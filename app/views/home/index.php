@@ -2,13 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <?php
+    $title = "Principal";
+    include_once "../structures/head.php";
+    ?>
 </head>
 
 <body>
     <h1>Pagina Principal</h1>
+
 </body>
 
 </html>
