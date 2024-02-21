@@ -14,11 +14,10 @@ $ROOT = $_SERVER['DOCUMENT_ROOT'] . "/$PROYECT/";
 
 $PRINCIPAL = "http://" . $_SERVER['HTTP_HOST'] . "/$PROYECT";
 
-
 //* .env configuration with phpdotenv
-// require $ROOT . '/vendor/autoload.php';
-// $dotenv = Dotenv\Dotenv::createImmutable($GLOBALS['PRINCIPAL']);
-// $dotenv->load();
+require $ROOT . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable($GLOBALS['PRINCIPAL']);
+$dotenv->load();
 
 
 include_once($ROOT . 'utils/functions.php');
