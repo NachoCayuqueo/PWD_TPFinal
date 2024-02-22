@@ -1,1 +1,44 @@
 /* global styles for the project */
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafbfe;
+}
+
+/* login / register */
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.bg-holder {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  background-image: url("../../assets/images/login.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.footer {
+  margin-top: auto;
+  display: table;
+  width: 100%;
+  height: 13vh;
+}
+
+.footer-title {
+  font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+}
+
+.footer-subtitle {
+  font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+}
