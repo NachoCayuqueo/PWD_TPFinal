@@ -13,7 +13,11 @@ $ROOT = $_SERVER['DOCUMENT_ROOT'] . "/$PROYECT/";
 
 
 $PRINCIPAL = "http://" . $_SERVER['HTTP_HOST'] . "/$PROYECT";
+//* direction to Bootstrap icons
+$BOOTSTRAP_ICONS = $PRINCIPAL . "/public/lib/bootstrap/bootstrap-icons/icons";
 
+//* direction to Logos
+$LOGOS = $PRINCIPAL . "/assets/logos";
 //* .env configuration with phpdotenv
 require $ROOT . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable($GLOBALS['PRINCIPAL']);
