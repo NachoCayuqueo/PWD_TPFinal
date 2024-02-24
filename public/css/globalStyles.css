@@ -21,10 +21,17 @@ a:hover {
   min-height: 100%;
   top: 0;
   left: 0;
-  background-image: url("../../assets/images/login.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.login-image {
+  background-image: url("../../assets/images/login.jpg");
+}
+
+.register-image {
+  background-image: url("../../assets/images/register.jpg");
 }
 
 .footer {
