@@ -11,6 +11,9 @@
 <body>
     <h1>Pagina Principal</h1>
 
+    <?php
+    include_once "../structures/footer.php";
+    ?>
 </body>
 
 </html>
