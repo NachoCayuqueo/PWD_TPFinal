@@ -13,7 +13,7 @@
         <!-- left side -->
         <!-- d-none d-lg-block => tamaño chico, se esconde la imagen -->
         <div class="col-lg-6 position-relative d-none d-lg-block">
-            <div class="bg-holder"></div>
+            <div class="bg-holder login-image"></div>
         </div>
         <!-- right side -->
         <div class="col-lg-6 ">
@@ -47,7 +47,7 @@
 
                         <div class="text-center">
                             <small>¿No tienes una cuenta?</small>
-                            <a href="#" class="fw-bold">Registrate</a>
+                            <a href="register.php" class="fw-bold">Registrate</a>
                         </div>
                     </form>
                 </div>
