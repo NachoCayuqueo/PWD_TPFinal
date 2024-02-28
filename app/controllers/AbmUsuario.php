@@ -39,24 +39,23 @@ class AbmUsuario
      */
     private function cargarObjeto($param)
     {
-        //TODO: ver cuando usdeshabilitado no viene
         $obj = null;
         if (
-            array_key_exists('idusuario', $param)  &&
-            array_key_exists('usnombre', $param) &&
-            array_key_exists('uspass', $param) &&
-            array_key_exists('usmail', $param) &&
-            array_key_exists('usdeshabilitado', $param) &&
-            array_key_exists('usactivo', $param)
+            array_key_exists('idUsuario', $param)  &&
+            array_key_exists('usNombre', $param) &&
+            array_key_exists('usPass', $param) &&
+            array_key_exists('usMail', $param) &&
+            array_key_exists('usDeshabilitado', $param) &&
+            array_key_exists('usActivo', $param)
         ) {
             $obj = new Usuario();
             $obj->setear(
-                $param['idusuario'],
-                $param['usnombre'],
-                $param['uspass'],
-                $param['usmail'],
-                $param['usdeshabilitado'],
-                $param['usactivo']
+                $param['idUsuario'],
+                $param['usNombre'],
+                $param['usPass'],
+                $param['usMail'],
+                $param['usSeshabilitado'],
+                $param['usActivo']
             );
         }
         return $obj;
@@ -96,7 +95,9 @@ class AbmUsuario
     public function alta($param)
     {
         $resp = false;
-        $param['idusuario'] = null;
+        $param['idUsuario'] = null;
+        $param['usDeshabilitado'] = null;
+        $param['usActivo'] = false;
         $objetoUsuario = $this->cargarObjeto($param);
         if ($objetoUsuario != null and $objetoUsuario->insertar()) {
             $resp = true;
@@ -119,7 +120,7 @@ class AbmUsuario
     public function alta_rol($param)
     {
         $resp = false;
-        if (isset($param['idusuario']) && isset($param['idrol'])) {
+        if (isset($param['idUsuario']) && isset($param['idrol'])) {
             $objetoUsuarioRol = new UsuarioRol();
             $objetoUsuarioRol->setearConClave($param['idusuario'], $param['idrol']);
             $resp = $objetoUsuarioRol->insertar();
