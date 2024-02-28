@@ -127,11 +127,230 @@ CREATE TABLE `menurol` (
 
 CREATE TABLE `producto` (
   `idproducto` bigint(20) NOT NULL,
-  `pronombre` int(11) NOT NULL,
-  `prodetalle` varchar(512) NOT NULL,
-  `procantstock` int(11) NOT NULL
+  `pronombre` varchar(50) NOT NULL,
+  `proprecio` int(20) NOT NULL,
+  `prodetalle` JSON NOT NULL, --se cambio a JSON para un mejor control de la informacion--
+  `procantstock` int(11) NOT NULL,
+  `espropopular` boolean NOT NULL DEFAULT false,
+  `espronuevo` boolean NOT NULL DEFAULT false
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`prodetalle`, `procantstock`,`espropopular`,`espronuevo`) VALUES
+(1, 'Comedero bebedero',3610,
+  '{"descripcion":"Comedero Acero Inoxidable Antideslizante",
+    "tipo":"accesorio",
+    "masInfo":[
+      "Es un bebedero de acero inoxidable, de gran resistencia",
+      "Presenta un molde de goma que evita deslizamientos mientras se usa"
+      ],
+    "imagen":"comedero-bebedero.jpg"
+    }',
+    100,false,false),
+(2, 'Comedero doble',15000,
+    '{"descripcion":"Comedero acero inoxidable doble",
+      "tipo":"accesorio",
+      "masInfo":[
+        "Incluye 2 tazones de acero inoxidable 750 ml. con soporte de metal negro",
+        "El protector antideslizante garantiza que la taza no se moverá ni se volcará fácilmente durante el uso"
+        ],
+        "imagen" : "comedero-doble.jpg"
+      }',
+      100,true,false),
+(3, 'Comedero doble regulable',40000,
+    '{"descripcion":"Comedero doble con pie regulable de acero inoxidable",
+      "tipo":"accesorio",
+      "masInfo":[
+        "Medida: 59 x 33 x 55",
+        "Medida de cada plato: 21 Cm Diámetro",
+        "Material: Acero inoxidable de primera calidad"
+        ],
+        "imagen" : "comedero-doble-regulable.jpg"
+      }',
+      100,true,false),
+(4, 'Comedero plegable de silicona',3450,
+    '{"descripcion":"Práctico comedero/bebedero para llevar en tus paseos o viajes con tu mascota",
+      "tipo":"accesorio",
+      "masInfo":[
+        "De silicona",
+        "Antideslizante, plegable y portátil",
+        "Incluye mosquetón para enganchar en cualquier lado"
+        ],
+        "imagen" : "comedero-plegable-de-silicona.jpg"
+      }',
+      100,false,true),
+(5, 'Funda de auto palta',60000,
+    '{"descripcion":"Funda para los asientos de los autos y tambien para el baul",
+      "tipo":"accesorio",
+      "masInfo":[
+        "Impermeable",
+        "Antidesgarro",
+        "No se pegan los pelos",
+        "Faciles de limpiar",
+        "Medidas: 1,30mts x 1,50 mts"
+        ],
+        "imagen" : "funda-auto-palta.jpg"
+      }',
+      100,true,false),
+(6, 'Funda de auto Paris',60000,
+    '{"descripcion":"Funda para los asientos de los autos y tambien para el baul",
+      "tipo":"accesorio",
+      "masInfo":[
+        "Impermeable",
+        "Antidesgarro",
+        "No se pegan los pelos",
+        "Faciles de limpiar",
+        "Medidas: 1,30mts x 1,50 mts"
+        ],
+        "imagen" : "funda-auto-paris.jpg"
+      }',
+      100,false,true),
+(7, 'Arnes Fucsia',23000,
+    '{"descripcion":"Arnés regulable en pecho y cuello",
+      "tipo":"accesorio",
+      "masInfo":[
+        "Impermeable",
+        "Manija de sujeción con hebilla de acero inoxidable para colocar correa",
+        "Banda Reflectiva para la noche"
+        ],
+        "imagen" : "arnes-fucsia.jpg"
+      }',
+      100,false,false),
+(8, 'Arnes Superman',8500,
+    '{"descripcion":"Proporcionan comodidad y confort a tu perro",
+      "tipo":"accesorio",
+      "masInfo":[
+        "Facil de colocar y retirar",
+        "Contienen una cinta regulable en el pecho que se ajusta con un broche reforzado"
+        ],
+        "imagen" : "arnes-superman.jpg"
+      }',
+      100,false,false),
+(9, 'Action baseball con manija de soga',8700,
+    '{"descripcion":"Soga Action con pelota dental",
+      "tipo":"juguete",
+      "masInfo":[
+        "Ideal para cuidar su salud bucal mientras juega"
+        ],
+        "imagen" : "baseball-sola.jpg"
+      }',
+      100,false,false),
+(10, 'Campana dispenser de snacks',10000,
+    '{"descripcion":"Juego de ingenio contenedor de alimento",
+      "tipo":"juguete",
+      "masInfo":[
+        "Sin información extra"
+        ],
+        "imagen" : "campana-dispenser-snack.jpg"
+      }',
+      100,true,false),
+(11, 'Dona',5300,
+    '{"descripcion":"Dona con chifle",
+      "tipo":"juguete",
+      "masInfo":[
+        "No son tóxicos",
+        "Son lavables y durables",
+        "Ideales para perros chicos o poco mordedores"
+        ],
+        "imagen" : "dona-chifle.jpg"
+      }',
+      100,false,true),
+(12, 'Mordillo',8600,
+    '{"descripcion":"Hueso Mordillo Ice",
+      "tipo":"juguete",
+      "masInfo":[
+        "Hecho de goma TPR no tóxica",
+        "Juguete refrescante, resistente, seguro y extremadamente duradero",
+        "Ideal para cachorros de dentición"
+        ],
+        "imagen" : "hueso-mordillo-ice.jpg"
+      }',
+      100,true,false),
+(13, 'Pelota Squiki',7500,
+    '{"descripcion":"Pelota squiki para snacks",
+      "tipo":"juguete",
+      "masInfo":[
+        "Diseñada para la diversión y la salud dental de tu perro",
+        "Son 100% resistentes y sus dientitos de goma ayudan a cuidar la salud bucal de tus mascotas mientras juegan",
+        "Es ideal para rellenarla con alimentos y estimular el ingenio de tu mascota brindándole máxima diversión y entretenimiento"
+        ],
+        "imagen" : "pelota-squiki-snacks.jpg"
+      }',
+      100,false,true),
+(14, 'Soga 2 nudos',2500,
+    '{"descripcion":"Soga de tela con 2 nudos",
+      "tipo":"juguete",
+      "masInfo":[
+        "Se diseñó para que tu mascota libere su stress mientras juega",
+        "También se usan para que el perro los pueda morder y realizar tareas de entrenamiento con él"
+        ],
+        "imagen" : "soga-2-nudos.jpg"
+      }',
+      100,false,false),
+(15, 'Agility perro adulto 20 kilos',37500,
+    '{"descripcion":"Alimento balanceado para perros adultos de 1 a 7 años",
+      "tipo":"alimento",
+      "masInfo":[
+        "Los perros adultos necesitan una alimentación completa y equilibrada que cubra sus requerimientos nutricionales y les brinde salud y vitalidad",
+        "Agility Adultos es una fórmula exclusivamente diseñada con ingredientes de alta calidad"
+        ],
+        "imagen" : "agility-adulto.jpg"
+      }',
+      100,false,false),
+(16, 'Balanced adulto razas medianas',11500,
+    '{"descripcion":"Indicado para perros adultos de raza mediana de 12 meses hasta 7 años",
+      "tipo":"alimento",
+      "masInfo":[
+        "Modulación de defensas",
+        "Músculos fuertes",
+        "Control de sarro y la halitosis",
+        "Cuidado óseo"
+        ],
+        "imagen" : "balanced-adulto.jpg"
+      }',
+      100,true,false),
+(17, 'ROYAL CANIN MINI ADULTO',21600,
+    '{"descripcion":"Alimento para perros adultos de talla pequeña (peso adulto hasta 10 kg). De 10 meses a 8 años de edad",
+      "tipo":"alimento",
+      "masInfo":[
+        "Ayuda a mantener un peso saludable en perros de talla pequeña",
+        "Esta fórmula contiene nutrientes que ayuda a mantener una piel y un pelaje saludable"
+        ],
+        "imagen" : "royal-mini-adulto.jpg"
+      }',
+      100,true,false),
+(18, 'Sieger perro adulto',13700,
+    '{"descripcion":"Sieger perro adulto mordida pequeña",
+      "tipo":"alimento",
+      "masInfo":[
+        "Sin información extra"
+        ],
+        "imagen" : "sieger-adulto-pequeño.jpg"
+      }',
+      100,false,false),
+(19, 'Sieger criadores',56500,
+    '{"descripcion":"Sieger criadores 20 Kg",
+      "tipo":"alimento",
+      "masInfo":[
+        "Criadores posee una fórmula exclusiva que brinda una adecuada alimentación durante todas las etapas madurativas de la vida del perro"
+        ],
+        "imagen" : "sieger-adulto.jpg"
+      }',
+      100,false,false),
+(20, 'Eukanuba perro adulto',14550,
+    '{"descripcion":"Eukanuba perro adulto razas pequeñas",
+      "tipo":"alimento",
+      "masInfo":[
+        "Recomendado para perros adultos mayores a 12 meses de edad",
+        "Alimento balanceado completo para perros adultos de raza pequeña que pesan menos de 10 kg"
+        ],
+        "imagen" : "eukanuba.jpg"
+      }',
+      100,false,true); 
 -- --------------------------------------------------------
 
 --
@@ -143,6 +362,15 @@ CREATE TABLE `rol` (
   `rodescripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
+(1, 'admin'),
+(2, 'deposito'),
+(3, 'cliente');
+
 -- --------------------------------------------------------
 
 --
@@ -150,12 +378,24 @@ CREATE TABLE `rol` (
 --
 
 CREATE TABLE `usuario` (
-  `idusuario` bigint(20) NOT NULL,
-  `usnombre` varchar(50) NOT NULL,
-  `uspass` int(11) NOT NULL,
-  `usmail` varchar(50) NOT NULL,
-  `usdeshabilitado` timestamp NULL DEFAULT NULL
+  `idusuario`       bigint(20) NOT NULL,
+  `usnombre`        varchar(50) NOT NULL,
+  `uspass`          varchar(50) NOT NULL, -- se cambio a varchar para poder utilizar numeros y letras --
+  `usmail`          varchar(50) NOT NULL,
+  `usdeshabilitado` timestamp NULL DEFAULT NULL,
+  `usActive`        boolean NOT NULL DEFAULT false -- control para usuarios activos --
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usActive`) VALUES
+(1, 'Nacho', 'admin103149', 'admin@gmail.com',true),
+(2, 'Pablo', 'admin114550', 'admin@gmail.com',true),
+(3, 'Elias', 'deposito123456', 'deposito@gmail.com',false),
+(4, 'Miriam', 'cliente000001', 'miriam@gmail.com',false),
+(5, 'Gisela', 'cliente000002', 'gisela@gmail.com',false);
 
 -- --------------------------------------------------------
 
@@ -167,6 +407,17 @@ CREATE TABLE `usuariorol` (
   `idusuario` bigint(20) NOT NULL,
   `idrol` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuariorol`
+--
+
+INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 3),
+(5, 3);
 
 --
 -- Índices para tablas volcadas
