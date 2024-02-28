@@ -1,3 +1,14 @@
+<?php
+include_once "../../../config/configuration.php";
+$productos = new AbmProducto();
+$listaProductos = $productos->buscar(null);
+$existenProductos = false;
+if (count($listaProductos) > 0) {
+    $existenProductos = true;
+} else {
+    echo  "<div class='container'>No hay productos registrados.</div>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,11 +20,100 @@
 </head>
 
 <body>
-    <h1>Pagina Principal</h1>
-
     <?php
-    include_once "../structures/footer.php";
+    include_once '../structures/navbar.php';
+    include_once '../structures/cards.php';
     ?>
+
+    <div class="container-fluid" style="background-color: #dec9ce;">
+
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h3 class="mt-3">Bienvenidos a</h3>
+                <h1>Doggys Friends</h1>
+                <p>Cillum Lorem cillum nostrud ea cupidatat culpa ea non pariatur culpa exercitation enim. Ex reprehenderit excepteur est reprehenderit nisi ipsum velit nostrud. Excepteur minim nisi in est sit dolore quis nulla laborum in. Id amet eiusmod aliqua id. Aliquip do laboris nostrud Lorem. Amet ipsum ullamco sunt cupidatat cillum amet laborum aliquip. Esse Lorem anim nostrud Lorem consectetur adipisicing dolore duis mollit laborum velit.
+                    Non sint ipsum nisi pariatur nulla nisi id cupidatat dolore officia et qui. Aliquip ipsum excepteur deserunt non eiusmod officia velit velit. Sunt fugiat proident dolor elit pariatur elit fugiat laborum.</p>
+            </div>
+            <div class="col-md-6">
+                <div class="image-container">
+                    <img src="<?php echo $IMAGES ?>/welcome1.png" alt="welcome" class="img-fluid" style="width: 100%; height: 70vh;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- populars products  -->
+    <div>
+        <h1 class="text-center mt-3">Productos Populares</h1>
+        <div class="main-container">
+            <div class="container-sm p-4">
+                <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+                    <?php
+                    if ($existenProductos) {
+                        foreach ($listaProductos as $producto) {
+                            if ($producto->getEsProPopular()) {
+                                $detallesJSON = json_decode($producto->getProDetalle(), true);
+
+                                $tipoProducto = $detallesJSON['tipo'];
+                                if ($tipoProducto === 'accesorio')
+                                    $urlImage =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
+                                if ($tipoProducto === 'juguete')
+                                    $urlImage =  $IMAGES . "/products/toys/" . $detallesJSON['imagen'];
+                                if ($tipoProducto === 'alimento')
+                                    $urlImage =  $IMAGES . "/products/food/" . $detallesJSON['imagen'];
+
+                                $descripcion = $detallesJSON['descripcion'];
+
+                                echo '<div class="col">';
+                                productsCard($urlImage, $producto->getProNombre(), $descripcion, $producto->getProPrecio(), "#", "#");
+                                echo '</div>';
+                            }
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- new products -->
+    <div>
+        <h1 class="text-center">Productos Nuevos</h1>
+        <div class="main-container">
+            <div class="container-sm p-4">
+                <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+                    <?php
+                    if ($existenProductos) {
+                        foreach ($listaProductos as $producto) {
+                            if ($producto->getEsProNuevo()) {
+                                $detallesJSON = json_decode($producto->getProDetalle(), true);
+
+                                $tipoProducto = $detallesJSON['tipo'];
+                                if ($tipoProducto === 'accesorio')
+                                    $urlImage =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
+                                if ($tipoProducto === 'juguete')
+                                    $urlImage =  $IMAGES . "/products/toys/" . $detallesJSON['imagen'];
+                                if ($tipoProducto === 'alimento')
+                                    $urlImage =  $IMAGES . "/products/food/" . $detallesJSON['imagen'];
+
+                                $descripcion = $detallesJSON['descripcion'];
+
+                                echo '<div class="col">';
+                                productsCard($urlImage, $producto->getProNombre(), $descripcion, $producto->getProPrecio(), "#", "#");
+                                echo '</div>';
+                            }
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <?php include_once "../structures/footer.php"; ?>
 </body>
+
+
 
 </html>
