@@ -18,8 +18,8 @@ class Session
     {
         $resp = false;
         $obj = new AbmUsuario();
-        $param['usnombre'] = $nombreUsuario;
-        $param['uspass'] = $psw;
+        $param['usNombre'] = $nombreUsuario;
+        $param['usPass'] = $psw;
         $resultado = $obj->buscar($param);
 
         if (count($resultado) > 0) {
