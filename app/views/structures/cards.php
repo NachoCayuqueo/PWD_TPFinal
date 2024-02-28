@@ -20,10 +20,10 @@ function productsCard($urlImagen, $title, $description, $price, $hrefComprar, $h
                 <h5 class="mt-2 text-center">' . $title . '</h5>
                 <p class="card-text">' . $description . '</p>
                 <h3 class="text-center">$' . $price . '</h3>
-                <div class="text-center">
-                    <a href="' . $hrefComprar . '" class="btn btn-primary rounded-pill me-2">comprar</a>
-                    <a href="' . $hrefMasInfo . '" class="btn btn-primary rounded-pill">mas info</a>
                 </div>
+            <div class="text-center">
+                <a href="' . $hrefComprar . '" class="btn btn-primary rounded-pill me-2">comprar</a>
+                <a href="' . $hrefMasInfo . '" class="btn btn-primary rounded-pill">mas info</a>
             </div>
         </div>';
 }
