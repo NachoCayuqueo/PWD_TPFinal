@@ -278,7 +278,6 @@ class Producto extends DataBase
                 while ($row = $this->Registro()) {
                     $obj = new Producto();
                     $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['procantstock'], $row['espropopular'], $row['espronuevo']);
-                    $obj->cargar();
                     array_push($arreglo, $obj);
                 }
             }
