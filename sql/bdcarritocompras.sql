@@ -376,23 +376,25 @@ INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
 --
 -- Estructura de tabla para la tabla `usuario`
 --
-
+-- se cambio idusuario,uspass y se agrego usactive
 CREATE TABLE `usuario` (
-  `idusuario`       bigint(20) NOT NULL,
+  `idusuario`       bigint(20) NOT NULL AUTO_INCREMENT,
   `usnombre`        varchar(50) NOT NULL,
-  `uspass`          varchar(50) NOT NULL, -- se cambio a varchar para poder utilizar numeros y letras --
+  `uspass`          varchar(50) NOT NULL,
   `usmail`          varchar(50) NOT NULL,
   `usdeshabilitado` timestamp NULL DEFAULT NULL,
-  `usActive`        boolean NOT NULL DEFAULT false -- control para usuarios activos --
+  `usActive`        boolean NOT NULL DEFAULT false,
+  PRIMARY KEY (`idusuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usActive`) VALUES
-(1, 'Nacho', 'admin103149', 'admin@gmail.com',true),
-(2, 'Pablo', 'admin114550', 'admin@gmail.com',true),
+(1, 'Nacho', 'admin103149', 'adminNacho@gmail.com',true),
+(2, 'Pablo', 'admin114550', 'adminPablo@gmail.com',true),
 (3, 'Elias', 'deposito123456', 'deposito@gmail.com',false),
 (4, 'Miriam', 'cliente000001', 'miriam@gmail.com',false),
 (5, 'Gisela', 'cliente000002', 'gisela@gmail.com',false);
