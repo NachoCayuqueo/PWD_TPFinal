@@ -14,6 +14,12 @@ $ROOT = $_SERVER['DOCUMENT_ROOT'] . "/$PROYECT/";
 //* direction to principal
 $PRINCIPAL = "http://" . $_SERVER['HTTP_HOST'] . "/$PROYECT";
 
+//* direction to js files
+$PUBLIC_JS = $PRINCIPAL . "/public/js";
+
+//* direction to views
+$VISTAS = $PRINCIPAL . "/app/views";
+
 //* direction to router
 $ROUTER = $PRINCIPAL . "/router";
 
