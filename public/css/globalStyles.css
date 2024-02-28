@@ -4,10 +4,10 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-color: #fafbfe;
+  /* background-color: #dec9ce; */
 }
 
-/* login / register */
+/** login / register */
 a {
   text-decoration: none;
 }
@@ -34,6 +34,14 @@ a:hover {
   background-image: url("../../assets/images/register.jpg");
 }
 
+.main-container {
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.35s ease-in-out;
+}
+
+/** footer */
 .footer {
   margin-top: auto;
   display: table;
