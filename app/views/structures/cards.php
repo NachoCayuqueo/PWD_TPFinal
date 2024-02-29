@@ -15,8 +15,8 @@
 function productsCard($cardId, $urlImagen, $title, $description, $moreInfo, $price, $hrefComprar)
 {
     echo '
-        <div class="card p-2" style="height: 100%;">
-            <img src="' . $urlImagen . '" class="card-img-top" alt="' . $title . '">
+        <div class="card card-container p-2" style="height: 100%;">
+            <img src="' . $urlImagen . '" class="image card-img-top" alt="' . $title . '">
             <div class="card-body">
                 <h5 class="mt-2 text-center">' . $title . '</h5>
                 <p class="card-text">' . $description . '</p>
