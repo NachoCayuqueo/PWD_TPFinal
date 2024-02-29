@@ -50,7 +50,9 @@ if (count($listaProductos) > 0) {
     </div>
     <!-- populars products  -->
     <div>
-        <h1 class="text-center mt-3">Productos Populares</h1>
+        <div class="title-with-line">
+            <h1 class="text-center">Productos Destacados</h1>
+        </div>
         <div class="main-container">
             <div class="container-sm p-4">
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
@@ -87,7 +89,9 @@ if (count($listaProductos) > 0) {
 
     <!-- new products -->
     <div>
-        <h1 class="text-center">Productos Nuevos</h1>
+        <div class="title-with-line">
+            <h1 class="text-center">Productos Nuevos</h1>
+        </div>
         <div class="main-container">
             <div class="container-sm p-4">
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">

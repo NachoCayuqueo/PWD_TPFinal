@@ -7,8 +7,7 @@ body {
   background-color: #fafbfe;
 }
 
-/** login / register */
-/* logo */
+/** logo **/
 .bg-holder {
   position: absolute;
   width: 100%;
@@ -35,6 +34,15 @@ body {
   transition: all 0.35s ease-in-out;
 }
 
+.card-container {
+  border-radius: 25px;
+  box-shadow: 0px 0px 15px 1px rgba(168, 168, 168, 0.75);
+}
+
+.image {
+  border-radius: 20px;
+}
+
 /** footer */
 .footer {
   margin-top: auto;
@@ -50,4 +58,38 @@ body {
 
 .footer-subtitle {
   font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Agrega estilos personalizados */
+.title-with-line {
+  position: relative;
+  text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  /* margin-bottom: 20px; */
+}
+
+.title-with-line h1 {
+  display: inline-block; /* Para que el título ocupe solo el espacio necesario */
+  background-color: #fff; /* Fondo blanco detrás del texto */
+  padding: 20px; /* Espacio alrededor del texto */
+}
+
+.title-with-line::before,
+.title-with-line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 1px; /* Grosor de la línea */
+  background-color: #000; /* Color de la línea */
+  z-index: -1; /* Para que la línea esté detrás del texto */
+}
+
+.title-with-line::before {
+  left: 0;
+}
+
+.title-with-line::after {
+  right: 0;
 }
