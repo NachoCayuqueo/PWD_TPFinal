@@ -1,5 +1,10 @@
 <?php
 include_once "../../../config/configuration.php";
+// $session = new Session();
+// if ($session->validar()) {
+//     // echo "ID usuario: " . $_SESSION['idusuario'];
+//     // header('Location: ' . $PRINCIPAL . "/views/tp5_views/paginaSegura.php");
+// }
 $productos = new AbmProducto();
 $listaProductos = $productos->buscar(null);
 $existenProductos = false;
@@ -32,7 +37,9 @@ if (count($listaProductos) > 0) {
                 <h3 class="mt-3">Bienvenidos a</h3>
                 <h1>Doggys Friends</h1>
                 <p>Cillum Lorem cillum nostrud ea cupidatat culpa ea non pariatur culpa exercitation enim. Ex reprehenderit excepteur est reprehenderit nisi ipsum velit nostrud. Excepteur minim nisi in est sit dolore quis nulla laborum in. Id amet eiusmod aliqua id. Aliquip do laboris nostrud Lorem. Amet ipsum ullamco sunt cupidatat cillum amet laborum aliquip. Esse Lorem anim nostrud Lorem consectetur adipisicing dolore duis mollit laborum velit.
-                    Non sint ipsum nisi pariatur nulla nisi id cupidatat dolore officia et qui. Aliquip ipsum excepteur deserunt non eiusmod officia velit velit. Sunt fugiat proident dolor elit pariatur elit fugiat laborum.</p>
+                    Non sint ipsum nisi pariatur nulla nisi id cupidatat dolore officia et qui. Aliquip ipsum excepteur deserunt non eiusmod officia velit velit. Sunt fugiat proident dolor elit pariatur elit fugiat laborum.
+                </p>
+
             </div>
             <div class="col-md-6">
                 <div class="image-container">
@@ -51,6 +58,7 @@ if (count($listaProductos) > 0) {
                     if ($existenProductos) {
                         foreach ($listaProductos as $producto) {
                             if ($producto->getEsProPopular()) {
+                                $cardId = $producto->getIdProducto();
                                 $detallesJSON = json_decode($producto->getProDetalle(), true);
 
                                 $tipoProducto = $detallesJSON['tipo'];
@@ -63,8 +71,9 @@ if (count($listaProductos) > 0) {
 
                                 $descripcion = $detallesJSON['descripcion'];
 
+                                $masInfo = $detallesJSON['masInfo'];
                                 echo '<div class="col">';
-                                productsCard($urlImage, $producto->getProNombre(), $descripcion, $producto->getProPrecio(), "#", "#");
+                                productsCard($cardId, $urlImage, $producto->getProNombre(), $descripcion, $masInfo, $producto->getProPrecio(), "#", "#");
                                 echo '</div>';
                             }
                         }
@@ -86,6 +95,7 @@ if (count($listaProductos) > 0) {
                     if ($existenProductos) {
                         foreach ($listaProductos as $producto) {
                             if ($producto->getEsProNuevo()) {
+                                $cardId = $producto->getIdProducto();
                                 $detallesJSON = json_decode($producto->getProDetalle(), true);
 
                                 $tipoProducto = $detallesJSON['tipo'];
@@ -98,8 +108,9 @@ if (count($listaProductos) > 0) {
 
                                 $descripcion = $detallesJSON['descripcion'];
 
+                                $masInfo = $detallesJSON['masInfo'];
                                 echo '<div class="col">';
-                                productsCard($urlImage, $producto->getProNombre(), $descripcion, $producto->getProPrecio(), "#", "#");
+                                productsCard($cardId, $urlImage, $producto->getProNombre(), $descripcion, $masInfo, $producto->getProPrecio(), "#", "#");
                                 echo '</div>';
                             }
                         }
