@@ -8,13 +8,7 @@ body {
 }
 
 /** login / register */
-a {
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
+/* logo */
 .bg-holder {
   position: absolute;
   width: 100%;
