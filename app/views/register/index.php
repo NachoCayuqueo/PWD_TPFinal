@@ -52,7 +52,7 @@
 
                         <div class="text-center">
                             <small>¿Quieres iniciar sesión?</small>
-                            <a href="../login" class="fw-bold">Log In</a>
+                            <a href="../login" class="btn fw-bold">Log In</a>
                         </div>
                     </form>
                 </div>

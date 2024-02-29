@@ -46,7 +46,7 @@
 
                         <div class="text-center">
                             <small>¿No tienes una cuenta?</small>
-                            <a href="../register" class="fw-bold">Registrate</a>
+                            <a href="../register" class="btn fw-bold">Registrate</a>
                         </div>
                     </form>
                 </div>
