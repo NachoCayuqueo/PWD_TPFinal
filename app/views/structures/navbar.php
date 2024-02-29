@@ -64,14 +64,19 @@ if ($session->validar()) {
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">PAGINA 1</a>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Productos</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Accesorios</a></li>
+                        <li><a class="dropdown-item" href="#">Juguetes</a></li>
+                        <li><a class="dropdown-item" href="#">Alimentos</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">PAGINA 2</a>
+                    <a href="#" class="nav-link" style="color: #f5f7f8;">Nuevos</a>
                 </li>
                 <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">PAGINA 3</a>
+                    <a href="#" class="nav-link" style="color: #f5f7f8;">Destacados</a>
                 </li>
             </ul>
         </div>
