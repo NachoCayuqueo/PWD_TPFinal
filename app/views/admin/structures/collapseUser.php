@@ -6,7 +6,7 @@ function mostrarCollapse($idUsuario, $esActivo, $roles, $rolesDB)
               <td></td>
               <td colspan="3">' . crearTablaRol($idUsuario, $roles, $rolesDB) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
           </tr>
-          <tr class="collapse" id="collapseUsuario' . $idUsuario . '">
+          <tr class="collapse" id="collapseUsuario' . $idUsuario . '" data-idusuario="' . $idUsuario . '">
               <td></td>
               <td colspan="3">' . crearTablaActivo($esActivo) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
           </tr>';
@@ -14,14 +14,10 @@ function mostrarCollapse($idUsuario, $esActivo, $roles, $rolesDB)
 
 function crearTablaRol($idUsuario, $roles, $rolesDB)
 {
-    // Array de roles predefinidos
-    // viewStructure($rolesDB[0]->getRoDescripcion());
-    $rolesPredefinidos = ['admin', 'deposito', 'cliente'];
-
     foreach ($roles as $rol) {
         if ($idUsuario === $rol['idUsuario']) {
             $rolesUsuario = $rol['roles'];
-            // viewStructure($rolesUsuario[0]['descripcionRol']);
+
             $tablaRoles = '
             <table id="rolesTable" class="table table-borderless">
                 <thead>
@@ -61,7 +57,7 @@ function crearTablaActivo($esActivo)
     $checked = $esActivo ? 'checked' : '';
 
     return '
-        <table class="table table-borderless" >
+        <table id="statusTable" class="table table-borderless" >
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -82,3 +78,4 @@ function crearTablaActivo($esActivo)
 
 
 echo '<script src="' . $PUBLIC_JS . '/updateRoles.js"></script>';
+echo '<script src="' . $PUBLIC_JS . '/admin/updateUserStatusAjax.js"></script>';
