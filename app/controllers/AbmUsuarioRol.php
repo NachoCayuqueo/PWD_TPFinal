@@ -18,14 +18,58 @@ class AbmUsuarioRol
             $objUsuario->setIdUsuario($param['idUsuario']);
 
             $objetoRol = new Rol();
-            $objetoRol->setIdRol($param['idrol']);
+            $objetoRol->setIdRol($param['idRol']);
 
-            $obj = new usuarioRol();
+            $obj = new UsuarioRol();
             $obj->setear($objUsuario, $objetoRol);
         }
 
         return $obj;
     }
+
+    /**
+     * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto que son claves
+     * @param array $param
+     * @return Tabla
+     */
+
+    private function cargarObjetoConClave($param)
+    {
+        $obj = null;
+        if (
+            isset($param['idUsuario']) &&
+            isset($param['idRol'])
+        ) {
+
+            $objUsuario = new Usuario();
+            $objUsuario->setear($param['idUsuario'], null, null, null, null, null);
+
+            $objetoRol = new Rol();
+            $objetoRol->setear($param['idRol'], null);
+
+            $obj = new UsuarioRol();
+            $obj->setear($objUsuario, $objetoRol);
+        }
+        return $obj;
+    }
+
+    /**
+     * Corrobora que dentro del arreglo asociativo estan seteados los campos claves
+     * @param array $param
+     * @return boolean
+     */
+
+    private function seteadosCamposClaves($param)
+    {
+        $resp = false;
+        if (
+            isset($param['idUsuario']) &&
+            isset($param['idRol'])
+        )
+            $resp = true;
+        return $resp;
+    }
+
     /**
      * 
      * @param array $param
@@ -37,6 +81,24 @@ class AbmUsuarioRol
         if (($objUsuarioRol != null) && ($objUsuarioRol->insertar())) {
             $resp = true;
         }
+        return $resp;
+    }
+
+    /**
+     * permite eliminar un objeto 
+     * @param array $param
+     * @return boolean
+     */
+    public function baja($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoUsuario = $this->cargarObjetoConClave($param);
+            if ($objetoUsuario != null and $objetoUsuario->eliminar()) {
+                $resp = true;
+            }
+        }
+
         return $resp;
     }
 

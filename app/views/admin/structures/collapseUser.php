@@ -43,7 +43,7 @@ function crearTablaRol($idUsuario, $roles, $rolesDB)
                 <tr>
                     <th scope="row">' . ($idRol) . '</th>
                     <td>' . ucfirst($descripcionRol) . '</td>
-                    <td><input class="form-check-input" type="checkbox" value="' . $descripcionRol . '" id="flexCheckDefault' . ($idRol) . '" ' . $checked . '></td>
+                    <td><input class="form-check-input" type="checkbox" value="' . $descripcionRol . '" id="flexCheckDefault' . ($idRol) . '" data-idrol="' . $idRol . '" ' . $checked . '></td>
                 </tr>';
             }
 
