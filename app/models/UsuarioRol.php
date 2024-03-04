@@ -139,7 +139,10 @@ class UsuarioRol extends DataBase
     public function eliminar()
     {
         $resp = false;
-        $sql = "DELETE FROM usuariorol WHERE idrol=" . $this->getObjetoRol()->getIdRol() . " AND idusuario =" . $this->getObjetoUsuario()->getIdUsuario() . ";";
+        $idRol = $this->getObjetoRol()->getIdRol();
+        $idUsuario = $this->getObjetoUsuario()->getIdUsuario();
+
+        $sql = "DELETE FROM usuariorol WHERE idrol=" . $idRol . " AND idusuario =" . $idUsuario . ";";
         if ($this->Iniciar()) {
             if ($this->Ejecutar($sql)) {
                 return true;
