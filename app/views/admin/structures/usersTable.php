@@ -39,7 +39,9 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
             'roles' => $roles
         ];
         echo "<tr>";
-        echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseUsuario" . $persona->getIdUsuario() . "' role='button' aria-expanded='false' aria-controls='collapseUsuario" . $persona->getIdUsuario() . "'><img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-down.svg' alt='down'></a></td>";
+        echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseUsuario" . $persona->getIdUsuario() . "' role='button' aria-expanded='false' aria-controls='collapseUsuario" . $persona->getIdUsuario() . "'>
+                    <img id='toggleIcon_" . $persona->getIdUsuario() . "' src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-right.svg' alt='right'></a>
+             </td>";
         echo "<td class='card-title'>" . $persona->getIdUsuario() . "</td>";
         echo "<td>" . $persona->getUsNombre() . "</td>";
         echo "<td>" . $persona->getUsPass() . "</td>";
@@ -61,3 +63,5 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
     echo '</tbody>
     </table>';
 }
+
+echo '<script src="' . $PUBLIC_JS . '/admin/changeCollapseButton.js"></script>';
