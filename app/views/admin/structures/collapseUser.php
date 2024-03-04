@@ -77,5 +77,5 @@ function crearTablaActivo($esActivo)
 }
 
 
-echo '<script src="' . $PUBLIC_JS . '/updateRoles.js"></script>';
+echo '<script src="' . $PUBLIC_JS . '/admin/updateRoles.js"></script>';
 echo '<script src="' . $PUBLIC_JS . '/admin/updateUserStatusAjax.js"></script>';
