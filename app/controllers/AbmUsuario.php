@@ -54,7 +54,7 @@ class AbmUsuario
                 $param['usNombre'],
                 $param['usPass'],
                 $param['usMail'],
-                $param['usSeshabilitado'],
+                $param['usDeshabilitado'],
                 $param['usActivo']
             );
         }
@@ -87,7 +87,7 @@ class AbmUsuario
     private function seteadosCamposClaves($param)
     {
         $resp = false;
-        if (isset($param['idusuario']))
+        if (isset($param['idUsuario']))
             $resp = true;
         return $resp;
     }
@@ -104,6 +104,7 @@ class AbmUsuario
         }
         return $resp;
     }
+
 
     public function borrar_rol($param)
     {
@@ -128,6 +129,24 @@ class AbmUsuario
 
         return $resp;
     }
+
+    /**
+     * permite modificar un objeto
+     * @param array $param
+     * @return boolean
+     */
+    public function modificacion($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoUsuario = $this->cargarObjeto($param);
+            if ($objetoUsuario != null and $objetoUsuario->modificar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
+    }
+
     /**
      * permite eliminar un objeto 
      * @param array $param
@@ -143,24 +162,6 @@ class AbmUsuario
             }
         }
 
-        return $resp;
-    }
-
-    /**
-     * permite modificar un objeto
-     * @param array $param
-     * @return boolean
-     */
-    public function modificacion($param)
-    {
-        //echo "Estoy en modificacion";
-        $resp = false;
-        if ($this->seteadosCamposClaves($param)) {
-            $objetoUsuario = $this->cargarObjeto($param);
-            if ($objetoUsuario != null and $objetoUsuario->modificar()) {
-                $resp = true;
-            }
-        }
         return $resp;
     }
 
