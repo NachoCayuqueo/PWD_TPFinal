@@ -168,10 +168,10 @@ class AbmUsuario
     {
         $where = [];
         if ($param !== NULL) {
-            if (isset($param['idusuario']))
-                $where[] = " idusuario =" . $param['idusuario'];
-            if (isset($param['idrol']))
-                $where[] = " idrol ='" . $param['idrol'] . "'";
+            if (isset($param['idUsuario']))
+                $where[] = " idusuario =" . $param['idUsuario'];
+            if (isset($param['idRol']))
+                $where[] = " idrol ='" . $param['idRol'] . "'";
         }
         $whereClause = implode(" AND ", $where);
 
