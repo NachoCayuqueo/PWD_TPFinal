@@ -1,9 +1,11 @@
 <?php
 include_once "collapseUser.php";
+include_once "modals.php";
 
 function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
 {
     $arregloRoles = [];
+
     echo '
     <h4 class="mb-4 title text-center">Listado de Usuarios</h4>
     <table class="table table-striped table-bordered">
@@ -12,8 +14,7 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
         <th scope="col"></th>
         <th scope="col">ID</th>
         <th scope="col">Nombre</th>
-        <th scope="col">Contraseña</th>
-        <th scope="col">Mail</th>
+        <th scope="col">Correo Electronico</th>
         <th scope="col">Fecha Deshabilitado</th>
         <th scope="col"></th>
     </tr>
@@ -28,10 +29,6 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
             $objetoRol = $usuarioRol->getObjetoRol();
             if ($objetoRol) {
                 $roles[] = $objetoRol->getRoDescripcion();
-                // $roles[] = [
-                //     'idRol' => $objetoRol->getIdRol(),
-                //     'descripcionRol' => $objetoRol->getRoDescripcion()
-                // ];
             }
         }
         $arregloRoles[] = [
@@ -44,14 +41,13 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
              </td>";
         echo "<td class='card-title'>" . $persona->getIdUsuario() . "</td>";
         echo "<td>" . $persona->getUsNombre() . "</td>";
-        echo "<td>" . $persona->getUsPass() . "</td>";
         echo "<td>" . $persona->getUsMail() . "</td>";
         echo "<td>" . ($persona->getUsDeshabilitado() ? $persona->getUsDeshabilitado() : 'Usuario activo') . "</td>";
         echo "<td class='text-center'>
-                    <a href='./actions/actualizarLogin.php?iduser=" . $persona->getIdUsuario() . " 'class='btn btn-outline-primary'>
-                    <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
+                    <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#exampleModal_" . $persona->getIdUsuario() . "'  data-user-id='" . $persona->getIdUsuario() . "'>
+                        <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
                     </a>
-                    <a href='./actions/eliminarLogin.php?iduser=" . $persona->getIdUsuario() . " 'class='btn" . ($persona->getUsDeshabilitado() ? ' btn-outline-secondary disabled' : ' btn-outline-danger') . "'>
+                    <a href='#' class='btn" . ($persona->getUsDeshabilitado() ? ' btn-outline-secondary disabled' : ' btn-outline-danger delete-btn') . "'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/trash3.svg' alt='trash'>
                     </a>
                   </td>";
@@ -59,9 +55,12 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
 
         // Función que muestra el área de colapso
         mostrarCollapse($persona->getIdUsuario(), $persona->getUsActivo(), $arregloRoles, $rolesDB);
+        $modalId = 'exampleModal_' . $persona->getIdUsuario();
+        editModal($modalId, $persona->getIdUsuario(), $persona->getUsNombre(), $persona->getUsMail());
     }
     echo '</tbody>
     </table>';
 }
 
 echo '<script src="' . $PUBLIC_JS . '/admin/changeCollapseButton.js"></script>';
+echo '<script src="' . $PUBLIC_JS . '/admin/modalAction.js"></script>';
