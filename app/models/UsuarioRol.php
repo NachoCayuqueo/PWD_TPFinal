@@ -8,8 +8,8 @@ class UsuarioRol extends DataBase
     public function __construct()
     {
         parent::__construct();
-        $this->objetoRol = null;
-        $this->objetoUsuario = null;
+        $this->objetoRol = new Rol();
+        $this->objetoUsuario = new Usuario();
         $this->mensajeOperacion = "";
     }
 
