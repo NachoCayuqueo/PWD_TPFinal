@@ -1,8 +1,7 @@
 <?php
-function editModal($modalId, $idUsuario, $nombre, $mail)
+function modalEdit($modalId, $idUsuario, $nombre, $mail)
 {
     echo '
-        <!-- Modal para la edición -->
             <div  class="modal fade" id="' . $modalId . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -43,6 +42,31 @@ function editModal($modalId, $idUsuario, $nombre, $mail)
                 </div>
             </div>
         ';
+}
+
+function modalDelete($modalId, $idUsuario, $nombre)
+{
+    echo '
+        <div class="modal fade modal-borrar" id="' . $modalId . '" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formulario_' . $idUsuario . '" class="formulario-borrar" data-name="' . $nombre . '">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar Usuario</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      ¿Esta seguro que desea  eliminar al usuario ' . $nombre . '?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    ';
 }
 
 echo '<script src="' . $PUBLIC_JS . '/admin/buttonActionsAjax.js"></script>';
