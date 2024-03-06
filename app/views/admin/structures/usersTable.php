@@ -42,7 +42,7 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
         echo "<td class='card-title'>" . $persona->getIdUsuario() . "</td>";
         echo "<td>" . $persona->getUsNombre() . "</td>";
         echo "<td>" . $persona->getUsMail() . "</td>";
-        echo "<td>" . ($persona->getUsDeshabilitado() ? $persona->getUsDeshabilitado() : 'Usuario activo') . "</td>";
+        echo "<td>" . ($persona->getUsDeshabilitado() ? $persona->getUsDeshabilitado() : 'El usuario no fue deshabilitado') . "</td>";
         echo "<td class='text-center'>
                     <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#exampleModal_" . $persona->getIdUsuario() . "'  data-user-id='" . $persona->getIdUsuario() . "'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
@@ -54,7 +54,7 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
         echo "</tr>";
 
         // Función que muestra el área de colapso
-        mostrarCollapse($persona->getIdUsuario(), $persona->getUsActivo(), $arregloRoles, $rolesDB);
+        mostrarCollapse($persona->getIdUsuario(), $persona->getUsDeshabilitado(), $persona->getUsActivo(), $arregloRoles, $rolesDB);
         $modalId = 'exampleModal_' . $persona->getIdUsuario();
         modalEdit($modalId, $persona->getIdUsuario(), $persona->getUsNombre(), $persona->getUsMail());
         $modalId = 'modalDelete_' . $persona->getIdUsuario();
