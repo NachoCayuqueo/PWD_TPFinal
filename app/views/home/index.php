@@ -1,18 +1,28 @@
 <?php
+
 include_once "../../../config/configuration.php";
-// $session = new Session();
-// if ($session->validar()) {
-//     // echo "ID usuario: " . $_SESSION['idusuario'];
-//     // header('Location: ' . $PRINCIPAL . "/views/tp5_views/paginaSegura.php");
-// }
+require_once '../../../vendor/autoload.php';
+require_once '../../models/conector/DataBase.php';
+require_once '../../models/Usuario.php';
+
+
+$session = new Session();
+if ($session->validar()) {
+    // echo "ID usuario: " . $_SESSION['idusuario'];
+    // header('Location: ' . $PRINCIPAL . "/views/tp5_views/paginaSegura.php");
+}
+
+
 $productos = new AbmProducto();
-$listaProductos = $productos->buscar(null);
+$listaProductos = $productos->buscar("");
 $existenProductos = false;
+
 if (count($listaProductos) > 0) {
     $existenProductos = true;
 } else {
     echo  "<div class='container'>No hay productos registrados.</div>";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,9 +69,10 @@ if (count($listaProductos) > 0) {
                     <?php
                     if ($existenProductos) {
                         foreach ($listaProductos as $producto) {
-                            if ($producto->getEsProPopular()) {
-                                $cardId = $producto->getIdProducto();
-                                $detallesJSON = json_decode($producto->getProDetalle(), true);
+
+                            if ($producto->espropopular) {
+                                $cardId = $producto->idproducto;
+                                $detallesJSON = json_decode($producto->prodetalle, true);
 
                                 $tipoProducto = $detallesJSON['tipo'];
                                 if ($tipoProducto === 'accesorio')
@@ -75,7 +86,7 @@ if (count($listaProductos) > 0) {
 
                                 $masInfo = $detallesJSON['masInfo'];
                                 echo '<div class="col">';
-                                productsCard($cardId, $urlImage, $producto->getProNombre(), $descripcion, $masInfo, $producto->getProPrecio(), "#", "#");
+                                productsCard($cardId, $urlImage, $producto->pronombre, $descripcion, $masInfo, $producto->proprecio, "#", "#");
                                 echo '</div>';
                             }
                         }
@@ -97,10 +108,11 @@ if (count($listaProductos) > 0) {
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                     <?php
                     if ($existenProductos) {
+                        //d($listaProductos);
                         foreach ($listaProductos as $producto) {
-                            if ($producto->getEsProNuevo()) {
-                                $cardId = $producto->getIdProducto();
-                                $detallesJSON = json_decode($producto->getProDetalle(), true);
+                            if ($producto->espronuevo) {
+                                $cardId = $producto->idproducto;
+                                $detallesJSON = json_decode($producto->prodetalle, true);
 
                                 $tipoProducto = $detallesJSON['tipo'];
                                 if ($tipoProducto === 'accesorio')
@@ -114,7 +126,7 @@ if (count($listaProductos) > 0) {
 
                                 $masInfo = $detallesJSON['masInfo'];
                                 echo '<div class="col">';
-                                productsCard($cardId, $urlImage, $producto->getProNombre(), $descripcion, $masInfo, $producto->getProPrecio(), "#", "#");
+                                productsCard($cardId, $urlImage, $producto->pronombre, $descripcion, $masInfo, $producto->proprecio, "#", "#");
                                 echo '</div>';
                             }
                         }

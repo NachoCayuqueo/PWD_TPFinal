@@ -1,96 +1,68 @@
 <?php
-class Compra
+
+use Illuminate\Database\Eloquent\Model;
+
+class Compra extends Model
 {
-    private $cofecha;
-    private $idCompra;
-    private $objetoUsuario;
-    private $mensajeOperacion;
+    protected $table = 'compra';
+    public $timestamps = false;
+    protected $fillable = [
+        'idcompra',
+        'cofecha',
+        'idusuario',
+    ];
+    protected $primaryKey = 'idcompra';
+
+
 
     public function __construct()
     {
         $this->cofecha = '';
         $this->idCompra = '';
         $this->objetoUsuario = '';
-        $this->mensajeOperacion = '';
     }
 
-    /**
-     * Get the value of cofecha
-     */
-    public function getCofecha()
+    public function setear($idCompra, $cofecha, $idUsuario)
     {
-        return $this->cofecha;
+        $this->update([
+            'idcompra' => $idCompra,
+            'cofecha' => $cofecha,
+            'idusuario' => $idUsuario
+        ]);
     }
-
-    /**
-     * Get the value of idCompra
-     */
-    public function getIdCompra()
+    public function crear_e_insertarEnTabla($idCompra, $idUsuario, $cofecha)
     {
-        return $this->idCompra;
+        $resp = false;
+        $compra = new Compra();
+        $compra->setear($idCompra, $idUsuario, $cofecha);
+        $compra->save();
+        $resp = true;
+        return  $resp;
     }
-
-    /**
-     * Get the value of objetoUsuario
-     */
-    public function getObjetoUsuario()
+    public function modificar()
     {
-        return $this->objetoUsuario;
+        $resp = false;
+        $this->update([
+            'idcompra' =>   $this->idCompra,
+            'cofecha' =>    $this->cofecha,
+            'idusuario' =>  $this->idUsuario
+        ]);
+        $this->save();
+        $resp = true;
+        return $resp;
     }
-
-    /**
-     * Get the value of mensajeOperacion
-     */
-    public function getMensajeOperacion()
+    public static function listar($param)
     {
-        return $this->mensajeOperacion;
+        $param = Compra::query();
+        $arreglo = $param->get();
+        return $arreglo;
     }
-
-    /**
-     * Set the value of cofecha
-     *
-     * @return  self
-     */
-    public function setCofecha($cofecha)
+    public function eliminar_producto()
     {
-        $this->cofecha = $cofecha;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of idCompra
-     *
-     * @return  self
-     */
-    public function setIdCompra($idCompra)
-    {
-        $this->idCompra = $idCompra;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of objetoUsuario
-     *
-     * @return  self
-     */
-    public function setObjetoUsuario($objetoUsuario)
-    {
-        $this->objetoUsuario = $objetoUsuario;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of mensajeOperacion
-     *
-     * @return  self
-     */
-    public function setMensajeOperacion($mensajeOperacion)
-    {
-        $this->mensajeOperacion = $mensajeOperacion;
-
-        return $this;
+        $resp = false;
+        $compraAEliminar = $this->idCompra;
+        Compra::destroy($compraAEliminar);
+        $resp = true;
+        return $resp;
     }
 }

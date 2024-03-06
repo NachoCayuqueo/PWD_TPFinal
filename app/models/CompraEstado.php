@@ -1,5 +1,8 @@
 <?php
-class CompraEstado
+
+use Illuminate\Database\Eloquent\Model;
+
+class CompraEstado extends Model
 {
     private $idCompraEstado;
     private $cefechaini;
@@ -8,7 +11,17 @@ class CompraEstado
     private $objetoCompraEstadoTipo;
     private $mensajeOperacion;
 
-    //TODO: ver contructores de fechas
+
+    protected $table = 'compraestado';
+    protected $filliable = [
+        'idcompra',
+        'idcompraestadotipo',
+        'cefechaini',
+        'cefechafin',
+    ];
+    protected $primaryKey = 'idcompraestado';
+
+
     public function __construct()
     {
         $this->idCompraEstado = '';
@@ -18,124 +31,52 @@ class CompraEstado
         $this->objetoCompraEstadoTipo = '';
         $this->mensajeOperacion = '';
     }
-
-    /**
-     * Get the value of idCompraEstado
-     */
-    public function getIdCompraEstado()
-    {
-        return $this->idCompraEstado;
+    public function setear(
+        $idCompraEstado,
+        $cefechaini,
+        $cefechaifin,
+        $objetoCompra,
+        $objetoCompraEstadoTipo,
+        $mensajeOperacion
+    ) {
+        $this->update([
+            'idcompraestado' => $idCompraEstado,
+            'idcompra' => $objetoCompra->getId(),
+            'idcompraestadotipo' => $objetoCompraEstadoTipo->getId(),
+            'cefechaini' => $cefechaini,
+            'cefechafin' => $cefechaifin,
+            'mensajeOdoperacion' => $mensajeOperacion
+        ]);
     }
 
-    /**
-     * Get the value of cefechaini
-     */
-    public function getCefechaini()
+    public function eliminar_compraEstado()
     {
-        return $this->cefechaini;
+        $resp = false;
+        $compraAEliminar = $this->idCompraEstado;
+        CompraEstado::destroy($compraAEliminar);
+        $resp = true;
+        return $resp;
     }
 
-    /**
-     * Get the value of cefechaifin
-     */
-    public function getCefechaifin()
+    public static function listar($param)
     {
-        return $this->cefechaifin;
+        $param = CompraEstado::query();
+        $arreglo = $param->get();
+        return $arreglo;
     }
 
-    /**
-     * Get the value of objetoCompra
-     */
-    public function getObjetoCompra()
-    {
-        return $this->objetoCompra;
-    }
-
-    /**
-     * Get the value of objetoCompraEstadoTipo
-     */
-    public function getObjetoCompraEstadoTipo()
-    {
-        return $this->objetoCompraEstadoTipo;
-    }
-
-    /**
-     * Get the value of mensajeOperacion
-     */
-    public function getMensajeOperacion()
-    {
-        return $this->mensajeOperacion;
-    }
-
-    /**
-     * Set the value of idCompraEstado
-     *
-     * @return  self
-     */
-    public function setIdCompraEstado($idCompraEstado)
-    {
-        $this->idCompraEstado = $idCompraEstado;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of cefechaini
-     *
-     * @return  self
-     */
-    public function setCefechaini($cefechaini)
-    {
-        $this->cefechaini = $cefechaini;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of cefechaifin
-     *
-     * @return  self
-     */
-    public function setCefechaifin($cefechaifin)
-    {
-        $this->cefechaifin = $cefechaifin;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of objetoCompra
-     *
-     * @return  self
-     */
-    public function setObjetoCompra($objetoCompra)
-    {
-        $this->objetoCompra = $objetoCompra;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of objetoCompraEstadoTipo
-     *
-     * @return  self
-     */
-    public function setObjetoCompraEstadoTipo($objetoCompraEstadoTipo)
-    {
-        $this->objetoCompraEstadoTipo = $objetoCompraEstadoTipo;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of mensajeOperacion
-     *
-     * @return  self
-     */
-    public function setMensajeOperacion($mensajeOperacion)
-    {
-        $this->mensajeOperacion = $mensajeOperacion;
-
-        return $this;
-    }
+    // public function modificar()
+    // {
+    //     $resp = false;
+    //     $this->update([
+    //         $this->update([
+    //             'idcompraestado' => $this->idCompraEstado,
+    //             'idcompra' => $objetoCompra->getId(),
+    //             'idcompraestadotipo' => $objetoCompraEstadoTipo->getId(),
+    //             'cefechaini' => $this->cefechaini,
+    //             'cefechafin' => $this->cefechaifin,
+    //             'mensajeOdoperacion' => $this->$mensajeOperacion
+    //         ]);
+    //     ]);
+    // }
 }

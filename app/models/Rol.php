@@ -1,75 +1,62 @@
 <?php
-class Rol
+
+use Illuminate\Database\Eloquent\Model;
+
+class Rol extends Model
 {
-    private $idRol;
-    private $roDescripcion;
-    private $mensajeOperacion;
+    protected $table = 'rol';
+    protected $fillable = [
+        'rodescripcion',
+    ];
+    protected $primaryKey = 'idrol';
+    public $timestamps = false;
 
     public function __construct()
     {
-        $this->idRol = "";
-        $this->roDescripcion = "";
-        $this->mensajeOperacion = "";
+        $this->idrol = "";
+        $this->rodescripcion = "";
     }
-
-
-    /**
-     * Get the value of idRol
-     */
-    public function getIdRol()
+    public function crear_e_insertarEnTabla($descripcion, $idrol)
     {
-        return $this->idRol;
+        $resp = false;
+        $rol = new Rol();
+        $rol->rodescripcion = $descripcion;
+        $rol->idrol = $idrol;
+        if ($rol->save()) {
+            $resp = true;
+        }
+        return $resp;
     }
-
-    /**
-     * Get the value of roDescripcion
-     */
-    public function getRoDescripcion()
+    public function eliminar_rol()
     {
-        return $this->roDescripcion;
+        $resp = false;
+        $rolAEliminar = $this->idrol;
+        Rol::destroy($rolAEliminar);
+        $resp = true;
+        return $resp;
     }
-
-    /**
-     * Get the value of mensajeOperacion
-     */
-    public function getMensajeOperacion()
+    public static function listar($param)
     {
-        return $this->mensajeOperacion;
+        $param = Rol::query();
+        $arreglo = $param->get();
+        return $arreglo;
     }
-
-    /**
-     * Set the value of idRol
-     *
-     * @return  self
-     */
-    public function setIdRol($idRol)
+    public function modificar()
     {
-        $this->idRol = $idRol;
-
-        return $this;
+        $resp = false;
+        $this->update([
+            'idrol' => $this->idrol,
+            'rodescripcion' => $this->rodescripcion,
+        ]);
+        $this->save();
+        $resp = true;
+        return $resp;
     }
-
-    /**
-     * Set the value of roDescripcion
-     *
-     * @return  self
-     */
-    public function setRoDescripcion($roDescripcion)
+    public function setear($idrol, $rolDescripcion)
     {
-        $this->roDescripcion = $roDescripcion;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of mensajeOperacion
-     *
-     * @return  self
-     */
-    public function setMensajeOperacion($mensajeOperacion)
-    {
-        $this->mensajeOperacion = $mensajeOperacion;
-
-        return $this;
+        $this->update([
+            "idrol" => $idrol,
+            "rodescripcion" => $rolDescripcion,
+        ]);
     }
 }

@@ -129,7 +129,7 @@ CREATE TABLE `producto` (
   `idproducto` bigint(20) NOT NULL,
   `pronombre` varchar(50) NOT NULL,
   `proprecio` int(20) NOT NULL,
-  `prodetalle` JSON NOT NULL, --se cambio a JSON para un mejor control de la informacion--
+  `prodetalle` JSON NOT NULL, 
   `procantstock` int(11) NOT NULL,
   `espropopular` boolean NOT NULL DEFAULT false,
   `espronuevo` boolean NOT NULL DEFAULT false

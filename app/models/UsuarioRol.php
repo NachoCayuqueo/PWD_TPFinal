@@ -1,74 +1,54 @@
 <?php
-class UsuarioRol
+
+use Illuminate\Database\Eloquent\Model;
+
+class UsuarioRol extends Model
 {
-    private $objetoRol;
-    private $objetoUsuario;
-    private $mensajeOperacion;
+
+    protected $table = 'usuariorol';
+    protected $fillable = [
+        'idusuario',
+        'idrol'
+    ];
+
 
     public function __construct()
     {
-        $this->objetoRol = "";
-        $this->objetoUsuario = "";
-        $this->mensajeOperacion = "";
+        $this->objUsuario = new Usuario();
+        $this->objRol = new Rol();
+    }
+    public function setear($objetoUsuario, $objetoRol)
+    {
+        $this->objUsuario = $objetoUsuario;
+        $this->objRol = $objetoRol;
+    }
+    public function rol()
+    {
+        return $this->belongsTo('rol', 'idrol');
+    }
+    public function usuario()
+    {
+        return $this->belongsTo('usuario', 'idusuario');
     }
 
-    /**
-     * Get the value of objetoRol
-     */
-    public function getObjetoRol()
+    // public function crear_e_insertarEnTabla()
+    // {
+    //     $resp = false;
+    //     $usuarioRol = new UsuarioRol();
+    //     $usuarioRol->idusuario = ($this->usuario())->idusuario;
+    //     $usuarioRol->idrol = ($this->rol())->idrol;
+    //     $usuarioRol->save();
+    //     $resp = true;
+    //     return $resp;
+    // }
+    public function listar()
     {
-        return $this->objetoRol;
-    }
-
-    /**
-     * Get the value of objetoUsuario
-     */
-    public function getObjetoUsuario()
-    {
-        return $this->objetoUsuario;
-    }
-
-    /**
-     * Get the value of mensajeOperacion
-     */
-    public function getMensajeOperacion()
-    {
-        return $this->mensajeOperacion;
-    }
-
-    /**
-     * Set the value of objetoRol
-     *
-     * @return  self
-     */
-    public function setObjetoRol($objetoRol)
-    {
-        $this->objetoRol = $objetoRol;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of objetoUsuario
-     *
-     * @return  self
-     */
-    public function setObjetoUsuario($objetoUsuario)
-    {
-        $this->objetoUsuario = $objetoUsuario;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of mensajeOperacion
-     *
-     * @return  self
-     */
-    public function setMensajeOperacion($mensajeOperacion)
-    {
-        $this->mensajeOperacion = $mensajeOperacion;
-
-        return $this;
+        $usuariosRol = UsuarioRol::get()->toArray();
+        return $usuariosRol;
     }
 }
+
+
+// private $objetoRol;
+//     private $objetoUsuario;
+//     private $mensajeOperacion;

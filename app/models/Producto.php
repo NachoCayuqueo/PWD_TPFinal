@@ -1,290 +1,101 @@
 <?php
-class Producto extends DataBase
+
+use Illuminate\Database\Eloquent\Model;
+
+class Producto extends Model
 {
-    private $idProducto;
-    private $proCantStock;
-    private $proPrecio;
-    private $proDetalle;
-    private $proNombre;
-    private $esProPopular;
-    private $esProNuevo;
-    private $mensajeOperacion;
+    protected $table = 'producto';
+    protected $fillable = [
+        'pronombre',
+        'proprecio',
+        'prodetalle',
+        'procantstrock',
+        'espopular',
+        'espronuevo',
+    ];
+    protected $primaryKey = 'idproducto';
+    public $timestamps = false;
+
 
     public function __construct()
     {
-        parent::__construct();
-        $this->idProducto = "";
-        $this->proCantStock = "";
-        $this->proDetalle = null;
-        $this->proNombre = "";
-        $this->esProPopular = false;
-        $this->esProNuevo = false;
-        $this->mensajeOperacion = "";
+        $this->idproducto = "";
+        $this->procantstock = "";
+        $this->prodetalle = null;
+        $this->pronombre = "";
+        $this->espopular = false;
+        $this->espronuevo = false;
     }
 
-    /**
-     * Get the value of idProducto
-     */
-    public function getIdProducto()
-    {
-        return $this->idProducto;
-    }
-
-    /**
-     * Get the value of proCantStock
-     */
-    public function getProCantStock()
-    {
-        return $this->proCantStock;
-    }
-    /**
-     * Get the value of proPrecio
-     */
-    public function getProPrecio()
-    {
-        return $this->proPrecio;
-    }
-    /**
-     * Get the value of proDetalle
-     */
-    public function getProDetalle()
-    {
-        return $this->proDetalle;
-    }
-
-    /**
-     * Get the value of proNombre
-     */
-    public function getProNombre()
-    {
-        return $this->proNombre;
-    }
-    /**
-     * Get the value of esProPopular
-     */
-    public function getEsProPopular()
-    {
-        return $this->esProPopular;
-    }
-    /**
-     * Get the value of esProNuevo
-     */
-    public function getEsProNuevo()
-    {
-        return $this->esProNuevo;
-    }
-    /**
-     * Get the value of mensajeOperacion
-     */
-    public function getMensajeOperacion()
-    {
-        return $this->mensajeOperacion;
-    }
-
-    /**
-     * Set the value of idProducto
-     *
-     * @return  self
-     */
-    public function setIdProducto($idProducto)
-    {
-        $this->idProducto = $idProducto;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of proCantStock
-     *
-     * @return  self
-     */
-    public function setProCantStock($proCantStock)
-    {
-        $this->proCantStock = $proCantStock;
-
-        return $this;
-    }
-    /**
-     * Set the value of proPrecio
-     *
-     * @return  self
-     */
-    public function setProPrecio($proPrecio)
-    {
-        $this->proPrecio = $proPrecio;
-
-        return $this;
-    }
-    /**
-     * Set the value of proDetalle
-     *
-     * @return  self
-     */
-    public function setProDetalle($proDetalle)
-    {
-        $this->proDetalle = $proDetalle;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of proNombre
-     *
-     * @return  self
-     */
-    public function setProNombre($proNombre)
-    {
-        $this->proNombre = $proNombre;
-
-        return $this;
-    }
-    /**
-     * Set the value of esProPopular
-     *
-     * @return  self
-     */
-    public function setEsProPopular($esProPopular)
-    {
-        $this->esProPopular = $esProPopular;
-
-        return $this;
-    }
-    /**
-     * Set the value of esProNuevo
-     *
-     * @return  self
-     */
-    public function setEsProNuevo($esProNuevo)
-    {
-        $this->esProNuevo = $esProNuevo;
-
-        return $this;
-    }
-    /**
-     * Set the value of mensajeOperacion
-     *
-     * @return  self
-     */
-    public function setMensajeOperacion($mensajeOperacion)
-    {
-        $this->mensajeOperacion = $mensajeOperacion;
-
-        return $this;
-    }
-
-    public function setear($id, $nombre, $detalle, $precio, $stock, $esPopular, $esNuevo)
-    {
-        $this->setIdProducto($id);
-        $this->setProNombre($nombre);
-        $this->setProDetalle($detalle);
-        $this->setProPrecio($precio);
-        $this->setProCantStock($stock);
-        $this->setEsProPopular($esPopular);
-        $this->setEsProNuevo($esNuevo);
-    }
-
-    public function cargar()
-    {
+    public function crear_e_insertarEnTabla(
+        $pronomnbre,
+        $proprecio,
+        $prodetalle,
+        $procantstock,
+        $espopular,
+        $espronuevo
+    ) {
         $resp = false;
-        $query = "SELECT * FROM producto WHERE idproducto = " . $this->getIdProducto();
-        if ($this->Iniciar()) {
-            $res = $this->Ejecutar($query);
-            if ($res > -1) {
-                if ($res > 0) {
-                    $row = $this->Registro();
-                    $this->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['procantstock'], $row['espropopular'], $row['espronuevo']);
-                }
-            }
-        } else {
-            $this->setMensajeoperacion("ERROR::Producto->cargar: " . $this->getError());
-        }
+
+        $producto = new producto();
+        $producto->pronomnbre = $pronomnbre;
+        $producto->proprecio = $proprecio;
+        $producto->prodetalle = $prodetalle;
+        $producto->procantstock = $procantstock;
+        $producto->espopular =    $espopular;
+        $producto->espronuevo =   $espronuevo;
+
+        $producto->save();
+        $resp = true;
         return $resp;
     }
-
-    public function insertar()
+    public function eliminar_producto()
     {
         $resp = false;
-        $query = "INSERT INTO producto(pronombre, prodetalle, procantstock)  
-              VALUES('"
-            . $this->getProNombre() . "', '"
-            . $this->getProDetalle() . "', '"
-            . $this->getProCantStock() . "'
-        );";
-        if ($this->Iniciar()) {
-            if ($id = $this->Ejecutar($query)) {
-                $this->setIdProducto($id);
-                $resp = true;
-            } else {
-                $this->setmensajeoperacion("ERROR::Producto->insertar ejecutar: " . $this->getError());
-            }
-        } else {
-            $this->setmensajeoperacion("ERROR::Producto->insertar iniciar: " . $this->getError());
-        }
+        $idAEliminar = $this->idProducto;
+        Producto::destroy($idAEliminar);
+        $resp = true;
         return $resp;
     }
-
-    //TODO: es posible que se necesite un control si viene imagen para guardar solo su nombre
+    public static function listar($param)
+    {
+        $param = Producto::query();
+        $arreglo = $param->get();
+        return $arreglo;
+    }
     public function modificar()
     {
         $resp = false;
-
-        $query = "UPDATE producto SET 
-            pronombre='" . $this->getProNombre() . "', 
-            prodetalle='" . $this->getProDetalle() . "', 
-            procantstock='" . $this->getProCantStock() . "'" .
-            " WHERE idproducto=" . $this->getIdProducto();
-
-        if ($this->Iniciar()) {
-            if ($this->Ejecutar($query)) {
-                $resp = true;
-            } else {
-                $this->setMensajeoperacion("ERROR::Producto => modificar ejecutar: " . $this->getError());
-            }
-        } else {
-            $this->setMensajeoperacion("ERROR::Producto => modificar insertar: " . $this->getError());
-        }
+        $this->update([
+            'idproducto' => $this->idproducto,
+            'pronombre' => $this->usnombre,
+            'proprecio' => $this->uspass,
+            'prodetalle' => $this->usmail,
+            'procantstock' => $this->procantstock,
+            'espopular' => $this->espopular,
+            'espronuevo' => $this->espronuevo,
+        ]);
+        $this->save();
+        $resp = true;
         return $resp;
     }
-
-    public function eliminar()
-    {
-        $resp = false;
-
-        $query = "DELETE FROM producto WHERE idproducto=" . $this->getIdProducto();
-        if ($this->Iniciar()) {
-            if ($this->Ejecutar($query)) {
-                $resp = true;
-            } else {
-                $this->setMensajeoperacion("ERROR::Producto => eliminar ejecutar: " . $this->getError());
-            }
-        } else {
-            $this->setMensajeoperacion("ERROR::Producto => eliminar insertar: " . $this->getError());
-        }
-        return $resp;
-    }
-
-    public function listar($parametro = "")
-    {
-        $arreglo = array();
-
-        $query = "SELECT * FROM producto ";
-        if ($parametro != "") {
-            $query .= 'WHERE ' . $parametro;
-        }
-        // if ($this->Iniciar()) {
-        $res = $this->Ejecutar($query);
-        if ($res > -1) {
-            if ($res > 0) {
-                while ($row = $this->Registro()) {
-                    $obj = new Producto();
-                    $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['procantstock'], $row['espropopular'], $row['espronuevo']);
-                    array_push($arreglo, $obj);
-                }
-            }
-        } else {
-            $this->setmensajeoperacion("ERROR::Producto => listar: " . $this->getError());
-        }
-        //}
-        return $arreglo;
+    public function setear(
+        $idproducto,
+        $usnombre,
+        $uspass,
+        $usmail,
+        $procantstock,
+        $espopular,
+        $espronuevo,
+    ) {
+        $this->update([
+            'idproducto' => $idproducto,
+            'pronombre' => $usnombre,
+            'proprecio' => $uspass,
+            'prodetalle' => $usmail,
+            'procantstock' => $procantstock,
+            'espopular' => $espopular,
+            'espronuevo' => $espronuevo,
+        ]);
     }
 }

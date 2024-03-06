@@ -1,96 +1,70 @@
 <?php
-class CompraEstadoTipo
+
+use Illuminate\Database\Eloquent\Model;
+
+class CompraEstadoTipo extends Model
 {
-    private $idCompraEstadoTipo;
-    private $cetDescripcion;
-    private $cetDetalle;
-    private $mensajeOperacion;
+    protected $table = 'compraestadotipo';
+    protected $fillable = [
+        'cetdescripcion',
+        'cetdetalle',
+    ];
+    protected $primaryKey = 'idcompraestadotipo';
+    public $timestampos = false;
 
     public function __construct()
     {
-        $this->idCompraEstadoTipo = "";
-        $this->cetDescripcion = "";
-        $this->cetDetalle = "";
-        $this->mensajeOperacion = "";
+        $this->idcompraestadotipo = "";
+        $this->cetdescripcion = "";
+        $this->cetdetalle = "";
     }
-
-    /**
-     * Get the value of idCompraEstadoTipo
-     */
-    public function getIdCompraEstadoTipo()
+    public function crear_e_insertarEnTabla($idcompraestadotipo, $cetDescripcion, $cetDetalle)
     {
-        return $this->idCompraEstadoTipo;
+        $resp = false;
+        $compraEstado = new  CompraEstadoTipo();
+        $compraEstado->idcompraestadotipo = $idcompraestadotipo;
+        $compraEstado->cetdescripcion = $cetDescripcion;
+        $compraEstado->cetdetalle = $cetDetalle;
+        if ($compraEstado->save()) {
+            $resp = true;
+        }
+        return $resp;
     }
-
-    /**
-     * Get the value of cetDescripcion
-     */
-    public function getCetDescripcion()
+    public function eliminar_CompraEstadoTipo()
     {
-        return $this->cetDescripcion;
+        $resp = false;
+        $aEliminar = $this->idcompraestadotipo;
+        CompraEstadoTipo::destroy($aEliminar);
+        //if (empty(CompraEstadoTipo::find($aEliminar))) {
+        //    $resp = true;
+        //}
+        $resp = true;
+        return $resp;
     }
-
-    /**
-     * Get the value of cetDetalle
-     */
-    public function getCetDetalle()
+    public static function listar($param)
     {
-        return $this->cetDetalle;
+        $param = CompraEstadoTipo::query();
+        $arreglo = $param->get();
+        return $arreglo;
     }
-
-    /**
-     * Get the value of mensajeOperacion
-     */
-    public function getMensajeOperacion()
+    public function modificar()
     {
-        return $this->mensajeOperacion;
+        $resp = false;
+        $this->update([
+            'idcompraestadotipo' => $this->idcompraestadotipo,
+            'cetdescripcion' => $this->cetdescripcion,
+            'cetdetalle' => $this->cetdetalle,
+        ]);
+        $this->save();
+        $resp = true;
+        return $resp;
     }
-
-    /**
-     * Set the value of idCompraEstadoTipo
-     *
-     * @return  self
-     */
-    public function setIdCompraEstadoTipo($idCompraEstadoTipo)
+    public function setear($idcompraestadotipo, $cetDescripcion, $cetDetalle)
     {
-        $this->idCompraEstadoTipo = $idCompraEstadoTipo;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of cetDescripcion
-     *
-     * @return  self
-     */
-    public function setCetDescripcion($cetDescripcion)
-    {
-        $this->cetDescripcion = $cetDescripcion;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of cetDetalle
-     *
-     * @return  self
-     */
-    public function setCetDetalle($cetDetalle)
-    {
-        $this->cetDetalle = $cetDetalle;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of mensajeOperacion
-     *
-     * @return  self
-     */
-    public function setMensajeOperacion($mensajeOperacion)
-    {
-        $this->mensajeOperacion = $mensajeOperacion;
-
-        return $this;
+        $this->update([
+            'idcompraestadotipo' => $idcompraestadotipo,
+            'cetdescripcion' => $cetDescripcion,
+            'cetdetalle' => $cetDetalle,
+        ]);
     }
 }
