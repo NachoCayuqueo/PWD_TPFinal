@@ -1,5 +1,29 @@
 <?php
 include_once '../../../config/configuration.php';
+
+$session = new Session();
+$existeSesion = false;
+if ($session->validar()) {
+    $usuario = $session->getUsuario();
+    if (is_null(($usuario))) {
+        $nombreUsuario = 'Usuario';
+        header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+    } else {
+        $nombreUsuario = $usuario->getUsNombre();
+        $usuarioRoles = $session->getRol();
+        //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
+        foreach ($usuarioRoles as $usuarioRol) {
+            $objetoRol = $usuarioRol->getObjetoRol();
+            $descripcionRol = $objetoRol->getRoDescripcion();
+            if ($descripcionRol === 'admin') {
+                $existeSesion = true;
+            }
+        }
+    }
+} else {
+    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+}
+
 $objetoUsuario = new AbmUsuario();
 $objetoRol = new AbmRol();
 
@@ -36,22 +60,22 @@ if (count($listaUsuario) > 0) {
             crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB);
         } else {
             echo '
-                        <div class="container d-flex justify-content-center">
-                            <div class=" card-container d-flex justify-content-center align-items-center">
-                                <div class="card text-center mb-3" style="width: 28rem;">
-                                    <div class="card-header">
-                                        <div class="text-end"><a class="btn-close" href="index.php" role="button"></a></div>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">UPS!</h5>
-                                        <p class="card-text">No se encontraron personas cargadas en la base de datos</p>
-                                    </div>
-                                    <div class="card-footer text-body-secondary">
-                                        <img src="../../assets/logo.png" style="height: 30px;" alt="logo-fai">
-                                    </div>
+                    <div class="container d-flex justify-content-center">
+                        <div class=" card-container d-flex justify-content-center align-items-center">
+                            <div class="card text-center mb-3" style="width: 28rem;">
+                                <div class="card-header">
+                                    <div class="text-end"><a class="btn-close" href="index.php" role="button"></a></div>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">UPS!</h5>
+                                    <p class="card-text">No se encontraron personas cargadas en la base de datos</p>
+                                </div>
+                                <div class="card-footer text-body-secondary">
+                                    <img src="../../assets/logo.png" style="height: 30px;" alt="logo-fai">
                                 </div>
                             </div>
-                        </div>';
+                        </div>
+                    </div>';
         }
         ?>
     </div>
