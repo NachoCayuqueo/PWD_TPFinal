@@ -47,7 +47,7 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
                     <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#exampleModal_" . $persona->getIdUsuario() . "'  data-user-id='" . $persona->getIdUsuario() . "'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
                     </a>
-                    <a href='#' class='btn" . ($persona->getUsDeshabilitado() ? ' btn-outline-secondary disabled' : ' btn-outline-danger delete-btn') . "'>
+                    <a href='#' class='btn" . ($persona->getUsDeshabilitado() ? ' btn-outline-secondary disabled' : ' btn-outline-danger delete-btn') . "' data-bs-toggle='modal' data-bs-target='#modalDelete_" . $persona->getIdUsuario() . "'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/trash3.svg' alt='trash'>
                     </a>
                   </td>";
@@ -56,7 +56,9 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
         // Función que muestra el área de colapso
         mostrarCollapse($persona->getIdUsuario(), $persona->getUsActivo(), $arregloRoles, $rolesDB);
         $modalId = 'exampleModal_' . $persona->getIdUsuario();
-        editModal($modalId, $persona->getIdUsuario(), $persona->getUsNombre(), $persona->getUsMail());
+        modalEdit($modalId, $persona->getIdUsuario(), $persona->getUsNombre(), $persona->getUsMail());
+        $modalId = 'modalDelete_' . $persona->getIdUsuario();
+        modalDelete($modalId, $persona->getIdUsuario(), $persona->getUsNombre());
     }
     echo '</tbody>
     </table>';
