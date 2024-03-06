@@ -70,9 +70,9 @@ class AbmUsuario
     private function cargarObjetoConClave($param)
     {
         $obj = null;
-        if (isset($param['idusuario'])) {
+        if (isset($param['idUsuario'])) {
             $obj = new Usuario();
-            $obj->setear($param['idusuario'], null, null, null, null, null);
+            $obj->setear($param['idUsuario'], null, null, null, null, null);
         }
         return $obj;
     }
@@ -206,5 +206,17 @@ class AbmUsuario
         $objetoUsuario = new Usuario();
         $arreglo = $objetoUsuario->listar($whereClause);
         return $arreglo;
+    }
+
+    public function deshabilitar($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $personObject = $this->cargarObjetoConClave($param);
+            if ($personObject != null and $personObject->deshabilitar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
     }
 }
