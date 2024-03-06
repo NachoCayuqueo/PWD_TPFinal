@@ -220,7 +220,6 @@ class Usuario extends DataBase
         return $resp;
     }
 
-
     public function modificar()
     {
         $resp = false;
@@ -277,7 +276,9 @@ class Usuario extends DataBase
         $resp = false;
         $newDate = date('Y-m-d H:i:s');
         $query = "UPDATE usuario SET 
-            usDeshabilitado='" . $newDate . "' WHERE idUsuario=" . $this->getIdUsuario();
+                    usDeshabilitado='" . $newDate . "', 
+                    usActive=0 WHERE idUsuario=" . $this->getIdUsuario();
+
 
         if ($this->Iniciar()) {
             if ($this->Ejecutar($query)) {
