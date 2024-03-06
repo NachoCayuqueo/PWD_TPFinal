@@ -2,7 +2,7 @@
 include_once '../../../../config/configuration.php';
 
 $objetoUsuario = new AbmUsuario();
-$objetoUsuarioRol = new AbmUsuarioRol();
+//$objetoUsuarioRol = new AbmUsuarioRol();
 
 $data = data_submitted();
 
@@ -13,18 +13,18 @@ $param = ["idUsuario" => $idUsuario];
 $response = array();
 
 //* se verifica si existen roles asociados al usuario
-$listaUsuarioRol = $objetoUsuarioRol->buscar($param);
-if (!empty($listaUsuarioRol)) {
-    foreach ($listaUsuarioRol as $usuarioRol) {
-        $objetoRol = $usuarioRol->getObjetoRol();
-        $idRol = $objetoRol->getIdRol();
-        $params = [
-            'idUsuario' => $idUsuario,
-            'idRol' =>  $idRol
-        ];
-        $objetoUsuarioRol->baja($params);
-    }
-}
+// $listaUsuarioRol = $objetoUsuarioRol->buscar($param);
+// if (!empty($listaUsuarioRol)) {
+//     foreach ($listaUsuarioRol as $usuarioRol) {
+//         $objetoRol = $usuarioRol->getObjetoRol();
+//         $idRol = $objetoRol->getIdRol();
+//         $params = [
+//             'idUsuario' => $idUsuario,
+//             'idRol' =>  $idRol
+//         ];
+//         $objetoUsuarioRol->baja($params);
+//     }
+// }
 
 $bajaExitosa = $objetoUsuario->deshabilitar($param);
 if ($bajaExitosa)
