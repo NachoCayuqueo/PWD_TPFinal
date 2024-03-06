@@ -1,22 +1,23 @@
 <?php
 
-function mostrarCollapse($idUsuario, $esActivo, $roles, $rolesDB)
+function mostrarCollapse($idUsuario, $fechaDeshabilitado, $esActivo, $roles, $rolesDB)
 {
     echo '<tr class="collapse" id="collapseUsuario' . $idUsuario . '" data-idusuario="' . $idUsuario . '">
               <td></td>
-              <td colspan="3">' . crearTablaRol($idUsuario, $roles, $rolesDB) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
+              <td colspan="3">' . crearTablaRol($idUsuario, $fechaDeshabilitado, $roles, $rolesDB) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
           </tr>
           <tr class="collapse" id="collapseUsuario' . $idUsuario . '" data-idusuario="' . $idUsuario . '">
               <td></td>
-              <td colspan="3">' . crearTablaActivo($idUsuario, $esActivo) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
+              <td colspan="3">' . crearTablaActivo($idUsuario, $fechaDeshabilitado, $esActivo) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
           </tr>';
 }
 
-function crearTablaRol($idUsuario, $roles, $rolesDB)
+function crearTablaRol($idUsuario, $fechaDeshabilitado, $roles, $rolesDB)
 {
     foreach ($roles as $rol) {
         if ($idUsuario === $rol['idUsuario']) {
             $rolesUsuario = $rol['roles'];
+            $disabled = $fechaDeshabilitado ? "disabled" : "";
 
             $tablaRoles = '
             <table id="rolesTable" class="table table-borderless">
@@ -39,7 +40,9 @@ function crearTablaRol($idUsuario, $roles, $rolesDB)
                 <tr>
                     <th scope="row">' . ($idRol) . '</th>
                     <td>' . ucfirst($descripcionRol) . '</td>
-                    <td><input class="form-check-input" type="checkbox" value="' . $descripcionRol . '" id="flexCheckDefault' . ($idRol) . '" data-idrol="' . $idRol . '" ' . $checked . '></td>
+                    <td>
+                        <input class="form-check-input" type="checkbox" value="' . $descripcionRol . '" id="flexCheckDefault' . ($idRol) . '" data-idrol="' . $idRol . '" ' . $checked . ' ' . $disabled . '>
+                    </td>
                 </tr>';
             }
 
@@ -52,10 +55,12 @@ function crearTablaRol($idUsuario, $roles, $rolesDB)
 }
 
 
-function crearTablaActivo($idUsuario, $esActivo)
+function crearTablaActivo($idUsuario, $fechaDeshabilitado, $esActivo)
 {
     $checked = $esActivo ? 'checked' : '';
     $mensaje = $esActivo ? "El usuario está activo" : "El usuario no está activo";
+    $disabled = $fechaDeshabilitado ? "disabled" : "";
+
     return '
         <table id="statusTable" class="table table-borderless table-status" >
             <thead>
@@ -70,7 +75,7 @@ function crearTablaActivo($idUsuario, $esActivo)
                     <th scope="row">1</th>
                         <td id="estadoUsuario_' . $idUsuario . '">' . $mensaje . '</td>
                         <td>
-                          <input class="form-check-input checkBoxActiveUser" type="checkbox" value="" id="checkBoxActiveUser_' . $idUsuario . '"' . $checked . '>
+                          <input class="form-check-input checkBoxActiveUser" type="checkbox" value="" id="checkBoxActiveUser_' . $idUsuario . '"' . $checked . ' ' . $disabled . '>
                         </td>
                 </tr>
             </tbody>
