@@ -93,3 +93,12 @@ body {
 .title-with-line::after {
   right: 0;
 }
+
+/* Estilo para los checkbox habilitados */
+.form-check-input:enabled {
+  border-color: blue; /* Color del borde para checkbox habilitados */
+}
+/* Estilo para los checkbox deshabilitados */
+.form-check-input:disabled {
+  border-color: grey; /* Color del borde para checkbox deshabilitados */
+}
