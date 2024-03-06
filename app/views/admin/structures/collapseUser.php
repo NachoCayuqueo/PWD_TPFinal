@@ -8,7 +8,7 @@ function mostrarCollapse($idUsuario, $esActivo, $roles, $rolesDB)
           </tr>
           <tr class="collapse" id="collapseUsuario' . $idUsuario . '" data-idusuario="' . $idUsuario . '">
               <td></td>
-              <td colspan="3">' . crearTablaActivo($esActivo) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
+              <td colspan="3">' . crearTablaActivo($idUsuario, $esActivo) . '</td> <!-- Las tablas internas comienzan en la columna 2 -->
           </tr>';
 }
 
@@ -52,12 +52,12 @@ function crearTablaRol($idUsuario, $roles, $rolesDB)
 }
 
 
-function crearTablaActivo($esActivo)
+function crearTablaActivo($idUsuario, $esActivo)
 {
     $checked = $esActivo ? 'checked' : '';
-
+    $mensaje = $esActivo ? "El usuario está activo" : "El usuario no está activo";
     return '
-        <table id="statusTable" class="table table-borderless" >
+        <table id="statusTable" class="table table-borderless table-status" >
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -67,15 +67,17 @@ function crearTablaActivo($esActivo)
             </thead>
             <tbody>
                 <tr>
-                  <th scope="row">1</th>
-                  <td>El usuario esta activo</td>
-                  <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"' . $checked . '></td>
+                    <th scope="row">1</th>
+                        <td id="estadoUsuario_' . $idUsuario . '">' . $mensaje . '</td>
+                        <td>
+                          <input class="form-check-input checkBoxActiveUser" type="checkbox" value="" id="checkBoxActiveUser_' . $idUsuario . '"' . $checked . '>
+                        </td>
                 </tr>
             </tbody>
         </table>                  
     ';
 }
 
-
 echo '<script src="' . $PUBLIC_JS . '/admin/updateRoles.js"></script>';
 echo '<script src="' . $PUBLIC_JS . '/admin/updateUserStatusAjax.js"></script>';
+echo '<script src="' . $PUBLIC_JS . '/admin/observeCheckBoxStatus.js"></script>';
