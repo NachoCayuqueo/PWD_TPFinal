@@ -2,7 +2,7 @@
 include_once "collapseUser.php";
 include_once "modals.php";
 
-function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
+function crearTablaUsuarios($idUsuarioAdmin, $listaUsuario, $objetoUsuario, $rolesDB)
 {
     $arregloRoles = [];
 
@@ -23,27 +23,30 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
     ';
     foreach ($listaUsuario as $persona) {
         $param = array('idUsuario' => $persona->getIdUsuario());
-        $objetoUsuarioRol = $objetoUsuario->darRoles($param);
-        $roles = [];
-        foreach ($objetoUsuarioRol as $usuarioRol) {
-            $objetoRol = $usuarioRol->getObjetoRol();
-            if ($objetoRol) {
-                $roles[] = $objetoRol->getRoDescripcion();
+        if ($persona->getIdUsuario() !== $idUsuarioAdmin) {
+
+
+            $objetoUsuarioRol = $objetoUsuario->darRoles($param);
+            $roles = [];
+            foreach ($objetoUsuarioRol as $usuarioRol) {
+                $objetoRol = $usuarioRol->getObjetoRol();
+                if ($objetoRol) {
+                    $roles[] = $objetoRol->getRoDescripcion();
+                }
             }
-        }
-        $arregloRoles[] = [
-            'idUsuario' => $persona->getIdUsuario(),
-            'roles' => $roles
-        ];
-        echo "<tr>";
-        echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseUsuario" . $persona->getIdUsuario() . "' role='button' aria-expanded='false' aria-controls='collapseUsuario" . $persona->getIdUsuario() . "'>
+            $arregloRoles[] = [
+                'idUsuario' => $persona->getIdUsuario(),
+                'roles' => $roles
+            ];
+            echo "<tr>";
+            echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseUsuario" . $persona->getIdUsuario() . "' role='button' aria-expanded='false' aria-controls='collapseUsuario" . $persona->getIdUsuario() . "'>
                     <img id='toggleIcon_" . $persona->getIdUsuario() . "' src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-right.svg' alt='right'></a>
              </td>";
-        echo "<td class='card-title'>" . $persona->getIdUsuario() . "</td>";
-        echo "<td>" . $persona->getUsNombre() . "</td>";
-        echo "<td>" . $persona->getUsMail() . "</td>";
-        echo "<td>" . ($persona->getUsDeshabilitado() ? $persona->getUsDeshabilitado() : 'El usuario no fue deshabilitado') . "</td>";
-        echo "<td class='text-center'>
+            echo "<td class='card-title'>" . $persona->getIdUsuario() . "</td>";
+            echo "<td>" . $persona->getUsNombre() . "</td>";
+            echo "<td>" . $persona->getUsMail() . "</td>";
+            echo "<td>" . ($persona->getUsDeshabilitado() ? $persona->getUsDeshabilitado() : 'El usuario no fue deshabilitado') . "</td>";
+            echo "<td class='text-center'>
                     <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#exampleModal_" . $persona->getIdUsuario() . "'  data-user-id='" . $persona->getIdUsuario() . "'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
                     </a>
@@ -51,14 +54,15 @@ function crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB)
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/trash3.svg' alt='trash'>
                     </a>
                   </td>";
-        echo "</tr>";
+            echo "</tr>";
 
-        // Función que muestra el área de colapso
-        mostrarCollapse($persona->getIdUsuario(), $persona->getUsDeshabilitado(), $persona->getUsActivo(), $arregloRoles, $rolesDB);
-        $modalId = 'exampleModal_' . $persona->getIdUsuario();
-        modalEdit($modalId, $persona->getIdUsuario(), $persona->getUsNombre(), $persona->getUsMail());
-        $modalId = 'modalDelete_' . $persona->getIdUsuario();
-        modalDelete($modalId, $persona->getIdUsuario(), $persona->getUsNombre());
+            // Función que muestra el área de colapso
+            mostrarCollapse($persona->getIdUsuario(), $persona->getUsDeshabilitado(), $persona->getUsActivo(), $arregloRoles, $rolesDB);
+            $modalId = 'exampleModal_' . $persona->getIdUsuario();
+            modalEdit($modalId, $persona->getIdUsuario(), $persona->getUsNombre(), $persona->getUsMail());
+            $modalId = 'modalDelete_' . $persona->getIdUsuario();
+            modalDelete($modalId, $persona->getIdUsuario(), $persona->getUsNombre());
+        }
     }
     echo '</tbody>
     </table>';

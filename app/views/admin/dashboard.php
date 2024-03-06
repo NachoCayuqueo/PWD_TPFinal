@@ -10,6 +10,7 @@ if ($session->validar()) {
         header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
     } else {
         $nombreUsuario = $usuario->getUsNombre();
+        $idUsuarioActivo = $usuario->getIdUsuario();
         $usuarioRoles = $session->getRol();
         //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
         foreach ($usuarioRoles as $usuarioRol) {
@@ -57,7 +58,7 @@ if (count($listaUsuario) > 0) {
     <div class="container-sm p-4">
         <?php
         if ($existeUsuario) {
-            crearTablaUsuarios($listaUsuario, $objetoUsuario, $rolesDB);
+            crearTablaUsuarios($idUsuarioActivo, $listaUsuario, $objetoUsuario, $rolesDB);
         } else {
             echo '
                     <div class="container d-flex justify-content-center">
