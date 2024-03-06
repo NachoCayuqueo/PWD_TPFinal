@@ -1,0 +1,37 @@
+<?php
+include_once '../../../../config/configuration.php';
+
+$objetoUsuarioRol = new AbmUsuarioRol();
+$data = data_submitted();
+
+$idUsuario = $data['idUsuario'];
+$idRol = $data['idRol'];
+$descripcionRol = $data['descripcionRol'];
+$isChecked = filter_var($data['isChecked'], FILTER_VALIDATE_BOOLEAN); //me aseguro que sea boolean y no una cadena
+
+
+$params = [
+    "idUsuario" => $idUsuario,
+    "idRol" => $idRol
+];
+
+$response = array();
+
+if ($isChecked) {
+    //TODO: dar alta en UsuarioRol
+    $altaExitosa = $objetoUsuarioRol->alta($params);
+    if ($altaExitosa)
+        $response = array('message' => 'Se activo el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+    else
+        $response = array('message' => 'ERROR al activar el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+} else {
+    //TODO: eliminar en UsuarioRol
+    $bajaExitosa = $objetoUsuarioRol->baja($params);
+    if ($bajaExitosa)
+        $response = array('message' => 'Se dio de baja el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+    else
+        $response = array('message' => 'ERROR al dar de baja el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+}
+
+// Convertir el array a formato JSON
+echo json_encode($response);

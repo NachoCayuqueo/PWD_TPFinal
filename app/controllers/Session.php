@@ -87,7 +87,7 @@ class Session
         $list_rol = null;
         if ($this->validar()) {
             $obj = new AbmUsuario();
-            $param['idusuario'] = $_SESSION['idusuario'];
+            $param['idUsuario'] = $_SESSION['idusuario'];
             $resultado = $obj->darRoles($param);
             if (count($resultado) > 0) {
                 $list_rol = $resultado;

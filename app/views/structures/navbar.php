@@ -3,7 +3,11 @@
 $session = new Session();
 $existeSesion = false;
 if ($session->validar()) {
-    $nombreUsuario = $session->getUsuario()->getUsNombre();
+    $usuario = $session->getUsuario();
+    if (is_null(($usuario))) {
+        $nombreUsuario = 'Usuario';
+    } else
+        $nombreUsuario = $usuario->getUsNombre();
     $existeSesion = true;
 }
 ?>
@@ -65,18 +69,17 @@ if ($session->validar()) {
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Productos</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Usuarios</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Accesorios</a></li>
-                        <li><a class="dropdown-item" href="#">Juguetes</a></li>
-                        <li><a class="dropdown-item" href="#">Alimentos</a></li>
+                        <li><a class="dropdown-item" href="#">Crear Usuarios</a></li>
+                        <li><a class="dropdown-item" href="#">Mostrar Usuarias</a></li>
                     </ul>
                 </li>
                 <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Nuevos</a>
+                    <a href="#" class="nav-link" style="color: #f5f7f8;">Crear Rol</a>
                 </li>
                 <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Destacados</a>
+                    <a href="#" class="nav-link" style="color: #f5f7f8;">Modificar Rol</a>
                 </li>
             </ul>
         </div>

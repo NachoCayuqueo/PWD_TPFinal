@@ -54,7 +54,7 @@ class AbmUsuario
                 $param['usNombre'],
                 $param['usPass'],
                 $param['usMail'],
-                $param['usSeshabilitado'],
+                $param['usDeshabilitado'],
                 $param['usActivo']
             );
         }
@@ -70,9 +70,9 @@ class AbmUsuario
     private function cargarObjetoConClave($param)
     {
         $obj = null;
-        if (isset($param['idusuario'])) {
+        if (isset($param['idUsuario'])) {
             $obj = new Usuario();
-            $obj->setear($param['idusuario'], null, null, null, null, null);
+            $obj->setear($param['idUsuario'], null, null, null, null, null);
         }
         return $obj;
     }
@@ -87,7 +87,7 @@ class AbmUsuario
     private function seteadosCamposClaves($param)
     {
         $resp = false;
-        if (isset($param['idusuario']))
+        if (isset($param['idUsuario']))
             $resp = true;
         return $resp;
     }
@@ -104,6 +104,7 @@ class AbmUsuario
         }
         return $resp;
     }
+
 
     public function borrar_rol($param)
     {
@@ -128,6 +129,24 @@ class AbmUsuario
 
         return $resp;
     }
+
+    /**
+     * permite modificar un objeto
+     * @param array $param
+     * @return boolean
+     */
+    public function modificacion($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoUsuario = $this->cargarObjeto($param);
+            if ($objetoUsuario != null and $objetoUsuario->modificar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
+    }
+
     /**
      * permite eliminar un objeto 
      * @param array $param
@@ -146,32 +165,14 @@ class AbmUsuario
         return $resp;
     }
 
-    /**
-     * permite modificar un objeto
-     * @param array $param
-     * @return boolean
-     */
-    public function modificacion($param)
-    {
-        //echo "Estoy en modificacion";
-        $resp = false;
-        if ($this->seteadosCamposClaves($param)) {
-            $objetoUsuario = $this->cargarObjeto($param);
-            if ($objetoUsuario != null and $objetoUsuario->modificar()) {
-                $resp = true;
-            }
-        }
-        return $resp;
-    }
-
     public function darRoles($param)
     {
         $where = [];
         if ($param !== NULL) {
-            if (isset($param['idusuario']))
-                $where[] = " idusuario =" . $param['idusuario'];
-            if (isset($param['idrol']))
-                $where[] = " idrol ='" . $param['idrol'] . "'";
+            if (isset($param['idUsuario']))
+                $where[] = " idusuario =" . $param['idUsuario'];
+            if (isset($param['idRol']))
+                $where[] = " idrol ='" . $param['idRol'] . "'";
         }
         $whereClause = implode(" AND ", $where);
 
@@ -205,5 +206,17 @@ class AbmUsuario
         $objetoUsuario = new Usuario();
         $arreglo = $objetoUsuario->listar($whereClause);
         return $arreglo;
+    }
+
+    public function deshabilitar($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $personObject = $this->cargarObjetoConClave($param);
+            if ($personObject != null and $personObject->deshabilitar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
     }
 }

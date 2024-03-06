@@ -205,8 +205,6 @@ class Usuario extends DataBase
             $query .= "'" . $usDeshabilitado . "')";
         }
 
-
-        echo "QUERY: " . $query . "<br>";
         // Ejecutar la consulta
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($query)) {
@@ -222,7 +220,6 @@ class Usuario extends DataBase
         return $resp;
     }
 
-
     public function modificar()
     {
         $resp = false;
@@ -234,11 +231,16 @@ class Usuario extends DataBase
 
         $usDeshabilitado = $this->getUsDeshabilitado();
 
-        if ($usDeshabilitado !== 'null') {
+        if ($usDeshabilitado !== null) {
             $query .= ", usdeshabilitado='" . $usDeshabilitado . "'";
         }
+        // Agregar la columna usActivo
+        $usActivo = $this->getUsActivo();
+        $query .= ", usActive=" . ($usActivo ? 1 : 0);
 
         $query .= " WHERE idusuario=" . $this->getIdUsuario();
+
+        // echo $query;
 
         if ($this->Iniciar()) {
             if ($this->Ejecutar($query)) {
@@ -274,7 +276,9 @@ class Usuario extends DataBase
         $resp = false;
         $newDate = date('Y-m-d H:i:s');
         $query = "UPDATE usuario SET 
-            usDeshabilitado='" . $newDate . "' WHERE idUsuario=" . $this->getIdUsuario();
+                    usDeshabilitado='" . $newDate . "', 
+                    usActive=0 WHERE idUsuario=" . $this->getIdUsuario();
+
 
         if ($this->Iniciar()) {
             if ($this->Ejecutar($query)) {
