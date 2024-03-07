@@ -8,7 +8,7 @@ $(document).ready(function () {
     // );
 
     $.ajax({
-      url: "../../views/admin/actions/updateStatus.php",
+      url: "../../views/admin/actions/updateStatusAction.php",
       type: "POST",
       dataType: "json",
       data: {
