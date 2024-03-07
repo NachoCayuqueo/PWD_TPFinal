@@ -97,7 +97,8 @@ class AbmUsuario
         $resp = false;
         $param['idUsuario'] = null;
         $param['usDeshabilitado'] = null;
-        $param['usActivo'] = false;
+        $param['usActivo'] = $param['usActivo'] ? $param['usActivo'] : "0";
+
         $objetoUsuario = $this->cargarObjeto($param);
         if ($objetoUsuario != null and $objetoUsuario->insertar()) {
             $resp = true;
@@ -121,9 +122,9 @@ class AbmUsuario
     public function alta_rol($param)
     {
         $resp = false;
-        if (isset($param['idUsuario']) && isset($param['idrol'])) {
+        if (isset($param['idUsuario']) && isset($param['idRol'])) {
             $objetoUsuarioRol = new UsuarioRol();
-            $objetoUsuarioRol->setearConClave($param['idusuario'], $param['idrol']);
+            $objetoUsuarioRol->setearConClave($param['idUsuario'], $param['idRol']);
             $resp = $objetoUsuarioRol->insertar();
         }
 
