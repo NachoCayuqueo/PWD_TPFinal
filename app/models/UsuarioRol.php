@@ -79,9 +79,9 @@ class UsuarioRol extends DataBase
         $this->setObjetoRol($objrol);
     }
 
-    public function setearConClave($idusuario, $idjrol)
+    public function setearConClave($idusuario, $idrol)
     {
-        $this->getObjetoRol()->setIdRol($idjrol);
+        $this->getObjetoRol()->setIdRol($idrol);
         $this->getObjetoUsuario()->setIdUsuario($idusuario);
     }
 

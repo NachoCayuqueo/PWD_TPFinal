@@ -12,7 +12,7 @@ $(document).ready(function () {
     const email = $("#usMail_" + id).val();
 
     $.ajax({
-      url: "../../views/admin/actions/editUserData.php",
+      url: "../../views/admin/actions/editUserDataAction.php",
       type: "POST",
       data: {
         idUsuario,
@@ -20,7 +20,6 @@ $(document).ready(function () {
         email,
       },
       success: function (response) {
-        // Si la respuesta contiene 'Modificacion exitosa', muestra la alerta exitosa
         response = JSON.parse(response);
 
         if (response.title === "EXITO") {
@@ -71,7 +70,7 @@ $(document).ready(function () {
     const nombre = formulario.data("name");
 
     $.ajax({
-      url: "../../views/admin/actions/deleteUser.php",
+      url: "../../views/admin/actions/deleteUserAction.php",
       type: "POST",
       data: {
         idUsuario: id,

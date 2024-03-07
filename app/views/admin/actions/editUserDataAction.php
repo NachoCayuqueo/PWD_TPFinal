@@ -13,8 +13,7 @@ $usuario   = $objetoUsuario->buscar($param);
 
 $response = array();
 
-if ($usuario) {
-
+if (!empty($usuario)) {
     if ($nombre === $usuario[0]->getUsNombre() && $email === $usuario[0]->getUsMail()) {
         $response = array('title' => 'SIN CAMBIOS', 'message' => 'No se realizaron cambios en el usuario con id: ' . $data['idUsuario']);
     } else {

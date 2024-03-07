@@ -13,7 +13,7 @@ $usuario   = $objetoUsuario->buscar($param);
 
 $response = array();
 
-if ($usuario) {
+if (!empty($usuario)) {
     $modificarParams = [
         "idUsuario" => $idUsuario,
         "usNombre" => $usuario[0]->getUsNombre(),

@@ -15,7 +15,7 @@ $(document).ready(function () {
     // );
 
     $.ajax({
-      url: "../../views/admin/actions/actualizarRol.php",
+      url: "../../views/admin/actions/updateRoleAction.php",
       type: "POST",
       dataType: "json",
       data: {

@@ -193,17 +193,21 @@ class Usuario extends DataBase
         $usDeshabilitado = $this->getUsDeshabilitado();
 
         // Construir la consulta SQL
-        $query = "INSERT INTO usuario (usnombre, uspass, usmail, usdeshabilitado) VALUES ('"
+        $query = "INSERT INTO usuario (usnombre, uspass, usmail, usdeshabilitado, usActive) VALUES ('"
             . $this->getUsNombre() . "', '"
             . $this->getUsPass() . "', '"
             . $this->getUsMail() . "', ";
 
         // Verificar si usdeshabilitado es NULL o no
         if ($usDeshabilitado === null) {
-            $query .= "NULL)";
+            $query .= "NULL,";
         } else {
-            $query .= "'" . $usDeshabilitado . "')";
+            $query .= "'" . $usDeshabilitado . "',";
         }
+
+        // Obtener el valor de usActivo y lo agrego a la consulta
+        $usActivo = $this->getUsActivo();
+        $query .= ($usActivo ? '1' : '0') . ")";
 
         // Ejecutar la consulta
         if ($this->Iniciar()) {

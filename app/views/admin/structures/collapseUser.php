@@ -83,6 +83,6 @@ function crearTablaActivo($idUsuario, $fechaDeshabilitado, $esActivo)
     ';
 }
 
-echo '<script src="' . $PUBLIC_JS . '/admin/updateRoles.js"></script>';
+echo '<script src="' . $PUBLIC_JS . '/admin/updateRolesAjax.js"></script>';
 echo '<script src="' . $PUBLIC_JS . '/admin/updateUserStatusAjax.js"></script>';
 echo '<script src="' . $PUBLIC_JS . '/admin/observeCheckBoxStatus.js"></script>';
