@@ -32,10 +32,11 @@ class AbmUsuario
         }
         return $resp;
     }
+
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
      * @param array $param
-     * @return Tabla
+     * @return Usuario
      */
     private function cargarObjeto($param)
     {
@@ -64,7 +65,7 @@ class AbmUsuario
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto que son claves
      * @param array $param
-     * @return Tabla
+     * @return Usuario
      */
 
     private function cargarObjetoConClave($param)
