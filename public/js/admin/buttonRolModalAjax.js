@@ -105,4 +105,55 @@ $(document).ready(function () {
       },
     });
   });
+
+  $(".formulario-nuevo-rol").submit(function (event) {
+    event.preventDefault();
+
+    // Obtener el valor del input #nombreRol y convertirlo a minúsculas
+    const nombreRol = $("#nombreRol").val().toLowerCase();
+
+    $.ajax({
+      url: "../../views/admin/actions/addRolAction.php",
+      type: "POST",
+      data: {
+        nombreRol,
+      },
+      success: function (response) {
+        response = JSON.parse(response);
+
+        if (response.title === "EXITO") {
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalAddRole").modal("hide");
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalAddRole").modal("hide");
+            location.reload();
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+        console.error("status: " + status);
+        console.error("error: " + error);
+        // Muestra una alerta de error
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        });
+      },
+    });
+  });
 });
