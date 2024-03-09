@@ -53,6 +53,18 @@ class AbmRol
         return $resp;
     }
 
+    public function alta($param)
+    {
+        $resp = false;
+        $param['idRol'] = null;
+
+        $objetoUsuario = $this->cargarObjeto($param);
+        if ($objetoUsuario != null and $objetoUsuario->insertar()) {
+            $resp = true;
+        }
+        return $resp;
+    }
+
     /**
      * permite modificar un objeto
      * @param array $param
