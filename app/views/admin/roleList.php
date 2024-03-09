@@ -54,7 +54,7 @@ if (!empty($listaRoles)) {
         }
         ?>
         <!-- Botón flotante para agregar nuevos roles -->
-        <a href="#" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#modalAddRole" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+        <a href="#" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#modalAddRole" type="button" data-bs-tooltip="tooltip" data-bs-placement="top" data-bs-title="Nuevo Rol">
             <img src="<?php echo $BOOTSTRAP_ICONS ?>/plus-circle-fill.svg" alt="add" width="65">
         </a>
         <?php
