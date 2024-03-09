@@ -1,5 +1,7 @@
 <?php
 include_once '../../../config/configuration.php';
+include_once "roleModals.php";
+
 $objetoRoles = new AbmRol();
 $listaRoles = $objetoRoles->buscar(null);
 
@@ -50,6 +52,13 @@ if (!empty($listaRoles)) {
                         </div>
                     </div>';
         }
+        ?>
+        <!-- Botón flotante para agregar nuevos roles -->
+        <a href="#" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#modalAddRole">
+            <img src="<?php echo $BOOTSTRAP_ICONS ?>/plus-circle-fill.svg" alt="add" width="65">
+        </a>
+        <?php
+        modalAddRole();
         ?>
     </div>
 </body>

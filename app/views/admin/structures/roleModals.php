@@ -62,4 +62,35 @@ function modalDelete($modalId, $idRol, $nombreRol)
     ';
 }
 
+function modalAddRole()
+{
+    echo '   
+        <div class="modal fade" id="modalAddRole" tabindex="-1" aria-labelledby="modalAddRoleLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formulario-nuevo-rol" class="formulario-nuevo-rol card-title card-body">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Rol</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <label for="nombreRol" class="form-label">Nombre</label>
+                                    <input id="nombreRol" name="nombreRol" class="form-control" type="text" required>
+                                    <div class="invalid-feedback">Ingresar Nombre del Rol</div>
+                                </div>
+                            </div>                
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    ';
+}
+
 echo '<script src="' . $PUBLIC_JS . '/admin/buttonRolModalAjax.js"></script>';
