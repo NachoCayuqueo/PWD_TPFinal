@@ -358,7 +358,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`prodetalle`, `pro
 --
 
 CREATE TABLE `rol` (
-  `idrol` bigint(20) NOT NULL,
+  `idrol` bigint(20) NOT NULL AUTO_INCREMENT,
   `rodescripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

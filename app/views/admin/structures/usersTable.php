@@ -47,10 +47,10 @@ function crearTablaUsuarios($idUsuarioAdmin, $listaUsuario, $objetoUsuario, $rol
             echo "<td>" . $persona->getUsMail() . "</td>";
             echo "<td>" . ($persona->getUsDeshabilitado() ? $persona->getUsDeshabilitado() : 'El usuario no fue deshabilitado') . "</td>";
             echo "<td class='text-center'>
-                    <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#exampleModal_" . $persona->getIdUsuario() . "'  data-user-id='" . $persona->getIdUsuario() . "'>
+                    <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#exampleModal_" . $persona->getIdUsuario() . "'  data-user-id='" . $persona->getIdUsuario() . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='Editar'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
                     </a>
-                    <a href='#' class='btn" . ($persona->getUsDeshabilitado() ? ' btn-outline-secondary disabled' : ' btn-outline-danger delete-btn') . "' data-bs-toggle='modal' data-bs-target='#modalDelete_" . $persona->getIdUsuario() . "'>
+                    <a href='#' class='btn" . ($persona->getUsDeshabilitado() ? ' btn-outline-secondary disabled' : ' btn-outline-danger delete-btn') . "' data-bs-toggle='modal' data-bs-target='#modalDelete_" . $persona->getIdUsuario() . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='right' data-bs-title='Borrar'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/trash3.svg' alt='trash'>
                     </a>
                   </td>";
@@ -69,4 +69,3 @@ function crearTablaUsuarios($idUsuarioAdmin, $listaUsuario, $objetoUsuario, $rol
 }
 
 echo '<script src="' . $PUBLIC_JS . '/admin/changeCollapseButton.js"></script>';
-echo '<script src="' . $PUBLIC_JS . '/admin/modalAction.js"></script>';

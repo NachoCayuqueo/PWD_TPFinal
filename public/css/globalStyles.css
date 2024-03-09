@@ -102,3 +102,11 @@ body {
 .form-check-input:disabled {
   border-color: grey; /* Color del borde para checkbox deshabilitados */
 }
+
+/** boton flotante agregar nuevoss roles*/
+.btn-floating {
+  position: fixed;
+  bottom: 20px; /* Distancia desde la parte inferior */
+  right: 20px; /* Distancia desde el borde derecho */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}

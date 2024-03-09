@@ -102,8 +102,9 @@ class Rol extends DataBase
     public function insertar()
     {
         $resp = false;
-        $sql = "INSERT INTO rol(idrol,rodescripcion)  
-            VALUES('" . $this->getIdRol() . "','" . $this->getRoDescripcion() . "');";
+        $sql = "INSERT INTO rol(rodescripcion)  
+            VALUES('" . $this->getRoDescripcion() . "');";
+
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($sql)) {
                 $this->setIdRol($id);
