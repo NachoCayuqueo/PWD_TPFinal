@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  //! se debe realizar la validacion en el formulario de campos validos
+  //! revisar ajax -> createUserAjax
   $(".formulario-editar").submit(function (event) {
     event.preventDefault();
     const formulario = $(this);
