@@ -21,10 +21,10 @@ function crearTablaRoles($listaRoles)
         echo "<td class='card-title'>" . $rol->getIdRol() . "</td>";
         echo "<td>" . $rol->getRoDescripcion() . "</td>";
         echo "<td class='text-center'>
-                <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $rol->getIdRol() . "'>
+                <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $rol->getIdRol() . "' type='button' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Editar'>
                     <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
                 </a>
-                <a href='#' class='btn btn-outline-danger delete-btn' data-bs-toggle='modal' data-bs-target='#modalDelete_" . $rol->getIdRol() . "'>
+                <a href='#' class='btn btn-outline-danger delete-btn' data-bs-toggle='modal' data-bs-target='#modalDelete_" . $rol->getIdRol() . "' type='button' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Borrar'>
                     <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/trash3.svg' alt='trash'>
                 </a>
               </td>";
