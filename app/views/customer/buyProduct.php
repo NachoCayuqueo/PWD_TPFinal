@@ -137,14 +137,23 @@ if (!empty($producto)) {
                             $cardId = $producto->getIdProducto();
                             $nombre = $producto->getProNombre();
                             $detallesJSON = json_decode($producto->getProDetalle(), true);
+
                             $tipoProducto = $producto->getProTipo();
-                            $urlImagen = $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
+                            if ($tipoProducto === 'accesorio')
+                                $urlImagen =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
+                            if ($tipoProducto === 'juguete')
+                                $urlImagen =  $IMAGES . "/products/toys/" . $detallesJSON['imagen'];
+                            if ($tipoProducto === 'alimento')
+                                $urlImagen =  $IMAGES . "/products/food/" . $detallesJSON['imagen'];
+
                             $descripcion = $detallesJSON['descripcion'];
                             $masInfo = $detallesJSON['masInfo'];
                             $precio = $producto->getProPrecio();
 
+                            $idProducto = $producto->getIdProducto();
+                            $botonComprar = "buyProduct.php?idProducto=" . $idProducto;
                             echo '<div class="col">';
-                            productsCard($cardId, $urlImagen, $nombre, $descripcion, $masInfo, $precio, "#");
+                            productsCard($cardId, $urlImagen, $nombre, $descripcion, $masInfo, $precio, $botonComprar);
                             echo '</div>';
                         }
 
