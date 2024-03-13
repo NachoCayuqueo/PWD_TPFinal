@@ -1,5 +1,5 @@
 <div class="container-fluid footer">
-    <div class="row p-5" style="background-color: #aabebd;">
+    <div class="row p-5" style="background-color: #232946;">
         <div class="col-xs-12 col-md-6 text-center">
             <img src="<?php echo $LOGOS ?>/logo.png" alt="inicio" width="70" class="d-inline-block align-text-top">
             <p class="footer-subtitle text-secondary mt-1">Universidad Nacional del Comahue</p>
