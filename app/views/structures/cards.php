@@ -23,8 +23,8 @@ function productsCard($cardId, $urlImagen, $title, $description, $moreInfo, $pri
                 <h3 class="text-center">$' . $price . '</h3>
             </div>
             <div class="text-center mb-3">
-                <a href="' . $hrefComprar . '" class="btn btn-primary rounded-pill me-2">comprar</a>
-                <a id="btn-more-info-' . $cardId . '" class="btn btn-primary rounded-pill" onclick="moreProductInfo(' . $cardId . ')">
+                <a href="' . $hrefComprar . '" class="btn btn-color rounded-pill me-2">Comprar</a>
+                <a id="btn-more-info-' . $cardId . '" class="btn btn-color rounded-pill" onclick="moreProductInfo(' . $cardId . ')">
                     Mas info
                 </a>
             </div>

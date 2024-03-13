@@ -12,7 +12,7 @@ if ($session->validar()) {
 }
 ?>
 
-<nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+<nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
     <div class="container-fluid">
         <a class="navbar-brand m-2" href="<?php echo $PRINCIPAL ?>" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Home">
             <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="inicio" width="80" class="d-inline-block align-text-top">
@@ -64,7 +64,9 @@ if ($session->validar()) {
 
 <hr class="my-0" style="color: white;">
 
-<nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+<!-- menu dinamico -->
+<!-- menu admin -->
+<!-- <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
@@ -75,12 +77,41 @@ if ($session->validar()) {
                         <li><a class="dropdown-item" href="#">Mostrar Usuarias</a></li>
                     </ul>
                 </li>
-                <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Crear Rol</a>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Roles</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Crear Roles</a></li>
+                        <li><a class="dropdown-item" href="#">Mostrar Roles</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Modificar Rol</a>
+            </ul>
+        </div>
+    </div>
+</nav> -->
+
+<!-- menu cliente -->
+<nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
+    <div class="container-fluid">
+        <div class="navbar-title collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Productos</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Accesorios</a></li>
+                        <li><a class="dropdown-item" href="#">Juguetes</a></li>
+                        <li><a class="dropdown-item" href="#">Comida</a></li>
+                    </ul>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Productos Favoritos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Productos Nuevos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Quienes somos</a>
+                </li>
+
             </ul>
         </div>
     </div>

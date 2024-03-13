@@ -1,3 +1,29 @@
+/* globals fonts */
+@font-face {
+  font-family: Monserrat;
+  src: url(../../assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: OpenSans;
+  src: url(../../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth\wght.ttf);
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(../../assets/fonts/Poppins/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: Nunito;
+  src: url(../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: Pacifico;
+  src: url(../../assets/fonts/Pacifico/Pacifico-Regular.ttf);
+}
+
 /* global styles for the project */
 body {
   min-height: 100vh;
@@ -5,6 +31,40 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #fafbfe;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.title {
+  font-family: Monserrat, "Courier New", Courier, monospace;
+  color: gray;
+  font-weight: bold;
+}
+.welcome-title {
+  font-family: Pacifico, Verdana, Geneva, Tahoma, sans-serif;
+  color: gray;
+}
+
+.text {
+  font-family: Nunito;
+}
+
+.btn-text {
+  font-family: Poppins;
+}
+.btn-color {
+  background-color: #eebbc3;
+  color: white;
 }
 
 /** logo **/
@@ -109,4 +169,41 @@ body {
   bottom: 20px; /* Distancia desde la parte inferior */
   right: 20px; /* Distancia desde el borde derecho */
   z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Alinea los elementos al extremo derecho */
+}
+
+.rating {
+  display: flex;
+}
+
+.star {
+  font-size: 24px;
+  color: gray;
+  cursor: pointer;
+}
+
+.filled {
+  color: gold;
+}
+
+.reviews {
+  margin-left: 20px;
+}
+
+/* Estilo adicional para representar la fracción de estrella */
+.star.fraction {
+  position: relative;
+}
+
+.star.fraction::before {
+  content: "★";
+  position: absolute;
+  overflow: hidden;
+  width: 50%; /* Cambia este valor para ajustar la fracción de estrella */
+  color: gold; /* Color de la fracción de estrella */
 }
