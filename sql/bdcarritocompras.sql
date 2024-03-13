@@ -228,7 +228,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
       "masInfo":[
         "Ideal para cuidar su salud bucal mientras juega"
         ],
-        "imagen" : "baseball-sola.jpg"
+        "imagen" : "baseball-soga.jpg"
       }',
       100,false,false),
 (10, 'Campana dispenser de snacks',10000,'juguete',
