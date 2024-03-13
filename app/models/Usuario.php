@@ -176,7 +176,7 @@ class Usuario extends DataBase
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $this->Registro();
-                    $this->setear($row['idusuario'], $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdeshabilitado'], $row['usactive']);
+                    $this->setear($row['idusuario'], $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdeshabilitado'], $row['usactivo']);
                 }
             }
         } else {
@@ -193,7 +193,7 @@ class Usuario extends DataBase
         $usDeshabilitado = $this->getUsDeshabilitado();
 
         // Construir la consulta SQL
-        $query = "INSERT INTO usuario (usnombre, uspass, usmail, usdeshabilitado, usActive) VALUES ('"
+        $query = "INSERT INTO usuario (usnombre, uspass, usmail, usdeshabilitado, usactivo) VALUES ('"
             . $this->getUsNombre() . "', '"
             . $this->getUsPass() . "', '"
             . $this->getUsMail() . "', ";
@@ -240,7 +240,7 @@ class Usuario extends DataBase
         }
         // Agregar la columna usActivo
         $usActivo = $this->getUsActivo();
-        $query .= ", usActive=" . ($usActivo ? 1 : 0);
+        $query .= ", usactivo=" . ($usActivo ? 1 : 0);
 
         $query .= " WHERE idusuario=" . $this->getIdUsuario();
 
@@ -281,7 +281,7 @@ class Usuario extends DataBase
         $newDate = date('Y-m-d H:i:s');
         $query = "UPDATE usuario SET 
                     usDeshabilitado='" . $newDate . "', 
-                    usActive=0 WHERE idUsuario=" . $this->getIdUsuario();
+                    usactivo=0 WHERE idUsuario=" . $this->getIdUsuario();
 
 
         if ($this->Iniciar()) {
@@ -309,7 +309,7 @@ class Usuario extends DataBase
                 if ($res > 0) {
                     while ($row = $this->Registro()) {
                         $obj = new Usuario();
-                        $obj->setear($row['idusuario'], $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdeshabilitado'], $row['usActive']);
+                        $obj->setear($row['idusuario'], $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdeshabilitado'], $row['usactivo']);
                         array_push($arreglo, $obj);
                     }
                 }

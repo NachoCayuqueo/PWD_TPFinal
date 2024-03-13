@@ -10,14 +10,16 @@ class AbmProducto
     {
         $where = [];
         if ($param !== NULL) {
-            if (isset($param['idproducto']))
-                $where[] = " idproducto = '" . $param['idproducto'] . "'";
-            if (isset($param['pronombre']))
-                $where[] = " pronombre = '" . $param['pronombre'] . "'";
-            if (isset($param['prodetalle']))
-                $where[] = " prodetalle = '" . $param['prodetalle'] . "'";
-            if (isset($param['procantstock']))
-                $where[] = " procantstock = '" . $param['procantstock'] . "'";
+            if (isset($param['idProducto']))
+                $where[] = " idproducto = '" . $param['idProducto'] . "'";
+            if (isset($param['proNombre']))
+                $where[] = " pronombre = '" . $param['proNombre'] . "'";
+            if (isset($param['proDetalle']))
+                $where[] = " prodetalle = '" . $param['proDetalle'] . "'";
+            if (isset($param['proCantStock']))
+                $where[] = " procantstock = '" . $param['proCantStock'] . "'";
+            if (isset($param['proTipo']))
+                $where[] = " protipo = '" . $param['proTipo'] . "'";
         }
         $whereClause = implode(" AND ", $where);
         $objetoProducto = new Producto();

@@ -4,6 +4,7 @@ class Producto extends DataBase
     private $idProducto;
     private $proCantStock;
     private $proPrecio;
+    private $proTipo;
     private $proDetalle;
     private $proNombre;
     private $esProPopular;
@@ -15,6 +16,8 @@ class Producto extends DataBase
         parent::__construct();
         $this->idProducto = "";
         $this->proCantStock = "";
+        $this->proPrecio = "";
+        $this->proTipo = "";
         $this->proDetalle = null;
         $this->proNombre = "";
         $this->esProPopular = false;
@@ -43,6 +46,13 @@ class Producto extends DataBase
     public function getProPrecio()
     {
         return $this->proPrecio;
+    }
+    /**
+     * Get the value of proTipo
+     */
+    public function getProTipo()
+    {
+        return $this->proTipo;
     }
     /**
      * Get the value of proDetalle
@@ -116,6 +126,17 @@ class Producto extends DataBase
         return $this;
     }
     /**
+     * Set the value of proTipo
+     *
+     * @return  self
+     */
+    public function setProTipo($proTipo)
+    {
+        $this->proTipo = $proTipo;
+
+        return $this;
+    }
+    /**
      * Set the value of proDetalle
      *
      * @return  self
@@ -172,12 +193,13 @@ class Producto extends DataBase
         return $this;
     }
 
-    public function setear($id, $nombre, $detalle, $precio, $stock, $esPopular, $esNuevo)
+    public function setear($id, $nombre, $detalle, $precio, $tipo, $stock, $esPopular, $esNuevo)
     {
         $this->setIdProducto($id);
         $this->setProNombre($nombre);
         $this->setProDetalle($detalle);
         $this->setProPrecio($precio);
+        $this->setProTipo($tipo);
         $this->setProCantStock($stock);
         $this->setEsProPopular($esPopular);
         $this->setEsProNuevo($esNuevo);
@@ -192,7 +214,7 @@ class Producto extends DataBase
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $this->Registro();
-                    $this->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['procantstock'], $row['espropopular'], $row['espronuevo']);
+                    $this->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['protipo'], $row['procantstock'], $row['esprodestacado'], $row['espronuevo']);
                 }
             }
         } else {
@@ -204,11 +226,15 @@ class Producto extends DataBase
     public function insertar()
     {
         $resp = false;
-        $query = "INSERT INTO producto(pronombre, prodetalle, procantstock)  
+        $query = "INSERT INTO producto(pronombre, prodetalle, procantstock,proprecio,esprodestacado,espronuevo,protipo)  
               VALUES('"
             . $this->getProNombre() . "', '"
             . $this->getProDetalle() . "', '"
-            . $this->getProCantStock() . "'
+            . $this->getProCantStock() . "', '"
+            . $this->getProPrecio() . "', '"
+            . $this->getEsProPopular() . "', '"
+            . $this->getEsProNuevo() . "', '"
+            . $this->getProTipo() . "'
         );";
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($query)) {
@@ -231,7 +257,11 @@ class Producto extends DataBase
         $query = "UPDATE producto SET 
             pronombre='" . $this->getProNombre() . "', 
             prodetalle='" . $this->getProDetalle() . "', 
-            procantstock='" . $this->getProCantStock() . "'" .
+            procantstock='" . $this->getProCantStock() . "', 
+            proprecio='" . $this->getProPrecio() . "', 
+            esprodestacado='" . $this->getEsProPopular() . "', 
+            espronuevo='" . $this->getEsProNuevo() . "', 
+            protipo='" . $this->getProTipo() . "'" .
             " WHERE idproducto=" . $this->getIdProducto();
 
         if ($this->Iniciar()) {
@@ -277,7 +307,7 @@ class Producto extends DataBase
             if ($res > 0) {
                 while ($row = $this->Registro()) {
                     $obj = new Producto();
-                    $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['procantstock'], $row['espropopular'], $row['espronuevo']);
+                    $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['protipo'], $row['procantstock'], $row['esprodestacado'], $row['espronuevo']);
                     array_push($arreglo, $obj);
                 }
             }
