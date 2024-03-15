@@ -1,24 +1,26 @@
 <?php
-class AbmCompraEstadoTipo
+class AbmCompraItem
 {
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
      * @param array $param
-     * @return CompraEstadoTipo
+     * @return CompraItem
      */
     private function cargarObjeto($param)
     {
         $obj = null;
         if (
-            array_key_exists('idCompraEstadoTipo', $param)  &&
-            array_key_exists('cetDescripcion', $param) &&
-            array_key_exists('cetDetalle', $param)
+            array_key_exists('idCompraItem', $param)  &&
+            array_key_exists('ciCantidad', $param) &&
+            array_key_exists('idCompra', $param) &&
+            array_key_exists('idProducto', $param)
         ) {
-            $obj = new Compra();
+            $obj = new CompraItem();
             $obj->setear(
-                $param['idCompraEstadoTipo'],
-                $param['cetDescripcion'],
-                $param['cetDetalle']
+                $param['idCompraItem'],
+                $param['ciCantidad'],
+                $param['idCompra'],
+                $param['idProducto']
             );
         }
         return $obj;
@@ -27,15 +29,15 @@ class AbmCompraEstadoTipo
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto que son claves
      * @param array $param
-     * @return CompraEstadoTipo
+     * @return CompraItem
      */
 
     private function cargarObjetoConClave($param)
     {
         $obj = null;
-        if (isset($param['idCompraEstadoTipo'])) {
-            $obj = new Compra();
-            $obj->setear($param['idCompraEstadoTipo'], null, null);
+        if (isset($param['idCompraItem'])) {
+            $obj = new CompraItem();
+            $obj->setear($param['idCompraItem'], null, null, null);
         }
         return $obj;
     }
@@ -49,7 +51,7 @@ class AbmCompraEstadoTipo
     private function seteadosCamposClaves($param)
     {
         $resp = false;
-        if (isset($param['idCompraEstadoTipo']))
+        if (isset($param['idCompraItem']))
             $resp = true;
         return $resp;
     }
@@ -57,10 +59,10 @@ class AbmCompraEstadoTipo
     public function alta($param)
     {
         $resp = false;
-        $param['idCompraEstadoTipo'] = null;
+        $param['idCompraItem'] = null;
 
-        $objetoCompraEstadoTipo = $this->cargarObjeto($param);
-        if ($objetoCompraEstadoTipo != null and $objetoCompraEstadoTipo->insertar()) {
+        $objetoCompraItem = $this->cargarObjeto($param);
+        if ($objetoCompraItem != null and $objetoCompraItem->insertar()) {
             $resp = true;
         }
         return $resp;
@@ -75,8 +77,8 @@ class AbmCompraEstadoTipo
     {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            $objetoCompraEstadoTipo = $this->cargarObjeto($param);
-            if ($objetoCompraEstadoTipo != null and $objetoCompraEstadoTipo->modificar()) {
+            $objetoCompraItem = $this->cargarObjeto($param);
+            if ($objetoCompraItem != null and $objetoCompraItem->modificar()) {
                 $resp = true;
             }
         }
@@ -92,14 +94,15 @@ class AbmCompraEstadoTipo
     {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            $objetoCompraEstadoTipo = $this->cargarObjetoConClave($param);
-            if ($objetoCompraEstadoTipo != null and $objetoCompraEstadoTipo->eliminar()) {
+            $objetoCompraItem = $this->cargarObjetoConClave($param);
+            if ($objetoCompraItem != null and $objetoCompraItem->eliminar()) {
                 $resp = true;
             }
         }
 
         return $resp;
     }
+
     /**
      * permite buscar un objeto
      * @param array $param
@@ -109,16 +112,19 @@ class AbmCompraEstadoTipo
     {
         $where = [];
         if ($param !== NULL) {
-            if (isset($param['idCompraEstadoTipo']))
-                $where[] = " idcompraestadotipo = '" . $param['idCompraEstadoTipo'] . "'";
-            if (isset($param['cetDescripcion']))
-                $where[] = " cetdescripcion = '" . $param['cetDescripcion'] . "'";
-            if (isset($param['cetDetalle']))
-                $where[] = " cetdetalle = '" . $param['cetDetalle'] . "'";
+            if (isset($param['idCompraItem']))
+                $where[] = " idcompraitem = '" . $param['idCompraItem'] . "'";
+            if (isset($param['ciCantidad']))
+                $where[] = " cicantidad = '" . $param['ciCantidad'] . "'";
+            if (isset($param['idCompra']))
+                $where[] = " idcompra = '" . $param['idCompra'] . "'";
+            if (isset($param['idProducto']))
+                $where[] = " idproducto = '" . $param['idProducto'] . "'";
         }
         $whereClause = implode(" AND ", $where);
-        $objetoUsuario = new CompraEstadoTipo();
-        $arreglo = $objetoUsuario->listar($whereClause);
+
+        $objetoCompra = new CompraItem();
+        $arreglo = $objetoCompra->listar($whereClause);
         return $arreglo;
     }
 }
