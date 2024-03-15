@@ -29,10 +29,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `compra` (
-  `idcompra` bigint(20) NOT NULL,
+  `idcompra` bigint(20) NOT NULL AUTO_INCREMENT,
   `cofecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `idusuario` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`cofecha`, `idusuario`) 
+VALUES 
+('2024-02-09 10:00:00', 4),
+('2024-02-10 11:00:00', 5),
+('2024-02-11 12:00:00', 6),
+('2024-02-15 12:00:00', 6);
 
 -- --------------------------------------------------------
 
@@ -41,12 +52,31 @@ CREATE TABLE `compra` (
 --
 
 CREATE TABLE `compraestado` (
-  `idcompraestado` bigint(20) UNSIGNED NOT NULL,
+  `idcompraestado` bigint(20) NOT NULL AUTO_INCREMENT,
   `idcompra` bigint(11) NOT NULL,
   `idcompraestadotipo` int(11) NOT NULL,
   `cefechaini` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cefechafin` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compraestado`
+--
+INSERT INTO `compraestado` (`idcompra`, `idcompraestadotipo`, `cefechaini`)
+VALUES 
+-- Compra 1
+(1, 1, '2024-02-09 10:00:00'), -- Estado inicial: carrito
+(1, 2, '2024-02-09 11:00:00'), -- Estado siguiente: iniciada
+(1, 3, '2024-02-09 12:00:00'), -- Estado siguiente: aceptada
+(1, 4, '2024-02-10 13:00:00'), -- Estado siguiente: enviada
+-- Compra 2
+(2, 1, '2024-02-10 11:00:00'), -- Estado inicial: carrito
+(2, 2, '2024-02-10 12:00:00'), -- Estado siguiente: iniciada
+(2, 5, '2024-02-10 13:00:00'), -- Estado siguiente: cancelada
+-- Compra 3
+(3, 1, '2024-02-11 12:00:00'), -- Estado inicial: carrito
+(4, 1, '2024-02-15 12:00:00'), -- Estado inicial: carrito
+(4, 2, '2024-02-15 13:00:00'); -- Estado siguiente: iniciada
 
 -- --------------------------------------------------------
 
@@ -65,10 +95,11 @@ CREATE TABLE `compraestadotipo` (
 --
 
 INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdetalle`) VALUES
-(1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
-(2, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
-(3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
-(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
+(1, 'carrito','cuando el usuario: cliente agrego productos al carrito'),
+(2, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
+(3, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 2 '),
+(4, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =3 '),
+(5, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
 
 -- --------------------------------------------------------
 
@@ -77,12 +108,25 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 --
 
 CREATE TABLE `compraitem` (
-  `idcompraitem` bigint(20) UNSIGNED NOT NULL,
+  `idcompraitem` bigint(20) NOT NULL AUTO_INCREMENT,
   `idproducto` bigint(20) NOT NULL,
   `idcompra` bigint(20) NOT NULL,
   `cicantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `compraestado`
+--
+
+INSERT INTO `compraitem` (`idproducto`, `idcompra`, `cicantidad`)
+VALUES 
+(1, 1, 2), -- Dos productos en la compra 1
+(3, 1, 1), -- Un producto en la compra 1
+(2, 2, 3), -- Tres productos en la compra 2
+(5, 3, 1), -- Un producto en la compra 3
+(6, 3, 2) -- Dos productos en la compra 3
+(15, 4, 1), -- Un producto en la compra 4
+(20, 4, 2); -- Dos productos en la compra 4
 -- --------------------------------------------------------
 
 --

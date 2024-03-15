@@ -102,15 +102,24 @@ if ($session->validar()) {
                         <li><a class="dropdown-item" href="#">Comida</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ms-3">
                     <a class="nav-link" href="#">Productos Favoritos</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ms-3">
                     <a class="nav-link" href="#">Productos Nuevos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quienes somos</a>
+                <li class="nav-item ms-3">
+                    <a class="nav-link" href="#">Mis Compras</a>
                 </li>
+                <li class="nav-item ms-3">
+                    <a class="nav-link" href="#">
+                        Carrito (0)
+                        <img src="<?php echo $BOOTSTRAP_ICONS ?>/cart-fill.svg" alt="cart" width="25">
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">Quienes somos</a>
+                </li> -->
 
             </ul>
         </div>
