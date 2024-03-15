@@ -52,7 +52,7 @@ if ($session->validar()) {
     </div>
     <div class="container-sm p-4">
         <?php
-        if (!$existeListaCompra) {
+        if ($existeListaCompra) {
             crearTablaResumenCompra($listaCompra);
         } else {
             echo '
