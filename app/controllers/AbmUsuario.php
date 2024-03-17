@@ -168,6 +168,7 @@ class AbmUsuario
 
     public function darRoles($param)
     {
+        //viewStructure($param);
         $where = [];
         if ($param !== NULL) {
             if (isset($param['idUsuario']))

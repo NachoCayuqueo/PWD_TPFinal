@@ -1,6 +1,7 @@
 <?php
+//echo "inicio pantalla deposito";
 include_once '../../../config/configuration.php';
-
+include_once './structures/funciones.php';
 $session = new Session();
 $existeSesion = false;
 if ($session->validar()) {
@@ -9,14 +10,17 @@ if ($session->validar()) {
         $nombreUsuario = 'Usuario';
         header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
     } else {
+
         $nombreUsuario = $usuario->getUsNombre();
         $idUsuarioActivo = $usuario->getIdUsuario();
         $usuarioRoles = $session->getRol();
+
         //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
         foreach ($usuarioRoles as $usuarioRol) {
+
             $objetoRol = $usuarioRol->getObjetoRol();
             $descripcionRol = $objetoRol->getRoDescripcion();
-            if ($descripcionRol === 'admin') {
+            if ($descripcionRol === 'deposito') {
                 $existeSesion = true;
             }
         }
@@ -24,42 +28,42 @@ if ($session->validar()) {
 } else {
     header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
 }
-
-$objetoUsuario = new AbmUsuario();
+$objetoProducto = new AbmProducto();
 $objetoRol = new AbmRol();
 
-$listaUsuario = $objetoUsuario->buscar(null);
-$existeUsuario = false;
-if (count($listaUsuario) > 0) {
-    $existeUsuario = true;
+$listaProducto = $objetoProducto->buscar(null);
+$existeProducto = false;
+
+if (count($listaProducto) > 0) {
+    $existeProducto = true;
     $rolesDB = $objetoRol->buscar(null);
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php
-    $title = "Panel Admin";
+    $title = "Panel Deposito";
     include_once "../structures/head.php";
     include_once "./structures/usersTable.php";
     ?>
 </head>
-
 
 <body>
     <?php
     include_once '../structures/navbar.php';
     ?>
     <div class="mt-3">
-        <h1 class="text-center">Panel Administrador</h1>
+        <h1 class="text-center">Panel Deposito</h1>
     </div>
     <div class="container-sm p-4">
+
         <?php
-        if ($existeUsuario) {
-            crearTablaUsuarios($idUsuarioActivo, $listaUsuario, $objetoUsuario, $rolesDB);
+        if ($existeProducto) {
+            crearTablaProducto($listaProducto);
         } else {
+            //si no se encuentra el usuario
             echo '
                     <div class="container d-flex justify-content-center">
                         <div class=" card-container d-flex justify-content-center align-items-center">
@@ -80,7 +84,6 @@ if (count($listaUsuario) > 0) {
         }
         ?>
     </div>
-
 </body>
 
 </html>

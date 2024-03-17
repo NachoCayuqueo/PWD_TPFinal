@@ -63,7 +63,7 @@ if (count($listaProductos) > 0) {
                                 $cardId = $producto->getIdProducto();
                                 $detallesJSON = json_decode($producto->getProDetalle(), true);
 
-                                $tipoProducto = $detallesJSON['tipo'];
+                                $tipoProducto = $producto->getProTipo();
                                 if ($tipoProducto === 'accesorio')
                                     $urlImage =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
                                 if ($tipoProducto === 'juguete')
@@ -102,7 +102,7 @@ if (count($listaProductos) > 0) {
                                 $cardId = $producto->getIdProducto();
                                 $detallesJSON = json_decode($producto->getProDetalle(), true);
 
-                                $tipoProducto = $detallesJSON['tipo'];
+                                $tipoProducto = $producto->getProTipo();
                                 if ($tipoProducto === 'accesorio')
                                     $urlImage =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
                                 if ($tipoProducto === 'juguete')

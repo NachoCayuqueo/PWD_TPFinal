@@ -172,6 +172,7 @@ class UsuarioRol extends DataBase
                         $objetoRol = null;
 
                         $idUsuario = $row['idusuario'];
+
                         if ($idUsuario) {
                             $objetoUsuario = new Usuario();
                             $objetoUsuario->setIdUsuario($idUsuario);
@@ -179,6 +180,7 @@ class UsuarioRol extends DataBase
                         }
 
                         $idRol = $row['idrol'];
+
                         if ($idRol) {
                             $objetoRol = new Rol();
                             $objetoRol->setIdRol($idRol);
@@ -194,6 +196,7 @@ class UsuarioRol extends DataBase
                 $this->setmensajeoperacion("ERROR:: UsuarioRol => listar: " . $this->getError());
             }
         }
+
         return $arreglo;
     }
 }

@@ -64,7 +64,7 @@ if ($session->validar()) {
 
 <hr class="my-0" style="color: white;">
 
-<nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+<!-- <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
@@ -80,6 +80,20 @@ if ($session->validar()) {
                 </li>
                 <li class="nav-item ms-5">
                     <a href="#" class="nav-link" style="color: #f5f7f8;">Modificar Rol</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav> -->
+<nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+    <div class="container-fluid">
+        <div class="navbar-title collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item ms-5">
+                    <a href="#" class="nav-link" style="color: #f5f7f8;">Listar Productos</a>
+                </li>
+                <li class="nav-item ms-5">
+                    <a href="#" class="nav-link" style="color: #f5f7f8;">Crear Producto</a>
                 </li>
             </ul>
         </div>
