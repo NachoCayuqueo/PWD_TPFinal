@@ -16,13 +16,19 @@ class AbmCompraEstado
             array_key_exists('idCompra', $param) &&
             array_key_exists('idCompraEstadoTipo', $param)
         ) {
+            $objetoCompra = new Compra();
+            $objetoCompra->setIdCompra($param['idCompra']);
+
+            $objetoCompraEstadoTipo = new CompraEstadoTipo();
+            $objetoCompraEstadoTipo->setIdCompraEstadoTipo($param['idCompraEstadoTipo']);
+
             $obj = new CompraEstado();
             $obj->setear(
                 $param['idCompraEstado'],
-                $param['cetFechaIni'],
+                $param['ceFechaIni'],
                 $param['cetFechaFin'],
-                $param['idCompra'],
-                $param['idCompraEstadoTipo']
+                $objetoCompra,
+                $objetoCompraEstadoTipo
             );
         }
         return $obj;
@@ -111,14 +117,25 @@ class AbmCompraEstado
      */
     public function buscar($param)
     {
+        // viewStructure($param);
         $where = [];
         if ($param !== NULL) {
             if (isset($param['idCompraEstado']))
                 $where[] = " idcompraestado = '" . $param['idCompraEstado'] . "'";
             if (isset($param['ceFechaIni']))
                 $where[] = " cefechaini = '" . $param['ceFechaIni'] . "'";
-            if (isset($param['ceFechaFin']))
-                $where[] = " cefechafin = '" . $param['ceFechaFin'] . "'";
+            // Verificar si ceFechaFin es NULL para incluirlo en la búsqueda
+            if (isset($param['ceFechaFin'])) {
+                // Si ceFechaFin es NULL, agregar la condición correspondiente
+                if ($param['ceFechaFin'] === null || $param['ceFechaFin'] === 'NULL') {
+                    $where[] = "cefechafin IS NULL";
+                } else {
+                    // Si ceFechaFin no es NULL, agregar la fecha como condición
+                    $where[] = "cefechafin = '" . $param['ceFechaFin'] . "'";
+                }
+            }
+            // if (isset($param['ceFechaFin']))
+            //     $where[] = " cefechafin = '" . $param['ceFechaFin'] . "'";
             if (isset($param['idCompra']))
                 $where[] = " idcompra = '" . $param['idCompra'] . "'";
             if (isset($param['idCompraEstadoTipo']))
