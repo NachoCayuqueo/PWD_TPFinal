@@ -1,5 +1,29 @@
 <?php
 include_once '../../../config/configuration.php';
+$session = new Session();
+$existeSesion = false;
+if ($session->validar()) {
+    $usuario = $session->getUsuario();
+    if (is_null(($usuario))) {
+        $nombreUsuario = 'Usuario';
+        header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+    } else {
+        $nombreUsuario = $usuario->getUsNombre();
+        $idUsuarioActivo = $usuario->getIdUsuario();
+        $usuarioRoles = $session->getRol();
+        //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
+        foreach ($usuarioRoles as $usuarioRol) {
+            $objetoRol = $usuarioRol->getObjetoRol();
+            $descripcionRol = $objetoRol->getRoDescripcion();
+            if ($descripcionRol === 'cliente') {
+                $existeSesion = true;
+            }
+        }
+    }
+} else {
+    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+}
+
 $data = data_submitted();
 $idProducto = $data['idProducto'];
 $paramIdProducto = ['idProducto' => $idProducto];
@@ -64,7 +88,7 @@ if (!empty($producto)) {
                     <img src="<?php echo $urlImagen ?>" alt="<?php $nombre ?>" class="image img-fluid" width="90%">
                 </div>
             </div>
-            <div class="col-4">
+            <div id="product-info" class="col-4" data-id-product="<?php echo $idProducto; ?>" data-id-user="<?php echo $idUsuarioActivo ?>">
                 <div class="mt-3">
                     <h1 class="title text-center"><?php echo $nombre ?></h1>
                 </div>
@@ -111,7 +135,9 @@ if (!empty($producto)) {
                                 <img src="<?php echo $BOOTSTRAP_ICONS ?>/plus.svg" alt="plus">
                             </button>
                         </div>
-                        <div class="ms-2 btn-text"><button class="btn btn-primary">AGREGAR AL CARRITO</button></div>
+                        <div class="ms-2 btn-text">
+                            <button class="btn btn-primary" id="btn-cart">AGREGAR AL CARRITO</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -169,6 +195,7 @@ if (!empty($producto)) {
     <script src="<?php echo $PUBLIC_JS ?>/customer/ranking.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/customer/handleQuantityButtonClick.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/customer/buttonModal.js"></script>
+    <script src="<?php echo $PUBLIC_JS ?>/customer/cartAjax.js"></script>
     <?php include_once "../structures/footer.php"; ?>
 </body>
 
