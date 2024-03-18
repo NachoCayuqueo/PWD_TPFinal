@@ -15,12 +15,18 @@ class AbmCompraItem
             array_key_exists('idCompra', $param) &&
             array_key_exists('idProducto', $param)
         ) {
+            $objetoCompra = new Compra();
+            $objetoCompra->setIdCompra($param['idCompra']);
+
+            $objetoProducto = new Producto();
+            $objetoProducto->setIdProducto($param['idProducto']);
+
             $obj = new CompraItem();
             $obj->setear(
                 $param['idCompraItem'],
                 $param['ciCantidad'],
-                $param['idCompra'],
-                $param['idProducto']
+                $objetoCompra,
+                $objetoProducto
             );
         }
         return $obj;
