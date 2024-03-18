@@ -38,12 +38,12 @@ CREATE TABLE `compra` (
 -- Volcado de datos para la tabla `compra`
 --
 
-INSERT INTO `compra` (`cofecha`, `idusuario`) 
+INSERT INTO `compra` (`idcompra`,`cofecha`, `idusuario`) 
 VALUES 
-('2024-02-09 10:00:00', 4),
-('2024-02-10 11:00:00', 5),
-('2024-02-11 12:00:00', 6),
-('2024-02-15 12:00:00', 6);
+(1,'2024-02-09 10:00:00', 4),
+(2,'2024-02-10 11:00:00', 5),
+(3,'2024-02-11 12:00:00', 6),
+(4,'2024-02-15 12:00:00', 6);
 
 -- --------------------------------------------------------
 
@@ -62,21 +62,21 @@ CREATE TABLE `compraestado` (
 --
 -- Volcado de datos para la tabla `compraestado`
 --
-INSERT INTO `compraestado` (`idcompra`, `idcompraestadotipo`, `cefechaini`)
+INSERT INTO `compraestado` (`idcompra`, `idcompraestadotipo`, `cefechaini`,`cefechafin`)
 VALUES 
 -- Compra 1
-(1, 1, '2024-02-09 10:00:00'), -- Estado inicial: carrito
-(1, 2, '2024-02-09 11:00:00'), -- Estado siguiente: iniciada
-(1, 3, '2024-02-09 12:00:00'), -- Estado siguiente: aceptada
-(1, 4, '2024-02-10 13:00:00'), -- Estado siguiente: enviada
+(1, 1, '2024-02-09 10:00:00','2024-02-09 11:00:00'), -- Estado inicial: carrito
+(1, 2, '2024-02-09 11:00:00','2024-02-09 12:00:00'), -- Estado siguiente: iniciada
+(1, 3, '2024-02-09 12:00:00','2024-02-09 13:00:00'), -- Estado siguiente: aceptada
+(1, 4, '2024-02-09 13:00:00','2024-02-09 14:00:00'), -- Estado siguiente: enviada
 -- Compra 2
-(2, 1, '2024-02-10 11:00:00'), -- Estado inicial: carrito
-(2, 2, '2024-02-10 12:00:00'), -- Estado siguiente: iniciada
-(2, 5, '2024-02-10 13:00:00'), -- Estado siguiente: cancelada
+(2, 1, '2024-02-10 11:00:00','2024-02-10 12:00:00'), -- Estado inicial: carrito
+(2, 2, '2024-02-10 12:00:00','2024-02-10 13:00:00'), -- Estado siguiente: iniciada
+(2, 5, '2024-02-10 13:00:00','2024-02-10 14:00:00'), -- Estado siguiente: cancelada
 -- Compra 3
-(3, 1, '2024-02-11 12:00:00'), -- Estado inicial: carrito
-(4, 1, '2024-02-15 12:00:00'), -- Estado inicial: carrito
-(4, 2, '2024-02-15 13:00:00'); -- Estado siguiente: iniciada
+(3, 1, '2024-02-11 12:00:00','2024-02-15 12:00:00'), -- Estado inicial: carrito
+(3, 2, '2024-02-15 12:00:00'), -- Estado inicial: carrito
+(4, 1, '2024-02-15 13:00:00'); -- Estado siguiente: iniciada
 
 -- --------------------------------------------------------
 
@@ -118,15 +118,15 @@ CREATE TABLE `compraitem` (
 -- Volcado de datos para la tabla `compraestado`
 --
 
-INSERT INTO `compraitem` (`idproducto`, `idcompra`, `cicantidad`)
+INSERT INTO `compraitem` (`idcompraitem`,`idproducto`, `idcompra`, `cicantidad`)
 VALUES 
-(1, 1, 2), -- Dos productos en la compra 1
-(3, 1, 1), -- Un producto en la compra 1
-(2, 2, 3), -- Tres productos en la compra 2
-(5, 3, 1), -- Un producto en la compra 3
-(6, 3, 2) -- Dos productos en la compra 3
-(15, 4, 1), -- Un producto en la compra 4
-(20, 4, 2); -- Dos productos en la compra 4
+(1,1, 1, 2), -- Dos productos en la compra 1
+(2,3, 1, 1), -- Un producto en la compra 1
+(3,2, 2, 3), -- Tres productos en la compra 2
+(4,5, 3, 1), -- Un producto en la compra 3
+(5,6, 3, 2), -- Dos productos en la compra 3
+(6,15, 4, 1), -- Un producto en la compra 4
+(7,20, 4, 2); -- Dos productos en la compra 4
 -- --------------------------------------------------------
 
 --
