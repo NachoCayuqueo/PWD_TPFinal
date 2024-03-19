@@ -3,22 +3,21 @@ include_once '../../../config/configuration.php';
 include_once './structures/funciones.php';
 
 $datos = data_submitted();
-// viewStructure($datos);
+
+//viewStructure($datos);
 
 $nombreImagen = $datos['nombreImagen'];
 $nombre = $datos['nombre'];
 $precio = $datos['precio'];
 $tipo = $datos['tipo'];
-// echo "tipo: $tipo";
 
 $idProducto = $datos['idProducto'];
 $descripcion = $datos['descripcionCompleta'];
 $descripcion_formateada = str_replace('<br/>', '.', $descripcion);
 $stock = $datos['stock'];
 $nombreCompleto = $datos['nombreCompleto'];
-$esNuevo = $datos['esNuevito'];
-$esPopular = $datos['esPopu'];
-
+$esNuevo = $datos['esNuevo'];
+$esPopular = $datos['esPopular'];
 
 $existenRoles = false;
 if (!empty($listaRoles)) {
@@ -73,15 +72,21 @@ if (!empty($listaRoles)) {
                                 <label for="stock" class="form-label">Tipo</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="tipo" id="tipo1" value="accessories">
+                                        <input class="form-check-input" type="radio" name="tipo" id="tipo1" value="accessories" <?php if ($tipo === 'accessories') {
+                                                                                                                                    echo "checked";
+                                                                                                                                } ?>>
                                         <label class="form-check-label" for="tipo1">Accesorio</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="food">
+                                        <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="food" <?php if ($tipo === 'food') {
+                                                                                                                                echo "checked";
+                                                                                                                            } ?>>
                                         <label class="form-check-label" for="tipo2">Comida</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="toys">
+                                        <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="toys" <?php if ($tipo === 'toys') {
+                                                                                                                                echo "checked";
+                                                                                                                            } ?>>
                                         <label class="form-check-label" for="tipo2">Juguete</label>
                                     </div>
                                 </div>
@@ -93,11 +98,15 @@ if (!empty($listaRoles)) {
                                 <label for="stock" class="form-label">Es Popular</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="esPopular" id="esPupular1" value="1">
+                                        <input class="form-check-input" type="radio" name="esPopular" id="esPupular1" value="1" <?php if ($esPopular === '1') {
+                                                                                                                                    echo "checked";
+                                                                                                                                } ?>>
                                         <label class="form-check-label" for="esPupular1">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="esPopular" id="esPupular2" value="0">
+                                        <input class="form-check-input" type="radio" name="esPopular" id="esPupular2" value="0" <?php if ($esPopular === '0') {
+                                                                                                                                    echo "checked";
+                                                                                                                                } ?>>
                                         <label class="form-check-label" for="esPupular2">NO</label>
                                     </div>
                                 </div>
@@ -106,11 +115,15 @@ if (!empty($listaRoles)) {
                                 <label for="stock" class="form-label">Es Nuevo</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="esNuevo" id="esNuevo1" value="1">
+                                        <input class="form-check-input" type="radio" name="esNuevo" id="esNuevo1" value="1" <?php if ($esNuevo === '1') {
+                                                                                                                                echo "checked";
+                                                                                                                            } ?>>
                                         <label class="form-check-label" for="esNuevo1">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="esNuevo" id="esNuevo2" value="0">
+                                        <input class="form-check-input" type="radio" name="esNuevo" id="esNuevo2" value="0" <?php if ($esNuevo === '0') {
+                                                                                                                                echo "checked";
+                                                                                                                            } ?>>
                                         <label class="form-check-label" for="esNuevo2">NO</label>
                                     </div>
                                 </div>
