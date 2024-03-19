@@ -4,32 +4,33 @@
 function seleccionCheck($esNuevo, $esPopular)
 {
 
-    if ($esNuevo === 0) {
-        $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+  if ($esNuevo === 0) {
+    $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
      </div>';
-    } else {
-        $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+  } else {
+    $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
     </div>';
-    }
+  }
 
-    if ($esPopular === 0) {
-        $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+  if ($esPopular === 0) {
+    $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
      </div>';
-    } else {
-        $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+  } else {
+    $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
                 </div>';
-    }
+  }
 
-    return [$esNuevito, $esPopu];
+  return [$esNuevito, $esPopu];
 }
 
 function crearTablaProducto($listaProducto)
 {
-    echo '
+  //viewStructure($listaProducto);
+  echo '
     <h4 class="mb-4 title text-center">Listado de Productos</h4>
     <table class="table table-striped table-bordered">
     <thead>
@@ -47,52 +48,38 @@ function crearTablaProducto($listaProducto)
     </thead>
     <tbody class="table-group-divider card-text">
     ';
-    foreach ($listaProducto as $producto) {
-        $param = array('idProducto' => $producto->getIdProducto);
 
-        $detallesJSON = json_decode($producto->getProDetalle(), true);
-        $descripcion = $detallesJSON['descripcion'];
-        $masInfo = $detallesJSON['masInfo'];
-        $imagen = $detallesJSON['imagen'];
-        $id =  $producto->getIdProducto();
 
-        $descripcionCompleta = "";
-        foreach ($masInfo as $info) {
-            $descripcionCompleta .= $info . "<br/>";
-        }
+  foreach ($listaProducto as $producto) {
+    $param = array('idProducto' => $producto->getIdProducto);
 
-        $esPopular = $producto->getEsProPopular();
-        $esNuevo = $producto->getEsProNuevo();
+    $detallesJSON = json_decode($producto->getProDetalle(), true);
+    $descripcion = $detallesJSON['descripcion'];
+    $masInfo = $detallesJSON['masInfo'];
 
-        $check = seleccionCheck($esNuevo, $esPopular);
-        $esNuevito = $check[0];
-        $esPopu = $check[1];
-        // if ($esNuevo === 0) {
-        //     $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-        //     <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
-        //  </div>';
-        // } else {
-        //     $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-        //     <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
-        // </div>';
-        // }
 
-        // if ($esPopular === 0) {
-        //     $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-        //     <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
-        //  </div>';
-        // } else {
-        //     $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-        //                 <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
-        //             </div>';
-        // }
+    $imagen = $detallesJSON['imagen'];
+    $id =  $producto->getIdProducto();
 
-        echo "<tr style='text-align: center;'>";
-        echo "<td style='width: max-content;'>" . $producto->getIdProducto() . "</td>";
-        echo '<td style="max-width: 200px; width: max-content;">' . $producto->getProNombre() . '</td>';
-        echo "<td style='width: max-content;'>" . $producto->getProPrecio() . "</td>";
-        echo "<td style='width: max-content;'>" . $producto->getProTipo() . "</td>";
-        echo '<td style="width: max-content; margin: 0; padding: 3;">
+    $descripcionCompleta = "";
+    foreach ($masInfo as $info) {
+      $descripcionCompleta .= $info . "<br/>";
+    }
+    //echo $descripcionCompleta;
+    $esPopular = $producto->getEsProPopular();
+    $esNuevo = $producto->getEsProNuevo();
+
+    $check = seleccionCheck($esNuevo, $esPopular);
+    $esNuevito = $check[0];
+    $esPopu = $check[1];
+
+
+    echo "<tr style='text-align: center;'>";
+    echo "<td style='width: max-content;'>" . $producto->getIdProducto() . "</td>";
+    echo '<td style="max-width: 200px; width: max-content;">' . $producto->getProNombre() . '</td>';
+    echo "<td style='width: max-content;'>" . $producto->getProPrecio() . "</td>";
+    echo "<td style='width: max-content;'>" . $producto->getProTipo() . "</td>";
+    echo '<td style="width: max-content; margin: 0; padding: 3;">
         <p style="margin: 0;">
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample' . $id . '" role="button" aria-expanded="false" aria-controls="multiCollapseExample' . $id . '">Mostrar Información</a>
         </p>
@@ -106,19 +93,20 @@ function crearTablaProducto($listaProducto)
           </div>
         </div>
       </td>';
-        echo "<td style='width: max-content;'>" . $producto->getProCantStock() . "</td>";
-        echo "<td>$esPopu</td>";
-        echo "<td >$esNuevito</td>";
-        echo '<td>
+    echo "<td style='width: max-content;'>" . $producto->getProCantStock() . "</td>";
+    echo "<td>$esPopu</td>";
+    echo "<td >$esNuevito</td>";
+    echo '<td>
                 <a href="modifyProduct.php?nombre=' . $producto->getProNombre() .
-            '&idProducto=' . $producto->getIdProducto() .
-            '&precio=' . $producto->getProPrecio() .
-            '&tipo=' . $producto->getProTipo() .
-            '&descripcionCompleta=' . $descripcionCompleta .
-            '&stock=' . $producto->getProCantStock() .
-            '&esNuevo=' . $esNuevo .
-            '&esPopular=' . $esPopular .
-            '&nombreCompleto=' . $descripcion . '" class="btn btn-outline-primary">
+      '&idProducto=' . $producto->getIdProducto() .
+      '&precio=' . $producto->getProPrecio() .
+      '&tipo=' . $producto->getProTipo() .
+      '&descripcionCompleta=' . $descripcionCompleta .
+      '&stock=' . $producto->getProCantStock() .
+      '&esNuevo=' . $esNuevo .
+      '&esPopular=' . $esPopular .
+      '&nombreImagen=' . $imagen .
+      '&nombreCompleto=' . $descripcion . '" class="btn btn-outline-primary">
                     <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
                 </a>
 
@@ -127,8 +115,8 @@ function crearTablaProducto($listaProducto)
                 </a>   
 </td>';
 
-        echo "</tr>";
-    }
+    echo "</tr>";
+  }
 }
 
 // <img src="http://localhost/PWD_TPFinal/public/lib/bootstrap/bootstrap-icons/icons/pen.svg" alt="edit">

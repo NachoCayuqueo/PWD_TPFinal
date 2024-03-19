@@ -10,9 +10,11 @@ class SubirArchivos
         $inf_archivo = pathinfo($nombre);
         $extensionDeArchivo = $inf_archivo['extension'];
         $exito = false;
+
+
         if (in_array($extensionDeArchivo, $this->EXTENSION_IMG)) {
             $ubicacion = $this->CARPETA .  $tipo . '/' . $nombre;
-            // echo $ubicacion . "<br/>";
+            echo $ubicacion . "<br/>";
             // echo $carpetaTemporal . "<br/>";
             if (move_uploaded_file($carpetaTemporal, $ubicacion)) {
                 $exito = true;

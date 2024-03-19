@@ -168,7 +168,6 @@ class AbmUsuario
 
     public function darRoles($param)
     {
-        //viewStructure($param);
         $where = [];
         if ($param !== NULL) {
             if (isset($param['idUsuario']))
@@ -176,10 +175,11 @@ class AbmUsuario
             if (isset($param['idRol']))
                 $where[] = " idrol ='" . $param['idRol'] . "'";
         }
-        $whereClause = implode(" AND ", $where);
 
+        $whereClause = implode(" AND ", $where);
         $objetoUsuarioRol = new UsuarioRol();
         $arreglo = $objetoUsuarioRol->listar($whereClause);
+
         return $arreglo;
     }
 

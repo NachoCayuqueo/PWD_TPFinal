@@ -142,25 +142,25 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodetalle`, `procantstock`,`esprodestacado`,`espronuevo`) VALUES
-(1, 'Comedero bebedero',3610,'accesorio',
-  '{"descripcion":"Comedero Acero Inoxidable Antideslizante.",
+(1, 'Comedero bebedero',3610,'accessories',
+  '{"descripcion":"Comedero Acero Inoxidable Antideslizante",
     "masInfo":[
-      "Es un bebedero de acero inoxidable, de gran resistencia.",
-      "Presenta un molde de goma que evita deslizamientos mientras se usa."
+      "Es un bebedero de acero inoxidable, de gran resistencia",
+      "Presenta un molde de goma que evita deslizamientos mientras se usa"
       ],
     "imagen":"comedero-bebedero.jpg"
     }',
     100,false,false),
-(2, 'Comedero doble',15000,'accesorio',
-    '{"descripcion":"Comedero acero inoxidable doble.",
+(2, 'Comedero doble',15000,'accessories',
+    '{"descripcion":"Comedero acero inoxidable doble",
       "masInfo":[
-        "Incluye 2 tazones de acero inoxidable 750 ml. con soporte de metal negro.",
-        "El protector antideslizante garantiza que la taza no se moverá ni se volcará fácilmente durante el uso."
+        "Incluye 2 tazones de acero inoxidable 750 ml. con soporte de metal negro",
+        "El protector antideslizante garantiza que la taza no se moverá ni se volcará fácilmente durante el uso"
         ],
         "imagen" : "comedero-doble.jpg"
       }',
       100,true,false),
-(3, 'Comedero doble regulable',40000,'accesorio',
+(3, 'Comedero doble regulable',40000,'accessories',
     '{"descripcion":"Comedero doble con pie regulable de acero inoxidable",
       "masInfo":[
         "Medida: 59 x 33 x 55",
@@ -170,7 +170,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "comedero-doble-regulable.jpg"
       }',
       100,true,false),
-(4, 'Comedero plegable de silicona',3450,'accesorio',
+(4, 'Comedero plegable de silicona',3450,'accessories',
     '{"descripcion":"Práctico comedero/bebedero para llevar en tus paseos o viajes con tu mascota",
       "masInfo":[
         "De silicona",
@@ -180,7 +180,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "comedero-plegable-de-silicona.jpg"
       }',
       100,false,true),
-(5, 'Funda de auto palta',60000,'accesorio',
+(5, 'Funda de auto palta',60000,'accessories',
     '{"descripcion":"Funda para los asientos de los autos y tambien para el baul",
       "masInfo":[
         "Impermeable",
@@ -192,7 +192,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "funda-auto-palta.jpg"
       }',
       100,true,false),
-(6, 'Funda de auto Paris',60000,'accesorio',
+(6, 'Funda de auto Paris',60000,'accessories',
     '{"descripcion":"Funda para los asientos de los autos y tambien para el baul",
       "masInfo":[
         "Impermeable",
@@ -204,7 +204,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "funda-auto-paris.jpg"
       }',
       100,false,true),
-(7, 'Arnes Fucsia',23000,'accesorio',
+(7, 'Arnes Fucsia',23000,'accessories',
     '{"descripcion":"Arnés regulable en pecho y cuello",
       "masInfo":[
         "Impermeable",
@@ -214,7 +214,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "arnes-fucsia.jpg"
       }',
       100,false,false),
-(8, 'Arnes Superman',8500,'accesorio',
+(8, 'Arnes Superman',8500,'accessories',
     '{"descripcion":"Proporcionan comodidad y confort a tu perro",
       "masInfo":[
         "Facil de colocar y retirar",
@@ -223,7 +223,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "arnes-superman.jpg"
       }',
       100,false,false),
-(9, 'Action baseball con manija de soga',8700,'juguete',
+(9, 'Action baseball con manija de soga',8700,'toys',
     '{"descripcion":"Soga Action con pelota dental",
       "masInfo":[
         "Ideal para cuidar su salud bucal mientras juega"
@@ -231,7 +231,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "baseball-sola.jpg"
       }',
       100,false,false),
-(10, 'Campana dispenser de snacks',10000,'juguete',
+(10, 'Campana dispenser de snacks',10000,'toys',
     '{"descripcion":"Juego de ingenio contenedor de alimento",
       "masInfo":[
         "Sin información extra"
@@ -239,7 +239,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "campana-dispenser-snack.jpg"
       }',
       100,true,false),
-(11, 'Dona',5300,'juguete',
+(11, 'Dona',5300,'toys',
     '{"descripcion":"Dona con chifle",
       "masInfo":[
         "No son tóxicos",
@@ -249,17 +249,17 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "dona-chifle.jpg"
       }',
       100,false,true),
-(12, 'Mordillo',8600,'juguete',
+(12, 'Mordillo',8600,'toys',
     '{"descripcion":"Hueso Mordillo Ice",
       "masInfo":[
         "Hecho de goma TPR no tóxica",
-        "Juguete refrescante, resistente, seguro y extremadamente duradero",
+        "toys refrescante, resistente, seguro y extremadamente duradero",
         "Ideal para cachorros de dentición"
         ],
         "imagen" : "hueso-mordillo-ice.jpg"
       }',
       100,true,false),
-(13, 'Pelota Squiki',7500,'juguete',
+(13, 'Pelota Squiki',7500,'toys',
     '{"descripcion":"Pelota squiki para snacks",
       "masInfo":[
         "Diseñada para la diversión y la salud dental de tu perro",
@@ -269,7 +269,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "pelota-squiki-snacks.jpg"
       }',
       100,false,true),
-(14, 'Soga 2 nudos',2500,'juguete',
+(14, 'Soga 2 nudos',2500,'toys',
     '{"descripcion":"Soga de tela con 2 nudos",
       "masInfo":[
         "Se diseñó para que tu mascota libere su stress mientras juega",
@@ -278,7 +278,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "soga-2-nudos.jpg"
       }',
       100,false,false),
-(15, 'Agility perro adulto 20 kilos',37500,'alimento',
+(15, 'Agility perro adulto 20 kilos',37500,'food',
     '{"descripcion":"Alimento balanceado para perros adultos de 1 a 7 años",
       "masInfo":[
         "Los perros adultos necesitan una alimentación completa y equilibrada que cubra sus requerimientos nutricionales y les brinde salud y vitalidad",
@@ -287,7 +287,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "agility-adulto.jpg"
       }',
       100,false,false),
-(16, 'Balanced adulto razas medianas',11500,'alimento',
+(16, 'Balanced adulto razas medianas',11500,'food',
     '{"descripcion":"Indicado para perros adultos de raza mediana de 12 meses hasta 7 años",
       "masInfo":[
         "Modulación de defensas",
@@ -298,7 +298,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "balanced-adulto.jpg"
       }',
       100,true,false),
-(17, 'ROYAL CANIN MINI ADULTO',21600,'alimento',
+(17, 'ROYAL CANIN MINI ADULTO',21600,'food',
     '{"descripcion":"Alimento para perros adultos de talla pequeña (peso adulto hasta 10 kg). De 10 meses a 8 años de edad",
       "masInfo":[
         "Ayuda a mantener un peso saludable en perros de talla pequeña",
@@ -307,7 +307,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "royal-mini-adulto.jpg"
       }',
       100,true,false),
-(18, 'Sieger perro adulto',13700,'alimento',
+(18, 'Sieger perro adulto',13700,'food',
     '{"descripcion":"Sieger perro adulto mordida pequeña",
       "masInfo":[
         "Sin información extra"
@@ -315,7 +315,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "sieger-adulto-pequeño.jpg"
       }',
       100,false,false),
-(19, 'Sieger criadores',56500,'alimento',
+(19, 'Sieger criadores',56500,'food',
     '{"descripcion":"Sieger criadores 20 Kg",
       "masInfo":[
         "Criadores posee una fórmula exclusiva que brinda una adecuada alimentación durante todas las etapas madurativas de la vida del perro"
@@ -323,7 +323,7 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
         "imagen" : "sieger-adulto.jpg"
       }',
       100,false,false),
-(20, 'Eukanuba perro adulto',14550,'alimento',
+(20, 'Eukanuba perro adulto',14550,'food',
     '{"descripcion":"Eukanuba perro adulto razas pequeñas",
       "masInfo":[
         "Recomendado para perros adultos mayores a 12 meses de edad",
@@ -334,7 +334,50 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
       100,false,true); 
 -- --------------------------------------------------------
 
+--
+-- Estructura de tabla para la tabla `valoracion_producto`
+--
+CREATE TABLE `valoracionproducto` (
+  `idvaloracion` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idusuario` bigint(20) NOT NULL,
+  `idproducto` bigint(20) NOT NULL,
+  `ranking` int(11) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idvaloracion`),
+  FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`),
+  FOREIGN KEY (`idproducto`) REFERENCES `producto` (`idproducto`)
+);
 
+
+--
+-- Volcado de datos para la tabla `valoracion_producto`
+--
+INSERT INTO `valoracionproducto` (`idproducto`, `idusuario`, `ranking`, `descripcion`) VALUES
+(2,4, 5, '¡Excelente producto, altamente recomendado!'),
+(2,5, 4, 'Muy buen producto, cumple con lo esperado.'),
+(2,6, 5, '¡Increíble calidad y diseño! Me encanta.'),
+(3,7, 4, 'Buen producto, fácil de usar y de gran calidad.'),
+(3,8, 5, '¡El mejor comedero que he tenido!'),
+(3,9, 3, 'Buen producto, aunque un poco caro para mi gusto.'),
+(5,10, 5, '¡Fantástica funda de auto! Se adapta perfectamente.'),
+(5,4, 4, 'Muy útil y práctica. La recomiendo.'),
+(5,5, 5, '¡Excelente calidad, superó mis expectativas!'),
+(7,6, 3, 'Buena calidad, pero el tamaño no es el adecuado para mi perro.'),
+(7,7, 4, 'Arnés resistente y cómodo. Ideal para paseos.'),
+(7,8, 5, '¡Me encanta este arnés! Muy seguro y fácil de ajustar.'),
+(10,9, 5, 'Juguete muy divertido y entretenido para mi perro.'),
+(10,10, 4, 'Me gusta mucho este producto, mi perro lo disfruta mucho.'),
+(10,4, 3, 'Bien, pero esperaba un poco más de calidad.'),
+(13,5, 5, '¡Pelota perfecta para juegos al aire libre!'),
+(13,6, 5, 'Muy resistente y durable. ¡Mi perro la adora!'),
+(13,7, 4, 'Excelente juguete para mantener activo a mi perro.'),
+(15,8, 4, 'Alimento de buena calidad, mi perro lo disfruta.'),
+(15,9, 5, '¡Muy bueno! Mi perro se siente genial después de comerlo.'),
+(15,10, 5, '¡El alimento perfecto para mi mascota! Lo recomiendo.'),
+(16,4, 5, 'Mi perro ama este alimento, le ha sentado muy bien.'),
+(16,5, 4, 'Buen producto, cumple con las expectativas.'),
+(16,6, 5, 'Excelente calidad, mi perro está feliz y saludable.');
 
 
 --
@@ -343,10 +386,9 @@ INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodeta
 
 CREATE TABLE `rol` (
   `idrol` bigint(20) NOT NULL AUTO_INCREMENT,
-  `rodescripcion` varchar(50) NOT NULL, 
+  `rodescripcion` varchar(50) NOT NULL,
   PRIMARY KEY (`idrol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 --
 -- Volcado de datos para la tabla `rol`
 --
@@ -417,53 +459,6 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (9, 3),
 (10, 3);
 
-
-
-
---
--- Estructura de tabla para la tabla `valoracion_producto`
---
-CREATE TABLE `valoracionproducto` (
-  `idvaloracion` bigint(20) NOT NULL AUTO_INCREMENT,
-  `idusuario` bigint(20) NOT NULL,
-  `idproducto` bigint(20) NOT NULL,
-  `ranking` int(11) NOT NULL,
-  `descripcion` varchar(255) DEFAULT NULL,
-  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idvaloracion`),
-  FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`),
-  FOREIGN KEY (`idproducto`) REFERENCES `producto` (`idproducto`)
-);
-
-
---
--- Volcado de datos para la tabla `valoracion_producto`
---
-INSERT INTO `valoracionproducto` (`idproducto`, `idusuario`, `ranking`, `descripcion`) VALUES
-(2,4, 5, '¡Excelente producto, altamente recomendado!'),
-(2,5, 4, 'Muy buen producto, cumple con lo esperado.'),
-(2,6, 5, '¡Increíble calidad y diseño! Me encanta.'),
-(3,7, 4, 'Buen producto, fácil de usar y de gran calidad.'),
-(3,8, 5, '¡El mejor comedero que he tenido!'),
-(3,9, 3, 'Buen producto, aunque un poco caro para mi gusto.'),
-(5,10, 5, '¡Fantástica funda de auto! Se adapta perfectamente.'),
-(5,4, 4, 'Muy útil y práctica. La recomiendo.'),
-(5,5, 5, '¡Excelente calidad, superó mis expectativas!'),
-(7,6, 3, 'Buena calidad, pero el tamaño no es el adecuado para mi perro.'),
-(7,7, 4, 'Arnés resistente y cómodo. Ideal para paseos.'),
-(7,8, 5, '¡Me encanta este arnés! Muy seguro y fácil de ajustar.'),
-(10,9, 5, 'Juguete muy divertido y entretenido para mi perro.'),
-(10,10, 4, 'Me gusta mucho este producto, mi perro lo disfruta mucho.'),
-(10,4, 3, 'Bien, pero esperaba un poco más de calidad.'),
-(13,5, 5, '¡Pelota perfecta para juegos al aire libre!'),
-(13,6, 5, 'Muy resistente y durable. ¡Mi perro la adora!'),
-(13,7, 4, 'Excelente juguete para mantener activo a mi perro.'),
-(15,8, 4, 'Alimento de buena calidad, mi perro lo disfruta.'),
-(15,9, 5, '¡Muy bueno! Mi perro se siente genial después de comerlo.'),
-(15,10, 5, '¡El alimento perfecto para mi mascota! Lo recomiendo.'),
-(16,4, 5, 'Mi perro ama este alimento, le ha sentado muy bien.'),
-(16,5, 4, 'Buen producto, cumple con las expectativas.'),
-(16,6, 5, 'Excelente calidad, mi perro está feliz y saludable.');
 --
 -- Índices para tablas volcadas
 --

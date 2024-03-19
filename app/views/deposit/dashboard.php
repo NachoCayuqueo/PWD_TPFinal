@@ -1,5 +1,5 @@
 <?php
-//echo "inicio pantalla deposito";
+
 include_once '../../../config/configuration.php';
 include_once './structures/funciones.php';
 $session = new Session();
@@ -10,11 +10,9 @@ if ($session->validar()) {
         $nombreUsuario = 'Usuario';
         header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
     } else {
-
         $nombreUsuario = $usuario->getUsNombre();
         $idUsuarioActivo = $usuario->getIdUsuario();
         $usuarioRoles = $session->getRol();
-
         //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
         foreach ($usuarioRoles as $usuarioRol) {
 
@@ -63,7 +61,7 @@ if (count($listaProducto) > 0) {
         if ($existeProducto) {
             crearTablaProducto($listaProducto);
         } else {
-            //si no se encuentra el usuario
+
             echo '
                     <div class="container d-flex justify-content-center">
                         <div class=" card-container d-flex justify-content-center align-items-center">

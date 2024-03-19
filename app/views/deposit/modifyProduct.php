@@ -3,8 +3,14 @@ include_once '../../../config/configuration.php';
 include_once './structures/funciones.php';
 
 $datos = data_submitted();
+// viewStructure($datos);
+
+$nombreImagen = $datos['nombreImagen'];
 $nombre = $datos['nombre'];
 $precio = $datos['precio'];
+$tipo = $datos['tipo'];
+// echo "tipo: $tipo";
+
 $idProducto = $datos['idProducto'];
 $descripcion = $datos['descripcionCompleta'];
 $descripcion_formateada = str_replace('<br/>', '.', $descripcion);
@@ -13,9 +19,6 @@ $nombreCompleto = $datos['nombreCompleto'];
 $esNuevo = $datos['esNuevito'];
 $esPopular = $datos['esPopu'];
 
-$check = seleccionCheck($esNuevo, $esPopular);
-$esNuevito = $check[0];
-$esPopu = $check[1];
 
 $existenRoles = false;
 if (!empty($listaRoles)) {
@@ -70,7 +73,7 @@ if (!empty($listaRoles)) {
                                 <label for="stock" class="form-label">Tipo</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="tipo" id="tipo1" value="accesories">
+                                        <input class="form-check-input" type="radio" name="tipo" id="tipo1" value="accessories">
                                         <label class="form-check-label" for="tipo1">Accesorio</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -134,13 +137,16 @@ if (!empty($listaRoles)) {
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col">
-                                <h5>Seleccione Imagen</h5>
-                                <input class="form-control" type="file" id="miArchivo" name="miArchivo" required>
-                                <small id="miniaturaHelp" class="form-text text-muted">formatos permitidos: png, jpg y jpeg</small>
+                            <div class="col text-center border">
+                                <h6>Imagen actual</h6>
+                                <img src="../../../assets/images/products/<?php echo $tipo ?>/<?php echo    $nombreImagen ?>" alt="" width="300" height="300">
                             </div>
-                            <div class="col">
-
+                            <div class="col d-flex align-items-center">
+                                <div>
+                                    <h5>Seleccione Imagen</h5>
+                                    <input class="form-control" type="file" id="miArchivo" name="miArchivo" required>
+                                    <small id="miniaturaHelp" class="form-text text-muted">formatos permitidos: png, jpg y jpeg</small>
+                                </div>
                             </div>
                         </div>
 
