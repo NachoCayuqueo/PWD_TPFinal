@@ -60,23 +60,19 @@ if (count($listaProductos) > 0) {
                         foreach ($listaProductos as $producto) {
                             if ($producto->getEsProPopular()) {
                                 $cardId = $producto->getIdProducto();
-                                $detallesJSON = json_decode($producto->getProDetalle(), true);
+                                $idProducto = $producto->getIdProducto();
+                                $nombreProducto = $producto->getProNombre();
+                                $descripcion = $producto->getProDescripcion();
+                                $masInfo = $producto->getProMasInfo();
+                                $precioProducto = $producto->getProPrecio();
 
                                 $tipoProducto = $producto->getProTipo();
-                                if ($tipoProducto === 'accesorio')
-                                    $urlImage =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
-                                if ($tipoProducto === 'juguete')
-                                    $urlImage =  $IMAGES . "/products/toys/" . $detallesJSON['imagen'];
-                                if ($tipoProducto === 'alimento')
-                                    $urlImage =  $IMAGES . "/products/food/" . $detallesJSON['imagen'];
-
-                                $descripcion = $detallesJSON['descripcion'];
-
-                                $masInfo = $detallesJSON['masInfo'];
-                                echo '<div class="col">';
-                                $idProducto = $producto->getIdProducto();
+                                $nombreImagen = $producto->getProImagen();
+                                $urlImage =  $IMAGES . "/products/" . $tipoProducto . "/" . $nombreImagen;
                                 $botonComprar = "../customer/buyProduct.php?idProducto=" . $idProducto;
-                                productsCard($cardId, $urlImage, $producto->getProNombre(), $descripcion, $masInfo, $producto->getProPrecio(), $botonComprar);
+
+                                echo '<div class="col">';
+                                productsCard($cardId, $urlImage, $nombreProducto, $descripcion, $masInfo, $precioProducto, $botonComprar);
                                 echo '</div>';
                             }
                         }
@@ -101,23 +97,20 @@ if (count($listaProductos) > 0) {
                         foreach ($listaProductos as $producto) {
                             if ($producto->getEsProNuevo()) {
                                 $cardId = $producto->getIdProducto();
-                                $detallesJSON = json_decode($producto->getProDetalle(), true);
+                                $idProducto = $producto->getIdProducto();
+                                $nombreProducto = $producto->getProNombre();
+                                $descripcion = $producto->getProDescripcion();
+                                $masInfo = $producto->getProMasInfo();
+                                $precioProducto = $producto->getProPrecio();
 
                                 $tipoProducto = $producto->getProTipo();
-                                if ($tipoProducto === 'accesorio')
-                                    $urlImage =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
-                                if ($tipoProducto === 'juguete')
-                                    $urlImage =  $IMAGES . "/products/toys/" . $detallesJSON['imagen'];
-                                if ($tipoProducto === 'alimento')
-                                    $urlImage =  $IMAGES . "/products/food/" . $detallesJSON['imagen'];
+                                $nombreImagen = $producto->getProImagen();
+                                $urlImage =  $IMAGES . "/products/" . $tipoProducto . "/" . $nombreImagen;
 
-                                $descripcion = $detallesJSON['descripcion'];
-
-                                $masInfo = $detallesJSON['masInfo'];
-                                $idProducto = $producto->getIdProducto();
                                 $botonComprar = "../customer/buyProduct.php?idProducto=" . $idProducto;
+
                                 echo '<div class="col">';
-                                productsCard($cardId, $urlImage, $producto->getProNombre(), $descripcion, $masInfo, $producto->getProPrecio(), $botonComprar);
+                                productsCard($cardId, $urlImage, $nombreProducto, $descripcion, $masInfo, $precioProducto, $botonComprar);
                                 echo '</div>';
                             }
                         }
