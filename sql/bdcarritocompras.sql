@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `compra` (
-  `idcompra` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idcompra` bigint(20) NOT NULL,
   `cofecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `idusuario` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -52,7 +52,7 @@ VALUES
 --
 
 CREATE TABLE `compraestado` (
-  `idcompraestado` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idcompraestado` bigint(20) NOT NULL,
   `idcompra` bigint(11) NOT NULL,
   `idcompraestadotipo` int(11) NOT NULL,
   `cefechaini` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -62,21 +62,23 @@ CREATE TABLE `compraestado` (
 --
 -- Volcado de datos para la tabla `compraestado`
 --
-INSERT INTO `compraestado` (`idcompra`, `idcompraestadotipo`, `cefechaini`,`cefechafin`)
+
+INSERT INTO `compraestado` (`idcompraestado`,`idcompra`, `idcompraestadotipo`, `cefechaini`,`cefechafin`)
 VALUES 
 -- Compra 1
-(1, 1, '2024-02-09 10:00:00','2024-02-09 11:00:00'), -- Estado inicial: carrito
-(1, 2, '2024-02-09 11:00:00','2024-02-09 12:00:00'), -- Estado siguiente: iniciada
-(1, 3, '2024-02-09 12:00:00','2024-02-09 13:00:00'), -- Estado siguiente: aceptada
-(1, 4, '2024-02-09 13:00:00','2024-02-09 14:00:00'), -- Estado siguiente: enviada
+(1,1, 1, '2024-02-09 10:00:00','2024-02-09 11:00:00'), -- Estado inicial: carrito
+(2,1, 2, '2024-02-09 11:00:00','2024-02-09 12:00:00'), -- Estado siguiente: iniciada
+(3,1, 3, '2024-02-09 12:00:00','2024-02-09 13:00:00'), -- Estado siguiente: aceptada
+(4,1, 4, '2024-02-09 13:00:00','2024-02-09 14:00:00'), -- Estado siguiente: enviada
 -- Compra 2
-(2, 1, '2024-02-10 11:00:00','2024-02-10 12:00:00'), -- Estado inicial: carrito
-(2, 2, '2024-02-10 12:00:00','2024-02-10 13:00:00'), -- Estado siguiente: iniciada
-(2, 5, '2024-02-10 13:00:00','2024-02-10 14:00:00'), -- Estado siguiente: cancelada
+(5,2, 1, '2024-02-10 11:00:00','2024-02-10 12:00:00'), -- Estado inicial: carrito
+(6,2, 2, '2024-02-10 12:00:00','2024-02-10 13:00:00'), -- Estado siguiente: iniciada
+(7,2, 5, '2024-02-10 13:00:00','2024-02-10 14:00:00'), -- Estado siguiente: cancelada
 -- Compra 3
-(3, 1, '2024-02-11 12:00:00','2024-02-15 12:00:00'), -- Estado inicial: carrito
-(3, 2, '2024-02-15 12:00:00'), -- Estado inicial: carrito
-(4, 1, '2024-02-15 13:00:00'); -- Estado siguiente: iniciada
+(8,3, 1, '2024-02-11 12:00:00','2024-02-15 12:00:00'), -- Estado inicial: carrito
+(9,3, 2, '2024-02-15 12:00:00',null), -- Estado siguiente: iniciada
+-- Compra 4
+(10,4, 1, '2024-02-15 13:00:00',null); -- Estado inicial: carrito
 
 -- --------------------------------------------------------
 
@@ -108,7 +110,7 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 --
 
 CREATE TABLE `compraitem` (
-  `idcompraitem` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idcompraitem` bigint(20) NOT NULL,
   `idproducto` bigint(20) NOT NULL,
   `idcompra` bigint(20) NOT NULL,
   `cicantidad` int(11) NOT NULL
@@ -174,7 +176,9 @@ CREATE TABLE `producto` (
   `pronombre` varchar(50) NOT NULL,
   `proprecio` int(20) NOT NULL,
   `protipo` varchar(50) NOT NULL,
-  `prodetalle` JSON NOT NULL,
+  `prodescripcion` varchar(100) NOT NULL,
+  `promasinfo`   varchar(500) NULL,
+  `proimagen` varchar(50) NOT NULL,
   `procantstock` int(11) NOT NULL,
   `esprodestacado` boolean NOT NULL DEFAULT false,
   `espronuevo` boolean NOT NULL DEFAULT false
@@ -182,254 +186,123 @@ CREATE TABLE `producto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `rol`
+-- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodetalle`, `procantstock`,`esprodestacado`,`espronuevo`) VALUES
-(1, 'Comedero bebedero',3610,'accesorio',
-  '{"descripcion":"Comedero Acero Inoxidable Antideslizante",
-    "masInfo":[
-      "Es un bebedero de acero inoxidable, de gran resistencia",
-      "Presenta un molde de goma que evita deslizamientos mientras se usa"
-      ],
-    "imagen":"comedero-bebedero.jpg"
-    }',
-    100,false,false),
-(2, 'Comedero doble',15000,'accesorio',
-    '{"descripcion":"Comedero acero inoxidable doble",
-      "masInfo":[
-        "Incluye 2 tazones de acero inoxidable 750 ml. con soporte de metal negro",
-        "El protector antideslizante garantiza que la taza no se moverá ni se volcará fácilmente durante el uso"
-        ],
-        "imagen" : "comedero-doble.jpg"
-      }',
-      100,true,false),
-(3, 'Comedero doble regulable',40000,'accesorio',
-    '{"descripcion":"Comedero doble con pie regulable de acero inoxidable",
-      "masInfo":[
-        "Medida: 59 x 33 x 55",
-        "Medida de cada plato: 21 Cm Diámetro",
-        "Material: Acero inoxidable de primera calidad"
-        ],
-        "imagen" : "comedero-doble-regulable.jpg"
-      }',
-      100,true,false),
-(4, 'Comedero plegable de silicona',3450,'accesorio',
-    '{"descripcion":"Práctico comedero/bebedero para llevar en tus paseos o viajes con tu mascota",
-      "masInfo":[
-        "De silicona",
-        "Antideslizante, plegable y portátil",
-        "Incluye mosquetón para enganchar en cualquier lado"
-        ],
-        "imagen" : "comedero-plegable-de-silicona.jpg"
-      }',
-      100,false,true),
-(5, 'Funda de auto palta',60000,'accesorio',
-    '{"descripcion":"Funda para los asientos de los autos y tambien para el baul",
-      "masInfo":[
-        "Impermeable",
-        "Antidesgarro",
-        "No se pegan los pelos",
-        "Faciles de limpiar",
-        "Medidas: 1,30mts x 1,50 mts"
-        ],
-        "imagen" : "funda-auto-palta.jpg"
-      }',
-      100,true,false),
-(6, 'Funda de auto Paris',60000,'accesorio',
-    '{"descripcion":"Funda para los asientos de los autos y tambien para el baul",
-      "masInfo":[
-        "Impermeable",
-        "Antidesgarro",
-        "No se pegan los pelos",
-        "Faciles de limpiar",
-        "Medidas: 1,30mts x 1,50 mts"
-        ],
-        "imagen" : "funda-auto-paris.jpg"
-      }',
-      100,false,true),
-(7, 'Arnes Fucsia',23000,'accesorio',
-    '{"descripcion":"Arnés regulable en pecho y cuello",
-      "masInfo":[
-        "Impermeable",
-        "Manija de sujeción con hebilla de acero inoxidable para colocar correa",
-        "Banda Reflectiva para la noche"
-        ],
-        "imagen" : "arnes-fucsia.jpg"
-      }',
-      100,false,false),
-(8, 'Arnes Superman',8500,'accesorio',
-    '{"descripcion":"Proporcionan comodidad y confort a tu perro",
-      "masInfo":[
-        "Facil de colocar y retirar",
-        "Contienen una cinta regulable en el pecho que se ajusta con un broche reforzado"
-        ],
-        "imagen" : "arnes-superman.jpg"
-      }',
-      100,false,false),
-(9, 'Action baseball con manija de soga',8700,'juguete',
-    '{"descripcion":"Soga Action con pelota dental",
-      "masInfo":[
-        "Ideal para cuidar su salud bucal mientras juega"
-        ],
-        "imagen" : "baseball-soga.jpg"
-      }',
-      100,false,false),
-(10, 'Campana dispenser de snacks',10000,'juguete',
-    '{"descripcion":"Juego de ingenio contenedor de alimento",
-      "masInfo":[
-        "Sin información extra"
-        ],
-        "imagen" : "campana-dispenser-snack.jpg"
-      }',
-      100,true,false),
-(11, 'Dona',5300,'juguete',
-    '{"descripcion":"Dona con chifle",
-      "masInfo":[
-        "No son tóxicos",
-        "Son lavables y durables",
-        "Ideales para perros chicos o poco mordedores"
-        ],
-        "imagen" : "dona-chifle.jpg"
-      }',
-      100,false,true),
-(12, 'Mordillo',8600,'juguete',
-    '{"descripcion":"Hueso Mordillo Ice",
-      "masInfo":[
-        "Hecho de goma TPR no tóxica",
-        "Juguete refrescante, resistente, seguro y extremadamente duradero",
-        "Ideal para cachorros de dentición"
-        ],
-        "imagen" : "hueso-mordillo-ice.jpg"
-      }',
-      100,true,false),
-(13, 'Pelota Squiki',7500,'juguete',
-    '{"descripcion":"Pelota squiki para snacks",
-      "masInfo":[
-        "Diseñada para la diversión y la salud dental de tu perro",
-        "Son 100% resistentes y sus dientitos de goma ayudan a cuidar la salud bucal de tus mascotas mientras juegan",
-        "Es ideal para rellenarla con alimentos y estimular el ingenio de tu mascota brindándole máxima diversión y entretenimiento"
-        ],
-        "imagen" : "pelota-squiki-snacks.jpg"
-      }',
-      100,false,true),
-(14, 'Soga 2 nudos',2500,'juguete',
-    '{"descripcion":"Soga de tela con 2 nudos",
-      "masInfo":[
-        "Se diseñó para que tu mascota libere su stress mientras juega",
-        "También se usan para que el perro los pueda morder y realizar tareas de entrenamiento con él"
-        ],
-        "imagen" : "soga-2-nudos.jpg"
-      }',
-      100,false,false),
-(15, 'Agility perro adulto 20 kilos',37500,'alimento',
-    '{"descripcion":"Alimento balanceado para perros adultos de 1 a 7 años",
-      "masInfo":[
-        "Los perros adultos necesitan una alimentación completa y equilibrada que cubra sus requerimientos nutricionales y les brinde salud y vitalidad",
-        "Agility Adultos es una fórmula exclusivamente diseñada con ingredientes de alta calidad"
-        ],
-        "imagen" : "agility-adulto.jpg"
-      }',
-      100,false,false),
-(16, 'Balanced adulto razas medianas',11500,'alimento',
-    '{"descripcion":"Indicado para perros adultos de raza mediana de 12 meses hasta 7 años",
-      "masInfo":[
-        "Modulación de defensas",
-        "Músculos fuertes",
-        "Control de sarro y la halitosis",
-        "Cuidado óseo"
-        ],
-        "imagen" : "balanced-adulto.jpg"
-      }',
-      100,true,false),
-(17, 'ROYAL CANIN MINI ADULTO',21600,'alimento',
-    '{"descripcion":"Alimento para perros adultos de talla pequeña (peso adulto hasta 10 kg). De 10 meses a 8 años de edad",
-      "masInfo":[
-        "Ayuda a mantener un peso saludable en perros de talla pequeña",
-        "Esta fórmula contiene nutrientes que ayuda a mantener una piel y un pelaje saludable"
-        ],
-        "imagen" : "royal-mini-adulto.jpg"
-      }',
-      100,true,false),
-(18, 'Sieger perro adulto',13700,'alimento',
-    '{"descripcion":"Sieger perro adulto mordida pequeña",
-      "masInfo":[
-        "Sin información extra"
-        ],
-        "imagen" : "sieger-adulto-pequeño.jpg"
-      }',
-      100,false,false),
-(19, 'Sieger criadores',56500,'alimento',
-    '{"descripcion":"Sieger criadores 20 Kg",
-      "masInfo":[
-        "Criadores posee una fórmula exclusiva que brinda una adecuada alimentación durante todas las etapas madurativas de la vida del perro"
-        ],
-        "imagen" : "sieger-adulto.jpg"
-      }',
-      100,false,false),
-(20, 'Eukanuba perro adulto',14550,'alimento',
-    '{"descripcion":"Eukanuba perro adulto razas pequeñas",
-      "masInfo":[
-        "Recomendado para perros adultos mayores a 12 meses de edad",
-        "Alimento balanceado completo para perros adultos de raza pequeña que pesan menos de 10 kg"
-        ],
-        "imagen" : "eukanuba.jpg"
-      }',
-      100,false,true); 
+INSERT INTO `producto` (`idproducto`, `pronombre`,`proprecio`,`protipo`,`prodescripcion`,`promasinfo`,`proimagen`, `procantstock`,`esprodestacado`,`espronuevo`) VALUES
+(1, 'Comedero bebedero',3610,'accessories','Comedero Acero Inoxidable Antideslizante',
+ 'Es un bebedero de acero inoxidable, de gran resistencia. Presenta un molde de goma que evita deslizamientos mientras se usa',
+  'comedero-bebedero.jpg',100,false,false),
+(2, 'Comedero doble',15000,'accessories','Comedero acero inoxidable doble',
+  'Incluye 2 tazones de acero inoxidable 750 ml. con soporte de metal negro. El protector antideslizante garantiza que la taza no se moverá ni se volcará fácilmente durante el uso',
+  'comedero-doble.jpg',100,true,false),
+(3, 'Comedero doble regulable',40000,'accessories','Comedero doble con pie regulable de acero inoxidable',
+  'Medida: 59 x 33 x 55. Medida de cada plato: 21 Cm Diámetro. Material: Acero inoxidable de primera calidad',
+  'comedero-doble-regulable.jpg',100,true,false),
+(4, 'Comedero plegable de silicona',3450,'accessories','Práctico comedero/bebedero para llevar en tus paseos o viajes con tu mascota',
+    'De silicona. Antideslizante, plegable y portátil. Incluye mosquetón para enganchar en cualquier lado',
+    'comedero-plegable-de-silicona.jpg',100,false,true),
+(5, 'Funda de auto palta',60000,'accessories','Funda para los asientos de los autos y tambien para el baul',
+    'Impermeable. Antidesgarro. No se pegan los pelos. Faciles de limpiar. Medidas: 1,30mts x 1,50 mts',
+    'funda-auto-palta.jpg',100,true,false),
+(6, 'Funda de auto Paris',60000,'accessories','Funda para los asientos de los autos y tambien para el baul',
+    'Impermeable. Antidesgarro. No se pegan los pelos. Faciles de limpiar. Medidas: 1,30mts x 1,50 mts',
+    'funda-auto-paris.jpg',100,false,true),
+(7, 'Arnes Fucsia',23000,'accessories','Arnés regulable en pecho y cuello',
+    'Impermeable. Manija de sujeción con hebilla de acero inoxidable para colocar correa. Banda Reflectiva para la noche',
+    'arnes-fucsia.jpg',100,false,false),
+(8, 'Arnes Superman',8500,'accessories','Proporcionan comodidad y confort a tu perro',
+    'Facil de colocar y retirar. Contienen una cinta regulable en el pecho que se ajusta con un broche reforzado',
+    'arnes-superman.jpg',100,false,false),
+(9, 'Action baseball con manija de soga',8700,'toys','Soga Action con pelota dental',
+    'Ideal para cuidar su salud bucal mientras juega',
+    'baseball-soga.jpg',100,false,false),
+(10, 'Campana dispenser de snacks',10000,'toys','Juego de ingenio contenedor de alimento',
+     'Sin información extra',
+     'campana-dispenser-snack.jpg',100,true,false),
+(11, 'Dona',5300,'toys','Dona con chifle',
+     'No son tóxicos. Son lavables y durables. Ideales para perros chicos o poco mordedores',
+     'dona-chifle.jpg',100,false,true),
+(12, 'Mordillo',8600,'toys','Hueso Mordillo Ice',
+     'Hecho de goma TPR no tóxica. Juguete refrescante, resistente, seguro y extremadamente duradero. Ideal para cachorros de dentición',
+     'hueso-mordillo-ice.jpg',100,true,false),
+(13, 'Pelota Squiki',7500,'toys','Pelota squiki para snacks',
+     'Diseñada para la diversión y la salud dental de tu perro. Son 100% resistentes y sus dientitos de goma ayudan a cuidar la salud bucal de tus mascotas mientras juegan. Es ideal para rellenarla con alimentos y estimular el ingenio de tu mascota brindándole máxima diversión y entretenimiento',
+     'pelota-squiki-snacks.jpg',100,false,true),
+(14, 'Soga 2 nudos',2500,'toys','Soga de tela con 2 nudos',
+     'Se diseñó para que tu mascota libere su stress mientras juega. También se usan para que el perro los pueda morder y realizar tareas de entrenamiento con él',
+     'soga-2-nudos.jpg' ,100,false,false),
+(15, 'Agility perro adulto 20 kilos',37500,'food','Alimento balanceado para perros adultos de 1 a 7 años',
+     'Los perros adultos necesitan una alimentación completa y equilibrada que cubra sus requerimientos nutricionales y les brinde salud y vitalidad. Agility Adultos es una fórmula exclusivamente diseñada con ingredientes de alta calidad',
+     'agility-adulto.jpg',100,false,false),
+(16, 'Balanced adulto razas medianas',11500,'food','Indicado para perros adultos de raza mediana de 12 meses hasta 7 años',
+     'Modulación de defensas. Músculos fuertes. Control de sarro y la halitosis. Cuidado óseo',
+     'balanced-adulto.jpg',100,true,false),
+(17, 'ROYAL CANIN MINI ADULTO',21600,'food','Alimento para perros adultos de talla pequeña (peso adulto hasta 10 kg)',
+     'De 10 meses a 8 años de edad. Ayuda a mantener un peso saludable en perros de talla pequeña. Esta fórmula contiene nutrientes que ayuda a mantener una piel y un pelaje saludable',
+     'royal-mini-adulto.jpg',100,true,false),
+(18, 'Sieger perro adulto',13700,'food','Sieger perro adulto mordida pequeña',
+     'Sin información extra',
+     'sieger-adulto-pequeño.jpg',100,false,false),
+(19, 'Sieger criadores',56500,'food','Sieger criadores 20 Kg',
+     'Criadores posee una fórmula exclusiva que brinda una adecuada alimentación durante todas las etapas madurativas de la vida del perro',
+     'sieger-adulto.jpg',100,false,false),
+(20, 'Eukanuba perro adulto',14550,'food','Eukanuba perro adulto razas pequeñas',
+     'Recomendado para perros adultos mayores a 12 meses de edad. Alimento balanceado completo para perros adultos de raza pequeña que pesan menos de 10 kg',
+     'eukanuba.jpg',100,false,true); 
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `valoracion_producto`
 --
+
 CREATE TABLE `valoracionproducto` (
-  `idvaloracion` bigint(20) NOT NULL AUTO_INCREMENT,
-  `idusuario` bigint(20) NOT NULL,
+  `idvaloracion` bigint(20) NOT NULL,
   `idproducto` bigint(20) NOT NULL,
+  `idusuario` bigint(20) NOT NULL,
   `ranking` int(11) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
-  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idvaloracion`),
-  FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`),
-  FOREIGN KEY (`idproducto`) REFERENCES `producto` (`idproducto`)
-);
+  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 --
 -- Volcado de datos para la tabla `valoracion_producto`
 --
-INSERT INTO `valoracionproducto` (`idproducto`, `idusuario`, `ranking`, `descripcion`) VALUES
-(2,4, 5, '¡Excelente producto, altamente recomendado!'),
-(2,5, 4, 'Muy buen producto, cumple con lo esperado.'),
-(2,6, 5, '¡Increíble calidad y diseño! Me encanta.'),
-(3,7, 4, 'Buen producto, fácil de usar y de gran calidad.'),
-(3,8, 5, '¡El mejor comedero que he tenido!'),
-(3,9, 3, 'Buen producto, aunque un poco caro para mi gusto.'),
-(5,10, 5, '¡Fantástica funda de auto! Se adapta perfectamente.'),
-(5,4, 4, 'Muy útil y práctica. La recomiendo.'),
-(5,5, 5, '¡Excelente calidad, superó mis expectativas!'),
-(7,6, 3, 'Buena calidad, pero el tamaño no es el adecuado para mi perro.'),
-(7,7, 4, 'Arnés resistente y cómodo. Ideal para paseos.'),
-(7,8, 5, '¡Me encanta este arnés! Muy seguro y fácil de ajustar.'),
-(10,9, 5, 'Juguete muy divertido y entretenido para mi perro.'),
-(10,10, 4, 'Me gusta mucho este producto, mi perro lo disfruta mucho.'),
-(10,4, 3, 'Bien, pero esperaba un poco más de calidad.'),
-(13,5, 5, '¡Pelota perfecta para juegos al aire libre!'),
-(13,6, 5, 'Muy resistente y durable. ¡Mi perro la adora!'),
-(13,7, 4, 'Excelente juguete para mantener activo a mi perro.'),
-(15,8, 4, 'Alimento de buena calidad, mi perro lo disfruta.'),
-(15,9, 5, '¡Muy bueno! Mi perro se siente genial después de comerlo.'),
-(15,10, 5, '¡El alimento perfecto para mi mascota! Lo recomiendo.'),
-(16,4, 5, 'Mi perro ama este alimento, le ha sentado muy bien.'),
-(16,5, 4, 'Buen producto, cumple con las expectativas.'),
-(16,6, 5, 'Excelente calidad, mi perro está feliz y saludable.');
 
+INSERT INTO `valoracionproducto` (`idvaloracion`,`idproducto`, `idusuario`, `ranking`, `descripcion`) VALUES
+(1,2,4, 5, '¡Excelente producto, altamente recomendado!'),
+(2,2,5, 4, 'Muy buen producto, cumple con lo esperado.'),
+(3,2,6, 5, '¡Increíble calidad y diseño! Me encanta.'),
+(4,3,7, 4, 'Buen producto, fácil de usar y de gran calidad.'),
+(5,3,8, 5, '¡El mejor comedero que he tenido!'),
+(6,3,9, 3, 'Buen producto, aunque un poco caro para mi gusto.'),
+(7,5,10, 5, '¡Fantástica funda de auto! Se adapta perfectamente.'),
+(8,5,4, 4, 'Muy útil y práctica. La recomiendo.'),
+(9,5,5, 5, '¡Excelente calidad, superó mis expectativas!'),
+(10,7,6, 3, 'Buena calidad, pero el tamaño no es el adecuado para mi perro.'),
+(11,7,7, 4, 'Arnés resistente y cómodo. Ideal para paseos.'),
+(12,7,8, 5, '¡Me encanta este arnés! Muy seguro y fácil de ajustar.'),
+(13,10,9, 5, 'Juguete muy divertido y entretenido para mi perro.'),
+(14,10,10, 4, 'Me gusta mucho este producto, mi perro lo disfruta mucho.'),
+(15,10,4, 3, 'Bien, pero esperaba un poco más de calidad.'),
+(16,13,5, 5, '¡Pelota perfecta para juegos al aire libre!'),
+(17,13,6, 5, 'Muy resistente y durable. ¡Mi perro la adora!'),
+(18,13,7, 4, 'Excelente juguete para mantener activo a mi perro.'),
+(19,15,8, 4, 'Alimento de buena calidad, mi perro lo disfruta.'),
+(20,15,9, 5, '¡Muy bueno! Mi perro se siente genial después de comerlo.'),
+(21,15,10, 5, '¡El alimento perfecto para mi mascota! Lo recomiendo.'),
+(22,16,4, 5, 'Mi perro ama este alimento, le ha sentado muy bien.'),
+(23,16,5, 4, 'Buen producto, cumple con las expectativas.'),
+(24,16,6, 5, 'Excelente calidad, mi perro está feliz y saludable.');
 
 --
 -- Estructura de tabla para la tabla `rol`
 --
 
 CREATE TABLE `rol` (
-  `idrol` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idrol` bigint(20) NOT NULL,
   `rodescripcion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -447,15 +320,14 @@ INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
 --
 -- Estructura de tabla para la tabla `usuario`
 --
--- se cambio idusuario,uspass y se agrego usactive
+
 CREATE TABLE `usuario` (
-  `idusuario`       bigint(20) NOT NULL AUTO_INCREMENT,
+  `idusuario`       bigint(20) NOT NULL,
   `usnombre`        varchar(50) NOT NULL,
   `uspass`          varchar(50) NOT NULL,
   `usmail`          varchar(50) NOT NULL,
   `usdeshabilitado` timestamp NULL DEFAULT NULL,
-  `usactivo`        boolean NOT NULL DEFAULT false,
-  PRIMARY KEY (`idusuario`)
+  `usactivo`        boolean NOT NULL DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -562,6 +434,13 @@ ALTER TABLE `producto`
   ADD UNIQUE KEY `idproducto` (`idproducto`);
 
 --
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `valoracionproducto`
+  ADD PRIMARY KEY (`idvaloracion`),
+  ADD UNIQUE KEY `idvaloracion` (`idvaloracion`);
+
+--
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -618,6 +497,12 @@ ALTER TABLE `producto`
   MODIFY `idproducto` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `valoracionproducto`
+--
+ALTER TABLE `valoracionproducto`
+  MODIFY `idvaloracion` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -665,6 +550,13 @@ ALTER TABLE `menu`
 ALTER TABLE `menurol`
   ADD CONSTRAINT `fkmenurol_1` FOREIGN KEY (`idmenu`) REFERENCES `menu` (`idmenu`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fkmenurol_2` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `valoracionproducto`
+--
+ALTER TABLE `valoracionproducto`
+  ADD CONSTRAINT `fkvaloracionproducto_1` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fkvaloracionproducto_2` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`idproducto`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuariorol`
