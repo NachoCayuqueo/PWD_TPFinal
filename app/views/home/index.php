@@ -1,14 +1,10 @@
 <?php
 include_once "../../../config/configuration.php";
-// $session = new Session();
-// if ($session->validar()) {
-//     // echo "ID usuario: " . $_SESSION['idusuario'];
-//     // header('Location: ' . $PRINCIPAL . "/views/tp5_views/paginaSegura.php");
-// }
+
 $productos = new AbmProducto();
-$listaProductos = $productos->buscar(null);
+$listadoProductos = $productos->buscar(null);
 $existenProductos = false;
-if (count($listaProductos) > 0) {
+if (count($listadoProductos) > 0) {
     $existenProductos = true;
 } else {
     echo  "<div class='container'>No hay productos registrados.</div>";
@@ -57,22 +53,11 @@ if (count($listaProductos) > 0) {
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                     <?php
                     if ($existenProductos) {
-                        foreach ($listaProductos as $producto) {
+                        foreach ($listadoProductos as $producto) {
                             if ($producto->getEsProPopular()) {
-                                $cardId = $producto->getIdProducto();
-                                $idProducto = $producto->getIdProducto();
-                                $nombreProducto = $producto->getProNombre();
-                                $descripcion = $producto->getProDescripcion();
-                                $masInfo = $producto->getProMasInfo();
-                                $precioProducto = $producto->getProPrecio();
-
-                                $tipoProducto = $producto->getProTipo();
-                                $nombreImagen = $producto->getProImagen();
-                                $urlImage =  $IMAGES . "/products/" . $tipoProducto . "/" . $nombreImagen;
-                                $botonComprar = "../customer/buyProduct.php?idProducto=" . $idProducto;
-
+                                $botonComprar = "../customer/buyProduct.php?idProducto=" . $producto->getIdProducto();
                                 echo '<div class="col">';
-                                productsCard($cardId, $urlImage, $nombreProducto, $descripcion, $masInfo, $precioProducto, $botonComprar);
+                                productsCard($producto, $botonComprar);
                                 echo '</div>';
                             }
                         }
@@ -94,23 +79,11 @@ if (count($listaProductos) > 0) {
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                     <?php
                     if ($existenProductos) {
-                        foreach ($listaProductos as $producto) {
+                        foreach ($listadoProductos as $producto) {
                             if ($producto->getEsProNuevo()) {
-                                $cardId = $producto->getIdProducto();
-                                $idProducto = $producto->getIdProducto();
-                                $nombreProducto = $producto->getProNombre();
-                                $descripcion = $producto->getProDescripcion();
-                                $masInfo = $producto->getProMasInfo();
-                                $precioProducto = $producto->getProPrecio();
-
-                                $tipoProducto = $producto->getProTipo();
-                                $nombreImagen = $producto->getProImagen();
-                                $urlImage =  $IMAGES . "/products/" . $tipoProducto . "/" . $nombreImagen;
-
-                                $botonComprar = "../customer/buyProduct.php?idProducto=" . $idProducto;
-
+                                $botonComprar = "../customer/buyProduct.php?idProducto=" . $producto->getIdProducto();
                                 echo '<div class="col">';
-                                productsCard($cardId, $urlImage, $nombreProducto, $descripcion, $masInfo, $precioProducto, $botonComprar);
+                                productsCard($producto, $botonComprar);
                                 echo '</div>';
                             }
                         }
