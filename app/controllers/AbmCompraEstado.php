@@ -26,7 +26,7 @@ class AbmCompraEstado
             $obj->setear(
                 $param['idCompraEstado'],
                 $param['ceFechaIni'],
-                $param['cetFechaFin'],
+                $param['ceFechaFin'],
                 $objetoCompra,
                 $objetoCompraEstadoTipo
             );
@@ -158,5 +158,39 @@ class AbmCompraEstado
             }
         }
         return ['estadoActual' => $estado, 'fechaFin' => $fechaFin];
+    }
+
+    public function cancelarCompra($idCompra)
+    {
+        $datosEstadoActual = $this->obtenerEstadoActual($idCompra);
+        $paramBusqueda = [
+            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+            'idCompra' => $idCompra
+        ];
+        $compraEstado = $this->buscar($paramBusqueda);
+
+        $newDate = date('Y-m-d H:i:s');
+        //* agrego fecha a estado actual
+        $param = [
+            'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
+            'ceFechaIni' => $compraEstado[0]->getCefechaini(),
+            'ceFechaFin' => $newDate,
+            'idCompra' =>  $idCompra,
+            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+        ];
+        $bajaExitosa = $this->modificacion($param);
+
+        //* cambio a estado cancelado
+        $paramNuevoEstado = [
+            'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
+            'ceFechaIni' => $newDate,
+            'ceFechaFin' => $newDate,
+            'idCompra' =>  $idCompra,
+            'idCompraEstadoTipo' => 5,
+        ];
+
+        $bajaExitosa = $this->alta($paramNuevoEstado);
+
+        return $bajaExitosa;
     }
 }
