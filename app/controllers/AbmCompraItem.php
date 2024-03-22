@@ -133,4 +133,32 @@ class AbmCompraItem
         $arreglo = $objetoCompra->listar($whereClause);
         return $arreglo;
     }
+
+    public function eliminarItem($param)
+    {
+        $response = [];
+        $items = $this->buscar(['idCompra' => $param['idCompra']]);
+        foreach ($items as $item) {
+            $id = $item->getObjetoProducto()->getIdProducto();
+            if ($id  === $param['idProducto']) {
+                $bajaExitosa = $this->baja([$item->getIdCompraItem()]);
+                if ($bajaExitosa)
+                    $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
+                else
+                    $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar el producto del carrito');
+            }
+        }
+        if (count($items) === 1) {
+            // carrito vacio
+            //si es solo 1 item se debe cancelar la compra
+            $objetoCompraEstado = new AbmCompraEstado();
+            $bajaExitosa = $objetoCompraEstado->cancelarCompra($param['idCompra']);
+            if ($bajaExitosa)
+                $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
+            else
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar la compra');
+        }
+
+        return $response;
+    }
 }
