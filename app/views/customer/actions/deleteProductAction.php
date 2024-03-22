@@ -12,17 +12,7 @@ $param = [
     'idCompra' => $idCompra,
     'idProducto' => $idProducto
 ];
-$itemProducto = $objetoCompraItem->buscar($param);
-
-if (!empty($itemProducto)) {
-    $paramId = ['idCompraItem' => $itemProducto[0]->getIdCompraItem()];
-    $bajaExitosa = $objetoCompraItem->baja($paramId);
-    if ($bajaExitosa)
-        $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
-    else
-        $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar el producto del carrito');
-} else {
-    $response = array('title' => 'ERROR', 'message' => 'Producto no encontrado');
-}
+//TODO: si se borra el ultimo item, se debe borrar compra
+$response = $objetoCompraItem->eliminarItem($param);
 
 echo json_encode($response);
