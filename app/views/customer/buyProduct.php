@@ -26,42 +26,17 @@ if ($session->validar()) {
 
 $data = data_submitted();
 $idProducto = $data['idProducto'];
-$paramIdProducto = ['idProducto' => $idProducto];
 
 $objetoProducto = new AbmProducto();
-$producto = $objetoProducto->buscar($paramIdProducto);
-
-if (!empty($producto)) {
-    $nombre = $producto[0]->getProNombre();
-    $precio = $producto[0]->getProPrecio();
-    $stock = $producto[0]->getProCantStock();
-    $detallesJSON = json_decode($producto[0]->getProDetalle(), true);
-    $tipo = $producto[0]->getProTipo();
-    if ($tipo === 'accesorio')
-        $urlImagen =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
-    if ($tipo === 'juguete')
-        $urlImagen =  $IMAGES . "/products/toys/" . $detallesJSON['imagen'];
-    if ($tipo === 'alimento')
-        $urlImagen =  $IMAGES . "/products/food/" . $detallesJSON['imagen'];
-
-    $paramTipo = ["proTipo" => $tipo];
-    $productosSimilares = $objetoProducto->buscar($paramTipo);
-    $descripcion = $detallesJSON['descripcion'];
-    $masInfo = $detallesJSON['masInfo'];
-
-    $objetoValoracion = new AbmValoracionProducto();
-    $cantidadValoraciones = 0;
-    $valoraciones = $objetoValoracion->buscar($paramIdProducto);
-    if (!empty($valoraciones)) {
-        $sumaValoraciones = 0;
-        foreach ($valoraciones as $valoracion) {
-            $sumaValoraciones += $valoracion->getRanking();
-        }
-        $cantidadValoraciones = count($valoraciones);
-        $promedio = $sumaValoraciones / $cantidadValoraciones;
-        echo '<input type="hidden" id="promedio" value="' . $promedio . '">';
-    }
+$datosProducto = $objetoProducto->obtenerDatosProductos($idProducto);
+if (!is_null($datosProducto)) {
+    $masInfo = $datosProducto['masInfo'];
+    $productosSimilares = $datosProducto['productosSimilares'];
+    $datosValoraciones = $datosProducto['datosValoraciones'];
+    $valoraciones = $datosValoraciones['valoraciones'];
+    $promedioValoraciones = $datosValoraciones['promedio'];
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -85,12 +60,12 @@ if (!empty($producto)) {
         <div class="row">
             <div class="col-8">
                 <div class="container p-2">
-                    <img src="<?php echo $urlImagen ?>" alt="<?php $nombre ?>" class="image img-fluid" width="90%">
+                    <img src="<?php echo $datosProducto['urlImagen'] ?>" alt="<?php echo $datosProducto['nombre'] ?>" class="image img-fluid" width="90%">
                 </div>
             </div>
-            <div id="product-info" class="col-4" data-id-product="<?php echo $idProducto; ?>" data-id-user="<?php echo $idUsuarioActivo ?>">
+            <div id="product-info" class="col-4" data-id-product="<?php echo $datosProducto['id']; ?>" data-id-user="<?php echo $idUsuarioActivo ?>">
                 <div class="mt-3">
-                    <h1 class="title text-center"><?php echo $nombre ?></h1>
+                    <h1 class="title text-center"><?php echo $datosProducto['nombre'] ?></h1>
                 </div>
                 <hr class="my-1" style="border-width: 2px;">
 
@@ -103,15 +78,16 @@ if (!empty($producto)) {
                         <span class="star">&#9733;</span>
                     </div>
                     <div class="reviews text">
+                        <input type="hidden" id="promedio" value="<?php echo $promedioValoraciones ?>">
                         <a href="#" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalReviews">
-                            <?php echo $cantidadValoraciones ?> reviews
+                            <?php echo ($datosValoraciones['cantidadValoraciones'] > 0 ? $datosValoraciones['cantidadValoraciones'] : '0') ?> reviews
                         </a>
                         <?php modalReviews($valoraciones) ?>
                     </div>
                 </div>
 
                 <div class="mt-3">
-                    <h5 class="text"><?php echo $descripcion ?></h5>
+                    <h5 class="text"><?php echo $datosProducto['descripcion'] ?></h5>
                     <?php
                     foreach ($masInfo as $info) {
                         echo '<p class="ms-3 text"> - ' . $info . '</p>';
@@ -119,11 +95,11 @@ if (!empty($producto)) {
                     ?>
                 </div>
                 <div class="mt-4">
-                    <h3 class="title"><?php echo "$ " . $precio ?></h3>
+                    <h3 class="title"><?php echo "$ " . $datosProducto['precio'] ?></h3>
                 </div>
                 <div class="mt-3">
                     <p><?php
-                        echo $stock <= 1 ? 'Apresurate, es el ultimo!' : '';
+                        echo $datosProducto['stock'] <= 1 ? 'Apresurate, es el ultimo!' : '';
                         ?></p>
                     <div class="d-flex">
                         <div class="input-group mb-3" style="width: 150px;">
@@ -158,28 +134,11 @@ if (!empty($producto)) {
 
                         // Mostrar los productos correspondientes a los índices aleatorios
                         foreach ($indicesAleatorios as $indice) {
-                            $producto = $productosSimilares[$indice];
+                            $objetoProducto = $productosSimilares[$indice];
 
-                            $cardId = $producto->getIdProducto();
-                            $nombre = $producto->getProNombre();
-                            $detallesJSON = json_decode($producto->getProDetalle(), true);
-
-                            $tipoProducto = $producto->getProTipo();
-                            if ($tipoProducto === 'accesorio')
-                                $urlImagen =  $IMAGES . "/products/accessories/" . $detallesJSON['imagen'];
-                            if ($tipoProducto === 'juguete')
-                                $urlImagen =  $IMAGES . "/products/toys/" . $detallesJSON['imagen'];
-                            if ($tipoProducto === 'alimento')
-                                $urlImagen =  $IMAGES . "/products/food/" . $detallesJSON['imagen'];
-
-                            $descripcion = $detallesJSON['descripcion'];
-                            $masInfo = $detallesJSON['masInfo'];
-                            $precio = $producto->getProPrecio();
-
-                            $idProducto = $producto->getIdProducto();
-                            $botonComprar = "buyProduct.php?idProducto=" . $idProducto;
+                            $botonComprar = "buyProduct.php?idProducto=" . $objetoProducto->getIdProducto();
                             echo '<div class="col">';
-                            productsCard($cardId, $urlImagen, $nombre, $descripcion, $masInfo, $precio, $botonComprar);
+                            productsCard($objetoProducto, $botonComprar);
                             echo '</div>';
                         }
 
