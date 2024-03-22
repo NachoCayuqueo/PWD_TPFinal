@@ -11,7 +11,7 @@ if ($session->validar()) {
     $listaCompras = $objetoCompra->obtenerCompras($param);
 }
 
-$listaProductos = [];
+$arregloProductos = [];
 $idUsuario = 0;
 $precioFinal = 0;
 foreach ($listaCompras as $compra) {
@@ -19,7 +19,7 @@ foreach ($listaCompras as $compra) {
     if ($estadoCompra === 1) {
         $idUsuario = $compra['idUsuario'];
         $idCompra = $compra['idCompra'];
-        $listaProductos = $compra['compraItem'];
+        $arregloProductos = $compra['compraItem'];
         break;
     }
 }
@@ -31,7 +31,7 @@ echo '
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">';
-foreach ($listaProductos as $producto) {
+foreach ($arregloProductos as $producto) {
     $idProducto = $producto['idProducto'];
     $nombreProducto = $producto['nombreProducto'];
     $cantidadProducto = $producto['cantidadProducto'];
