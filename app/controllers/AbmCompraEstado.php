@@ -146,4 +146,17 @@ class AbmCompraEstado
         $arreglo = $objetoUsuario->listar($whereClause);
         return $arreglo;
     }
+
+    public function obtenerEstadoActual($idCompra)
+    {
+        $estado = 0;
+        $listaCompraEstado = $this->buscar(['idCompra' => $idCompra]);
+        if (!empty($listaCompraEstado)) {
+            foreach ($listaCompraEstado as $compraEstado) {
+                $estado = $compraEstado->getObjetoCompraEstadoTipo()->getIdCompraEstadoTipo();
+                $fechaFin = $compraEstado->getCefechaifin();
+            }
+        }
+        return ['estadoActual' => $estado, 'fechaFin' => $fechaFin];
+    }
 }
