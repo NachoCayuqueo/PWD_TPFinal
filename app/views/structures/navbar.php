@@ -1,5 +1,4 @@
 <?php
-// include_once "../../../config/configuration.php";
 $session = new Session();
 $existeSesion = false;
 if ($session->validar()) {
@@ -90,6 +89,10 @@ if ($session->validar()) {
 </nav> -->
 
 <!-- menu cliente -->
+<?php
+include_once "../customer/strucures/cartSidePanel.php";
+?>
+
 <nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
@@ -112,15 +115,8 @@ if ($session->validar()) {
                     <a class="nav-link" href="#">Mis Compras</a>
                 </li>
                 <li class="nav-item ms-3">
-                    <a class="nav-link" href="#">
-                        Carrito (0)
-                        <img src="<?php echo $BOOTSTRAP_ICONS ?>/cart-fill.svg" alt="cart" width="25">
-                    </a>
+                    <a id="carritoLink" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Carrito</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Quienes somos</a>
-                </li> -->
-
             </ul>
         </div>
     </div>
