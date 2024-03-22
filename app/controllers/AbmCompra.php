@@ -136,46 +136,74 @@ class AbmCompra
     {
         $compras = [];
         $compraItem = [];
-        $compra_data = [];
-        $precioTotal = 0;
-        $objetoCompraItem = new AbmCompraItem();
+        $objetoCompraEstado = new AbmCompraEstado();
 
         $listaCompra = $this->buscar($param);
         if (!empty($listaCompra)) {
             foreach ($listaCompra as $compra) {
-                $compraItem = [];
-                //obtener items de compra
-                $paramIdCompra = ['idCompra' => $compra->getIdCompra()];
+                // Obtener detalles de los items de la compra
+                $detallesCompra = $this->obtenerDetallesCompraItems($compra);
 
-                $listaItems = $objetoCompraItem->buscar($paramIdCompra);
-                foreach ($listaItems as $item) {
-                    $objetoProducto = $item->getObjetoProducto();
-                    $precioUnitario = $objetoProducto->getProPrecio();
-                    $cantidad = $item->getCiCantidad();
-                    $precioTotal += ($cantidad * $precioUnitario);
+                // obtener el estado actual de la compra
+                $detallesEstado = $objetoCompraEstado->obtenerEstadoActual($compra->getIdCompra());
 
-                    $item_data = [
-                        'idCompraItem' => $item->getIdCompraItem(),
-                        'idProducto' => $objetoProducto->getIdProducto(),
-                        'nombreProducto' => $objetoProducto->getProNombre(),
-                        'precioUnitarioProducto' => $precioUnitario,
-                        'cantidadProducto' => $cantidad,
-                    ];
-                    array_push($compraItem, $item_data);
-                }
+                // construir datos de la compra
                 $compra_data = [
                     'idCompra' => $compra->getIdCompra(),
-                    'cantidadItems' => count($compraItem),
-                    'precioTotal' => $precioTotal,
+                    'estadoCompra' => $detallesEstado['estadoActual'],
+                    'fechaFin' => $detallesEstado['fechaFin'],
+                    'cantidadItems' => count($detallesCompra['items']),
+                    'precioTotal' => $detallesCompra['precioTotal'],
                     'fechaCompra' => $compra->getCofecha(),
                     'idUsuario' => $param['idUsuario'],
-                    'compraItem' => $compraItem
+                    'compraItem' => $detallesCompra['items']
                 ];
                 array_push($compras, $compra_data);
             }
         }
 
         return $compras;
+    }
+
+    /**
+     * Obtiene los detalles de los items de una compra.
+     * @param Compra $compra - Objeto de la compra.
+     * @return array - Arreglo de objetos que representa los detalles de los items de la compra.
+     */
+    private function obtenerDetallesCompraItems($compra)
+    {
+        $objetoCompraItem = new AbmCompraItem();
+        $objetoProducto = new AbmProducto();
+        $compraItem = [];
+        $precioTotal = 0;
+
+        // Obtener los items de la compra
+        $paramIdCompra = ['idCompra' => $compra->getIdCompra()];
+        $listaItems = $objetoCompraItem->buscar($paramIdCompra);
+
+        // Calcular el precio total y construir los datos de los items
+        foreach ($listaItems as $item) {
+            $producto = $item->getObjetoProducto();
+            $precioUnitario = $producto->getProPrecio();
+            $tipo = $producto->getProTipo();
+            $nombreImagen = $producto->getProImagen();
+            $urlImagen =  $GLOBALS['IMAGES'] . "/products/" . $tipo . "/" . $nombreImagen;
+
+            $cantidad = $item->getCiCantidad();
+            $precioTotal += ($cantidad * $precioUnitario);
+
+            $item_data = [
+                'idCompraItem' => $item->getIdCompraItem(),
+                'idProducto' => $producto->getIdProducto(),
+                'nombreProducto' => $producto->getProNombre(),
+                'urlImagen' => $urlImagen,
+                'precioUnitarioProducto' => $precioUnitario,
+                'cantidadProducto' => $cantidad,
+            ];
+            $compraItem[] = $item_data;
+        }
+
+        return ['items' => $compraItem, 'precioTotal' => $precioTotal];
     }
 
     /**
