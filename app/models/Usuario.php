@@ -281,7 +281,7 @@ class Usuario extends DataBase
         $newDate = date('Y-m-d H:i:s');
         $query = "UPDATE usuario SET 
                     usDeshabilitado='" . $newDate . "', 
-                    usActive=0 WHERE idUsuario=" . $this->getIdUsuario();
+                    usactivo=0 WHERE idUsuario=" . $this->getIdUsuario();
 
 
         if ($this->Iniciar()) {
