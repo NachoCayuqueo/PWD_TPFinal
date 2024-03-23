@@ -1,32 +1,5 @@
 <?php
 
-
-function seleccionCheck($esNuevo, $esPopular)
-{
-
-  if ($esNuevo === 0) {
-    $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
-     </div>';
-  } else {
-    $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
-    </div>';
-  }
-
-  if ($esPopular === 0) {
-    $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
-     </div>';
-  } else {
-    $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
-                </div>';
-  }
-
-  return [$esNuevito, $esPopu];
-}
-
 function crearTablaProducto($listaProducto)
 {
   //viewStructure($listaProducto);
@@ -51,21 +24,9 @@ function crearTablaProducto($listaProducto)
 
 
   foreach ($listaProducto as $producto) {
-    $param = array('idProducto' => $producto->getIdProducto);
 
-    $detallesJSON = json_decode($producto->getProDetalle(), true);
-    $descripcion = $detallesJSON['descripcion'];
-    $masInfo = $detallesJSON['masInfo'];
-
-
-    $imagen = $detallesJSON['imagen'];
     $id =  $producto->getIdProducto();
 
-    $descripcionCompleta = "";
-    foreach ($masInfo as $info) {
-      $descripcionCompleta .= $info . "<br/>";
-    }
-    //echo $descripcionCompleta;
     $esPopular = $producto->getEsProPopular();
     $esNuevo = $producto->getEsProNuevo();
 
@@ -73,6 +34,7 @@ function crearTablaProducto($listaProducto)
     $esNuevito = $check[0];
     $esPopu = $check[1];
 
+    $descripcionCompleta = $producto->getProMasInfo();
 
     echo "<tr style='text-align: center;'>";
     echo "<td style='width: max-content;'>" . $producto->getIdProducto() . "</td>";
@@ -105,8 +67,8 @@ function crearTablaProducto($listaProducto)
       '&stock=' . $producto->getProCantStock() .
       '&esNuevo=' . $esNuevo .
       '&esPopular=' . $esPopular .
-      '&nombreImagen=' . $imagen .
-      '&nombreCompleto=' . $descripcion . '" class="btn btn-outline-primary">
+      '&nombreImagen=' . $producto->getProImagen() .
+      '&nombreCompleto=' . $producto->getProDescripcion() . '" class="btn btn-outline-primary">
                     <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
                 </a>
 
@@ -118,5 +80,28 @@ function crearTablaProducto($listaProducto)
     echo "</tr>";
   }
 }
+function seleccionCheck($esNuevo, $esPopular)
+{
 
-// <img src="http://localhost/PWD_TPFinal/public/lib/bootstrap/bootstrap-icons/icons/pen.svg" alt="edit">
+  if ($esNuevo === 0) {
+    $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+     </div>';
+  } else {
+    $esNuevito = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+    </div>';
+  }
+
+  if ($esPopular === 0) {
+    $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+     </div>';
+  } else {
+    $esPopu = '<div class="form-check" style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+                </div>';
+  }
+
+  return [$esNuevito, $esPopu];
+}

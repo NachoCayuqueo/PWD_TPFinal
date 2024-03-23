@@ -4,7 +4,6 @@ include_once '../../../../config/configuration.php';
 $objArchivo = new SubirArchivos();
 $objProducto = new AbmProducto();
 $datos = data_submitted();
-viewStructure($datos);
 
 $idProducto = $datos['idProducto'];
 $param = ["idProducto" => $idProducto];
@@ -23,32 +22,29 @@ if (!empty($producto)) {
         $respuesta = $objArchivo->SubirImagen($nombreImagen, $rutaTemporal, $datos['tipo']);
     }
 
+    if (!$respuesta)
+        $nombreImagen = $datos['nombreImagen'];
+
     $descripcion = $datos['titulo'];
     $masInfo = array($datos['masInfo']);
 
-    //armo el json 
-    $json = array(
-        "descripcion" => $descripcion,
-        "masInfo" => $masInfo,
-        "imagen" => $nombreImagen
-    );
-    $json_final = json_encode($json);
-
-
 
     $modificarParams = [
+        "idProducto" => $datos['idProducto'],
         "proNombre" => $datos['nombre'],
-        "proDetalle" => $json_final,
-        "proCantStock" => $stockModificado,
-        "proTipo" => $datos['tipo'],
         "proPrecio" => $datos['precio'],
-        "esProDestacado" => $datos['esPopular'],
-        "esProNuevo" => $datos['esNuevo'],
-        "idProducto" => $idProducto,
+        "proTipo" => $datos['tipo'],
+        "proDescripcion" => $datos['titulo'],
+        "proMasInfo" => $datos['masInfo'],
+        "proImagen" => $nombreImagen,
+        "proCantStock" => $datos['stock'],
+        "esprodestacado" => $datos['esPopular'],
+        "espronuevo" => $datos['esNuevo'],
 
     ];
 
     $modificacionExitosa = $objProducto->modificacion($modificarParams);
+
     if ($modificacionExitosa)
         $response = array('title' => 'EXITO', 'message' => 'Modificacion exitosa con el id: ' . $data['idProducto']);
     else

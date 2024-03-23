@@ -30,6 +30,7 @@ $objetoProducto = new AbmProducto();
 $objetoRol = new AbmRol();
 
 $listaProducto = $objetoProducto->buscar(null);
+//viewStructure($listaProducto);
 $existeProducto = false;
 
 if (count($listaProducto) > 0) {

@@ -4,7 +4,7 @@ include_once './structures/funciones.php';
 
 $datos = data_submitted();
 
-//viewStructure($datos);
+// viewStructure($datos);
 
 $nombreImagen = $datos['nombreImagen'];
 $nombre = $datos['nombre'];
@@ -152,7 +152,9 @@ if (!empty($listaRoles)) {
                         <div class="row mb-4">
                             <div class="col text-center border">
                                 <h6>Imagen actual</h6>
-                                <img src="../../../assets/images/products/<?php echo $tipo ?>/<?php echo    $nombreImagen ?>" alt="" width="300" height="300">
+                                <img src="../../../assets/images/products/<?php echo $tipo ?>/<?php echo $nombreImagen ?>" alt="" width="300" height="300">
+                                <input type="hidden" name="nombreImagen" id="nombreImagen" value="<?php echo $nombreImagen ?>">
+
                             </div>
                             <div class="col d-flex align-items-center">
                                 <div>

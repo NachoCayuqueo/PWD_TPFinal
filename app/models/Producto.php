@@ -5,7 +5,9 @@ class Producto extends DataBase
     private $proCantStock;
     private $proPrecio;
     private $proTipo;
-    private $proDetalle;
+    private $proDescripcion;
+    private $proMasInfo;
+    private $proImagen;
     private $proNombre;
     private $esProPopular;
     private $esProNuevo;
@@ -18,7 +20,7 @@ class Producto extends DataBase
         $this->proCantStock = "";
         $this->proPrecio = "";
         $this->proTipo = "";
-        $this->proDetalle = null;
+        $this->proDescripcion = null;
         $this->proNombre = "";
         $this->esProPopular = false;
         $this->esProNuevo = false;
@@ -55,13 +57,26 @@ class Producto extends DataBase
         return $this->proTipo;
     }
     /**
-     * Get the value of proDetalle
+     * Get the value of proDescripcion
      */
-    public function getProDetalle()
+    public function getProDescripcion()
     {
-        return $this->proDetalle;
+        return $this->proDescripcion;
     }
-
+    /**
+     * Get the value of proMasInfo
+     */
+    public function getProMasInfo()
+    {
+        return $this->proMasInfo;
+    }
+    /**
+     * Get the value of proImagen
+     */
+    public function getProImagen()
+    {
+        return $this->proImagen;
+    }
     /**
      * Get the value of proNombre
      */
@@ -137,17 +152,38 @@ class Producto extends DataBase
         return $this;
     }
     /**
-     * Set the value of proDetalle
+     * Set the value of proDescripcion
      *
      * @return  self
      */
-    public function setProDetalle($proDetalle)
+    public function setProDescripcion($proDescripcion)
     {
-        $this->proDetalle = $proDetalle;
+        $this->proDescripcion = $proDescripcion;
 
         return $this;
     }
+    /**
+     * Set the value of proMasInfo
+     *
+     * @return  self
+     */
+    public function setProMasInfo($proMasInfo)
+    {
+        $this->proMasInfo = $proMasInfo;
 
+        return $this;
+    }
+    /**
+     * Set the value of proImagen
+     *
+     * @return  self
+     */
+    public function setProImagen($proImagen)
+    {
+        $this->proImagen = $proImagen;
+
+        return $this;
+    }
     /**
      * Set the value of proNombre
      *
@@ -193,11 +229,13 @@ class Producto extends DataBase
         return $this;
     }
 
-    public function setear($id, $nombre, $detalle, $precio, $tipo, $stock, $esPopular, $esNuevo)
+    public function setear($id, $nombre, $descripcion, $masInfo, $imagen, $precio, $tipo, $stock, $esPopular, $esNuevo)
     {
         $this->setIdProducto($id);
         $this->setProNombre($nombre);
-        $this->setProDetalle($detalle);
+        $this->setProDescripcion($descripcion);
+        $this->setProMasInfo($masInfo);
+        $this->setProImagen($imagen);
         $this->setProPrecio($precio);
         $this->setProTipo($tipo);
         $this->setProCantStock($stock);
@@ -214,7 +252,7 @@ class Producto extends DataBase
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $this->Registro();
-                    $this->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['protipo'], $row['procantstock'], $row['esprodestacado'], $row['espronuevo']);
+                    $this->setear($row['idproducto'], $row['pronombre'], $row['prodescripcion'], $row['promasinfo'], $row['proimagen'], $row['proprecio'], $row['protipo'], $row['procantstock'], $row['esprodestacado'], $row['espronuevo']);
                 }
             }
         } else {
@@ -226,10 +264,12 @@ class Producto extends DataBase
     public function insertar()
     {
         $resp = false;
-        $query = "INSERT INTO producto(pronombre, prodetalle, procantstock,proprecio,esprodestacado,espronuevo,protipo)  
+        $query = "INSERT INTO producto(pronombre, prodescripcion,promasinfo,proimagen,procantstock,proprecio,esprodestacado,espronuevo,protipo)  
               VALUES('"
             . $this->getProNombre() . "', '"
-            . $this->getProDetalle() . "', '"
+            . $this->getProDescripcion() . "', '"
+            . $this->getProMasInfo() . "', '"
+            . $this->getProImagen() . "', '"
             . $this->getProCantStock() . "', '"
             . $this->getProPrecio() . "', '"
             . $this->getEsProPopular() . "', '"
@@ -249,14 +289,15 @@ class Producto extends DataBase
         return $resp;
     }
 
-    //TODO: es posible que se necesite un control si viene imagen para guardar solo su nombre
     public function modificar()
     {
         $resp = false;
 
         $query = "UPDATE producto SET 
             pronombre='" . $this->getProNombre() . "', 
-            prodetalle='" . $this->getProDetalle() . "', 
+            prodescripcion='" . $this->getProDescripcion() . "', 
+            promasinfo='" . $this->getProMasInfo() . "', 
+            proimagen='" . $this->getProImagen() . "', 
             procantstock='" . $this->getProCantStock() . "', 
             proprecio='" . $this->getProPrecio() . "', 
             esprodestacado='" . $this->getEsProPopular() . "', 
@@ -295,7 +336,6 @@ class Producto extends DataBase
 
     public function listar($parametro = "")
     {
-        //echo "listar de producto <br/>";
         $arreglo = array();
 
         $query = "SELECT * FROM producto ";
@@ -308,7 +348,7 @@ class Producto extends DataBase
             if ($res > 0) {
                 while ($row = $this->Registro()) {
                     $obj = new Producto();
-                    $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proprecio'], $row['protipo'], $row['procantstock'], $row['esprodestacado'], $row['espronuevo']);
+                    $obj->setear($row['idproducto'], $row['pronombre'], $row['prodescripcion'], $row['promasinfo'], $row['proimagen'], $row['proprecio'], $row['protipo'], $row['procantstock'], $row['esprodestacado'], $row['espronuevo']);
                     array_push($arreglo, $obj);
                 }
             }
@@ -316,7 +356,6 @@ class Producto extends DataBase
             $this->setmensajeoperacion("ERROR::Producto => listar: " . $this->getError());
         }
         //}
-        //viewStructure($arreglo);
         return $arreglo;
     }
 }
