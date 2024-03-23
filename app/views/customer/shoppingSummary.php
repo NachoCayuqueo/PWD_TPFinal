@@ -73,7 +73,7 @@ if ($session->validar()) {
             }
             echo '</div>
                   <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">';
-            if (crearTablaComprasCanceladas($listaCompra)) {
+            if (!crearTablaComprasCanceladas($listaCompra)) {
                 echo "<p>No se encontraron compras canceladas.</p>";
             };
             echo '</div>

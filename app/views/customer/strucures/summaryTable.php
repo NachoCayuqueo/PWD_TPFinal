@@ -97,7 +97,7 @@ function crearTablaComprasCanceladas($listaCompras)
     echo '</tbody>
                 </table>  ';
 
-    return $estadoCompra;
+    return $existeCompra;
 }
 
 function collapseProducto($idCompra, $listaProductos)
