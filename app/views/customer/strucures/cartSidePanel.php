@@ -14,9 +14,11 @@ if ($session->validar()) {
 $arregloProductos = [];
 $idUsuario = 0;
 $precioFinal = 0;
+$existeCompraCarrito = false;
 foreach ($listaCompras as $compra) {
     $estadoCompra = $compra['estadoCompra'];
     if ($estadoCompra === 1) {
+        $existeCompraCarrito = true;
         $idUsuario = $compra['idUsuario'];
         $idCompra = $compra['idCompra'];
         $arregloProductos = $compra['compraItem'];
@@ -29,17 +31,19 @@ echo '
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrito de Compras</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">';
-foreach ($arregloProductos as $producto) {
-    $idProducto = $producto['idProducto'];
-    $nombreProducto = $producto['nombreProducto'];
-    $cantidadProducto = $producto['cantidadProducto'];
-    $precioUnitario = $producto['precioUnitarioProducto'];
-    $urlImagen = $producto['urlImagen'];
-    $precioProductoTotal = $cantidadProducto *  $precioUnitario;
-    $precioFinal += $precioProductoTotal;
+            </div>';
+if ($existeCompraCarrito) {
     echo '
+            <div class="offcanvas-body">';
+    foreach ($arregloProductos as $producto) {
+        $idProducto = $producto['idProducto'];
+        $nombreProducto = $producto['nombreProducto'];
+        $cantidadProducto = $producto['cantidadProducto'];
+        $precioUnitario = $producto['precioUnitarioProducto'];
+        $urlImagen = $producto['urlImagen'];
+        $precioProductoTotal = $cantidadProducto *  $precioUnitario;
+        $precioFinal += $precioProductoTotal;
+        echo '
             <div class="card mb-2">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -74,8 +78,8 @@ foreach ($arregloProductos as $producto) {
                   </div>
                 </div>
             </div>';
-}
-echo '
+    }
+    echo '
                 <div class="mt-4 mb-4">
                     <hr style="color: black;">
                 </div>
@@ -86,7 +90,16 @@ echo '
                 <div class="d-grid gap-2 mt-3">
                     <button class="btn btn-outline-primary btn-text" type="button">Comprar</button>
                 </div>
+            </div>';
+} else {
+    echo '
+            <div class="m-2">
+                <hr style="color: black;">
             </div>
-                </div>';
+            <p class="text-center text">No se agregaron productos al carrito</p>
+    ';
+}
+echo
+'</div>';
 
 echo '<script src="' . $PUBLIC_JS . '/customer/handleQuantityCartAjax.js"></script>';
