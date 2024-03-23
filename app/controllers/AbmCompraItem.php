@@ -138,10 +138,11 @@ class AbmCompraItem
     {
         $response = [];
         $items = $this->buscar(['idCompra' => $param['idCompra']]);
+        $paramIdProducto = intval($param['idProducto']);
         foreach ($items as $item) {
-            $id = $item->getObjetoProducto()->getIdProducto();
-            if ($id  === $param['idProducto']) {
-                $bajaExitosa = $this->baja([$item->getIdCompraItem()]);
+            $idProducto = $item->getObjetoProducto()->getIdProducto();
+            if ($idProducto  === $paramIdProducto) {
+                $bajaExitosa = $this->baja(['idCompraItem' => $item->getIdCompraItem()]);
                 if ($bajaExitosa)
                     $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
                 else
