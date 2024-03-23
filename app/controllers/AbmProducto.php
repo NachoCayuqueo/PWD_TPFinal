@@ -90,4 +90,57 @@ class AbmProducto
     {
         return $this->buscar(['proTipo' => $tipoProducto]);
     }
+
+    public function modificacion($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoProducto = $this->cargarObjeto($param);
+            if ($objetoProducto != null and $objetoProducto->modificar()) {
+
+                $resp = true;
+            }
+        }
+
+        return $resp;
+    }
+    private function seteadosCamposClaves($param)
+    {
+        $resp = false;
+        if (isset($param['idProducto']))
+            $resp = true;
+        return $resp;
+    }
+    private function cargarObjeto($param)
+    {
+
+        $obj = null;
+        if (
+            array_key_exists('idProducto', $param)  &&
+            array_key_exists('proNombre', $param) &&
+            array_key_exists('proPrecio', $param) &&
+            array_key_exists('proTipo', $param) &&
+            array_key_exists('proDescripcion', $param) &&
+            array_key_exists('proMasInfo', $param) &&
+            array_key_exists('proImagen', $param) &&
+            array_key_exists('proCantStock', $param) &&
+            array_key_exists('esprodestacado', $param) &&
+            array_key_exists('espronuevo', $param)
+        ) {
+            $obj = new Producto();
+            $obj->setear(
+                $param['idProducto'],
+                $param['proNombre'],
+                $param['proDescripcion'],
+                $param['proMasInfo'],
+                $param['proImagen'],
+                $param['proPrecio'],
+                $param['proTipo'],
+                $param['proCantStock'],
+                $param['esprodestacado'],
+                $param['espronuevo']
+            );
+        }
+        return $obj;
+    }
 }

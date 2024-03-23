@@ -84,6 +84,7 @@ class Session
      */
     public function getRol()
     {
+
         $list_rol = null;
         if ($this->validar()) {
             $obj = new AbmUsuario();

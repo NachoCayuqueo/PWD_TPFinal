@@ -176,10 +176,11 @@ class AbmUsuario
             if (isset($param['idRol']))
                 $where[] = " idrol ='" . $param['idRol'] . "'";
         }
-        $whereClause = implode(" AND ", $where);
 
+        $whereClause = implode(" AND ", $where);
         $objetoUsuarioRol = new UsuarioRol();
         $arreglo = $objetoUsuarioRol->listar($whereClause);
+
         return $arreglo;
     }
 
