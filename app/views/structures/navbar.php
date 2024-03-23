@@ -112,7 +112,7 @@ include_once "../customer/strucures/cartSidePanel.php";
                     <a class="nav-link" href="#">Productos Nuevos</a>
                 </li>
                 <li class="nav-item ms-3">
-                    <a class="nav-link" href="#">Mis Compras</a>
+                    <a class="nav-link" href="<?php echo $VISTAS ?>/customer/shoppingSummary.php">Mis Compras</a>
                 </li>
                 <li class="nav-item ms-3">
                     <a id="carritoLink" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Carrito</a>
