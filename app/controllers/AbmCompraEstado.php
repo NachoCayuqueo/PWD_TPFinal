@@ -16,13 +16,19 @@ class AbmCompraEstado
             array_key_exists('idCompra', $param) &&
             array_key_exists('idCompraEstadoTipo', $param)
         ) {
+            $objetoCompra = new Compra();
+            $objetoCompra->setIdCompra($param['idCompra']);
+
+            $objetoCompraEstadoTipo = new CompraEstadoTipo();
+            $objetoCompraEstadoTipo->setIdCompraEstadoTipo($param['idCompraEstadoTipo']);
+
             $obj = new CompraEstado();
             $obj->setear(
                 $param['idCompraEstado'],
-                $param['cetFechaIni'],
-                $param['cetFechaFin'],
-                $param['idCompra'],
-                $param['idCompraEstadoTipo']
+                $param['ceFechaIni'],
+                $param['ceFechaFin'],
+                $objetoCompra,
+                $objetoCompraEstadoTipo
             );
         }
         return $obj;
@@ -111,14 +117,25 @@ class AbmCompraEstado
      */
     public function buscar($param)
     {
+        // viewStructure($param);
         $where = [];
         if ($param !== NULL) {
             if (isset($param['idCompraEstado']))
                 $where[] = " idcompraestado = '" . $param['idCompraEstado'] . "'";
             if (isset($param['ceFechaIni']))
                 $where[] = " cefechaini = '" . $param['ceFechaIni'] . "'";
-            if (isset($param['ceFechaFin']))
-                $where[] = " cefechafin = '" . $param['ceFechaFin'] . "'";
+            // Verificar si ceFechaFin es NULL para incluirlo en la búsqueda
+            if (isset($param['ceFechaFin'])) {
+                // Si ceFechaFin es NULL, agregar la condición correspondiente
+                if ($param['ceFechaFin'] === null || $param['ceFechaFin'] === 'NULL') {
+                    $where[] = "cefechafin IS NULL";
+                } else {
+                    // Si ceFechaFin no es NULL, agregar la fecha como condición
+                    $where[] = "cefechafin = '" . $param['ceFechaFin'] . "'";
+                }
+            }
+            // if (isset($param['ceFechaFin']))
+            //     $where[] = " cefechafin = '" . $param['ceFechaFin'] . "'";
             if (isset($param['idCompra']))
                 $where[] = " idcompra = '" . $param['idCompra'] . "'";
             if (isset($param['idCompraEstadoTipo']))
@@ -128,5 +145,52 @@ class AbmCompraEstado
         $objetoUsuario = new CompraEstado();
         $arreglo = $objetoUsuario->listar($whereClause);
         return $arreglo;
+    }
+
+    public function obtenerEstadoActual($idCompra)
+    {
+        $estado = 0;
+        $listaCompraEstado = $this->buscar(['idCompra' => $idCompra]);
+        if (!empty($listaCompraEstado)) {
+            foreach ($listaCompraEstado as $compraEstado) {
+                $estado = $compraEstado->getObjetoCompraEstadoTipo()->getIdCompraEstadoTipo();
+                $fechaFin = $compraEstado->getCefechaifin();
+            }
+        }
+        return ['estadoActual' => $estado, 'fechaFin' => $fechaFin];
+    }
+
+    public function cancelarCompra($idCompra)
+    {
+        $datosEstadoActual = $this->obtenerEstadoActual($idCompra);
+        $paramBusqueda = [
+            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+            'idCompra' => $idCompra
+        ];
+        $compraEstado = $this->buscar($paramBusqueda);
+
+        $newDate = date('Y-m-d H:i:s');
+        //* agrego fecha a estado actual
+        $param = [
+            'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
+            'ceFechaIni' => $compraEstado[0]->getCefechaini(),
+            'ceFechaFin' => $newDate,
+            'idCompra' =>  $idCompra,
+            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+        ];
+        $bajaExitosa = $this->modificacion($param);
+
+        //* cambio a estado cancelado
+        $paramNuevoEstado = [
+            'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
+            'ceFechaIni' => $newDate,
+            'ceFechaFin' => $newDate,
+            'idCompra' =>  $idCompra,
+            'idCompraEstadoTipo' => 5,
+        ];
+
+        $bajaExitosa = $this->alta($paramNuevoEstado);
+
+        return $bajaExitosa;
     }
 }

@@ -15,12 +15,18 @@ class AbmCompraItem
             array_key_exists('idCompra', $param) &&
             array_key_exists('idProducto', $param)
         ) {
+            $objetoCompra = new Compra();
+            $objetoCompra->setIdCompra($param['idCompra']);
+
+            $objetoProducto = new Producto();
+            $objetoProducto->setIdProducto($param['idProducto']);
+
             $obj = new CompraItem();
             $obj->setear(
                 $param['idCompraItem'],
                 $param['ciCantidad'],
-                $param['idCompra'],
-                $param['idProducto']
+                $objetoCompra,
+                $objetoProducto
             );
         }
         return $obj;
@@ -126,5 +132,34 @@ class AbmCompraItem
         $objetoCompra = new CompraItem();
         $arreglo = $objetoCompra->listar($whereClause);
         return $arreglo;
+    }
+
+    public function eliminarItem($param)
+    {
+        $response = [];
+        $items = $this->buscar(['idCompra' => $param['idCompra']]);
+        $paramIdProducto = intval($param['idProducto']);
+        foreach ($items as $item) {
+            $idProducto = $item->getObjetoProducto()->getIdProducto();
+            if ($idProducto  === $paramIdProducto) {
+                $bajaExitosa = $this->baja(['idCompraItem' => $item->getIdCompraItem()]);
+                if ($bajaExitosa)
+                    $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
+                else
+                    $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar el producto del carrito');
+            }
+        }
+        if (count($items) === 1) {
+            // carrito vacio
+            //si es solo 1 item se debe cancelar la compra
+            $objetoCompraEstado = new AbmCompraEstado();
+            $bajaExitosa = $objetoCompraEstado->cancelarCompra($param['idCompra']);
+            if ($bajaExitosa)
+                $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
+            else
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar la compra');
+        }
+
+        return $response;
     }
 }

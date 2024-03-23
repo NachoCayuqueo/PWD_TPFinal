@@ -207,3 +207,11 @@ input[type="number"] {
   width: 50%; /* Cambia este valor para ajustar la fracción de estrella */
   color: gold; /* Color de la fracción de estrella */
 }
+
+.border-color-custom {
+  border-color: #d4d8f0;
+}
+
+.btn-radius {
+  border-radius: 50%;
+}

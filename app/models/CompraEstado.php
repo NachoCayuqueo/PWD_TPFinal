@@ -180,13 +180,20 @@ class CompraEstado extends DataBase
         $resp = false;
         $idCompra = $this->getObjetoCompra()->getIdCompra();
         $idCompraEstadoTipo = $this->getObjetoCompraEstadoTipo()->getIdCompraEstadoTipo();
-        $query = "INSERT INTO compraestado(idcompra,idcompraestadotipo,cefechaini,cefechafin)  
-              VALUES('"
-            . $idCompra . "', '"
-            . $idCompraEstadoTipo . "', '"
+
+        $fechaFin = $this->getCefechaifin();
+        $fechaFinStr = $fechaFin === null ? '' : ', cefechafin';
+
+        $fechaFinValue = $fechaFin === null ? '' : ", '$fechaFin'";
+
+        $query = "INSERT INTO compraestado(cefechaini, idcompra, idcompraestadotipo$fechaFinStr)  
+        VALUES('"
             . $this->getCefechaini() . "', '"
-            . $this->getCefechaifin() . "'
-        );";
+            . $idCompra . "', '"
+            . $idCompraEstadoTipo . "'"
+            . $fechaFinValue .
+            ");";
+
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($query)) {
                 $this->setIdCompraEstado($id);
@@ -250,6 +257,8 @@ class CompraEstado extends DataBase
         if ($parametro != "") {
             $query .= 'WHERE ' . $parametro;
         }
+
+
         // if ($this->Iniciar()) {
         $res = $this->Ejecutar($query);
         if ($res > -1) {
