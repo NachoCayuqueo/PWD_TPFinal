@@ -44,7 +44,7 @@ class AbmCompraEstado
     {
         $obj = null;
         if (isset($param['idCompraEstado'])) {
-            $obj = new Compra();
+            $obj = new CompraEstado();
             $obj->setear($param['idCompraEstado'], null, null, null, null);
         }
         return $obj;
