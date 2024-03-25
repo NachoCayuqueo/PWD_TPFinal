@@ -29,6 +29,7 @@ $idProducto = $data['idProducto'];
 
 $objetoProducto = new AbmProducto();
 $datosProducto = $objetoProducto->obtenerDatosProductos($idProducto);
+$tipoProductosSimilares = '';
 if (!is_null($datosProducto)) {
     $masInfo = $datosProducto['masInfo'];
     $productosSimilares = $datosProducto['productosSimilares'];
@@ -135,7 +136,7 @@ if (!is_null($datosProducto)) {
                         // Mostrar los productos correspondientes a los índices aleatorios
                         foreach ($indicesAleatorios as $indice) {
                             $objetoProducto = $productosSimilares[$indice];
-
+                            $tipoProductosSimilares = $objetoProducto->getProTipo();
                             $botonComprar = "buyProduct.php?idProducto=" . $objetoProducto->getIdProducto();
                             echo '<div class="col">';
                             productsCard($objetoProducto, $botonComprar);
@@ -147,7 +148,9 @@ if (!is_null($datosProducto)) {
                     </div>
                 </div>
             </div>
-            <div class="text-center"><button class="btn btn-outline-primary">Mas Productos similares</button></div>
+            <div class="text-center">
+                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-outline-primary">Mas Productos similares</a>
+            </div>
         </div>
     </div>
 
