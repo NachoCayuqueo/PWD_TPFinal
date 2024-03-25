@@ -151,13 +151,30 @@ class AbmCompraItem
         }
         if (count($items) === 1) {
             // carrito vacio
-            //si es solo 1 item se debe cancelar la compra
+            //si es solo 1 item se debe borrar compraEstado y la compra
             $objetoCompraEstado = new AbmCompraEstado();
-            $bajaExitosa = $objetoCompraEstado->cancelarCompra($param['idCompra']);
-            if ($bajaExitosa)
-                $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
-            else
-                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar la compra');
+            $paramBusqueda = [
+                'idCompra' => $param['idCompra'],
+                'idCompraEstadoTipo' => 1
+            ];
+            $compraEstado = $objetoCompraEstado->buscar($paramBusqueda);
+
+            if (!empty($compraEstado)) {
+                $idCompraEstado = $compraEstado[0]->getIdCompraEstado();
+                $bajaExitosa = $objetoCompraEstado->baja(['idCompraEstado' => $idCompraEstado]);
+                if ($bajaExitosa) {
+                    $objetoCompra = new AbmCompra();
+                    $bajaExitosa = $objetoCompra->baja(['idCompra' => $param['idCompra']]);
+                    if ($bajaExitosa) {
+                        $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
+                    } else {
+                        $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar la compra');
+                    }
+                } else
+                    $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar la compra');
+            } else {
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al buscar  el estado de la compra');
+            }
         }
 
         return $response;
