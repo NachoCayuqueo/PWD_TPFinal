@@ -43,7 +43,10 @@ VALUES
 (1,'2024-02-09 10:00:00', 4),
 (2,'2024-02-10 11:00:00', 5),
 (3,'2024-02-11 12:00:00', 6),
-(4,'2024-02-15 12:00:00', 6);
+(4,'2024-02-15 12:00:00', 6),
+(5,'2024-02-16 12:00:00', 7),
+(6,'2024-02-17 12:00:00', 7),
+(7,'2024-02-18 12:00:00', 7);
 
 -- --------------------------------------------------------
 
@@ -78,8 +81,21 @@ VALUES
 (8,3, 1, '2024-02-11 12:00:00','2024-02-15 12:00:00'), -- Estado inicial: carrito
 (9,3, 2, '2024-02-15 12:00:00',null), -- Estado siguiente: iniciada
 -- Compra 4
-(10,4, 1, '2024-02-15 13:00:00',null); -- Estado inicial: carrito
-
+(10,4, 1, '2024-02-15 13:00:00',null), -- Estado inicial: carrito
+-- Compra 5
+(11,5, 1, '2024-02-16 10:00:00','2024-02-16 11:00:00'), -- Estado inicial: carrito
+(12,5, 2, '2024-02-16 11:00:00','2024-02-16 12:00:00'), -- Estado siguiente: iniciada
+(13,5, 3, '2024-02-16 12:00:00','2024-02-16 13:00:00'), -- Estado siguiente: aceptada
+(14,5, 5, '2024-02-16 13:00:00','2024-02-16 14:00:00'), -- Estado siguiente: cancelada
+-- Compra 6
+(15,6, 1, '2024-02-17 11:00:00','2024-02-17 12:00:00'), -- Estado inicial: carrito
+(16,6, 2, '2024-02-17 12:00:00','2024-02-17 13:00:00'), -- Estado siguiente: iniciada
+(17,6, 5, '2024-02-17 13:00:00','2024-02-17 14:00:00'), -- Estado siguiente: cancelada
+-- Compra 7
+(18,7, 1, '2024-02-18 10:00:00','2024-02-18 11:00:00'), -- Estado inicial: carrito
+(19,7, 2, '2024-02-18 11:00:00','2024-02-18 12:00:00'), -- Estado siguiente: iniciada
+(20,7, 3, '2024-02-18 12:00:00','2024-02-18 13:00:00'), -- Estado siguiente: aceptada
+(21,7, 4, '2024-02-18 13:00:00','2024-02-18 14:00:00'); -- Estado siguiente: enviada
 -- --------------------------------------------------------
 
 --
@@ -128,7 +144,13 @@ VALUES
 (4,5, 3, 1), -- Un producto en la compra 3
 (5,6, 3, 2), -- Dos productos en la compra 3
 (6,15, 4, 1), -- Un producto en la compra 4
-(7,20, 4, 2); -- Dos productos en la compra 4
+(7,20, 4, 2), -- Dos productos en la compra 4
+(8,6, 5, 1), -- Un producto en la compra 5
+(9,19, 5, 1), -- Un producto en la compra 5
+(10,11, 6, 2), -- Dos productos en la compra 6
+(11,7, 6, 1), -- Un producto en la compra 6
+(12,12, 7, 2), -- Dos productos en la compra 7
+(13,20, 7, 1); -- Un producto en la compra 7
 -- --------------------------------------------------------
 
 --
