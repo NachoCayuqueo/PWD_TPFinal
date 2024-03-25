@@ -100,16 +100,16 @@ include_once "../customer/strucures/cartSidePanel.php";
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Productos</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Accesorios</a></li>
-                        <li><a class="dropdown-item" href="#">Juguetes</a></li>
-                        <li><a class="dropdown-item" href="#">Comida</a></li>
+                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=accessories">Accesorios</a></li>
+                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=toys">Juguetes</a></li>
+                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=food">Comida</a></li>
                     </ul>
                 </li>
                 <li class="nav-item ms-3">
-                    <a class="nav-link" href="#">Productos Favoritos</a>
+                    <a class="nav-link" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=favorite">Productos Favoritos</a>
                 </li>
                 <li class="nav-item ms-3">
-                    <a class="nav-link" href="#">Productos Nuevos</a>
+                    <a class="nav-link" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=new">Productos Nuevos</a>
                 </li>
                 <li class="nav-item ms-3">
                     <a class="nav-link" href="<?php echo $VISTAS ?>/customer/shoppingSummary.php">Mis Compras</a>
