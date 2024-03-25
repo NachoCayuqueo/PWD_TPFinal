@@ -120,7 +120,7 @@ include_once "../customer/strucures/cartSidePanel.php";
             </ul>
         </div>
     </div>
-</nav> -->
+</nav>
 <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
