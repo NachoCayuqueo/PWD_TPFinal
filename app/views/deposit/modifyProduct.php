@@ -49,7 +49,7 @@ if (!empty($listaRoles)) {
                     <h3 class="title">Modificar Producto</h3>
                 </div>
                 <div>
-                    <form class="form card-body card-title" method="POST" action="./actions/modifyProductAction.php" id="form-modif-producto" name="form-modif-producto" novalidate enctype="multipart/form-data">
+                    <form class="form card-body card-title" id="form-modif-producto" name="form-modif-producto" novalidate enctype="multipart/form-data">
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -84,7 +84,7 @@ if (!empty($listaRoles)) {
                                         <label class="form-check-label" for="tipo2">Comida</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="toys" <?php if ($tipo === 'toys') {
+                                        <input class="form-check-input" type="radio" name="tipo" id="tipo3" value="toys" <?php if ($tipo === 'toys') {
                                                                                                                                 echo "checked";
                                                                                                                             } ?>>
                                         <label class="form-check-label" for="tipo2">Juguete</label>
@@ -174,6 +174,7 @@ if (!empty($listaRoles)) {
             </div>
         </div>
     </div>
+    <script src="<?php echo $PUBLIC_JS ?>/deposit/modifyProductAjax.js"></script>
 
 </body>
 

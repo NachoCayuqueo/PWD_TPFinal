@@ -62,7 +62,6 @@ if (count($listaProducto) > 0) {
         if ($existeProducto) {
             crearTablaProducto($listaProducto);
         } else {
-
             echo '
                     <div class="container d-flex justify-content-center">
                         <div class=" card-container d-flex justify-content-center align-items-center">

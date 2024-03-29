@@ -89,9 +89,9 @@ if ($session->validar()) {
 </nav> -->
 
 <!-- menu cliente -->
-<?php
-include_once "../customer/strucures/cartSidePanel.php";
-?>
+<!-- <?php
+        include_once "../customer/strucures/cartSidePanel.php";
+        ?>
 
 <nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
     <div class="container-fluid">

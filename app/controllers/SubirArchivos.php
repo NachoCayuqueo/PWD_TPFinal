@@ -14,8 +14,6 @@ class SubirArchivos
 
         if (in_array($extensionDeArchivo, $this->EXTENSION_IMG)) {
             $ubicacion = $this->CARPETA .  $tipo . '/' . $nombre;
-            echo $ubicacion . "<br/>";
-            // echo $carpetaTemporal . "<br/>";
             if (move_uploaded_file($carpetaTemporal, $ubicacion)) {
                 $exito = true;
                 $resp =  "Archivo guardado con éxito";
