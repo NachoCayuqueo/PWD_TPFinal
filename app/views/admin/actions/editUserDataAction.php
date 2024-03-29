@@ -23,12 +23,13 @@ if (!empty($usuario)) {
             "usPass" => $usuario[0]->getUsPass(),
             "usMail" => $email,
             "usDeshabilitado" => $usuario[0]->getUsDeshabilitado(),
-            "usActivo" => $isChecked ? '1' : '0'
+            "usActivo" => $usuario[0]->getUsActivo() ? '1' : '0'
+            // "usActivo" => $isChecked ? '1' : '0'
         ];
 
         $modificacionExitosa = $objetoUsuario->modificacion($modificarParams);
         if ($modificacionExitosa)
-            $response = array('title' => 'EXITO', 'message' => 'Modificacion exitosa con el id: ' . $data['idUsuario']);
+            $response = array('title' => 'EXITO', 'message' => 'Los datos fueron modificados exitosamente');
         else
             $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al editar el usuario con id: ' . $data['idUsuario']);
     }
