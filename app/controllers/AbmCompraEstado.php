@@ -142,8 +142,8 @@ class AbmCompraEstado
                 $where[] = " idcompraestadotipo = '" . $param['idCompraEstadoTipo'] . "'";
         }
         $whereClause = implode(" AND ", $where);
-        $objetoUsuario = new CompraEstado();
-        $arreglo = $objetoUsuario->listar($whereClause);
+        $objetoCompraEstado = new CompraEstado();
+        $arreglo = $objetoCompraEstado->listar($whereClause);
         return $arreglo;
     }
 
