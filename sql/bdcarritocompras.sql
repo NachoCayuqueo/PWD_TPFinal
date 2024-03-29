@@ -170,11 +170,24 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
-(7, 'nuevo', 'kkkkk', NULL, NULL),
-(8, 'nuevo', 'kkkkk', NULL, NULL),
-(9, 'nuevo', 'kkkkk', 7, NULL),
-(10, 'nuevo', 'kkkkk', NULL, NULL),
-(11, 'nuevo', 'kkkkk', NULL, NULL);
+(1, 'Administrador', 'menu padre del usuario administrador', NULL, NULL),
+(2, 'Deposito', 'menu padre del usuario deposito', NULL, NULL),
+(3, 'Cliente', 'menu padre del usuario cliente', NULL, NULL),
+(4, 'Selector Administrador', 'menu selector del usuario administrador', 1, NULL), -- usuario Administrador selector
+(5, 'Crear Usuario', '/admin/createUser.php', 4, NULL), -- usuario Administrador
+(6, 'Mostrar Usuarios', '/admin/dashboard.php', 4, NULL), -- usuario Administrador
+(7, 'Roles', '/admin/roleList.php', 1,NULL), -- usuario Administrador
+(8, 'Administrar Menu', '#', 1,NULL), -- usuario Administrador
+(9, 'Listar Productos', '/deposit/dashboard.php', 2,NULL), -- usuario Deposito
+(10, 'Crear Producto', '#', 2,NULL), -- usuario Deposito
+(11, 'Selector Cliente', 'menu selector del usuario cliente', 3, NULL), -- usuario Cliente selector
+(12, 'Accesorios', '/customer/similarProducts.php?type=accessories', 11,NULL), -- usuario Cliente
+(13, 'Juguetes', '/customer/similarProducts.php?type=toys',11,NULL), -- usuario Cliente
+(14, 'Alimentos', '/customer/similarProducts.php?type=food',11,NULL), -- usuario Cliente
+(15, 'Productos Favoritos', '/customer/similarProducts.php?type=favorite', 3,NULL), -- usuario Cliente
+(16, 'Productos Nuevos', '/customer/similarProducts.php?type=new', 3,NULL), -- usuario Cliente
+(17, 'Mis Compras', '/customer/shoppingSummary.php', 3,NULL), -- usuario Cliente
+(18, 'Carrito', '#', 3,NULL); -- usuario Cliente
 
 -- --------------------------------------------------------
 
@@ -187,6 +200,13 @@ CREATE TABLE `menurol` (
   `idrol` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `menurol`
+--
+INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 -- --------------------------------------------------------
 
 --
@@ -378,7 +398,8 @@ INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usactivo`) 
 
 CREATE TABLE `usuariorol` (
   `idusuario` bigint(20) NOT NULL,
-  `idrol` bigint(20) NOT NULL
+  `idrol` bigint(20) NOT NULL,
+  `rolactivo` boolean NOT NULL DEFAULT false -- Nuevo campo para indicar el rol activo
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
