@@ -3,6 +3,7 @@ class UsuarioRol extends DataBase
 {
     private $objetoRol;
     private $objetoUsuario;
+    private $rolActivo;
     private $mensajeOperacion;
 
     public function __construct()
@@ -10,6 +11,7 @@ class UsuarioRol extends DataBase
         parent::__construct();
         $this->objetoRol = new Rol();
         $this->objetoUsuario = new Usuario();
+        $this->rolActivo = false;
         $this->mensajeOperacion = "";
     }
 
@@ -27,6 +29,13 @@ class UsuarioRol extends DataBase
     public function getObjetoUsuario()
     {
         return $this->objetoUsuario;
+    }
+    /**
+     * Get the value of rolActivo
+     */
+    public function getRolActivo()
+    {
+        return $this->rolActivo;
     }
 
     /**
@@ -60,7 +69,17 @@ class UsuarioRol extends DataBase
 
         return $this;
     }
+    /**
+     * Set the value of rolActivo
+     *
+     * @return  self
+     */
+    public function setRolActivo($rolActivo)
+    {
+        $this->rolActivo = $rolActivo;
 
+        return $this;
+    }
     /**
      * Set the value of mensajeOperacion
      *
@@ -73,12 +92,14 @@ class UsuarioRol extends DataBase
         return $this;
     }
 
-    public function setear($objusuario, $objrol)
+    public function setear($rolActivo, $objusuario, $objrol)
     {
+        $this->setRolActivo($rolActivo);
         $this->setObjetoUsuario($objusuario);
         $this->setObjetoRol($objrol);
     }
 
+    //TODO: ver si se utiliza, sino borrar
     public function setearConClave($idusuario, $idrol)
     {
         $this->getObjetoRol()->setIdRol($idrol);
@@ -103,7 +124,7 @@ class UsuarioRol extends DataBase
                     $objetoRol->setIdRol($row['idrol']);
                     $objetoRol->cargar();
 
-                    $this->setear($objetoUsuario, $objetoRol);
+                    $this->setear($row['rolactivo'], $objetoUsuario, $objetoRol);
                 }
             }
         } else {
@@ -118,7 +139,11 @@ class UsuarioRol extends DataBase
         $idRol = $this->getObjetoRol()->getIdRol();
         $idUsuario = $this->getObjetoUsuario()->getIdUsuario();
 
-        $sql = "INSERT INTO usuariorol(idrol,idusuario)  VALUES(" . $idRol . "," . $idUsuario . ");";
+        $sql = "INSERT INTO usuariorol(rolactivo,idrol,idusuario)  
+            VALUES("
+            . $this->getRolActivo() . ","
+            . $idRol . ","
+            . $idUsuario . ");";
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($sql)) {
                 $resp = true;
@@ -133,7 +158,26 @@ class UsuarioRol extends DataBase
 
     public function modificar()
     {
-        return false;
+        $resp = false;
+        $idUsuario = $this->getObjetoUsuario()->getIdUsuario();
+        $idRol = $this->getObjetoRol()->getIdRol();
+
+        $query = "UPDATE usuariorol SET 
+            idusuario='" . $idUsuario . "', 
+            idrol='" . $idRol . "', 
+            rolactivo='" . $this->getRolActivo() . "'" .
+            " WHERE idusuario=" . $idUsuario . " AND idrol=" . $idRol;
+
+        if ($this->Iniciar()) {
+            if ($this->Ejecutar($query)) {
+                $resp = true;
+            } else {
+                $this->setMensajeoperacion("ERROR::UsuarioRol => modificar ejecutar: " . $this->getError());
+            }
+        } else {
+            $this->setMensajeoperacion("ERROR::UsuarioRol => modificar insertar: " . $this->getError());
+        }
+        return $resp;
     }
 
     public function eliminar()
@@ -188,7 +232,7 @@ class UsuarioRol extends DataBase
                         }
 
                         $objetoUsuarioRol = new UsuarioRol();
-                        $objetoUsuarioRol->setear($objetoUsuario, $objetoRol);
+                        $objetoUsuarioRol->setear($row['rolactivo'], $objetoUsuario, $objetoRol);
                         array_push($arreglo, $objetoUsuarioRol);
                     }
                 }
