@@ -49,17 +49,17 @@ if (!empty($listaRoles)) {
                     <h3 class="title">Modificar Producto</h3>
                 </div>
                 <div>
-                    <form class="form card-body card-title" id="form-modif-producto" name="form-modif-producto" novalidate enctype="multipart/form-data">
+                    <form class="form card-body card-title" id="form-modificar-producto" name="form-modif-producto" novalidate enctype="multipart/form-data">
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input id="nombre" name="nombre" class="form-control" type="text" value="<?php echo $nombre ?>">
-                                <div class="invalid-feedback"></div>
+                                <span id="error-nombre" class="error" style="color: red; display: none;"></span>
                             </div>
                             <div class="col">
                                 <label for="precio" class="form-label">Precio</label>
                                 <input id="precio" name="precio" class="form-control" type="number" value="<?php echo $precio ?>" minlength="8">
-                                <div class="invalid-feedback"></div>
+                                <span id="error-precio" class="error" style="color: red; display: none;"></span>
                             </div>
                         </div>
                         <div class="row mb-4">
@@ -67,6 +67,7 @@ if (!empty($listaRoles)) {
                             <div class="col">
                                 <label for="stock" class="form-label">Nuevo stock</label>
                                 <input id="stock" name="stock" class="form-control" value="<?php echo $stock  ?>" type="number">
+                                <span id="error-stock" class="error" style="color: red; display: none;"></span>
                             </div>
                             <div class="col text-center">
                                 <label for="stock" class="form-label">Tipo</label>
@@ -110,6 +111,7 @@ if (!empty($listaRoles)) {
                                         <label class="form-check-label" for="esPupular2">NO</label>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="col text-center">
                                 <label for="stock" class="form-label">Es Nuevo</label>
@@ -141,11 +143,13 @@ if (!empty($listaRoles)) {
                             <div class="col">
                                 <label for="titulo" class="form-label">Titulo</label>
                                 <input id="titulo" name="titulo" class="form-control" value="<?php echo $nombreCompleto ?>" type="text">
+                                <span id="error-titulo" class="error" style="color: red; display: none;"></span>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <textarea class="form-control" name="masInfo" id="masInfo" style="height: 100px"><?php echo $descripcion_formateada ?></textarea>
                                     <label for="floatingTextarea2">Mas Info (separar oraciones con punto)</label>
+                                    <span id="error-masInfo" class="error" style="color: red; display: none;"></span>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +170,7 @@ if (!empty($listaRoles)) {
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
-                            <button id='btn-send' class="btn btn-text btn-primary me-md-2" type="submit">Crear</button>
+                            <button id='btn-send' class="btn btn-text btn-primary me-md-2" type="submit">Modificar</button>
                             <button id='btn-clean' class="btn btn-text btn-primary" type="reset">Borrar</button>
                         </div>
                     </form>
@@ -174,6 +178,8 @@ if (!empty($listaRoles)) {
             </div>
         </div>
     </div>
+
+    <script src="<?php echo $PUBLIC_JS ?>/deposit/validation.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/deposit/modifyProductAjax.js"></script>
 
 </body>

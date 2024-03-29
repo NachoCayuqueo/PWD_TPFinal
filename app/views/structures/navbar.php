@@ -126,7 +126,7 @@ if ($session->validar()) {
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Listar Productos</a>
+                    <a href="../deposit/dashboard.php" class="nav-link" style="color: #f5f7f8;">Listar Productos</a>
                 </li>
                 <li class="nav-item ms-5">
                     <a href="#" class="nav-link" style="color: #f5f7f8;">Crear Producto</a>

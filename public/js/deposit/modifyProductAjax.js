@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $("#form-modif-producto").submit(function (event) {
+  $("#form-modificar-producto").submit(function (event) {
     event.preventDefault();
     //TODO: funciona pero no hace la validacion de los campos ya que falta esa parte
     //! se debe realizar la validacionFormulario
@@ -97,7 +97,7 @@ function enviarFormularioDeModificacion(nombreImg) {
           text: response.message,
         }).then((result) => {
           // Redirecciona a la página deseada
-          location.reload();
+          window.location.href = "../../views/deposit/dashboard.php";
         });
       } else {
         Swal.fire({
