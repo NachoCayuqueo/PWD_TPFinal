@@ -1,5 +1,19 @@
 <?php
 include_once "../../../config/configuration.php";
+$dataJSON = getJSONFileUser();
+
+$session = new Session();
+if ($session->validar()) {
+    $usuario = $session->getUsuario();
+    if (!empty($usuario)) {
+        $idUsuario = $usuario->getIdUsuario();
+        $nombre = $usuario->getUsNombre();
+        $email = $usuario->getUsMail();
+        $objetoUsuarioRol = new AbmUsuarioRol();
+        $rolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario);
+        $avatarUsuario = getAvatar($rolActivo);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +61,40 @@ include_once "../../../config/configuration.php";
                 </div>
             </div>
             <div class="col mb-5 mt-5">
-                <div id="contenedor-formulario"></div>
+                <div id="contenedor-formulario">
+                    <div class="container d-flex justify-content-center">
+                        <div class="card mb-3" style="max-width: 650px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="<?php echo $BOOTSTRAP_ICONS . "/" . $avatarUsuario  ?>" width="300px" class="img-fluid rounded-start ms-3" alt="avatar">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-left:25%">Mis Datos</h5>
+                                        <div class="mb-2 row">
+                                            <label for="staticName" class="ms-3 col-sm-4 col-form-label">Nombre</label>
+                                            <div class="col-sm-6 offset-md-1">
+                                                <input type="text" readonly class="form-control-plaintext " id="staticName" value="<?php echo $nombre ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row ">
+                                            <label for="staticEmail" class="ms-3 col-sm-4 col-form-label">Email</label>
+                                            <div class="col-sm-6 offset-md-1">
+                                                <input type="text" readonly class="form-control-plaintext " id="staticEmail" value="<?php echo $email ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row ">
+                                            <label for="staticRole" class="ms-3 col-sm-4 col-form-label">Rol Activo</label>
+                                            <div class="col-sm-6 offset-md-1">
+                                                <input type="text" readonly class="form-control-plaintext " id="staticRole" value="<?php echo $rolActivo ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
