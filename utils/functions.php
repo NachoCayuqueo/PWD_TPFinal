@@ -41,3 +41,12 @@ function viewStructure($param)
     print_r($param);
     echo "</pre>";
 }
+
+function getJSONFileUser()
+{
+    $filePath = $GLOBALS['PRINCIPAL'] . '/utils/userdata.json';
+    $string = file_get_contents($filePath);
+    $json = json_decode($string, true);
+
+    return $json;
+}
