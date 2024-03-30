@@ -11,6 +11,7 @@ class AbmUsuarioRol
     {
         $obj = null;
         if (
+            isset($param['rolActivo']) &&
             isset($param['idUsuario']) &&
             isset($param['idRol'])
         ) {
@@ -21,7 +22,7 @@ class AbmUsuarioRol
             $objetoRol->setIdRol($param['idRol']);
 
             $obj = new UsuarioRol();
-            $obj->setear($objUsuario, $objetoRol);
+            $obj->setear($param['rolActivo'], $objUsuario, $objetoRol);
         }
 
         return $obj;
@@ -30,13 +31,14 @@ class AbmUsuarioRol
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto que son claves
      * @param array $param
-     * @return Tabla
+     * @return UsuarioRol
      */
 
     private function cargarObjetoConClave($param)
     {
         $obj = null;
         if (
+            isset($param['rolActivo']) &&
             isset($param['idUsuario']) &&
             isset($param['idRol'])
         ) {
@@ -48,7 +50,7 @@ class AbmUsuarioRol
             $objetoRol->setear($param['idRol'], null);
 
             $obj = new UsuarioRol();
-            $obj->setear($objUsuario, $objetoRol);
+            $obj->setear($param['rolActivo'], $objUsuario, $objetoRol);
         }
         return $obj;
     }
@@ -83,7 +85,22 @@ class AbmUsuarioRol
         }
         return $resp;
     }
-
+    /**
+     * permite modificar un objeto
+     * @param array $param
+     * @return boolean
+     */
+    public function modificacion($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoCompraEstado = $this->cargarObjeto($param);
+            if ($objetoCompraEstado != null and $objetoCompraEstado->modificar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
+    }
     /**
      * permite eliminar un objeto 
      * @param array $param
@@ -111,6 +128,8 @@ class AbmUsuarioRol
     {
         $where = [];
         if ($param !== NULL) {
+            if (isset($param['rolActivo']))
+                $where[] = " rolactivo = '" . $param['rolActivo'] . "'";
             if (isset($param['idUsuario']))
                 $where[] = " idusuario = '" . $param['idUsuario'] . "'";
             if (isset($param['idRol']))
@@ -120,5 +139,50 @@ class AbmUsuarioRol
         $objetoUsuarioRol = new UsuarioRol();
         $arreglo = $objetoUsuarioRol->listar($whereClause);
         return $arreglo;
+    }
+
+    //parametro $idUsuario
+    //se desactiva el rol actual y se activa el nuevo rol
+    public function cambiarDeRol($idUsuario, $idRol)
+    {
+        $modificacionExitosa = false;
+        $param = [
+            'idUsuario' => $idUsuario,
+            'rolActivo' => '1'
+        ];
+        $usuarioRol = $this->buscar($param);
+        if (!empty($usuarioRol)) {
+            $rol = $usuarioRol[0]->getObjetoRol();
+            $paramDesactivar = [
+                'idUsuario' => $idUsuario,
+                'idRol' => $rol->getIdRol(),
+                'rolActivo' => '0'
+            ];
+            $modificacionExitosa = $this->modificacion($paramDesactivar);
+            if ($modificacionExitosa) {
+                $modificarParams = [
+                    "idUsuario" => $idUsuario,
+                    "idRol" => $idRol,
+                    "rolActivo" => '1'
+                ];
+                $modificacionExitosa = $this->modificacion($modificarParams);
+            }
+        }
+        return $modificacionExitosa;
+    }
+
+    public function obtenerRolActivo($idUsuario)
+    {
+        $nombreRol = "";
+        $param = [
+            'idUsuario' => $idUsuario,
+            'rolActivo' => '1'
+        ];
+        $usuarioRol = $this->buscar($param);
+        if (!empty($usuarioRol)) {
+            $objetoRol = $usuarioRol[0]->getObjetoRol();
+            $nombreRol = $objetoRol->getRoDescripcion();
+        }
+        return $nombreRol;
     }
 }

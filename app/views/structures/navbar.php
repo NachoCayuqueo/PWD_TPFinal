@@ -1,13 +1,23 @@
 <?php
 $session = new Session();
 $existeSesion = false;
+$avatarUsuario = "";
 if ($session->validar()) {
     $usuario = $session->getUsuario();
     if (is_null(($usuario))) {
         $nombreUsuario = 'Usuario';
-    } else
+    } else {
+        $idUsuario = $usuario->getIdUsuario();
         $nombreUsuario = $usuario->getUsNombre();
+        // Nombre del usuario que quieres buscar
+        $objetoUsuarioRol = new AbmUsuarioRol();
+        $rolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario);
+        $avatarUsuario = getAvatar($rolActivo);
+    }
     $existeSesion = true;
+}
+if ($avatarUsuario === "") {
+    $avatarUsuario = "person-fill.svg";
 }
 ?>
 
@@ -33,7 +43,7 @@ if ($session->validar()) {
                             ?>
                         </p>
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="<?php echo $BOOTSTRAP_ICONS ?>/person-circle.svg" alt="inicio" width="30" class="d-inline-block align-text-top">
+                            <img src="<?php echo $BOOTSTRAP_ICONS . "/" . $avatarUsuario ?>" alt="inicio" width="30" class="d-inline-block align-text-top">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <?php
@@ -43,7 +53,7 @@ if ($session->validar()) {
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Configuraciones</a></li>';
+                                <li><a class="dropdown-item" href="' . $VISTAS . '/usuario/configuration.php">Configuraciones</a></li>';
                             } else {
                                 echo '<li><a class="dropdown-item" href="' . $VISTAS . '/login">Login</a></li>
                                 <li><a class="dropdown-item" href="' . $VISTAS . '/register">Register</a></li>
@@ -65,35 +75,34 @@ if ($session->validar()) {
 
 <!-- menu dinamico -->
 <!-- menu admin -->
-<!-- <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+<nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Usuarios</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Crear Usuarios</a></li>
-                        <li><a class="dropdown-item" href="#">Mostrar Usuarias</a></li>
+                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/admin/createUser.php">Crear Usuarios</a></li>
+                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/admin/dashboard.php">Mostrar Usuarios</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Roles</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Crear Roles</a></li>
-                        <li><a class="dropdown-item" href="#">Mostrar Roles</a></li>
-                    </ul>
+                <li class="nav-item ms-3">
+                    <a class="nav-link" href="<?php echo $VISTAS ?>/admin/roleList.php" style="color: #f5f7f8;">Roles</a>
+                </li>
+                <li class="nav-item ms-3">
+                    <a class="nav-link" href="#" style="color: #f5f7f8;">Administrar Menu</a>
                 </li>
             </ul>
         </div>
     </div>
-</nav> -->
+</nav>
 
 <!-- menu cliente -->
 <?php
 include_once "../customer/strucures/cartSidePanel.php";
 ?>
 
-<nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
+<!-- <nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
@@ -120,13 +129,15 @@ include_once "../customer/strucures/cartSidePanel.php";
             </ul>
         </div>
     </div>
-</nav>
-<nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+</nav> -->
+
+<!-- menu deposito -->
+<!-- <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
     <div class="container-fluid">
         <div class="navbar-title collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Listar Productos</a>
+                    <a href="<?php echo $VISTAS ?>/deposit/dashboard.php" class="nav-link" style="color: #f5f7f8;">Listar Productos</a>
                 </li>
                 <li class="nav-item ms-5">
                     <a href="#" class="nav-link" style="color: #f5f7f8;">Crear Producto</a>
@@ -134,4 +145,4 @@ include_once "../customer/strucures/cartSidePanel.php";
             </ul>
         </div>
     </div>
-</nav>
+</nav> -->

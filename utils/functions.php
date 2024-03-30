@@ -41,3 +41,27 @@ function viewStructure($param)
     print_r($param);
     echo "</pre>";
 }
+
+function getJSONFileUser()
+{
+    $filePath = $GLOBALS['PRINCIPAL'] . '/utils/userdata.json';
+    $string = file_get_contents($filePath);
+    $json = json_decode($string, true);
+
+    return $json;
+}
+
+function getAvatar($rol)
+{
+    $avatarUsuario = "";
+
+    $dataJSON = getJSONFileUser();
+    foreach ($dataJSON['user'] as $user) {
+        if ($user['role'] === $rol) {
+            // Encontramos el usuario, ahora puedes acceder a su avatar
+            $avatarUsuario = $user['avatar_img'];
+            break;
+        }
+    }
+    return $avatarUsuario;
+}
