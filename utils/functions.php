@@ -50,3 +50,18 @@ function getJSONFileUser()
 
     return $json;
 }
+
+function getAvatar($rol)
+{
+    $avatarUsuario = "";
+
+    $dataJSON = getJSONFileUser();
+    foreach ($dataJSON['user'] as $user) {
+        if ($user['role'] === $rol) {
+            // Encontramos el usuario, ahora puedes acceder a su avatar
+            $avatarUsuario = $user['avatar_img'];
+            break;
+        }
+    }
+    return $avatarUsuario;
+}
