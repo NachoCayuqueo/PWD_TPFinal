@@ -170,4 +170,19 @@ class AbmUsuarioRol
         }
         return $modificacionExitosa;
     }
+
+    public function obtenerRolActivo($idUsuario)
+    {
+        $nombreRol = "";
+        $param = [
+            'idUsuario' => $idUsuario,
+            'rolActivo' => '1'
+        ];
+        $usuarioRol = $this->buscar($param);
+        if (!empty($usuarioRol)) {
+            $objetoRol = $usuarioRol[0]->getObjetoRol();
+            $nombreRol = $objetoRol->getRoDescripcion();
+        }
+        return $nombreRol;
+    }
 }
