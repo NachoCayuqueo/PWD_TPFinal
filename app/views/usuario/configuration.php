@@ -10,7 +10,7 @@ if ($session->validar()) {
         $nombre = $usuario->getUsNombre();
         $email = $usuario->getUsMail();
         $objetoUsuarioRol = new AbmUsuarioRol();
-        $rolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario);
+        $rolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario)->getRoDescripcion();
         $avatarUsuario = getAvatar($rolActivo);
     }
 }
