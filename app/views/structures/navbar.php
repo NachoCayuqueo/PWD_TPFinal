@@ -129,7 +129,7 @@ if ($session->validar()) {
                     <a href="../deposit/dashboard.php" class="nav-link" style="color: #f5f7f8;">Listar Productos</a>
                 </li>
                 <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Crear Producto</a>
+                    <a href="../deposit/newProduct.php" class="nav-link" style="color: #f5f7f8;">Crear Producto</a>
                 </li>
             </ul>
         </div>

@@ -113,7 +113,6 @@ class AbmProducto
     }
     private function cargarObjeto($param)
     {
-
         $obj = null;
         if (
             array_key_exists('idProducto', $param)  &&
@@ -141,6 +140,17 @@ class AbmProducto
                 $param['espronuevo']
             );
         }
+
         return $obj;
+    }
+    function alta($params)
+    {
+        $resp = false;
+        $params['idProducto'] = null;
+        $objetoProducto = $this->cargarObjeto($params);
+        if ($objetoProducto != null and $objetoProducto->insertar())
+            $resp = true;
+
+        return $resp;
     }
 }

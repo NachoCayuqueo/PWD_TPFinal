@@ -1,59 +1,121 @@
 $(document).ready(function () {
-  // Esta parte se ejecutará una vez que el DOM esté completamente cargado
-  // Aquí se agregará el código para manejar el envío del formulario
-
   $("#form-modificar-producto").submit(function (event) {
-    // Evitar el envío del formulario si la validación no pasa
-    if (!validarFormulario()) {
-      event.preventDefault();
+    event.preventDefault();
+
+    if (validarFormulario(event)) {
     }
+  });
+  $("#form-nuevo-producto").submit(function (event) {
+    event.preventDefault();
+    validarFormularioNuevo(event);
   });
 });
 
-function validarFormulario() {
-  console.log("Estoy en validar formulario de producto");
+function validarFormulario(event) {
   ("use strict");
-  const form = $("#form-modificar-producto");
+  const form = $("#form-modificar-producto")[0];
   let isValid = true;
 
-  const nombre = $("#nombre").val(); // Cambio aquí, añadir # para seleccionar por id
+  if (!form.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add("was-validated");
+    isValid = false;
+  }
+
   const precio = $("#precio").val();
   const stock = $("#stock").val();
-  const tipoSeleccionado = $('input[name="tipo"]:checked').val();
-  const esPopular = $('input[name="esPopular"]:checked').val();
-  const valorEsNuevoSeleccionado = $('input[name="esNuevo"]:checked').val();
-  //idProducto no lo necesito porque no tiene que hacerle nada
-  const titulo = $("#titulo").val(); // Cambio aquí, añadir # para seleccionar por id
-  const contenidoMasInfo = $("#masInfo").val();
 
-  if (nombre === "") {
-    $("#error-nombre").text("Por favor, ingrese un nombre válido.").show();
+  if (precio <= 0) {
+    $("#error-precio").text("El precio debe ser mayor que cero.").show().css({
+      color: "#dc3545",
+      "font-size": "0.875rem",
+    });
     isValid = false;
-  }
-  if (precio === "") {
-    $("#error-precio").text("Por favor, ingrese un precio.").show();
-    isValid = false;
-  } else if (precio <= 0) {
-    $("#error-precio").text("El precio debe ser mayor que cero.").show();
-    isValid = false;
-  }
-  if (stock === "") {
-    $("#error-stock").text("Por favor, ingrese un stock.").show();
-    isValid = false;
-  } else if (stock <= 0) {
-    $("#error-stock").text("El stock debe ser mayor que cero.").show();
-    isValid = false;
+  } else {
+    $("#error-precio").text("").hide();
   }
 
-  if (titulo === "") {
-    $("#error-titulo").text("Por favor, ingrese un titulo válido.").show();
+  if (stock <= 0) {
+    $("#error-stock").text("El stock debe ser mayor que cero.").show().css({
+      color: "#dc3545",
+      "font-size": "0.875rem",
+    });
+    isValid = false;
+  } else {
+    $("#error-stock").text("").hide();
+  }
+  return isValid;
+}
+function validarFormularioNuevo(event) {
+  ("use strict");
+  const form = $("#form-nuevo-producto")[0];
+  let isValid = true;
+
+  if (!form.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add("was-validated");
     isValid = false;
   }
-  if (contenidoMasInfo.trim() === "") {
-    $("#error-masInfo")
-      .text("Por favor, ingrese información adicional.")
-      .show();
+
+  const precio = $("#precio").val();
+  const stock = $("#stock").val();
+
+  if (precio <= 0) {
+    $("#error-precio").text("El precio debe ser mayor que cero.").show().css({
+      color: "#dc3545",
+      "font-size": "0.875rem",
+    });
     isValid = false;
+  } else {
+    $("#error-precio").text("").hide();
+  }
+
+  if (stock <= 0) {
+    $("#error-stock").text("El stock debe ser mayor que cero.").show().css({
+      color: "#dc3545",
+      "font-size": "0.875rem",
+    });
+    isValid = false;
+  } else {
+    $("#error-stock").text("").hide();
+  }
+  //--------------- VALIDACIONES DE CHECKBOX -------------------//
+  const checkBoxTipo = document.querySelector('input[name="tipo"]:checked');
+  const checkBoxEsPopular = document.querySelector(
+    'input[name="esPopular"]:checked'
+  );
+  const checkBoxEsNuevo = document.querySelector(
+    'input[name="esNuevo"]:checked'
+  );
+
+  if (!checkBoxTipo) {
+    $(".invalid-tipo").show().css({
+      color: "#dc3545",
+      "font-size": "0.875rem",
+    });
+    isValid = false;
+  } else {
+    $(".invalid-tipo").hide();
+  }
+  if (!checkBoxEsPopular) {
+    $(".invalid-esPopular").show().css({
+      color: "#dc3545",
+      "font-size": "0.875rem",
+    });
+    isValid = false;
+  } else {
+    $(".invalid-esPopular").hide();
+  }
+  if (!checkBoxEsNuevo) {
+    $(".invalid-esNuevo").show().css({
+      color: "#dc3545",
+      "font-size": "0.875rem",
+    });
+    isValid = false;
+  } else {
+    $(".invalid-esNuevo").hide();
   }
 
   return isValid;

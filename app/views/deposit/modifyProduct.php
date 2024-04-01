@@ -53,20 +53,21 @@ if (!empty($listaRoles)) {
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input id="nombre" name="nombre" class="form-control" type="text" value="<?php echo $nombre ?>">
-                                <span id="error-nombre" class="error" style="color: red; display: none;"></span>
+                                <input id="nombre" name="nombre" class="form-control" type="text" value="<?php echo $nombre ?>" required>
+                                <div class="invalid-feedback">Debe ingreasar el nombre</div>
                             </div>
                             <div class="col">
                                 <label for="precio" class="form-label">Precio</label>
-                                <input id="precio" name="precio" class="form-control" type="number" value="<?php echo $precio ?>" minlength="8">
+                                <input id="precio" name="precio" class="form-control" type="number" value="<?php echo $precio ?>" minlength="8" required>
+                                <div class="invalid-feedback">Debe ingresar un precio</div>
                                 <span id="error-precio" class="error" style="color: red; display: none;"></span>
                             </div>
                         </div>
                         <div class="row mb-4">
-
                             <div class="col">
                                 <label for="stock" class="form-label">Nuevo stock</label>
-                                <input id="stock" name="stock" class="form-control" value="<?php echo $stock  ?>" type="number">
+                                <input id="stock" name="stock" class="form-control" value="<?php echo $stock  ?>" type="number" required>
+                                <div class="invalid-feedback">Ingrese el stock</div>
                                 <span id="error-stock" class="error" style="color: red; display: none;"></span>
                             </div>
                             <div class="col text-center">
@@ -136,19 +137,20 @@ if (!empty($listaRoles)) {
                             <div class="col">
                                 <label for="idProducto" class="form-label">Id</label>
                                 <input id="idProducto" name="idProducto" class="form-control" type="text" value="<?php echo $idProducto ?>" readonly>
-                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="titulo" class="form-label">Titulo</label>
-                                <input id="titulo" name="titulo" class="form-control" value="<?php echo $nombreCompleto ?>" type="text">
+                                <input id="titulo" name="titulo" class="form-control" value="<?php echo $nombreCompleto ?>" type="text" required>
+                                <div class="invalid-feedback">Ingrese el titulo</div>
                                 <span id="error-titulo" class="error" style="color: red; display: none;"></span>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <textarea class="form-control" name="masInfo" id="masInfo" style="height: 100px"><?php echo $descripcion_formateada ?></textarea>
+                                    <textarea class="form-control" name="masInfo" id="masInfo" style="height: 100px" required><?php echo $descripcion_formateada ?></textarea>
                                     <label for="floatingTextarea2">Mas Info (separar oraciones con punto)</label>
+                                    <div class="invalid-feedback">Ingrese la informacion</div>
                                     <span id="error-masInfo" class="error" style="color: red; display: none;"></span>
                                 </div>
                             </div>
@@ -163,8 +165,9 @@ if (!empty($listaRoles)) {
                             <div class="col d-flex align-items-center">
                                 <div>
                                     <h5>Seleccione Imagen</h5>
-                                    <input class="form-control" type="file" id="miArchivo" name="miArchivo" required>
+                                    <input class="form-control" type="file" id="miArchivo" name="miArchivo">
                                     <small id="miniaturaHelp" class="form-text text-muted">formatos permitidos: png, jpg y jpeg</small>
+                                    <div class="invalid-feedback">Ingrese el nombre</div>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +183,7 @@ if (!empty($listaRoles)) {
     </div>
 
     <script src="<?php echo $PUBLIC_JS ?>/deposit/validation.js"></script>
-    <script src="<?php echo $PUBLIC_JS ?>/deposit/modifyProductAjax.js"></script>
+    <script src="<?php echo $PUBLIC_JS ?>/deposit/productAjax.js"></script>
 
 </body>
 
