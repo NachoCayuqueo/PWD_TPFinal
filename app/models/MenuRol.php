@@ -154,44 +154,43 @@ class MenuRol extends DataBase
     public function listar($parametro = "")
     {
         $arreglo = array();
-        $sql = "SELECT * FROM menurol ";
+        $query = "SELECT * FROM menurol ";
         if ($parametro != "") {
-            $sql .= 'WHERE ' . $parametro;
+            $query .= 'WHERE ' . $parametro;
         }
+        // if ($this->Iniciar()) {
+        $res = $this->Ejecutar($query);
+        if ($res > -1) {
+            if ($res > 0) {
+                while ($row = $this->Registro()) {
+                    $objetoMenu = null;
+                    $objetoRol = null;
 
-        if ($this->Iniciar()) {
-            $res = $this->Ejecutar($sql);
-            if ($res > -1) {
-                if ($res > 0) {
-                    while ($row = $this->Registro()) {
-                        $objetoMenu = null;
-                        $objetoRol = null;
+                    $idMenu = $row['idmenu'];
 
-                        $idMenu = $row['idmenu'];
-
-                        if ($idMenu) {
-                            $objetoMenu = new Menu();
-                            $objetoMenu->setIdMenu($idMenu);
-                            $objetoMenu->cargar();
-                        }
-
-                        $idRol = $row['idrol'];
-
-                        if ($idRol) {
-                            $objetoRol = new Rol();
-                            $objetoRol->setIdRol($idRol);
-                            $objetoRol->cargar();
-                        }
-
-                        $objetoMenuRol = new MenuRol();
-                        $objetoMenuRol->setear($objetoMenu, $objetoRol);
-                        array_push($arreglo, $objetoMenuRol);
+                    if ($idMenu) {
+                        $objetoMenu = new Menu();
+                        $objetoMenu->setIdMenu($idMenu);
+                        $objetoMenu->cargar();
                     }
+
+                    $idRol = $row['idrol'];
+
+                    if ($idRol) {
+                        $objetoRol = new Rol();
+                        $objetoRol->setIdRol($idRol);
+                        $objetoRol->cargar();
+                    }
+
+                    $objetoMenuRol = new MenuRol();
+                    $objetoMenuRol->setear($objetoMenu, $objetoRol);
+                    array_push($arreglo, $objetoMenuRol);
                 }
-            } else {
-                $this->setmensajeoperacion("ERROR:: Menu Rol => listar: " . $this->getError());
             }
+        } else {
+            $this->setmensajeoperacion("ERROR:: Menu Rol => listar: " . $this->getError());
         }
+        //}
 
         return $arreglo;
     }
