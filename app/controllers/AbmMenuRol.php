@@ -117,8 +117,8 @@ class AbmMenuRol
                 $where[] = " idrol = '" . $param['idRol'] . "'";
         }
         $whereClause = implode(" AND ", $where);
-        $objetoUsuarioRol = new MenuRol();
-        $arreglo = $objetoUsuarioRol->listar($whereClause);
+        $objetoMenuRol = new MenuRol();
+        $arreglo = $objetoMenuRol->listar($whereClause);
         return $arreglo;
     }
 }
