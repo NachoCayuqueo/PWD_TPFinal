@@ -133,19 +133,33 @@ class AbmMenu
         return $arreglo;
     }
 
+    /**
+     * Arma dinámicamente el menú de navegación basado en el rol del usuario o en un menú predeterminado.
+     * Si el usuario está autenticado, se genera el menú según el rol proporcionado.
+     * Si el usuario no está autenticado, se muestra un menú predeterminado para el usuario invitado.
+     *
+     * @param int|null $idRol El ID del rol del usuario autenticado. Si es null, se asume que el usuario no está autenticado.
+     * @return void
+     */
     public function armarMenu($idRol)
     {
-        // strtolower($nombreRol)
-        $objetoMenuRol = new AbmMenuRol();
-        $param = ['idRol' => $idRol];
-        $menuRol = $objetoMenuRol->buscar($param);
-        if (!empty($menuRol)) {
-            $menu = $menuRol[0]->getObjetoMenu();
-            $idMenu = $menu->getIdMenu();
-            $nombreMenu = $menu->getMeNombre();
-            $arregloMenu = $this->obtenerMenuCompleto($idMenu, $nombreMenu);
-            $this->crearMenu($arregloMenu);
+        if (!is_null($idRol)) {
+            $objetoMenuRol = new AbmMenuRol();
+            $param = ['idRol' => $idRol];
+            $menuRol = $objetoMenuRol->buscar($param);
+            if (!empty($menuRol)) {
+                $menu = $menuRol[0]->getObjetoMenu();
+                $idMenu = $menu->getIdMenu();
+                $nombreMenu = $menu->getMeNombre();
+            }
+        } else {
+            //* usuario no logueado, se arma menu con menu  por defecto (menu cliente).
+            $menu = $this->buscar(['idMenu' => 3]);
+            $idMenu = $menu[0]->getIdMenu();
+            $nombreMenu = $menu[0]->getMeNombre();
         }
+        $arregloMenu = $this->obtenerMenuCompleto($idMenu, $nombreMenu);
+        $this->crearMenuHTML($arregloMenu);
     }
 
     /**
@@ -215,7 +229,7 @@ class AbmMenu
         return $arregloSubHijos;
     }
 
-    private function crearMenu($arregloMenu)
+    private function crearMenuHTML($arregloMenu)
     {
         // Obtiene los datos del menú
         $datosMenu = $arregloMenu['hijos'];
