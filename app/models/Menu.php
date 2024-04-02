@@ -247,16 +247,19 @@ class Menu extends DataBase
         if ($parametro != "") {
             $query .= 'WHERE ' . $parametro;
         }
-
         // if ($this->Iniciar()) {
         $res = $this->Ejecutar($query);
         if ($res > -1) {
             if ($res > 0) {
                 while ($row = $this->Registro()) {
 
-                    $objetoMenu = new Menu();
-                    $objetoMenu->setIdMenu($row['idpadre']);
-                    $objetoMenu->cargar();
+                    $objetoMenu = null;
+                    $idPadre = $row['idpadre'];
+                    if (!is_null($idPadre)) {
+                        $objetoMenu = new Menu();
+                        $objetoMenu->setIdMenu($row['idpadre']);
+                        $objetoMenu->cargar();
+                    }
 
                     $obj = new Menu();
                     $obj->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $row['medeshabilitado'], $objetoMenu);
