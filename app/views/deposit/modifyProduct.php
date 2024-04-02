@@ -54,7 +54,7 @@ if (!empty($listaRoles)) {
                             <div class="col">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input id="nombre" name="nombre" class="form-control" type="text" value="<?php echo $nombre ?>" required>
-                                <div class="invalid-feedback">Debe ingreasar el nombre</div>
+                                <div class="invalid-feedback">Debe ingresar el nombre</div>
                             </div>
                             <div class="col">
                                 <label for="precio" class="form-label">Precio</label>
@@ -65,8 +65,9 @@ if (!empty($listaRoles)) {
                         </div>
                         <div class="row mb-4">
                             <div class="col">
-                                <label for="stock" class="form-label">Nuevo stock</label>
-                                <input id="stock" name="stock" class="form-control" value="<?php echo $stock  ?>" type="number" required>
+                                <label for="stock" class="form-label">Stock a ingresar</label>
+                                <input id="stock" name="stock" class="form-control" value="" type="number" required>
+                                <span> Stock actual: <?php echo $stock  ?></span>
                                 <div class="invalid-feedback">Ingrese el stock</div>
                                 <span id="error-stock" class="error" style="color: red; display: none;"></span>
                             </div>

@@ -82,6 +82,8 @@ if (count($listaProducto) > 0) {
         }
         ?>
     </div>
+
+    <script src="<?php echo $PUBLIC_JS ?>/deposit/deleteProduct.js"></script>
 </body>
 
 </html>

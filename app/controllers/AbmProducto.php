@@ -153,4 +153,32 @@ class AbmProducto
 
         return $resp;
     }
+
+    public function baja($param)
+    {
+        //viewStructure($param);
+        $resp = false;
+        echo "baja 1<br/>";
+        if ($this->seteadosCamposClaves($param)) {
+            echo "baja 2<br/>";
+            $objetoProducto = $this->cargarObjetoConClave($param);
+            echo "baja 3<br/>";
+
+            if ($objetoProducto != null and $objetoProducto->eliminar()) {
+                echo "baja 4<br/>";
+                $resp = true;
+            }
+        }
+
+        return $resp;
+    }
+    private function cargarObjetoConClave($param)
+    {
+        $obj = null;
+        if (isset($param['idProducto'])) {
+            $obj = new Producto();
+            $obj->setear($param['idProducto'], null, null, null, null, null, null, null, null, null);
+        }
+        return $obj;
+    }
 }

@@ -21,7 +21,7 @@ if (!empty($producto)) {
         "proDescripcion" => $datos['titulo'],
         "proMasInfo" => $datos['masInfo'],
         "proImagen" => $datos['nombreImagen'],
-        "proCantStock" => $datos['stock'],
+        "proCantStock" => $stockModificado,
         "esprodestacado" => $datos['esPopular'],
         "espronuevo" => $datos['esNuevo'],
 

@@ -59,7 +59,7 @@ function crearTablaProducto($listaProducto)
     echo "<td>$esPopu</td>";
     echo "<td >$esNuevito</td>";
     echo '<td>
-                <a href="modifyProduct.php?nombre=' . $producto->getProNombre() .
+    <a href="modifyProduct.php?nombre=' . $producto->getProNombre() .
       '&idProducto=' . $producto->getIdProducto() .
       '&precio=' . $producto->getProPrecio() .
       '&tipo=' . $producto->getProTipo() .
@@ -69,13 +69,14 @@ function crearTablaProducto($listaProducto)
       '&esPopular=' . $esPopular .
       '&nombreImagen=' . $producto->getProImagen() .
       '&nombreCompleto=' . $producto->getProDescripcion() . '" class="btn btn-outline-primary">
-                    <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
-                </a>
+        <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
+    </a>
 
-                <a href="#" class="btn btn-outline-danger">
-                    <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/trash3.svg" alt="eliminar">
-                </a>   
+    <a href="#" class="btn btn-outline-danger deleteButton" id="deleteButton" data-id="' . $producto->getIdProducto() . '">
+        <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/trash3.svg" alt="eliminar">
+    </a>  
 </td>';
+
 
     echo "</tr>";
   }
@@ -105,3 +106,10 @@ function seleccionCheck($esNuevo, $esPopular)
 
   return [$esNuevito, $esPopu];
 }
+
+
+
+
+// <a href="actions/deleteProductAction.php?idProducto=' . $id . '" class="btn btn-outline-danger">
+// <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/trash3.svg" alt="eliminar">
+// </a>
