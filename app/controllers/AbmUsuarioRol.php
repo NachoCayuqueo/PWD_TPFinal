@@ -173,16 +173,16 @@ class AbmUsuarioRol
 
     public function obtenerRolActivo($idUsuario)
     {
-        $nombreRol = "";
+        $rol = null;
         $param = [
             'idUsuario' => $idUsuario,
             'rolActivo' => '1'
         ];
         $usuarioRol = $this->buscar($param);
         if (!empty($usuarioRol)) {
-            $objetoRol = $usuarioRol[0]->getObjetoRol();
-            $nombreRol = $objetoRol->getRoDescripcion();
+            $rol = $usuarioRol[0]->getObjetoRol();
+            // $nombreRol = $rol->getRoDescripcion();
         }
-        return $nombreRol;
+        return $rol;
     }
 }

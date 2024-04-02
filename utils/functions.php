@@ -65,3 +65,17 @@ function getAvatar($rol)
     }
     return $avatarUsuario;
 }
+
+function getHomePage($rol)
+{
+    $homepage = "";
+
+    $dataJSON = getJSONFileUser();
+    foreach ($dataJSON['user'] as $user) {
+        if ($user['role'] === $rol) {
+            $homepage = $user['homepage'];
+            break;
+        }
+    }
+    return $homepage;
+}

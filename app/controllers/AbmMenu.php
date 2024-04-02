@@ -132,4 +132,170 @@ class AbmMenu
         $arreglo = $objetoMenu->listar($whereClause);
         return $arreglo;
     }
+
+    /**
+     * Arma dinámicamente el menú de navegación basado en el rol del usuario o en un menú predeterminado.
+     * Si el usuario está autenticado, se genera el menú según el rol proporcionado.
+     * Si el usuario no está autenticado, se muestra un menú predeterminado para el usuario invitado.
+     *
+     * @param int|null $idRol El ID del rol del usuario autenticado. Si es null, se asume que el usuario no está autenticado.
+     * @return void
+     */
+    public function armarMenu($idRol)
+    {
+        if (!is_null($idRol)) {
+            $objetoMenuRol = new AbmMenuRol();
+            $param = ['idRol' => $idRol];
+            $menuRol = $objetoMenuRol->buscar($param);
+            if (!empty($menuRol)) {
+                $menu = $menuRol[0]->getObjetoMenu();
+                $idMenu = $menu->getIdMenu();
+                $nombreMenu = $menu->getMeNombre();
+            }
+        } else {
+            //* usuario no logueado, se arma menu con menu  por defecto (menu cliente).
+            $menu = $this->buscar(['idMenu' => 3]);
+            $idMenu = $menu[0]->getIdMenu();
+            $nombreMenu = $menu[0]->getMeNombre();
+        }
+        $arregloMenu = $this->obtenerMenuCompleto($idMenu, $nombreMenu);
+        $this->crearMenuHTML($arregloMenu);
+    }
+
+    /**
+     * Obtiene el menú completo con sus hijos y subhijos.
+     *
+     * @param int $idMenu - El ID del menú padre.
+     * @param string $nombreMenu - El nombre del menú padre.
+     * @return array - Arreglo con el menú completo.
+     */
+    private function obtenerMenuCompleto($idMenu, $nombreMenu)
+    {
+        return [
+            'idPadre' => $idMenu,
+            'nombrePadre' => $nombreMenu,
+            'hijos' => $this->obtenerHijosMenu($idMenu)
+        ];
+    }
+
+    /**
+     * Obtiene los hijos de un menú.
+     *
+     * @param int $idMenu - El ID del menú padre.
+     * @return array - Arreglo con los hijos del menú.
+     */
+    private function obtenerHijosMenu($idMenu)
+    {
+        $arregloHijos = [];
+        $objetoMenu = new AbmMenu();
+        $paramMenu = ['idPadre' => $idMenu];
+        $misMenus = $objetoMenu->buscar($paramMenu);
+        if (!empty($misMenus)) {
+            foreach ($misMenus as $menu) {
+                $id = $menu->getIdMenu();
+                $nombre = $menu->getMeNombre();
+                $descripcion = $menu->getMeDescripcion();
+                $arregloHijos[] = [
+                    'idHijo' => $id,
+                    'nombreHijo' => $nombre,
+                    'descripcionHijo' => $descripcion,
+                    'subHijos' => $this->obtenerSubHijosMenu($id)
+                ];
+            }
+        }
+        return $arregloHijos;
+    }
+
+    /**
+     * Obtiene los subhijos de un menú.
+     *
+     * @param int $idMenu - El ID del menú.
+     * @return array - Arreglo con los subhijos del menú.
+     */
+    private function obtenerSubHijosMenu($idMenu)
+    {
+        $arregloSubHijos = [];
+        $objetoMenu = new AbmMenu();
+        $hijos = $objetoMenu->buscar(['idPadre' => $idMenu]);
+        if (!empty($hijos)) {
+            foreach ($hijos as $hijo) {
+                $arregloSubHijos[] = [
+                    'id' => $hijo->getIdMenu(),
+                    'nombre' => $hijo->getMeNombre(),
+                    'descripcion' => $hijo->getMeDescripcion()
+                ];
+            }
+        }
+        return $arregloSubHijos;
+    }
+
+    private function crearMenuHTML($arregloMenu)
+    {
+        // Obtiene los datos del menú
+        $datosMenu = $arregloMenu['hijos'];
+        // Inicia la estructura del navbar
+        echo '
+    <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+        <div class="container-fluid">
+            <div class="navbar-title collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+    ';
+
+        // Recorre cada hijo del menú
+        foreach ($datosMenu as $hijo) {
+            $nombre = $hijo['nombreHijo'];
+            $descripcionHijo = $hijo['descripcionHijo'];
+            $subHijos = $hijo['subHijos'];
+
+            // Verifica si el hijo tiene subhijos
+            if (!empty($subHijos)) {
+                // Si tiene subhijos, genera un elemento de menú desplegable
+                echo '
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color: #f5f7f8;">' . $nombre . '</a>
+                <ul class="dropdown-menu">
+            ';
+
+                // Recorre cada subhijo
+                foreach ($subHijos as $subhijo) {
+                    $nombreInterno = $subhijo['nombre'];
+                    $descripcion = $subhijo['descripcion'];
+
+                    // Genera un elemento de menú para cada subhijo
+                    echo '
+                <li><a class="dropdown-item" href="' . $GLOBALS['VISTAS'] . "/" . $descripcion . '">' . $nombreInterno . '</a></li>
+                ';
+                }
+
+                // Cierra el menú desplegable
+                echo '
+                </ul>
+            </li>
+            ';
+            } else {
+                // Si no tiene subhijos, genera un elemento de menú normal
+                echo '
+            <li class="nav-item">
+            ';
+                if ($nombre !== "Carrito") {
+                    echo '
+                    <a class="nav-link" href="' . $GLOBALS['VISTAS'] . "/" . $descripcionHijo . '" style="color: #f5f7f8;">' . $nombre . '</a>
+                    ';
+                } else {
+                    echo '
+                    <a id="carritoLink" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Carrito</a>
+                    ';
+                }
+                echo '</li>';
+            }
+        }
+
+        // Cierra la estructura del navbar
+        echo '
+                </ul>
+            </div>
+        </div>
+    </nav>
+    ';
+    }
 }

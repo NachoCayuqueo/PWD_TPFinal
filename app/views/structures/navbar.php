@@ -1,6 +1,9 @@
 <?php
+include_once "../customer/strucures/cartSidePanel.php";
 $session = new Session();
 $existeSesion = false;
+$nombreRolActivo = null;
+$idRol = null;
 $avatarUsuario = "";
 if ($session->validar()) {
     $usuario = $session->getUsuario();
@@ -11,14 +14,18 @@ if ($session->validar()) {
         $nombreUsuario = $usuario->getUsNombre();
         // Nombre del usuario que quieres buscar
         $objetoUsuarioRol = new AbmUsuarioRol();
-        $rolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario);
-        $avatarUsuario = getAvatar($rolActivo);
+        $idRol = $objetoUsuarioRol->obtenerRolActivo($idUsuario)->getIdRol();
+
+        $nombreRolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario)->getRoDescripcion();
+        $avatarUsuario = getAvatar($nombreRolActivo);
     }
     $existeSesion = true;
 }
-if ($avatarUsuario === "") {
+
+if (is_null($nombreRolActivo)) {
     $avatarUsuario = "person-fill.svg";
 }
+
 ?>
 
 <nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
@@ -57,10 +64,7 @@ if ($avatarUsuario === "") {
                             } else {
                                 echo '<li><a class="dropdown-item" href="' . $VISTAS . '/login">Login</a></li>
                                 <li><a class="dropdown-item" href="' . $VISTAS . '/register">Register</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Configuraciones</a></li>';
+                                ';
                             }
                             ?>
                         </ul>
@@ -74,75 +78,8 @@ if ($avatarUsuario === "") {
 <hr class="my-0" style="color: white;">
 
 <!-- menu dinamico -->
-<!-- menu admin -->
-<nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
-    <div class="container-fluid">
-        <div class="navbar-title collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Usuarios</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/admin/createUser.php">Crear Usuarios</a></li>
-                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/admin/dashboard.php">Mostrar Usuarios</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="<?php echo $VISTAS ?>/admin/roleList.php" style="color: #f5f7f8;">Roles</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="#" style="color: #f5f7f8;">Administrar Menu</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- menu cliente -->
 <?php
-include_once "../customer/strucures/cartSidePanel.php";
+//*menu
+$objetoMenu = new AbmMenu();
+$objetoMenu->armarMenu($idRol);
 ?>
-
-<!-- <nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
-    <div class="container-fluid">
-        <div class="navbar-title collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false" style="color: #f5f7f8;">Productos</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=accessories">Accesorios</a></li>
-                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=toys">Juguetes</a></li>
-                        <li><a class="dropdown-item" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=food">Comida</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=favorite">Productos Favoritos</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="<?php echo $VISTAS ?>/customer/similarProducts.php?type=new">Productos Nuevos</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="<?php echo $VISTAS ?>/customer/shoppingSummary.php">Mis Compras</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a id="carritoLink" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Carrito</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav> -->
-
-<!-- menu deposito -->
-<!-- <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
-    <div class="container-fluid">
-        <div class="navbar-title collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item ms-5">
-                    <a href="<?php echo $VISTAS ?>/deposit/dashboard.php" class="nav-link" style="color: #f5f7f8;">Listar Productos</a>
-                </li>
-                <li class="nav-item ms-5">
-                    <a href="#" class="nav-link" style="color: #f5f7f8;">Crear Producto</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav> -->

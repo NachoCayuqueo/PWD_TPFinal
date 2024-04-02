@@ -1,5 +1,19 @@
 <?php
 include_once "../../../config/configuration.php";
+$session = new Session();
+$objetoUsuarioRol = new AbmUsuarioRol();
+if ($session->validar()) {
+    $usuario = $session->getUsuario();
+    $idUsuario = $usuario->getIdUsuario();
+    $rol = $objetoUsuarioRol->obtenerRolActivo($idUsuario);
+    $nombreRolActivo = $rol->getRoDescripcion();
+}
+
+if (!is_null($nombreRolActivo) && $nombreRolActivo !== 'cliente') {
+    $locacion = getHomePage($nombreRolActivo);
+    header('Location: ' . $VISTAS . "/" . $locacion);
+}
+
 
 $objetoProducto = new AbmProducto();
 $productosDestacados = $objetoProducto->obtenerProductosSimilares('favorite');

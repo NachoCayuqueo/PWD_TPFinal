@@ -12,7 +12,7 @@ class Menu extends DataBase
     {
         parent::__construct();
         $this->idMenu = "";
-        $this->objetoPadre = new Menu();
+        $this->objetoPadre = null;
         $this->meDescripcion = "";
         $this->meDeshabilitado = "";
         $this->meNombre = "";
@@ -152,16 +152,19 @@ class Menu extends DataBase
     public function cargar()
     {
         $resp = false;
-        $query = "SELECT * FROM producto WHERE idmenu = " . $this->getIdMenu();
+        $query = "SELECT * FROM menu WHERE idmenu = " . $this->getIdMenu();
         if ($this->Iniciar()) {
             $res = $this->Ejecutar($query);
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $this->Registro();
 
-                    $objetoMenu = new Menu();
-                    $objetoMenu->setIdMenu($row['idpadre']);
-                    $objetoMenu->cargar();
+                    $objetoMenu = null;
+                    if ($row['idPadre'] !== null) {
+                        $objetoMenu = new Menu();
+                        $objetoMenu->setIdMenu($row['idpadre']);
+                        $objetoMenu->cargar();
+                    }
 
                     $this->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $row['medeshabilitado'], $objetoMenu);
                 }
@@ -244,16 +247,19 @@ class Menu extends DataBase
         if ($parametro != "") {
             $query .= 'WHERE ' . $parametro;
         }
-
         // if ($this->Iniciar()) {
         $res = $this->Ejecutar($query);
         if ($res > -1) {
             if ($res > 0) {
                 while ($row = $this->Registro()) {
 
-                    $objetoMenu = new Menu();
-                    $objetoMenu->setIdMenu($row['idpadre']);
-                    $objetoMenu->cargar();
+                    $objetoMenu = null;
+                    $idPadre = $row['idpadre'];
+                    if (!is_null($idPadre)) {
+                        $objetoMenu = new Menu();
+                        $objetoMenu->setIdMenu($row['idpadre']);
+                        $objetoMenu->cargar();
+                    }
 
                     $obj = new Menu();
                     $obj->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $row['medeshabilitado'], $objetoMenu);
