@@ -2,6 +2,8 @@
 include_once "../customer/strucures/cartSidePanel.php";
 $session = new Session();
 $existeSesion = false;
+$nombreRolActivo = null;
+$idRol = null;
 $avatarUsuario = "";
 if ($session->validar()) {
     $usuario = $session->getUsuario();
@@ -12,12 +14,15 @@ if ($session->validar()) {
         $nombreUsuario = $usuario->getUsNombre();
         // Nombre del usuario que quieres buscar
         $objetoUsuarioRol = new AbmUsuarioRol();
-        $rolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario)->getRoDescripcion();
-        $avatarUsuario = getAvatar($rolActivo);
+        $idRol = $objetoUsuarioRol->obtenerRolActivo($idUsuario)->getIdRol();
+
+        $nombreRolActivo = $objetoUsuarioRol->obtenerRolActivo($idUsuario)->getRoDescripcion();
+        $avatarUsuario = getAvatar($nombreRolActivo);
     }
     $existeSesion = true;
 }
-if ($avatarUsuario === "") {
+
+if (is_null($nombreRolActivo)) {
     $avatarUsuario = "person-fill.svg";
 }
 
@@ -59,10 +64,7 @@ if ($avatarUsuario === "") {
                             } else {
                                 echo '<li><a class="dropdown-item" href="' . $VISTAS . '/login">Login</a></li>
                                 <li><a class="dropdown-item" href="' . $VISTAS . '/register">Register</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Configuraciones</a></li>';
+                                ';
                             }
                             ?>
                         </ul>
@@ -79,6 +81,5 @@ if ($avatarUsuario === "") {
 <?php
 //*menu
 $objetoMenu = new AbmMenu();
-$idRol = $objetoUsuarioRol->obtenerRolActivo($idUsuario)->getIdRol();
 $objetoMenu->armarMenu($idRol);
 ?>
