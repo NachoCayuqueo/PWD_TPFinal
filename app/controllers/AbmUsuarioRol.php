@@ -181,7 +181,6 @@ class AbmUsuarioRol
         $usuarioRol = $this->buscar($param);
         if (!empty($usuarioRol)) {
             $rol = $usuarioRol[0]->getObjetoRol();
-            // $nombreRol = $rol->getRoDescripcion();
         }
         return $rol;
     }
