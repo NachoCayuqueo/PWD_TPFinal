@@ -3,6 +3,10 @@ include_once '../../../config/configuration.php';
 $session = new Session();
 $esUsuarioValido = $session->validarUsuario("cliente");
 $existenProductos = false;
+
+if (!$esUsuarioValido && $session->esUsuarioNoLogueado()) {
+    $esUsuarioValido = true;
+}
 if ($esUsuarioValido) {
     $data = data_submitted();
     $tipoProducto = $data['type'];
