@@ -102,7 +102,6 @@ class Session
     {
         $objetoUsuarioRol = new AbmUsuarioRol();
         $esUsuarioValido = false;
-
         if ($this->validar()) {
             $usuario = $this->getUsuario();
             if (!is_null($usuario)) {
@@ -113,8 +112,15 @@ class Session
                 }
             }
         }
-
         return $esUsuarioValido;
+    }
+
+    public function esUsuarioNoLogueado()
+    {
+        if (!$this->validar()) {
+            return true;
+        }
+        return false;
     }
 
     /**
