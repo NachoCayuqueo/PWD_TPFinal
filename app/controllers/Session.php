@@ -97,6 +97,26 @@ class Session
         return $list_rol;
     }
 
+    //* valida que el usuario tenga permiso para ingresar a una pagina especifica
+    public function validarUsuario($nombreRol)
+    {
+        $objetoUsuarioRol = new AbmUsuarioRol();
+        $esUsuarioValido = false;
+
+        if ($this->validar()) {
+            $usuario = $this->getUsuario();
+            if (!is_null($usuario)) {
+                $rol = $objetoUsuarioRol->obtenerRolActivo($usuario->getIdUsuario());
+                $descripcionRol = $rol->getRoDescripcion();
+                if ($descripcionRol === $nombreRol) {
+                    $esUsuarioValido = true;
+                }
+            }
+        }
+
+        return $esUsuarioValido;
+    }
+
     /**
      *Cierra la sesión actual.
      */
