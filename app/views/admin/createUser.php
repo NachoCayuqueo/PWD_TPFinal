@@ -112,7 +112,7 @@ if ($esUsuarioValido) {
 
     <script src="<?php echo $PUBLIC_JS ?>/admin/validations.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/admin/createUserAjax.js"></script>
-
+    <?php include_once "../structures/footer.php"; ?>
 </body>
 
 </html>

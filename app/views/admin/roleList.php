@@ -34,7 +34,7 @@ if ($esUsuarioValido) {
     <div class="mt-3">
         <h1 class="text-center">Panel Administrador</h1>
     </div>
-    <div class="container-sm p-4" style="width:70%">
+    <div class="container-sm p-4">
         <?php
         if ($listaRoles) {
             crearTablaRoles($listaRoles);
@@ -58,14 +58,18 @@ if ($esUsuarioValido) {
                     </div>';
         }
         ?>
-        <!-- Botón flotante para agregar nuevos roles -->
-        <a href="#" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#modalAddRole" type="button" data-bs-tooltip="tooltip" data-bs-placement="top" data-bs-title="Nuevo Rol">
-            <img src="<?php echo $BOOTSTRAP_ICONS ?>/plus-circle-fill.svg" alt="add" width="65">
-        </a>
-        <?php
-        modalAddRole();
-        ?>
+        <!-- Botón para agregar nuevos roles -->
+        <div class="btn-floating">
+            <a class="btn" data-bs-toggle="modal" data-bs-target="#modalAddRole" type="button" data-bs-tooltip="tooltip" data-bs-placement="top" data-bs-title="Nuevo Rol">
+                <img src="<?php echo $BOOTSTRAP_ICONS ?>/plus-circle-fill.svg" alt="add" width="65">
+            </a>
+        </div>
     </div>
+
+    <?php
+    modalAddRole();
+    ?>
+    <?php include_once "../structures/footer.php"; ?>
 </body>
 
 </html>

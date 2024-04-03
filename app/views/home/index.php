@@ -128,6 +128,4 @@ if (!empty($productosNuevos)) {
     <?php include_once "../structures/footer.php"; ?>
 </body>
 
-
-
 </html>
