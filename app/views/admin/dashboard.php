@@ -61,7 +61,7 @@ if ($esUsuarioValido) {
         }
         ?>
     </div>
-
+    <?php include_once "../structures/footer.php"; ?>
 </body>
 
 </html>
