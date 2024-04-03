@@ -1,14 +1,21 @@
 <?php
 include_once '../../../config/configuration.php';
-$data = data_submitted();
-$tipoProducto = $data['type'];
-
-$objetoProducto = new AbmProducto();
-$productosTipoSimilares =  $objetoProducto->obtenerProductosSimilares($tipoProducto);
-$nombreTipo = $objetoProducto->obtenerNombreTipo($tipoProducto);
+$session = new Session();
+$esUsuarioValido = $session->validarUsuario("cliente");
 $existenProductos = false;
-if (!empty($productosTipoSimilares)) {
-    $existenProductos = true;
+if ($esUsuarioValido) {
+    $data = data_submitted();
+    $tipoProducto = $data['type'];
+
+    $objetoProducto = new AbmProducto();
+    $productosTipoSimilares =  $objetoProducto->obtenerProductosSimilares($tipoProducto);
+    $nombreTipo = $objetoProducto->obtenerNombreTipo($tipoProducto);
+
+    if (!empty($productosTipoSimilares)) {
+        $existenProductos = true;
+    }
+} else {
+    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
 }
 ?>
 
@@ -22,7 +29,6 @@ if (!empty($productosTipoSimilares)) {
     include_once "./strucures/modals.php";
     ?>
 </head>
-
 
 <body>
     <?php
@@ -40,12 +46,17 @@ if (!empty($productosTipoSimilares)) {
                         <?php
                         if ($existenProductos) {
                             foreach ($productosTipoSimilares as $producto) {
-
                                 $botonComprar = "../customer/buyProduct.php?idProducto=" . $producto->getIdProducto();
                                 echo '<div class="col">';
                                 productsCard($producto, $botonComprar);
                                 echo '</div>';
                             }
+                        } else {
+                            echo '
+                            <div>
+                            <p>Productos no encontrados</p>
+                            </div>
+                            ';
                         }
                         ?>
                     </div>
