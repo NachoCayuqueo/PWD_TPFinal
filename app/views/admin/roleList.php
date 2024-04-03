@@ -2,12 +2,17 @@
 include_once '../../../config/configuration.php';
 include_once "roleModals.php";
 
-$objetoRoles = new AbmRol();
-$listaRoles = $objetoRoles->buscar(null);
-
+$session = new Session();
+$esUsuarioValido = $session->validarUsuario("admin");
 $existenRoles = false;
-if (!empty($listaRoles)) {
-    $existenRoles = true;
+if ($esUsuarioValido) {
+    $objetoRoles = new AbmRol();
+    $listaRoles = $objetoRoles->buscar(null);
+    if (!empty($listaRoles)) {
+        $existenRoles = true;
+    }
+} else {
+    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
 }
 ?>
 

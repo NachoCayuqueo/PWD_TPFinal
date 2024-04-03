@@ -2,39 +2,20 @@
 include_once '../../../config/configuration.php';
 
 $session = new Session();
-$existeSesion = false;
-if ($session->validar()) {
-    $usuario = $session->getUsuario();
-    if (is_null(($usuario))) {
-        $nombreUsuario = 'Usuario';
-        header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-    } else {
-        $nombreUsuario = $usuario->getUsNombre();
-        $idUsuarioActivo = $usuario->getIdUsuario();
-        $usuarioRoles = $session->getRol();
-        //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
-        foreach ($usuarioRoles as $usuarioRol) {
-            $objetoRol = $usuarioRol->getObjetoRol();
-            $descripcionRol = $objetoRol->getRoDescripcion();
-            if ($descripcionRol === 'admin') {
-                $existeSesion = true;
-            }
-        }
+$existeUsuario = false;
+
+$esUsuarioValido = $session->validarUsuario("admin");
+if ($esUsuarioValido) {
+    $objetoUsuario = new AbmUsuario();
+    $objetoRol = new AbmRol();
+    $listaUsuario = $objetoUsuario->buscar(null);
+    if (count($listaUsuario) > 0) {
+        $existeUsuario = true;
+        $rolesDB = $objetoRol->buscar(null);
     }
 } else {
     header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
 }
-
-$objetoUsuario = new AbmUsuario();
-$objetoRol = new AbmRol();
-
-$listaUsuario = $objetoUsuario->buscar(null);
-$existeUsuario = false;
-if (count($listaUsuario) > 0) {
-    $existeUsuario = true;
-    $rolesDB = $objetoRol->buscar(null);
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
