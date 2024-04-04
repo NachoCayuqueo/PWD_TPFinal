@@ -156,16 +156,11 @@ class AbmProducto
 
     public function baja($param)
     {
-        //viewStructure($param);
         $resp = false;
-        echo "baja 1<br/>";
         if ($this->seteadosCamposClaves($param)) {
-            echo "baja 2<br/>";
             $objetoProducto = $this->cargarObjetoConClave($param);
-            echo "baja 3<br/>";
-
             if ($objetoProducto != null and $objetoProducto->eliminar()) {
-                echo "baja 4<br/>";
+
                 $resp = true;
             }
         }

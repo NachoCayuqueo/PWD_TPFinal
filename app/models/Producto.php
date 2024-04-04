@@ -322,9 +322,7 @@ class Producto extends DataBase
         $resp = false;
 
         $query = "DELETE FROM producto WHERE idproducto=" . $this->getIdProducto();
-        echo "query: $query <br/>";
         if ($this->Iniciar()) {
-            echo "1 en eliminar de producto<br/>";
             if ($this->Ejecutar($query)) {
                 $resp = true;
             } else {

@@ -2,7 +2,6 @@
 
 function crearTablaProducto($listaProducto)
 {
-  //viewStructure($listaProducto);
   echo '
     <h4 class="mb-4 title text-center">Listado de Productos</h4>
     <table class="table table-striped table-bordered">
@@ -35,6 +34,9 @@ function crearTablaProducto($listaProducto)
     $esPopu = $check[1];
 
     $descripcionCompleta = $producto->getProMasInfo();
+
+
+
 
     echo "<tr style='text-align: center;'>";
     echo "<td style='width: max-content;'>" . $producto->getIdProducto() . "</td>";
@@ -72,7 +74,7 @@ function crearTablaProducto($listaProducto)
         <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
     </a>
 
-    <a href="#" class="btn btn-outline-danger deleteButton" id="deleteButton" data-id="' . $producto->getIdProducto() . '">
+    <a href="" class="btn btn-outline-danger deleteButton" id="deleteButton-' . $producto->getIdProducto() . '" data-id="' . $producto->getIdProducto() . '">
         <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/trash3.svg" alt="eliminar">
     </a>  
 </td>';
@@ -80,6 +82,7 @@ function crearTablaProducto($listaProducto)
 
     echo "</tr>";
   }
+  echo '</tbody></table>';
 }
 function seleccionCheck($esNuevo, $esPopular)
 {
