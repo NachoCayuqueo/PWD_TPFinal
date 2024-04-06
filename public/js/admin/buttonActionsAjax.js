@@ -157,18 +157,17 @@ $(document).ready(function () {
             text: response.message,
           }).then(() => {
             // Cerrar el modal después de que se cierre el mensaje
-            $("#exampleModal_" + id).modal("hide");
+            $("#modalEdit_" + idMenu).modal("hide");
             location.reload();
           });
-        }
-        if (response.title === "SIN CAMBIOS") {
+        } else {
           Swal.fire({
-            icon: "success",
-            title: "Éxito",
+            icon: "error",
+            title: "Error",
             text: response.message,
           }).then(() => {
             // Cerrar el modal después de que se cierre el mensaje
-            $("#exampleModal_" + id).modal("hide");
+            $("#modalEdit_" + idMenu).modal("hide");
             location.reload();
           });
         }
