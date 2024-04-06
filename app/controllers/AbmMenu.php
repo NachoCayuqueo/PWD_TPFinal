@@ -18,7 +18,6 @@ class AbmMenu
         ) {
             $objetoMenu = new Menu();
             $objetoMenu->setIdMenu($param['idPadre']);
-
             $obj = new Menu();
             $obj->setear(
                 $param['idMenu'],
@@ -195,10 +194,12 @@ class AbmMenu
                 $id = $menu->getIdMenu();
                 $nombre = $menu->getMeNombre();
                 $descripcion = $menu->getMeDescripcion();
+                $fecha = $menu->getMeDeshabilitado();
                 $arregloHijos[] = [
                     'idHijo' => $id,
                     'nombreHijo' => $nombre,
                     'descripcionHijo' => $descripcion,
+                    'fechaDeshabilitado' => $fecha,
                     'subHijos' => $this->obtenerSubHijosMenu($id)
                 ];
             }
@@ -222,7 +223,8 @@ class AbmMenu
                 $arregloSubHijos[] = [
                     'id' => $hijo->getIdMenu(),
                     'nombre' => $hijo->getMeNombre(),
-                    'descripcion' => $hijo->getMeDescripcion()
+                    'descripcion' => $hijo->getMeDescripcion(),
+                    'fechaDeshabilitado' => $hijo->getMeDeshabilitado()
                 ];
             }
         }
@@ -297,5 +299,141 @@ class AbmMenu
         </div>
     </nav>
     ';
+    }
+
+    //genera un array con los datos del menu y sus hijos
+    public function recuperarDatosMenu()
+    {
+        $arregloMenu = [];
+        $menus = $this->buscar(null);
+
+        foreach ($menus as $menu) {
+            $objetoPadre = $menu->getObjetoPadre();
+
+            if (is_null($objetoPadre)) {
+                $hijos = $this->obtenerHijosMenu($menu->getIdMenu());
+
+                $arregloMenu[] = [
+                    'id' => $menu->getIdMenu(),
+                    'nombre' => $menu->getMeNombre(),
+                    'hijos' => $hijos
+                ];
+            }
+        }
+        return $arregloMenu;
+    }
+
+    /**
+     * Función para cambiar un elemento del menú de un rol a otro.
+     *
+     * @param array $param Un arreglo con los parámetros necesarios:
+     *   - idMenu: ID del menú.
+     *   - nombreItem: Nombre del ítem.
+     *   - idRolSeleccionado: ID del rol seleccionado.
+     *   - deshabilitarSwitch: Indicador de si el switch está deshabilitado.
+     *   - subItems: Subelementos del menú.
+     * @return bool
+     */
+    public function cambiarItemDelMenu($param)
+    {
+        $idMenu = $param['idMenu'];
+        $nombreItem = $param['nombreItem'];
+        $idRolSeleccionado = $param['idRolSeleccionado'];
+        $switchActivado = $param['deshabilitarSwitch'];
+        $switchActivado = $switchActivado === 'null' ? false : true;
+        $subItems = $param['subItems'];
+        $respuesta = false;
+
+        if (!empty($subItems)) {
+            $respuesta = $this->moverSubItems($switchActivado, $subItems, $idMenu, $nombreItem, $idRolSeleccionado);
+        } else {
+            $respuesta = $this->moverItem($idMenu, $nombreItem, $idRolSeleccionado);
+        }
+        return $respuesta;
+    }
+
+    private function moverSubItems($moverSelector, $subItems, $idMenu, $nombreItem, $idRol)
+    {
+        $cambiosExitosos = false;
+        if (!$moverSelector) {
+            //* se recorre cada subitem del selector
+            $cambiosExitosos = $this->procesarSubItems($subItems, $idRol);
+
+            if ($cambiosExitosos)
+                //* se actualiza el nombre del selector y se mantiene el id del rol
+                $cambiosExitosos = $this->actualizarNombreSelector($idMenu, $nombreItem);
+            else {
+                $cambiosExitosos = $this->moverTodoSelector($idMenu, $nombreItem, $idRol);
+            }
+        } else {
+            //* mover todo el selector
+            $cambiosExitosos = $this->moverTodoSelector($idMenu, $nombreItem, $idRol);
+        }
+        return $cambiosExitosos;
+    }
+
+    private function procesarSubItems($subItems, $idRol)
+    {
+        foreach ($subItems as $item) {
+            $idSubMenu = $item['id'];
+            $paramIdMenu = ['idMenu' => $idSubMenu];
+            $menu = $this->buscar($paramIdMenu);
+            if (!empty($menu)) {
+                $menuItem = $menu[0];
+                $cambiarItem = $item['cambiarItem'];
+                $cambiarItemBool = filter_var($cambiarItem, FILTER_VALIDATE_BOOLEAN);
+                if ($cambiarItemBool) {
+                    $nombreSubItem = $item['nombre'];
+                    return $this->modificarMenu($menuItem->getIdMenu(), $nombreSubItem, $menuItem->getMeDescripcion(), $menuItem->getMeDeshabilitado(), $idRol);
+                }
+            }
+        }
+        return false;
+    }
+
+    private function actualizarNombreSelector($idMenu, $nombreItem)
+    {
+        $menu = $this->buscar(['idMenu' => $idMenu]);
+        if (!empty($menu)) {
+            $menuItem = $menu[0];
+            $idPadre = $menuItem->getObjetoPadre()->getIdMenu();
+            $nombre = $menuItem->getMeNombre();
+            if ($nombre === $nombreItem) return true;
+            return $this->modificarMenu($menuItem->getIdMenu(), $nombreItem, $menuItem->getMeDescripcion(), $menuItem->getMeDeshabilitado(), $idPadre);
+        }
+    }
+
+    private function moverTodoSelector($idMenu, $nombreItem, $idRol)
+    {
+        $objetoRol = new AbmRol();
+        $rol = $objetoRol->buscar(['idRol' => $idRol]);
+        $nombreNuevoRol = $rol[0]->getRoDescripcion();
+        $nuevaDescripcion = "menu selector del usuario " . $nombreNuevoRol;
+        return $this->moverItem($idMenu, $nombreItem, $idRol, $nuevaDescripcion);
+    }
+
+    private function moverItem($idMenu, $nombreItem, $idRol, $descripcion = "")
+    {
+        $menu = $this->buscar(['idMenu' => $idMenu]);
+
+        if (!empty($menu)) {
+            $menuItem = $menu[0];
+            if ($descripcion === "") {
+                $descripcion = $menuItem->getMeDescripcion();
+            }
+            return $this->modificarMenu($menuItem->getIdMenu(), $nombreItem, $descripcion, $menuItem->getMeDeshabilitado(), $idRol);
+        }
+    }
+
+    private function modificarMenu($id, $nombre, $descripcion, $fecha, $idPadre)
+    {
+        $paramModificacion = [
+            'idMenu' => $id,
+            'meNombre' => $nombre,
+            'meDescripcion' => $descripcion,
+            'meDeshabilitado' => $fecha,
+            'idPadre' => $idPadre,
+        ];
+        return $this->modificacion($paramModificacion);
     }
 }
