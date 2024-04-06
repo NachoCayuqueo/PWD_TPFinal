@@ -98,14 +98,10 @@ class AbmCompraItem
      */
     public function baja($param)
     {
-        //echo "baja de abm compraitem <br/>";
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            // echo "baja de abm compraitem 2<br/>";
             $objetoCompraItem = $this->cargarObjetoConClave($param);
-            // echo "baja de abm compraitem 3<br/>";
             if ($objetoCompraItem != null and $objetoCompraItem->eliminar()) {
-                // echo "baja de abm compraitem 4<br/>";
                 $resp = true;
             }
         }

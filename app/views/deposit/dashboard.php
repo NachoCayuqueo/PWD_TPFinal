@@ -67,7 +67,7 @@ if (count($listaProducto) > 0) {
                         <div class=" card-container d-flex justify-content-center align-items-center">
                             <div class="card text-center mb-3" style="width: 28rem;">
                                 <div class="card-header">
-                                    <div class="text-end"><a class="btn-close" href="index.php" role="button"></a></div>
+                                    <div class="text-end"><a class="btn-close" href="../../../index.php" role="button"></a></div>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">UPS!</h5>
@@ -82,9 +82,7 @@ if (count($listaProducto) > 0) {
         }
         ?>
     </div>
-
     <script src="<?php echo $PUBLIC_JS ?>/deposit/deleteProduct.js"></script>
-
 </body>
 
 </html>

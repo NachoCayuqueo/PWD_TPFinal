@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  $("[id^='deleteButton-']").click(function () {
+  $("[id^='deleteButton-']").click(function (event) {
+    event.preventDefault();
     const idBtnMinus = $(this).attr("id");
     const partesId = idBtnMinus.split("-");
     const idProducto = partesId[partesId.length - 1];

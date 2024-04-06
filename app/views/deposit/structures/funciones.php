@@ -61,18 +61,21 @@ function crearTablaProducto($listaProducto)
     echo "<td>$esPopu</td>";
     echo "<td >$esNuevito</td>";
     echo '<td>
-    <a href="modifyProduct.php?nombre=' . $producto->getProNombre() .
-      '&idProducto=' . $producto->getIdProducto() .
-      '&precio=' . $producto->getProPrecio() .
-      '&tipo=' . $producto->getProTipo() .
-      '&descripcionCompleta=' . $descripcionCompleta .
-      '&stock=' . $producto->getProCantStock() .
-      '&esNuevo=' . $esNuevo .
-      '&esPopular=' . $esPopular .
-      '&nombreImagen=' . $producto->getProImagen() .
-      '&nombreCompleto=' . $producto->getProDescripcion() . '" class="btn btn-outline-primary">
-        <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
-    </a>
+    <form action="modifyProduct.php" method="post">
+    <input type="hidden" name="nombre" value="' . $producto->getProNombre() . '">
+    <input type="hidden" name="idProducto" value="' . $producto->getIdProducto() . '">
+    <input type="hidden" name="precio" value="' . $producto->getProPrecio() . '">
+    <input type="hidden" name="tipo" value="' . $producto->getProTipo() . '">
+    <input type="hidden" name="descripcionCompleta" value="' . $descripcionCompleta . '">
+    <input type="hidden" name="stock" value="' . $producto->getProCantStock() . '">
+    <input type="hidden" name="esNuevo" value="' . $esNuevo . '">
+    <input type="hidden" name="esPopular" value="' . $esPopular . '">
+    <input type="hidden" name="nombreImagen" value="' . $producto->getProImagen() . '">
+    <input type="hidden" name="nombreCompleto" value="' . $producto->getProDescripcion() . '">
+    <button type="submit" class="btn btn-outline-primary">
+      <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
+    </button>
+  </form>
 
     <a href="" class="btn btn-outline-danger deleteButton" id="deleteButton-' . $producto->getIdProducto() . '" data-id="' . $producto->getIdProducto() . '">
         <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/trash3.svg" alt="eliminar">
@@ -110,7 +113,7 @@ function seleccionCheck($esNuevo, $esPopular)
   return [$esNuevito, $esPopu];
 }
 
-
+//echo '<script src="' . $PUBLIC_JS . '/deposit/deleteProduct.js"></script>';
 
 
 // <a href="actions/deleteProductAction.php?idProducto=' . $id . '" class="btn btn-outline-danger">

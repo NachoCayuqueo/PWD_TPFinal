@@ -1,4 +1,5 @@
 <?php
+include_once '../config/configuration.php';
 class AbmProducto
 {
     /**
@@ -175,5 +176,43 @@ class AbmProducto
             $obj->setear($param['idProducto'], null, null, null, null, null, null, null, null, null);
         }
         return $obj;
+    }
+
+    public function eliminarProducto($paramProducto)
+    {
+        $objetoValoracion = new AbmValoracionProducto();
+        $listaValoraciones = $objetoValoracion->buscar($paramProducto);
+        $eliminarExito = true;
+
+        //---- elimino valoraciones si este producto posee
+        if (!empty($listaValoraciones)) {
+            foreach ($listaValoraciones as $valoracion) {
+                $idValoracion = $valoracion->getIdValoracionProducto();
+                $paramValoracion = ['idValoracion' => $idValoracion];
+                $eliminarExito = $objetoValoracion->baja($paramValoracion);
+            }
+        }
+
+        //---- elimino compras si este producto posee
+        $objetoCompraItem = new AbmCompraItem();
+        $comprasDeProducto = $objetoCompraItem->buscar($paramProducto);
+        if (!empty($comprasDeProducto)) { //si encuentra una compra la elimina
+            // controlar q la compraEstado tipo sea 4 o 5 con fecha fin distinta de null
+
+            $objetoCompraEstado = new AbmCompraEstado();
+
+
+
+            $idCompraItem =  $comprasDeProducto[0]->getIdCompraItem();
+            $paramCompraItem = ['idCompraItem' => $idCompraItem];
+            $eliminarExito = $objetoCompraItem->baja($paramCompraItem);
+        }
+
+        //----por ultimo elimino el producto 
+        if ($eliminarExito) {
+            $eliminarExito = $this->baja($paramProducto);
+        }
+
+        return $eliminarExito;
     }
 }
