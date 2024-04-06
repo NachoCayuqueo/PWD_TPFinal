@@ -11,8 +11,17 @@ $idRolSeleccionado = $data['idRolSeleccionado'];
 $deshabilitarSwitch = $data['deshabilitarSwitch'];
 $subItems = $data['subItems'];
 
-echo $idMenu . " - " . $nombreItem . " - " . $idRolSeleccionado . " - ";
-echo "deshabilitarSwitch: " . $deshabilitarSwitch . " - ";
-viewStructure($subItems);
+$param = [
+    'idMenu' => $idMenu,
+    'nombreItem' => $nombreItem,
+    'idRolSeleccionado' => $idRolSeleccionado,
+    'deshabilitarSwitch' => $deshabilitarSwitch,
+    'subItems' => $subItems
+];
+$cambioExitoso = $objetoMenu->cambiarItemDelMenu($param);
+if ($cambioExitoso)
+    $response = array('title' => 'EXITO', 'message' => 'El menu fue editado correctamente');
+else
+    $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al editar el menu');
 // Convertir el array a formato JSON
 echo json_encode($response);
