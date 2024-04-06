@@ -206,9 +206,14 @@ class Menu extends DataBase
         $query = "UPDATE menu SET 
             menombre='" . $this->getMeNombre() . "', 
             medescripcion='" . $this->getMeDescripcion() . "', 
-            idpadre='" . $idPadre . "', 
-            medeshabilitado='" . $this->getMeDeshabilitado() . "'" .
-            " WHERE idMenu=" . $this->getIdMenu();
+            idpadre='" . $idPadre . "'";
+
+        $meDeshabilitado = $this->getMeDeshabilitado();
+        if ($meDeshabilitado !== null) {
+            $query .= ", medeshabilitado='" . $meDeshabilitado . "'";
+        }
+
+        $query .= " WHERE idmenu=" . $this->getIdMenu();
 
         if ($this->Iniciar()) {
             if ($this->Ejecutar($query)) {
