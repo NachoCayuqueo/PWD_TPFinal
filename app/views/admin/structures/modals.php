@@ -94,6 +94,7 @@ function modalEditMenu($modalId, $idRolPadre, $idItem, $nombreItem, $subMenu, $r
                                     </div>';
 
     if (!empty($subMenu)) {
+        echo '<hr class="mb-3" style="color: grey;">';
         echo '<p for="rol" class="form-label">Item del Selector</p>    
                                         ';
         foreach ($subMenu as $item) {
@@ -126,6 +127,7 @@ function modalEditMenu($modalId, $idRolPadre, $idItem, $nombreItem, $subMenu, $r
             <input class="form-check-input switchCheck" type="checkbox" id="nuevoSwitch_' . $idItem . '">
         </div>
     </div>';
+        echo '<hr class="mb-3" style="color: grey;">';
     }
     echo '
         <div class="row mb-4">
