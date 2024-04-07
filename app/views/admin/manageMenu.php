@@ -2,7 +2,7 @@
 include_once '../../../config/configuration.php';
 
 $session = new Session();
-$esUsuarioValido = $session->validarUsuario("admin");
+$esUsuarioValido = $session->validarUsuario();
 if ($esUsuarioValido) {
     $objetoMenu = new AbmMenu();
     $objetoRol = new AbmRol();

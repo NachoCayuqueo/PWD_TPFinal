@@ -3,7 +3,7 @@ include_once '../../../config/configuration.php';
 include_once "roleModals.php";
 
 $session = new Session();
-$esUsuarioValido = $session->validarUsuario("admin");
+$esUsuarioValido = $session->validarUsuario();
 $existenRoles = false;
 if ($esUsuarioValido) {
     $objetoRoles = new AbmRol();

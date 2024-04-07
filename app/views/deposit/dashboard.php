@@ -3,7 +3,7 @@ include_once '../../../config/configuration.php';
 include_once './structures/funciones.php';
 
 $session = new Session();
-$esUsuarioValido = $session->validarUsuario("deposito");
+$esUsuarioValido = $session->validarUsuario();
 $existeProducto = false;
 if ($esUsuarioValido) {
     $objetoProducto = new AbmProducto();
