@@ -211,6 +211,8 @@ class Menu extends DataBase
         $meDeshabilitado = $this->getMeDeshabilitado();
         if ($meDeshabilitado !== null) {
             $query .= ", medeshabilitado='" . $meDeshabilitado . "'";
+        } else {
+            $query .= ", medeshabilitado=NULL";
         }
 
         $query .= " WHERE idmenu=" . $this->getIdMenu();
