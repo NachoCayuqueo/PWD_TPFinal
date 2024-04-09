@@ -16,11 +16,14 @@ function mostrarCollapse($id, $subMenu)
     foreach ($subMenu as $item) {
         $idSubHijo = $item['id'];
         $nombreSubHijo = $item['nombre'];
-        //crear tabla
-        echo "<tr>";
-        echo "<td class='card-title'>" . $idSubHijo . "</td>";
-        echo "<td>" . $nombreSubHijo . "</td>";
-        echo "</tr>";
+        $fechaDeshabilitado = $item['fechaDeshabilitado'];
+        if (is_null($fechaDeshabilitado)) {
+            //crear tabla
+            echo "<tr>";
+            echo "<td class='card-title'>" . $idSubHijo . "</td>";
+            echo "<td>" . $nombreSubHijo . "</td>";
+            echo "</tr>";
+        }
     }
     echo '</tbody>
             </table>    
