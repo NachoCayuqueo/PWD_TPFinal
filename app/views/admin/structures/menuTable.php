@@ -90,8 +90,11 @@ function crearTablaMenuInactivos($listaMenu)
             $subItems = $item['subHijos'];
             $fechaDeshabilitado = $item['fechaDeshabilitado'];
             if (!is_null($fechaDeshabilitado)) {
+                if (!empty($subItems)) {
+                    $descripcion = $item['descripcionHijo'];
+                }
                 $itemsEncontrados++;
-                mostrarDatosTabla($item['idHijo'], $item['nombreHijo'], $nombreRol, "");
+                mostrarDatosTabla($item['idHijo'], $item['nombreHijo'], $nombreRol, $descripcion);
                 $modalId = 'modalActivarMenu_' . $item['idHijo'];
                 modalActivarMenu($modalId, $idMenuPadre, $item['nombreHijo']);
             }
@@ -115,7 +118,7 @@ function crearTablaMenuInactivos($listaMenu)
     return $itemsEncontrados;
 }
 
-function mostrarDatosTabla($id, $nombre, $nombreRol, $descripcion = "")
+function mostrarDatosTabla($id, $nombre, $nombreRol, $descripcion = "sin descripcion")
 {
     echo "<tr>";
     echo "<td class='card-title'>" . $id . "</td>";
