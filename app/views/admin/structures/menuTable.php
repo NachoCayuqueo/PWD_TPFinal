@@ -72,6 +72,73 @@ function crearTablaMenuInactivos($listaMenu)
     echo '
         <table class="table table-striped table-bordered">
         <thead>
+        <tr class="text-center card-title">   
+            <th scope="col">ID</th>    
+            <th scope="col">Nombre</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider card-text">
+        ';
+    foreach ($listaMenu as $menu) {
+        $hijos = $menu['hijos'];
+        $idMenuPadre = $menu['id'];
+        foreach ($hijos as $item) {
+            $nombreRol = $menu['nombre'];
+            $subItems = $item['subHijos'];
+            $fechaDeshabilitado = $item['fechaDeshabilitado'];
+            if (!is_null($fechaDeshabilitado)) {
+                $itemsEncontrados++;
+                mostrarDatosTabla($item['idHijo'], $item['nombreHijo'], $nombreRol, "");
+                $modalId = 'modalActivarMenu_' . $item['idHijo'];
+                modalActivarMenu($modalId, $idMenuPadre, $item['nombreHijo']);
+            }
+            if (!empty($subItems)) {
+                foreach ($subItems as $subitem) {
+                    $fechaDeshabilitado = $subitem['fechaDeshabilitado'];
+                    if (!is_null($fechaDeshabilitado)) {
+                        $itemsEncontrados++;
+                        $nombreRol = $menu['nombre'];
+                        $descripcion = "Item perteneciente al selector " . $item['nombreHijo'];
+                        mostrarDatosTabla($subitem['id'], $subitem['nombre'], $nombreRol, $descripcion);
+                        $modalId = 'modalActivarMenu_' . $subitem['id'];
+                        modalActivarMenu($modalId, $idMenuPadre, $subitem['nombre']);
+                    }
+                }
+            }
+        }
+    }
+    echo '</tbody>
+        </table>';
+    return $itemsEncontrados;
+}
+
+function mostrarDatosTabla($id, $nombre, $nombreRol, $descripcion = "")
+{
+    echo "<tr>";
+    echo "<td class='card-title'>" . $id . "</td>";
+    echo "<td>" . $nombre . "</td>";
+    echo "<td>" . $nombreRol . "</td>";
+    echo "<td>" . $descripcion . "</td>";
+    echo "<td class='text-center'>
+            <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#modalActivarMenu_" . $id . "'>
+                Activar
+            </button>
+        </td>";
+    echo "</tr>";
+}
+
+
+
+
+function crearTablaMenuInactivos_original($listaMenu)
+{
+    $itemsEncontrados = 0;
+    echo '
+        <table class="table table-striped table-bordered">
+        <thead>
         <tr class="text-center card-title">
             <th scope="col"></th>    
             <th scope="col">ID</th>    
