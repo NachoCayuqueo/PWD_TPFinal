@@ -264,47 +264,51 @@ class AbmMenu
             $nombre = $hijo['nombreHijo'];
             $descripcionHijo = $hijo['descripcionHijo'];
             $subHijos = $hijo['subHijos'];
-
-            // Verifica si el hijo tiene subhijos
-            if (!empty($subHijos)) {
-                // Si tiene subhijos, genera un elemento de menú desplegable
-                echo '
+            $fechaDeshabilitado = $hijo['fechaDeshabilitado'];
+            if (is_null($fechaDeshabilitado)) {
+                // Verifica si el hijo tiene subhijos
+                if (!empty($subHijos)) {
+                    // Si tiene subhijos, genera un elemento de menú desplegable
+                    echo '
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color: #f5f7f8;">' . $nombre . '</a>
                 <ul class="dropdown-menu">
             ';
 
-                // Recorre cada subhijo
-                foreach ($subHijos as $subhijo) {
-                    $nombreInterno = $subhijo['nombre'];
-                    $descripcion = $subhijo['descripcion'];
-
-                    // Genera un elemento de menú para cada subhijo
-                    echo '
+                    // Recorre cada subhijo
+                    foreach ($subHijos as $subhijo) {
+                        $nombreInterno = $subhijo['nombre'];
+                        $descripcion = $subhijo['descripcion'];
+                        $fechaDeshabilitado = $subhijo['fechaDeshabilitado'];
+                        if (is_null($fechaDeshabilitado)) {
+                            // Genera un elemento de menú para cada subhijo
+                            echo '
                 <li><a class="dropdown-item" href="' . $GLOBALS['VISTAS'] . "/" . $descripcion . '">' . $nombreInterno . '</a></li>
                 ';
-                }
+                        }
+                    }
 
-                // Cierra el menú desplegable
-                echo '
+                    // Cierra el menú desplegable
+                    echo '
                 </ul>
             </li>
             ';
-            } else {
-                // Si no tiene subhijos, genera un elemento de menú normal
-                echo '
+                } else {
+                    // Si no tiene subhijos, genera un elemento de menú normal
+                    echo '
             <li class="nav-item">
             ';
-                if ($nombre !== "Carrito") {
-                    echo '
+                    if ($nombre !== "Carrito") {
+                        echo '
                     <a class="nav-link" href="' . $GLOBALS['VISTAS'] . "/" . $descripcionHijo . '" style="color: #f5f7f8;">' . $nombre . '</a>
                     ';
-                } else {
-                    echo '
+                    } else {
+                        echo '
                     <a id="carritoLink" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Carrito</a>
                     ';
+                    }
+                    echo '</li>';
                 }
-                echo '</li>';
             }
         }
 
