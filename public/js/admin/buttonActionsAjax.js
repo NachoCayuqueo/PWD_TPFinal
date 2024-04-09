@@ -263,6 +263,59 @@ $(document).ready(function () {
     });
   });
 
+  $(".formulario-activar-menu").submit(function (event) {
+    event.preventDefault();
+    const formulario = $(this);
+
+    const idMenu = obtenerId(formulario);
+    console.log({ idMenu });
+
+    $.ajax({
+      url: "../../views/admin/actions/activateMenuAction.php",
+      type: "POST",
+      data: {
+        idMenu,
+      },
+      success: function (response) {
+        response = JSON.parse(response);
+
+        if (response.title === "EXITO") {
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalActivarMenu_" + idMenu).modal("hide");
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalActivarMenu_" + idMenu).modal("hide");
+            location.reload();
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+        console.error("status: " + status);
+        console.error("error: " + error);
+        // Muestra una alerta de error
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        });
+      },
+    });
+  });
+
+  //TODO: mover esta funcion para utilizarla de manera global
   function obtenerId(formulario) {
     const idCompleto = formulario.attr("id");
     const partesId = idCompleto.split("_");

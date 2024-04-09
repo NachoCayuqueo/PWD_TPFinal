@@ -207,15 +207,15 @@ class AbmMenu
                 $nombre = $menu->getMeNombre();
                 $descripcion = $menu->getMeDescripcion();
                 $fecha = $menu->getMeDeshabilitado();
-                if (is_null($fecha)) {
-                    $arregloHijos[] = [
-                        'idHijo' => $id,
-                        'nombreHijo' => $nombre,
-                        'descripcionHijo' => $descripcion,
-                        'fechaDeshabilitado' => $fecha,
-                        'subHijos' => $this->obtenerSubHijosMenu($id)
-                    ];
-                }
+                // if (is_null($fecha)) {
+                $arregloHijos[] = [
+                    'idHijo' => $id,
+                    'nombreHijo' => $nombre,
+                    'descripcionHijo' => $descripcion,
+                    'fechaDeshabilitado' => $fecha,
+                    'subHijos' => $this->obtenerSubHijosMenu($id)
+                ];
+                // }
             }
         }
         return $arregloHijos;
@@ -234,14 +234,14 @@ class AbmMenu
         $hijos = $objetoMenu->buscar(['idPadre' => $idMenu]);
         if (!empty($hijos)) {
             foreach ($hijos as $hijo) {
-                if (is_null($hijo->getMeDeshabilitado())) {
-                    $arregloSubHijos[] = [
-                        'id' => $hijo->getIdMenu(),
-                        'nombre' => $hijo->getMeNombre(),
-                        'descripcion' => $hijo->getMeDescripcion(),
-                        'fechaDeshabilitado' => $hijo->getMeDeshabilitado()
-                    ];
-                }
+                // if (is_null($hijo->getMeDeshabilitado())) {
+                $arregloSubHijos[] = [
+                    'id' => $hijo->getIdMenu(),
+                    'nombre' => $hijo->getMeNombre(),
+                    'descripcion' => $hijo->getMeDescripcion(),
+                    'fechaDeshabilitado' => $hijo->getMeDeshabilitado()
+                ];
+                // }
             }
         }
         return $arregloSubHijos;
@@ -337,6 +337,19 @@ class AbmMenu
             }
         }
         return $arregloMenu;
+    }
+
+    public function activarItemMenu($idMenu)
+    {
+        $respuesta = false;
+        $paramBuscar = ['idMenu' => $idMenu];
+        $menu = $this->buscar($paramBuscar);
+        if (!empty($menu)) {
+            $dataMenu = $menu[0];
+            $idPadre = $dataMenu->getObjetoPadre()->getIdMenu();
+            $respuesta = $this->modificarMenu($idMenu, $dataMenu->getMeNombre(), $dataMenu->getMeDescripcion(), null, $idPadre);
+        }
+        return $respuesta;
     }
 
     /**
