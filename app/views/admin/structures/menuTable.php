@@ -4,7 +4,6 @@ include_once "modals.php";
 
 function crearTablaMenu($listaMenu, $roles)
 {
-    //viewStructure($listaMenu[0]);
     echo '
     <h4 class="mb-4 title text-center">Administrar Menus</h4>
     <table class="table table-striped table-bordered">
@@ -57,8 +56,8 @@ function crearTablaMenu($listaMenu, $roles)
             mostrarCollapse($item['idHijo'], $subItems);
             $modalId = 'modalEdit_' . $item['idHijo'];
             modalEditMenu($modalId, $menu['id'],  $item['idHijo'], $item['nombreHijo'], $subItems, $roles);
-            // $modalId = 'modalDelete_' . $persona->getIdUsuario();
-            // modalDelete($modalId, $persona->getIdUsuario(), $persona->getUsNombre());
+            $modalId = 'modalDelete_' . $item['idHijo'];
+            modalDeleteMenu($modalId, $menu['id'], $item['idHijo'], $item['nombreHijo'], $subItems);
         }
     }
     echo '</tbody>
