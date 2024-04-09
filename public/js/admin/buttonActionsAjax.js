@@ -113,14 +113,14 @@ $(document).ready(function () {
     const idMenu = obtenerId(formulario);
     const nombreItem = obtenerNombreItem(idMenu);
     const idRolSeleccionado = obtenerIdRol(idMenu);
-    const switchDisabled = obtenerNuevoSwitch(idMenu);
+    const switchDisabled = obtenerSwitchDisabled("nuevoSwitch", idMenu);
 
     const idItemSelectorValues = obtenerValores("idItemSelector", idMenu);
     const nombreItemSelectorValues = obtenerValores(
       "nombreItemSelector",
       idMenu
     );
-    const switches = obtenerSwitches(idMenu);
+    const switches = obtenerSwitches("switchCheck", idMenu);
 
     const subItems = armarArregloItems(
       idItemSelectorValues,
@@ -139,6 +139,84 @@ $(document).ready(function () {
     // AJAX
     $.ajax({
       url: "../../views/admin/actions/editMenuAction.php",
+      type: "POST",
+      data: {
+        idMenu,
+        nombreItem,
+        idRolSeleccionado,
+        deshabilitarSwitch: switchDisabled ? switchDisabled : null,
+        subItems,
+      },
+      success: function (response) {
+        response = JSON.parse(response);
+
+        if (response.title === "EXITO") {
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalEdit_" + idMenu).modal("hide");
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalEdit_" + idMenu).modal("hide");
+            location.reload();
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        // Maneja los errores de la solicitud AJAX
+        console.error(xhr.responseText);
+        // Muestra una alerta de error
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        });
+      },
+    });
+  });
+
+  $(".formulario-borrar-menu").submit(function (event) {
+    event.preventDefault();
+    const formulario = $(this);
+
+    const idMenu = obtenerId(formulario);
+    const nombreItem = obtenerNombreItem(idMenu);
+    const idRolSeleccionado = obtenerIdRol(idMenu);
+    const switchDisabled = obtenerSwitchDisabled("deleteSwitch", idMenu);
+
+    const idItemSelectorValues = obtenerValores("idItemSelectorBorrar", idMenu);
+    const nombreItemSelectorValues = obtenerValores(
+      "nombreItemSelectorBorrar",
+      idMenu
+    );
+    const switches = obtenerSwitches("switchCheckBorrar", idMenu);
+
+    const subItems = armarArregloItems(
+      idItemSelectorValues,
+      nombreItemSelectorValues,
+      switches
+    );
+
+    // console.log({
+    //   idMenu,
+    //   nombreItem,
+    //   idRolSeleccionado,
+    //   switchDisabled,
+    //   subItems,
+    // });
+
+    $.ajax({
+      url: "../../views/admin/actions/deleteMenuAction.php",
       type: "POST",
       data: {
         idMenu,
@@ -228,18 +306,20 @@ $(document).ready(function () {
     return idNombreArray;
   }
 
-  function obtenerSwitches(id) {
+  function obtenerSwitches(selectorPrefix, id) {
     const switches = [];
-    $("input[id^='switchCheck_'][id$='_" + id + "']").each(function () {
-      const switchId = $(this).attr("id");
-      const switchValue = $(this).prop("checked");
-      switches.push({ id: switchId, value: switchValue });
-    });
+    $("input[id^='" + selectorPrefix + "_'][id$='_" + id + "']").each(
+      function () {
+        const switchId = $(this).attr("id");
+        const switchValue = $(this).prop("checked");
+        switches.push({ id: switchId, value: switchValue });
+      }
+    );
     return switches;
   }
 
-  function obtenerNuevoSwitch(id) {
-    const nuevoSwitchId = "nuevoSwitch_" + id;
+  function obtenerSwitchDisabled(selectorPrefix, id) {
+    const nuevoSwitchId = selectorPrefix + "_" + id;
     const nuevoSwitchValue = $("#" + nuevoSwitchId).prop("checked");
     return nuevoSwitchValue;
   }
@@ -249,7 +329,6 @@ $(document).ready(function () {
     const idNuevoSwitch = $(this).attr("id");
     const partesIdNuevoSwitch = idNuevoSwitch.split("_");
     const id = partesIdNuevoSwitch[partesIdNuevoSwitch.length - 1];
-
     if ($(this).prop("checked")) {
       // Deshabilitar los dos switches anteriores
       $("input[id^='switchCheck_'][id$='_" + id + "']").each(function () {
@@ -258,6 +337,23 @@ $(document).ready(function () {
     } else {
       // Habilitar los dos switches anteriores
       $("input[id^='switchCheck_'][id$='_" + id + "']").each(function () {
+        $(this).prop("disabled", false);
+      });
+    }
+  });
+
+  $("[id^='deleteSwitch_']").click(function () {
+    const idNuevoSwitch = $(this).attr("id");
+    const partesIdNuevoSwitch = idNuevoSwitch.split("_");
+    const id = partesIdNuevoSwitch[partesIdNuevoSwitch.length - 1];
+    if ($(this).prop("checked")) {
+      // Deshabilitar los dos switches anteriores
+      $("input[id^='switchCheckBorrar_'][id$='_" + id + "']").each(function () {
+        $(this).prop("disabled", true);
+      });
+    } else {
+      // Habilitar los dos switches anteriores
+      $("input[id^='switchCheckBorrar_'][id$='_" + id + "']").each(function () {
         $(this).prop("disabled", false);
       });
     }
