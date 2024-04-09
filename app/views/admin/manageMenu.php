@@ -36,7 +36,32 @@ if ($esUsuarioValido) {
     <div class="container-sm p-4">
         <?php
         if ($misMenus) {
-            crearTablaMenu($misMenus, $roles);
+            echo '
+            <div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Items Activados</button>
+                    </li>
+                  
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Items Desactivados</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">';
+            if (crearTablaMenu($misMenus, $roles) === 0) {
+
+                echo "<p>No se encontraron menus activos.</p>";
+            }
+            echo '</div>
+                  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">';
+            if (crearTablaMenuInactivos($misMenus) === 0) {
+                echo '<p>No se encontraron menus inactivos</p>';
+            };
+            echo '</div>
+                </div>
+            </div>
+            ';
         } else {
             echo '
                     <div class="container d-flex justify-content-center">
