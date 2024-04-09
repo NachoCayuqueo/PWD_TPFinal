@@ -224,6 +224,7 @@ class Menu extends DataBase
         } else {
             $this->setMensajeoperacion("ERROR::Menu => modificar insertar: " . $this->getError());
         }
+
         return $resp;
     }
 
@@ -277,5 +278,25 @@ class Menu extends DataBase
         }
         //}
         return $arreglo;
+    }
+
+    public function deshabilitar()
+    {
+        $resp = false;
+        $newDate = date('Y-m-d H:i:s');
+        $query = "UPDATE menu SET  
+                    medeshabilitado='" . $newDate . "' WHERE idmenu=" . $this->getIdMenu();
+
+
+        if ($this->Iniciar()) {
+            if ($this->Ejecutar($query)) {
+                $resp = true;
+            } else {
+                $this->setMensajeoperacion("ERROR::Menu => deshabilitar ejecutar: " . $this->getError());
+            }
+        } else {
+            $this->setMensajeoperacion("ERROR::Menu => deshabilitar iniciar: " . $this->getError());
+        }
+        return $resp;
     }
 }
