@@ -132,6 +132,18 @@ class AbmMenu
         return $arreglo;
     }
 
+    public function deshabilitar($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $menuObject = $this->cargarObjetoConClave($param);
+            if ($menuObject != null and $menuObject->deshabilitar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
+    }
+
     /**
      * Arma dinámicamente el menú de navegación basado en el rol del usuario o en un menú predeterminado.
      * Si el usuario está autenticado, se genera el menú según el rol proporcionado.
@@ -195,13 +207,15 @@ class AbmMenu
                 $nombre = $menu->getMeNombre();
                 $descripcion = $menu->getMeDescripcion();
                 $fecha = $menu->getMeDeshabilitado();
-                $arregloHijos[] = [
-                    'idHijo' => $id,
-                    'nombreHijo' => $nombre,
-                    'descripcionHijo' => $descripcion,
-                    'fechaDeshabilitado' => $fecha,
-                    'subHijos' => $this->obtenerSubHijosMenu($id)
-                ];
+                if (is_null($fecha)) {
+                    $arregloHijos[] = [
+                        'idHijo' => $id,
+                        'nombreHijo' => $nombre,
+                        'descripcionHijo' => $descripcion,
+                        'fechaDeshabilitado' => $fecha,
+                        'subHijos' => $this->obtenerSubHijosMenu($id)
+                    ];
+                }
             }
         }
         return $arregloHijos;
@@ -220,12 +234,14 @@ class AbmMenu
         $hijos = $objetoMenu->buscar(['idPadre' => $idMenu]);
         if (!empty($hijos)) {
             foreach ($hijos as $hijo) {
-                $arregloSubHijos[] = [
-                    'id' => $hijo->getIdMenu(),
-                    'nombre' => $hijo->getMeNombre(),
-                    'descripcion' => $hijo->getMeDescripcion(),
-                    'fechaDeshabilitado' => $hijo->getMeDeshabilitado()
-                ];
+                if (is_null($hijo->getMeDeshabilitado())) {
+                    $arregloSubHijos[] = [
+                        'id' => $hijo->getIdMenu(),
+                        'nombre' => $hijo->getMeNombre(),
+                        'descripcion' => $hijo->getMeDescripcion(),
+                        'fechaDeshabilitado' => $hijo->getMeDeshabilitado()
+                    ];
+                }
             }
         }
         return $arregloSubHijos;
@@ -352,6 +368,34 @@ class AbmMenu
         return $respuesta;
     }
 
+    /**
+     * Función para deshabilitar un elemento del menú
+     *
+     * @param array $param Un arreglo con los parámetros necesarios:
+     *   - idMenu: ID del menú.
+     *   - nombreItem: Nombre del ítem.
+     *   - idRolSeleccionado: ID del rol seleccionado.
+     *   - deshabilitarSwitch: Indicador de si el switch está deshabilitado.
+     *   - subItems: Subelementos del menú.
+     * @return bool
+     */
+    public function deshabilitarItemDelMenu($param)
+    {
+        $idMenu = $param['idMenu'];
+        $nombreItem = $param['nombreItem'];
+        $idRolSeleccionado = $param['idRolSeleccionado'];
+        $switchActivado = $param['deshabilitarSwitch'];
+        $switchActivado = $switchActivado === 'null' ? false : true;
+        $subItems = $param['subItems'];
+
+        if (!empty($subItems)) {
+            $respuesta = $this->deshabilitarSubItems($switchActivado, $subItems, $idMenu, $nombreItem, $idRolSeleccionado);
+        } else {
+            $respuesta = $this->deshabilitarItem($idMenu);
+        }
+        return $respuesta;
+    }
+
     private function moverSubItems($moverSelector, $subItems, $idMenu, $nombreItem, $idRol)
     {
         $cambiosExitosos = false;
@@ -370,6 +414,34 @@ class AbmMenu
             $cambiosExitosos = $this->moverTodoSelector($idMenu, $nombreItem, $idRol);
         }
         return $cambiosExitosos;
+    }
+
+    private function deshabilitarSubItems($deshabilitarSelector, $subItems, $idMenu, $nombreItem, $idRol)
+    {
+        if (!$deshabilitarSelector) {
+            $bajaExitosa = $this->procesarDeshabilitarSubItems($subItems);
+        } else {
+            $bajaExitosa = $this->deshabilitarItem($idMenu);
+        }
+        return $bajaExitosa;
+    }
+
+    private function procesarDeshabilitarSubItems($subItems)
+    {
+        foreach ($subItems as $item) {
+            $idSubMenu = $item['id'];
+            $paramIdMenu = ['idMenu' => $idSubMenu];
+            $menu = $this->buscar($paramIdMenu);
+            if (!empty($menu)) {
+                $menuItem = $menu[0];
+                $cambiarItem = $item['cambiarItem'];
+                $cambiarItemBool = filter_var($cambiarItem, FILTER_VALIDATE_BOOLEAN);
+                if ($cambiarItemBool) {
+                    return $this->deshabilitarItem($menuItem->getIdMenu());
+                }
+            }
+        }
+        return false;
     }
 
     private function procesarSubItems($subItems, $idRol)
@@ -425,6 +497,16 @@ class AbmMenu
         }
     }
 
+    private function deshabilitarItem($idMenu)
+    {
+        $menu = $this->buscar(['idMenu' => $idMenu]);
+
+        if (!empty($menu)) {
+            $menuItem = $menu[0];
+            return $this->deshabilitarMenu($menuItem->getIdMenu());
+        }
+    }
+
     private function modificarMenu($id, $nombre, $descripcion, $fecha, $idPadre)
     {
         $paramModificacion = [
@@ -434,6 +516,15 @@ class AbmMenu
             'meDeshabilitado' => $fecha,
             'idPadre' => $idPadre,
         ];
+        //viewStructure($paramModificacion);
         return $this->modificacion($paramModificacion);
+    }
+
+    private function deshabilitarMenu($idMenu)
+    {
+        $paramBaja = [
+            'idMenu' => $idMenu,
+        ];
+        return $this->deshabilitar($paramBaja);
     }
 }
