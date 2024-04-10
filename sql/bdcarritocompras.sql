@@ -177,7 +177,7 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (5, 'Crear Usuario', 'admin/createUser.php', 4, NULL), -- usuario Administrador
 (6, 'Mostrar Usuarios', 'admin/dashboard.php', 4, NULL), -- usuario Administrador
 (7, 'Roles', 'admin/roleList.php', 1,NULL), -- usuario Administrador
-(8, 'Administrar Menu', '#', 1,NULL), -- usuario Administrador
+(8, 'Administrar Menu', 'admin/manageMenu.php', 1,NULL), -- usuario Administrador
 (9, 'Listar Productos', 'deposit/dashboard.php', 2,NULL), -- usuario Deposito
 (10, 'Crear Producto', '#', 2,NULL), -- usuario Deposito
 (11, 'Productos', 'menu selector del usuario cliente', 3, NULL), -- usuario Cliente selector

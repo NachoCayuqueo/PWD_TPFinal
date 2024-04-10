@@ -12,7 +12,8 @@ $isChecked = filter_var($data['isChecked'], FILTER_VALIDATE_BOOLEAN); //me asegu
 
 $params = [
     "idUsuario" => $idUsuario,
-    "idRol" => $idRol
+    "idRol" => $idRol,
+    "rolActivo" => $isChecked,
 ];
 
 $response = array();
@@ -21,16 +22,16 @@ if ($isChecked) {
     //TODO: dar alta en UsuarioRol
     $altaExitosa = $objetoUsuarioRol->alta($params);
     if ($altaExitosa)
-        $response = array('message' => 'Se activo el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+        $response = array('title' => 'EXITO', 'message' => 'Se activo el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
     else
-        $response = array('message' => 'ERROR al activar el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+        $response = array('title' => 'ERROR', 'message' => 'ERROR al activar el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
 } else {
     //TODO: eliminar en UsuarioRol
     $bajaExitosa = $objetoUsuarioRol->baja($params);
     if ($bajaExitosa)
-        $response = array('message' => 'Se dio de baja el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+        $response = array('title' => 'EXITO', 'message' => 'Se dio de baja el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
     else
-        $response = array('message' => 'ERROR al dar de baja el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
+        $response = array('title' => 'ERROR', 'message' => 'ERROR al dar de baja el rol: ' . ' (' . $idRol . ') ' . $data['rol'] . ' con el id usuario: ' . $data['idUsuario']);
 }
 
 // Convertir el array a formato JSON

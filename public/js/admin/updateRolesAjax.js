@@ -24,12 +24,30 @@ $(document).ready(function () {
         descripcionRol,
         isChecked,
       },
-      success: function (data) {
-        console.log(data); // Manejar la respuesta del servidor
+      success: function (response) {
+        if (response.title === "EXITO") {
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: response.message,
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+          });
+        }
       },
       error: function (xhr, status, error) {
         console.error({ xhr: xhr.responseText });
         console.error("Error:", error);
+        // Muestra una alerta de error
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        });
       },
     });
   });

@@ -4,7 +4,7 @@ include_once '../../../config/configuration.php';
 $session = new Session();
 $existeUsuario = false;
 
-$esUsuarioValido = $session->validarUsuario("admin");
+$esUsuarioValido = $session->validarUsuario();
 if ($esUsuarioValido) {
     $objetoUsuario = new AbmUsuario();
     $objetoRol = new AbmRol();

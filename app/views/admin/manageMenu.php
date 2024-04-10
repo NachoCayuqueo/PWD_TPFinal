@@ -1,16 +1,14 @@
 <?php
 include_once '../../../config/configuration.php';
-include_once "roleModals.php";
 
 $session = new Session();
 $esUsuarioValido = $session->validarUsuario();
-$existenRoles = false;
 if ($esUsuarioValido) {
-    $objetoRoles = new AbmRol();
-    $listaRoles = $objetoRoles->buscar(null);
-    if (!empty($listaRoles)) {
-        $existenRoles = true;
-    }
+    $objetoMenu = new AbmMenu();
+    $objetoRol = new AbmRol();
+    $misMenus = $objetoMenu->recuperarDatosMenu();
+    //* obtener roles de la db
+    $roles = $objetoRol->buscar(null);
 } else {
     header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
 }
@@ -21,11 +19,12 @@ if ($esUsuarioValido) {
 
 <head>
     <?php
-    $title = "Roles";
+    $title = "Panel Admin";
     include_once "../structures/head.php";
-    include_once "./structures/roleTable.php";
+    include_once "./structures/menuTable.php";
     ?>
 </head>
+
 
 <body>
     <?php
@@ -36,8 +35,33 @@ if ($esUsuarioValido) {
     </div>
     <div class="container-sm p-4">
         <?php
-        if ($listaRoles) {
-            crearTablaRoles($listaRoles);
+        if ($misMenus) {
+            echo '
+            <div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Items Activados</button>
+                    </li>
+                  
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Items Desactivados</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">';
+            if (crearTablaMenu($misMenus, $roles) === 0) {
+
+                echo "<p>No se encontraron menus activos.</p>";
+            }
+            echo '</div>
+                  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">';
+            if (crearTablaMenuInactivos($misMenus) === 0) {
+                echo '<p>No se encontraron menus inactivos</p>';
+            };
+            echo '</div>
+                </div>
+            </div>
+            ';
         } else {
             echo '
                     <div class="container d-flex justify-content-center">
@@ -58,17 +82,8 @@ if ($esUsuarioValido) {
                     </div>';
         }
         ?>
-        <!-- Botón para agregar nuevos roles -->
-        <div class="btn-floating">
-            <a class="btn" data-bs-toggle="modal" data-bs-target="#modalAddRole" type="button" data-bs-tooltip="tooltip" data-bs-placement="top" data-bs-title="Nuevo Rol">
-                <img src="<?php echo $BOOTSTRAP_ICONS ?>/plus-circle-fill.svg" alt="add" width="65">
-            </a>
-        </div>
     </div>
 
-    <?php
-    modalAddRole();
-    ?>
     <?php include_once "../structures/footer.php"; ?>
 </body>
 

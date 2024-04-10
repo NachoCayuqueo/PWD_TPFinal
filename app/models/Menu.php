@@ -206,9 +206,16 @@ class Menu extends DataBase
         $query = "UPDATE menu SET 
             menombre='" . $this->getMeNombre() . "', 
             medescripcion='" . $this->getMeDescripcion() . "', 
-            idpadre='" . $idPadre . "', 
-            medeshabilitado='" . $this->getMeDeshabilitado() . "'" .
-            " WHERE idMenu=" . $this->getIdMenu();
+            idpadre='" . $idPadre . "'";
+
+        $meDeshabilitado = $this->getMeDeshabilitado();
+        if ($meDeshabilitado !== null) {
+            $query .= ", medeshabilitado='" . $meDeshabilitado . "'";
+        } else {
+            $query .= ", medeshabilitado=NULL";
+        }
+
+        $query .= " WHERE idmenu=" . $this->getIdMenu();
 
         if ($this->Iniciar()) {
             if ($this->Ejecutar($query)) {
@@ -217,10 +224,30 @@ class Menu extends DataBase
                 $this->setMensajeoperacion("ERROR::Menu => modificar ejecutar: " . $this->getError());
             }
         } else {
-            $this->setMensajeoperacion("ERROR::Menu => modificar insertar: " . $this->getError());
+            $this->setMensajeoperacion("ERROR::Menu => modificar iniciar: " . $this->getError());
         }
+
         return $resp;
     }
+
+    // public function modificar_idpadre()
+    // {
+    //     $resp = false;
+    //     $idPadre = $this->getObjetoPadre()->getIdMenu();
+    //     $query = "UPDATE menu SET  
+    //     idpadre=" . $idPadre . " WHERE idmenu=" . $this->getIdMenu();
+
+    //     if ($this->Iniciar()) {
+    //         if ($this->Ejecutar($query)) {
+    //             $resp = true;
+    //         } else {
+    //             $this->setMensajeoperacion("ERROR::Menu => modificar_idpadre ejecutar: " . $this->getError());
+    //         }
+    //     } else {
+    //         $this->setMensajeoperacion("ERROR::Menu => modificar_idpadre iniciar: " . $this->getError());
+    //     }
+    //     return $resp;
+    // }
 
     public function eliminar()
     {
@@ -272,5 +299,44 @@ class Menu extends DataBase
         }
         //}
         return $arreglo;
+    }
+
+    public function habilitar()
+    {
+        $resp = false;
+        $query = "UPDATE menu SET  
+                    medeshabilitado=NULL WHERE idmenu=" . $this->getIdMenu();
+
+
+        if ($this->Iniciar()) {
+            if ($this->Ejecutar($query)) {
+                $resp = true;
+            } else {
+                $this->setMensajeoperacion("ERROR::Menu => habilitar ejecutar: " . $this->getError());
+            }
+        } else {
+            $this->setMensajeoperacion("ERROR::Menu => habilitar iniciar: " . $this->getError());
+        }
+        return $resp;
+    }
+
+    public function deshabilitar()
+    {
+        $resp = false;
+        $newDate = date('Y-m-d H:i:s');
+        $query = "UPDATE menu SET  
+                    medeshabilitado='" . $newDate . "' WHERE idmenu=" . $this->getIdMenu();
+
+
+        if ($this->Iniciar()) {
+            if ($this->Ejecutar($query)) {
+                $resp = true;
+            } else {
+                $this->setMensajeoperacion("ERROR::Menu => deshabilitar ejecutar: " . $this->getError());
+            }
+        } else {
+            $this->setMensajeoperacion("ERROR::Menu => deshabilitar iniciar: " . $this->getError());
+        }
+        return $resp;
     }
 }

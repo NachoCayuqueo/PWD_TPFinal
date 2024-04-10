@@ -1,7 +1,7 @@
 <?php
 include_once '../../../config/configuration.php';
 $session = new Session();
-$esUsuarioValido = $session->validarUsuario("cliente");
+$esUsuarioValido = $session->validarUsuario();
 $existenProductos = false;
 
 if (!$esUsuarioValido && $session->esUsuarioNoLogueado()) {
