@@ -132,6 +132,18 @@ class AbmMenu
         return $arreglo;
     }
 
+    public function habilitar($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $menuObject = $this->cargarObjetoConClave($param);
+            if ($menuObject != null and $menuObject->habilitar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
+    }
+
     public function deshabilitar($param)
     {
         $resp = false;
@@ -351,7 +363,7 @@ class AbmMenu
         if (!empty($menu)) {
             $dataMenu = $menu[0];
             $idPadre = $dataMenu->getObjetoPadre()->getIdMenu();
-            $respuesta = $this->modificarMenu($idMenu, $dataMenu->getMeNombre(), $dataMenu->getMeDescripcion(), null, $idPadre);
+            $respuesta = $this->habilitar(['idMenu' => $idMenu]);
         }
         return $respuesta;
     }
@@ -533,7 +545,6 @@ class AbmMenu
             'meDeshabilitado' => $fecha,
             'idPadre' => $idPadre,
         ];
-        //viewStructure($paramModificacion);
         return $this->modificacion($paramModificacion);
     }
 
