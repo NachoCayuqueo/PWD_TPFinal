@@ -1,7 +1,7 @@
 <?php
 include_once '../../../config/configuration.php';
 $session = new Session();
-$esUsuarioValido = $session->validarUsuario("cliente");
+$esUsuarioValido = $session->validarUsuarioPorRol("cliente");
 $existeListaCompra = false;
 
 if ($esUsuarioValido) {
