@@ -1,17 +1,18 @@
 $(document).ready(function () {
-  //! se debe realizar la validacion en el formulario de campos validos
-  //! revisar ajax -> createUserAjax
   $(".formulario-editar").submit(function (event) {
     event.preventDefault();
     const formulario = $(this);
+    const idForm = obtenerId(formulario);
 
-    const idCompleto = formulario.attr("id"); // Recuperar el id completo del formulario actual
-    const partesId = idCompleto.split("_"); // Dividir el id completo para obtener solo el idUsuario
-    const id = partesId[partesId.length - 1]; // Obtener el último elemento
+    if (validarModalEditarUsuario(event, idForm)) {
+      formularioEditar(idForm);
+    }
+  });
 
-    const idUsuario = $("#idUsuario_" + id).val();
-    const nombre = $("#usNombre_" + id).val();
-    const email = $("#usMail_" + id).val();
+  function formularioEditar(idForm) {
+    const idUsuario = $("#idUsuario_" + idForm).val();
+    const nombre = $("#usNombre_" + idForm).val();
+    const email = $("#usMail_" + idForm).val();
 
     $.ajax({
       url: "../../views/admin/actions/editUserDataAction.php",
@@ -58,9 +59,8 @@ $(document).ready(function () {
         });
       },
     });
-  });
+  }
 
-  //TODO: btn eliminar usuario
   $(".formulario-borrar").submit(function (event) {
     event.preventDefault();
     const formulario = $(this);
@@ -109,8 +109,14 @@ $(document).ready(function () {
   $(".formulario-editar-menu").submit(function (event) {
     event.preventDefault();
     const formulario = $(this);
-
     const idMenu = obtenerId(formulario);
+
+    if (validarModalEditarMenu(event, idMenu)) {
+      formularioEditarMenu(idMenu);
+    }
+  });
+
+  function formularioEditarMenu(idMenu) {
     const nombreItem = obtenerNombreItem(idMenu);
     const idRolSeleccionado = obtenerIdRol(idMenu);
     const switchDisabled = obtenerSwitchDisabled("nuevoSwitch", idMenu);
@@ -183,7 +189,7 @@ $(document).ready(function () {
         });
       },
     });
-  });
+  }
 
   $(".formulario-borrar-menu").submit(function (event) {
     event.preventDefault();

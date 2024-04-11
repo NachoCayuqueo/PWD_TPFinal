@@ -1,38 +1,96 @@
-function validarFormulario() {
+function validarFormularioCrearUsuario(event) {
   "use strict";
-  const form = $("#form-nuevo-usuario");
-  let isValid = true;
+  const form = $("#form-nuevo-usuario")[0];
+  let isValid = form.checkValidity();
 
-  const password = $("#password").val();
-  const repeatPassword = $("#repeat-password").val();
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add("was-validated");
+    return false;
+  }
 
+  const isValidEmailFormat = validarEmail("#email");
+  const isValidPasswordFormat = validarPasswords(
+    "#password",
+    "#repeat-password"
+  );
+  const checkboxesValid = validarCheckboxes("#form-nuevo-usuario");
+
+  isValid = isValidEmailFormat && isValidPasswordFormat && checkboxesValid;
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
+
+  return true;
+}
+
+function validarModalEditarUsuario(event, idform) {
+  const isValidNombre = validarCampo("#usNombre_" + idform);
+  const isValidMail = validarCampo("#usMail_" + idform);
+  const isValidEmailFormat = validarEmail("#usMail_" + idform);
+
+  const isValid = isValidNombre && isValidMail && isValidEmailFormat;
+
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
+  return true;
+}
+
+function validarModalEditarMenu(event, idform) {
+  const isValid = validarCampo("#nombreItem_" + idform);
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
+  return true;
+}
+
+function validarCampo(selector) {
+  const input = $(selector).val().trim();
+  if (input === "") {
+    $(selector).addClass("is-invalid");
+    return false;
+  } else {
+    $(selector).removeClass("is-invalid");
+    return true;
+  }
+}
+
+function validarEmail(selector) {
+  const email = $(selector).val().trim();
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!regex.test(email)) {
+    $(selector).addClass("is-invalid");
+    return false;
+  } else {
+    $(selector).removeClass("is-invalid");
+    return true;
+  }
+}
+
+function validarPasswords(selectorPassword, selectorRepeatPassword) {
+  const password = $(selectorPassword).val();
+  const repeatPassword = $(selectorRepeatPassword).val();
   if (password !== repeatPassword) {
     $("#repeat-password")
       .addClass("is-invalid")
       .css({ "border-color": "#dc3545" });
-    form.addClass("was-validated");
-    // return false;
-    isValid = false;
+    return false;
   } else {
     $("#repeat-password").removeClass("is-invalid").css({ "border-color": "" });
+    return true;
   }
+}
 
-  const mailInput = $("#email").val();
-  //* email validation: valid email
-  if (mailInput) {
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!regex.test(mailInput)) {
-      $("#email").addClass("is-invalid").css({ "border-color": "#dc3545" });
-      form.addClass("was-validated");
-      // return false;
-      isValid = false;
-    } else {
-      $("#email").removeClass("is-invalid").css({ "border-color": "" });
-    }
-  }
-
-  //* verify checks
-  const checkboxes = form.find('input[type="checkbox"]');
+function validarCheckboxes(formSelector) {
+  const checkboxes = $(formSelector).find('input[type="checkbox"]');
   if (checkboxes.length > 1) {
     const isChecked = checkboxes.is(":checked");
 
@@ -44,26 +102,10 @@ function validarFormulario() {
         color: "#dc3545",
         "font-size": "14px",
       });
-      form.addClass("was-validated");
-      // return false;
-      isValid = false;
+      return false;
     } else {
       $(".errorCheck").text("");
+      return true;
     }
   }
-
-  if (!form[0].checkValidity()) {
-    form.addClass("was-validated");
-    return false;
-  }
-
-  // Agregar la clase was-validated si el formulario es válido
-  if (isValid) {
-    form.addClass("was-validated");
-  } else {
-    form.removeClass("was-validated");
-  }
-  return isValid;
-  //form.addClass("was-validated");
-  // return true;
 }

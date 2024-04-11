@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $("#form-nuevo-usuario").submit(function (event) {
     event.preventDefault();
-    if (validarFormulario()) {
+    if (validarFormularioCrearUsuario(event)) {
       enviarFormularioDeCreacion();
     }
   });
@@ -28,8 +28,6 @@ function enviarFormularioDeCreacion() {
     .text();
 
   const activarUsuario = activarUsuarioLabel === "SI" ? "1" : "0";
-
-  //console.log({ nombre, email, password });
 
   $.ajax({
     url: "../../views/admin/actions/createUserAction.php",
