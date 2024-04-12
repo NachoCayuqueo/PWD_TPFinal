@@ -222,4 +222,34 @@ class AbmUsuario
         }
         return $resp;
     }
+
+    /**
+     * modifica la contraseña actual de un usuario
+     * @param array $param: idUsuario, passwordActual,passwordNueva
+     * @return bool
+     */
+    public function modificarPassword($param)
+    {
+        $idUsuario = ['idUsuario' => $param['idUsuario']];
+        $usuario = $this->buscar($idUsuario);
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $passwordDB = $usuario->getUsPass();
+            $passwordActual = $param['passwordActual'];
+            $passwordNueva = $param['passwordNueva'];
+
+            if ($passwordDB === $passwordActual) {
+                $modificarParams = [
+                    "idUsuario" => $usuario->getIdUsuario(),
+                    "usNombre" => $usuario->getUsNombre(),
+                    "usPass" => $passwordNueva,
+                    "usMail" => $usuario->getUsMail(),
+                    "usDeshabilitado" => $usuario->getUsDeshabilitado(),
+                    "usActivo" => $usuario->getUsActivo() ? '1' : '0'
+                ];
+                return $this->modificacion($modificarParams);
+            }
+        }
+        return false;
+    }
 }
