@@ -13,7 +13,7 @@ function validarFormularioLogin(event) {
 
 function validarFormularioRegistro(event) {
   const form = $("#formulario-registro-usuario")[0];
-  const isValid = form.checkValidity();
+  let isValid = form.checkValidity();
 
   if (!isValid) {
     event.preventDefault();
