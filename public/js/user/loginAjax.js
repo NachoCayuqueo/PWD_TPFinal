@@ -8,7 +8,7 @@ $(document).ready(function () {
 });
 
 function login() {
-  const user = $("#user").val();
+  const email = $("#email").val();
   const password = $("#password").val();
   const encryptedPassword = hex_md5(password);
 
@@ -16,7 +16,7 @@ function login() {
     url: "../../views/login/actions/loginAction.php",
     type: "POST",
     data: {
-      user,
+      email,
       password: encryptedPassword,
     },
     success: function (response) {
@@ -34,6 +34,8 @@ function login() {
           icon: "error",
           title: "Error",
           text: response.message,
+        }).then((result) => {
+          window.location.href = "../../../app/views/home";
         });
       }
     },

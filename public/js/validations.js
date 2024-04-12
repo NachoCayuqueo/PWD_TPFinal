@@ -1,6 +1,6 @@
 function validarFormularioLogin(event) {
   const form = $("#formulario-login")[0];
-  const isValid = form.checkValidity();
+  let isValid = form.checkValidity();
 
   if (!isValid) {
     event.preventDefault();
@@ -8,6 +8,16 @@ function validarFormularioLogin(event) {
     form.classList.add("was-validated");
     return false;
   }
+
+  const isValidEmailFormat = validarEmail("#email");
+
+  isValid = isValidEmailFormat;
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
+
   return true;
 }
 

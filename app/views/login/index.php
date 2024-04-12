@@ -20,7 +20,7 @@
             <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
                 <div class="col col-sm-6 col-lg-7 col-xl-6">
                     <!-- logo -->
-                    <a href="#" class="d-flex justify-content-center mb-4">
+                    <a href="../home" class="d-flex justify-content-center mb-4">
                         <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="logo" width="150">
                     </a>
                     <div class="text-center mb-5">
@@ -31,9 +31,9 @@
                     <!-- form -->
                     <form id="formulario-login" name="formulario-login" novalidate>
                         <div class="input-group mb-3 ">
-                            <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/person-fill.svg" alt="username"></span>
-                            <input type="text" class="form-control " id="user" name="user" placeholder="Nombre de usuario" required>
-                            <div class="invalid-feedback">Debe ingresar usuario</div>
+                            <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/envelope-fill.svg" alt="lock"></span>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Ingrese Email" required>
+                            <div class="invalid-feedback">Debe ingresar un email valido</div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/lock-fill.svg" alt="lock"></span>

@@ -1,20 +1,25 @@
 <?php
 include_once '../../../../config/configuration.php';
 
+$objetoUsuario = new AbmUsuario();
 $data = data_submitted();
 $response = array();
 
 if (!empty($data)) {
-    $user = $data['user'];
+    $email = $data['email'];
     $pass = $data['password'];
 
     $session = new Session();
     $isActiveSession = $session->activa();
 
     if ($isActiveSession) {
-        $res = $session->iniciar($user, $pass);
+        $res = $session->iniciar($email, $pass);
         if ($res) {
-            $response = array('title' => 'EXITO', 'message' => 'Bienvenido ' . $user);
+            $response = $objetoUsuario->esUsuarioActivo($email);
+            if ($response)
+                $response = array('title' => 'EXITO', 'message' => 'Bienvenido ' . $email);
+            else
+                $response = array('title' => 'ERROR', 'message' => 'Su cuenta aun no esta activa.');
         } else {
             $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al iniciar sesion');
         }
