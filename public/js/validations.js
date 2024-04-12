@@ -1,41 +1,65 @@
-$(document).ready(function () {
-  "use strict";
+function validarFormularioLogin(event) {
+  const form = $("#formulario-login")[0];
+  const isValid = form.checkValidity();
 
-  const forms = $("#form");
-  forms.on("submit", function (event) {
-    if (!this.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add("was-validated");
+    return false;
+  }
+  return true;
+}
 
-    const password = $("#password").val();
-    const repeatPassword = $("#repeat-password").val();
+function validarFormularioRegistro(event) {
+  const form = $("#formulario-registro-usuario")[0];
+  const isValid = form.checkValidity();
 
-    if (password && repeatPassword) {
-      if (password !== repeatPassword) {
-        event.preventDefault();
-        event.stopPropagation();
-        $("#repeat-password").addClass("is-invalid");
-        $("#repeat-password").css({ "border-color": "#dc3545" });
-      } else {
-        $("#repeat-password").removeClass("is-invalid");
-        $("#repeat-password").css({ "border-color": "" });
-      }
-    }
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add("was-validated");
+    return false;
+  }
 
-    const mailInput = $("#email").val();
-    //* email validation: valid email
-    if (mailInput) {
-      const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      if (!regex.test(mailInput)) {
-        event.preventDefault();
-        event.stopPropagation();
-        $("#email").addClass("is-invalid");
-      } else {
-        $("#email").removeClass("is-invalid");
-      }
-    }
+  const isValidPasswordFormat = validarPasswords(
+    "#password",
+    "#repeat-password"
+  );
+  const isValidEmailFormat = validarEmail("#email");
 
-    $(this).addClass("was-validated");
-  });
-});
+  isValid = isValidEmailFormat && isValidPasswordFormat;
+  if (!isValid) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
+
+  return true;
+}
+
+function validarPasswords(selectorPassword, selectorRepeatPassword) {
+  const password = $(selectorPassword).val();
+  const repeatPassword = $(selectorRepeatPassword).val();
+  if (password !== repeatPassword) {
+    $("#repeat-password")
+      .addClass("is-invalid")
+      .css({ "border-color": "#dc3545" });
+    return false;
+  } else {
+    $("#repeat-password").removeClass("is-invalid").css({ "border-color": "" });
+    return true;
+  }
+}
+
+function validarEmail(selector) {
+  const email = $(selector).val().trim();
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!regex.test(email)) {
+    $(selector).addClass("is-invalid");
+    return false;
+  } else {
+    $(selector).removeClass("is-invalid");
+    return true;
+  }
+}

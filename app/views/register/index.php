@@ -25,7 +25,7 @@
                     </div>
 
                     <!-- form -->
-                    <form id="form" name="form" action="actions/registerAction.php" method="POST" novalidate>
+                    <form id="formulario-registro-usuario" name="formulario-registro-usuario" novalidate>
                         <div class="input-group mb-3 ">
                             <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/person-fill.svg" alt="username"></span>
                             <input type="text" class="form-control " id="user" name="user" placeholder="Nombre de usuario" required>
@@ -66,6 +66,8 @@
     </div>
 
     <script src="<?php echo $PUBLIC_JS ?>/validations.js"></script>
+    <script src="<?php echo $PUBLIC_JS ?>/user/registerAjax.js"></script>
+    <script src="<?php echo $PRINCIPAL ?>/public/lib/md5.js"></script>
 
 </body>
 
