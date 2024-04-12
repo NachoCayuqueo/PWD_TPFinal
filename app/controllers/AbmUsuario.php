@@ -224,6 +224,72 @@ class AbmUsuario
     }
 
     /**
+     * Almacena un nuevo usuario en la base de datos
+     * @param array $param: user,password,email
+     * @return bool
+     */
+    public function registrarNuevoUsuario($param)
+    {
+        $response = "";
+        $buscarPersona = array('usMail' => $param['email']);
+        $persona = $this->buscar($buscarPersona);
+        if (empty($persona)) {
+            $darDeAlta = array(
+                "usNombre" => $param['user'],
+                "usPass" => $param['password'],
+                "usMail" => $param['email']
+            );
+            $cargaExitosa = $this->alta($darDeAlta);
+            if ($cargaExitosa) {
+                $persona = $this->buscar($buscarPersona);
+
+                $objetoUsuarioRol = new AbmUsuarioRol();
+                $altaUsuarioRol = [
+                    'rolActivo' => true, //* true o 1?
+                    'idUsuario' => $persona[0]->getIdUsuario(),
+                    'idRol' => 3 //* verificar esto
+                ];
+                $cargaExitosa = $objetoUsuarioRol->alta($altaUsuarioRol);
+                if ($cargaExitosa) {
+                    $response = array('title' => 'EXITO', 'message' => 'Su cuenta fue registrada. Recibira un email cuando la cuenta se haya activado');
+                } else {
+                    $response = array('title' => 'ERROR', 'message' => 'Error al asignarle rol');
+                }
+            } else {
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar registrar al usuario');
+            }
+        } else {
+            $response = array('title' => 'ERROR', 'message' => 'El usuario se encuentra registrado');
+        }
+
+        return $response;
+    }
+
+    /**
+     * verifica si un usuario tiene permiso de un admin para ingresar al sitio
+     * @param string email
+     * @return bool
+     */
+    public function esUsuarioActivo($email)
+    {
+        $usuario = $this->buscar(['usMail' => $email]);
+
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $esUsuarioActivo = $usuario->getUsActivo();
+            if ($esUsuarioActivo) {
+                return true;
+            } else {
+                $session = new Session();
+                $session->cerrar();
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * modifica la contraseña actual de un usuario
      * @param array $param: idUsuario, passwordActual,passwordNueva
      * @return bool
