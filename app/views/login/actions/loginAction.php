@@ -2,6 +2,7 @@
 include_once '../../../../config/configuration.php';
 
 $data = data_submitted();
+$response = array();
 
 if (!empty($data)) {
     $user = $data['user'];
@@ -13,12 +14,13 @@ if (!empty($data)) {
     if ($isActiveSession) {
         $res = $session->iniciar($user, $pass);
         if ($res) {
-            header('Location: ' . $PRINCIPAL . "/app/views/home");
+            $response = array('title' => 'EXITO', 'message' => 'Bienvenido ' . $user);
         } else {
-            echo 'error al iniciar <br>';
-            // header('Location: ' . $PRINCIPAL . "/views/tp5_views/login.php");
+            $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al iniciar sesion');
         }
     } else {
-        echo "ERROR:: sesion inactiva";
+        $response = array('title' => 'ERROR', 'message' => 'Sesion Inactiva');
     }
 }
+
+echo json_encode($response);

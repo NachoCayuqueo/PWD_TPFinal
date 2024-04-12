@@ -3,6 +3,7 @@ include_once '../../../../config/configuration.php';
 
 $data = data_submitted();
 $objetoPersona = new AbmUsuario();
+$response = array();
 
 if (!empty($data)) {
     $usuario = $data['user'];
@@ -20,9 +21,15 @@ if (!empty($data)) {
         );
         $cargaExitosa = $objetoPersona->alta($darDeAlta);
         if ($cargaExitosa) {
-            header('Location: ' . $PRINCIPAL . "/app/views/login");
+            $response = array('title' => 'EXITO', 'message' => 'El registro se realizo exitosamente');
         } else {
-            echo "<div> <h1>ERROR: NO SE DIO DE ALTA A LA PARSONA </h1> </div>";
+            $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar registrar al usuario');
         }
+    } else {
+        $response = array('title' => 'ERROR', 'message' => 'El usuario ya existe');
     }
+} else {
+    $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al recuperar los datos ingresados');
 }
+
+echo json_encode($response);
