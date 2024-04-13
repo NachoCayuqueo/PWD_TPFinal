@@ -179,7 +179,7 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (7, 'Roles', 'admin/roleList.php', 1,NULL), -- usuario Administrador
 (8, 'Administrar Menu', 'admin/manageMenu.php', 1,NULL), -- usuario Administrador
 (9, 'Listar Productos', 'deposit/dashboard.php', 2,NULL), -- usuario Deposito
-(10, 'Crear Producto', '#', 2,NULL), -- usuario Deposito
+(10, 'Crear Producto', 'deposit/newProduct.php', 2,NULL), -- usuario Deposito
 (11, 'Productos', 'menu selector del usuario cliente', 3, NULL), -- usuario Cliente selector
 (12, 'Accesorios', 'customer/similarProducts.php?type=accessories', 11,NULL), -- usuario Cliente
 (13, 'Juguetes', 'customer/similarProducts.php?type=toys',11,NULL), -- usuario Cliente
