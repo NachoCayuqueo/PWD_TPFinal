@@ -47,7 +47,7 @@ if ($esUsuarioValido) {
                     </li>
                   
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="inactives-user-tab" data-bs-toggle="tab" data-bs-target="#inactives-user-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Lista Usuarios Inactivos</button>
+                      <button class="nav-link" id="inactives-user-tab" data-bs-toggle="tab" data-bs-target="#inactives-user-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Lista Usuarios Nuevos</button>
                     </li>
 
                     <li class="nav-item" role="presentation">
