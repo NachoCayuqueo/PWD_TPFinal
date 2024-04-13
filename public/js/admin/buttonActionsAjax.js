@@ -321,6 +321,108 @@ $(document).ready(function () {
     });
   });
 
+  $(".formulario-activar-usuario").submit(function (event) {
+    event.preventDefault();
+    const formulario = $(this);
+
+    const idUsuario = obtenerId(formulario);
+
+    $.ajax({
+      url: "../../views/admin/actions/activateUserAction.php",
+      type: "POST",
+      data: {
+        idUsuario,
+      },
+      success: function (response) {
+        response = JSON.parse(response);
+
+        if (response.title === "EXITO") {
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalActivarUsuario_" + idUsuario).modal("hide");
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalActivarUsuario_" + idUsuario).modal("hide");
+            location.reload();
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+        console.error("status: " + status);
+        console.error("error: " + error);
+        // Muestra una alerta de error
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        });
+      },
+    });
+  });
+
+  $(".formulario-habilitar-usuario").submit(function (event) {
+    event.preventDefault();
+    const formulario = $(this);
+
+    const idUsuario = obtenerId(formulario);
+
+    $.ajax({
+      url: "../../views/admin/actions/enableUserAction.php",
+      type: "POST",
+      data: {
+        idUsuario,
+      },
+      success: function (response) {
+        response = JSON.parse(response);
+
+        if (response.title === "EXITO") {
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalHabilitarUsuario_" + idUsuario).modal("hide");
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+          }).then(() => {
+            // Cerrar el modal después de que se cierre el mensaje
+            $("#modalHabilitarUsuario_" + idUsuario).modal("hide");
+            location.reload();
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+        console.error("status: " + status);
+        console.error("error: " + error);
+        // Muestra una alerta de error
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        });
+      },
+    });
+  });
+
   //TODO: mover esta funcion para utilizarla de manera global
   function obtenerId(formulario) {
     const idCompleto = formulario.attr("id");

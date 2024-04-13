@@ -118,15 +118,13 @@ function modificarDatosPersonales() {
 }
 
 function modificarPassword() {
-  const passwordActual = $("#password").val();
-  const passwordNueva = $("#new-password").val();
+  const passwordActual = hex_md5($("#password").val());
+  const passwordNueva = hex_md5($("#new-password").val());
   const idUsuario = $("#formulario-cambio-password").data("id");
-
-  //console.log({ idUsuario, passwordActual, passwordNueva });
 
   //AJAX
   $.ajax({
-    url: "../../views/usuario/actions/changePassword.php",
+    url: "../../views/usuario/actions/changePasswordAction.php",
     type: "POST",
     data: {
       idUsuario,

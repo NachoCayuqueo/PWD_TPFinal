@@ -222,4 +222,141 @@ class AbmUsuario
         }
         return $resp;
     }
+
+    /**
+     * Almacena un nuevo usuario en la base de datos
+     * @param array $param: user,password,email
+     * @return bool
+     */
+    public function registrarNuevoUsuario($param)
+    {
+        $response = "";
+        $buscarPersona = array('usMail' => $param['email']);
+        $persona = $this->buscar($buscarPersona);
+        if (empty($persona)) {
+            $darDeAlta = array(
+                "usNombre" => $param['user'],
+                "usPass" => $param['password'],
+                "usMail" => $param['email']
+            );
+            $cargaExitosa = $this->alta($darDeAlta);
+            if ($cargaExitosa) {
+                $persona = $this->buscar($buscarPersona);
+
+                $objetoUsuarioRol = new AbmUsuarioRol();
+                $altaUsuarioRol = [
+                    'rolActivo' => true, //* true o 1?
+                    'idUsuario' => $persona[0]->getIdUsuario(),
+                    'idRol' => 3 //* verificar esto
+                ];
+                $cargaExitosa = $objetoUsuarioRol->alta($altaUsuarioRol);
+                if ($cargaExitosa) {
+                    $response = array('title' => 'EXITO', 'message' => 'Su cuenta fue registrada. Recibira un email cuando la cuenta se haya activado');
+                } else {
+                    $response = array('title' => 'ERROR', 'message' => 'Error al asignarle rol');
+                }
+            } else {
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar registrar al usuario');
+            }
+        } else {
+            $response = array('title' => 'ERROR', 'message' => 'El usuario se encuentra registrado');
+        }
+
+        return $response;
+    }
+
+    /**
+     * verifica si un usuario tiene permiso de un admin para ingresar al sitio
+     * @param string email
+     * @return bool
+     */
+    public function esUsuarioActivo($email)
+    {
+        $usuario = $this->buscar(['usMail' => $email]);
+
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $esUsuarioActivo = $usuario->getUsActivo();
+            if ($esUsuarioActivo) {
+                return true;
+            } else {
+                $session = new Session();
+                $session->cerrar();
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * modifica la contraseña actual de un usuario
+     * @param array $param: idUsuario, passwordActual,passwordNueva
+     * @return bool
+     */
+    public function modificarPassword($param)
+    {
+        $idUsuario = ['idUsuario' => $param['idUsuario']];
+        $usuario = $this->buscar($idUsuario);
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $passwordDB = $usuario->getUsPass();
+            $passwordActual = $param['passwordActual'];
+            $passwordNueva = $param['passwordNueva'];
+
+            if ($passwordDB === $passwordActual) {
+                $modificarParams = [
+                    "idUsuario" => $usuario->getIdUsuario(),
+                    "usNombre" => $usuario->getUsNombre(),
+                    "usPass" => $passwordNueva,
+                    "usMail" => $usuario->getUsMail(),
+                    "usDeshabilitado" => $usuario->getUsDeshabilitado(),
+                    "usActivo" => $usuario->getUsActivo() ? '1' : '0'
+                ];
+                return $this->modificacion($modificarParams);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * da a acceso a un usuario con una cuenta registrada
+     * @param string idusuario
+     * @return bool
+     */
+    public function activarUsuario($idUsuario)
+    {
+        $usuario = $this->buscar(['idUsuario' => $idUsuario]);
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $modificarParams = [
+                "idUsuario" => $usuario->getIdUsuario(),
+                "usNombre" => $usuario->getUsNombre(),
+                "usPass" => $usuario->getUsPass(),
+                "usMail" => $usuario->getUsMail(),
+                "usDeshabilitado" => $usuario->getUsDeshabilitado(),
+                "usActivo" => 1
+            ];
+            return $this->modificacion($modificarParams);
+        }
+        return false;
+    }
+
+    public function habilitarUsuario($idUsuario)
+    {
+        $usuario = $this->buscar(['idUsuario' => $idUsuario]);
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $modificarParams = [
+                "idUsuario" => $usuario->getIdUsuario(),
+                "usNombre" => $usuario->getUsNombre(),
+                "usPass" => $usuario->getUsPass(),
+                "usMail" => $usuario->getUsMail(),
+                "usDeshabilitado" => null,
+                "usActivo" => 1
+            ];
+            return $this->modificacion($modificarParams);
+        }
+        return false;
+    }
 }

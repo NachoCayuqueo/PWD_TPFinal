@@ -14,11 +14,11 @@ class Session
     /**
      * Actualiza las variables de sesión con los valores ingresados.
      */
-    public function iniciar($nombreUsuario, $psw)
+    public function iniciar($emailUsuario, $psw)
     {
         $resp = false;
         $obj = new AbmUsuario();
-        $param['usNombre'] = $nombreUsuario;
+        $param['usMail'] = $emailUsuario;
         $param['usPass'] = $psw;
         $resultado = $obj->buscar($param);
 
