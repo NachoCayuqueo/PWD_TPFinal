@@ -269,7 +269,7 @@ class ValoracionProducto extends DataBase
         if ($parametro != "") {
             $query .= 'WHERE ' . $parametro;
         }
-        // if ($this->Iniciar()) {
+
         $res = $this->Ejecutar($query);
         if ($res > -1) {
             if ($res > 0) {
@@ -292,7 +292,7 @@ class ValoracionProducto extends DataBase
         } else {
             $this->setmensajeoperacion("ERROR::Valoracion Producto => listar: " . $this->getError());
         }
-        //}
+
         return $arreglo;
     }
 }

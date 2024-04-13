@@ -331,6 +331,7 @@ class Producto extends DataBase
         } else {
             $this->setMensajeoperacion("ERROR::Producto => eliminar insertar: " . $this->getError());
         }
+
         return $resp;
     }
 

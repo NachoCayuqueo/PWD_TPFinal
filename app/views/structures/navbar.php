@@ -77,7 +77,6 @@ if (is_null($nombreRolActivo)) {
 
 <hr class="my-0" style="color: white;">
 
-<!-- menu dinamico -->
 <?php
 //*menu
 $objetoMenu = new AbmMenu();

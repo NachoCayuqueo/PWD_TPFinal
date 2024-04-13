@@ -25,6 +25,36 @@ class AbmValoracionProducto
 
         $objetoValoracion = new ValoracionProducto();
         $arreglo = $objetoValoracion->listar($whereClause);
+        //viewStructure($arreglo);
         return $arreglo;
+    }
+    public function baja($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoProducto = $this->cargarObjetoConClave($param);
+            if ($objetoProducto != null and $objetoProducto->eliminar()) {
+
+                $resp = true;
+            }
+        }
+
+        return $resp;
+    }
+    private function cargarObjetoConClave($param)
+    {
+        $obj = null;
+        if (isset($param['idValoracion'])) {
+            $obj = new ValoracionProducto();
+            $obj->setear($param['idValoracion'], null, null, null, null, null);
+        }
+        return $obj;
+    }
+    private function seteadosCamposClaves($param)
+    {
+        $resp = false;
+        if (isset($param['idValoracion']))
+            $resp = true;
+        return $resp;
     }
 }

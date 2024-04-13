@@ -1,4 +1,5 @@
 <?php
+include_once '../config/configuration.php';
 class AbmProducto
 {
     /**
@@ -142,7 +143,6 @@ class AbmProducto
     }
     private function cargarObjeto($param)
     {
-
         $obj = null;
         if (
             array_key_exists('idProducto', $param)  &&
@@ -170,6 +170,86 @@ class AbmProducto
                 $param['espronuevo']
             );
         }
+
         return $obj;
+    }
+    function alta($params)
+    {
+        $resp = false;
+        $params['idProducto'] = null;
+        $objetoProducto = $this->cargarObjeto($params);
+        if ($objetoProducto != null and $objetoProducto->insertar())
+            $resp = true;
+
+        return $resp;
+    }
+
+    public function baja($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoProducto = $this->cargarObjetoConClave($param);
+            if ($objetoProducto != null and $objetoProducto->eliminar()) {
+
+                $resp = true;
+            }
+        }
+
+        return $resp;
+    }
+    private function cargarObjetoConClave($param)
+    {
+        $obj = null;
+        if (isset($param['idProducto'])) {
+            $obj = new Producto();
+            $obj->setear($param['idProducto'], null, null, null, null, null, null, null, null, null);
+        }
+        return $obj;
+    }
+
+    public function eliminarProducto($paramProducto)
+    {
+        $objetoValoracion = new AbmValoracionProducto();
+        $listaValoraciones = $objetoValoracion->buscar($paramProducto);
+        $eliminarExito = true;
+        //---- elimino compras si este producto posee
+        $objetoCompraItem = new AbmCompraItem();
+        $comprasDeProducto = $objetoCompraItem->buscar($paramProducto);
+
+        if (!empty($comprasDeProducto)) { //si encuentra una compra la elimina
+
+            foreach ($comprasDeProducto as $compra) {
+                $idCompraItem = $compra->getObjetoCompra()->getIdCompra();
+                $objCompraEstado = new AbmCompraEstado();
+
+                $estadoCompra = $objCompraEstado->obtenerEstadoActual($idCompraItem);
+                $estadoActual = $estadoCompra['estadoActual'];
+                $fechaFin = $estadoCompra['fechaFin'];
+
+                if ((($estadoActual === 4) && ($fechaFin)) || ($estadoActual === 5)) {
+                    //---- elimino valoraciones si este producto posee
+                    if (!empty($listaValoraciones)) {
+                        foreach ($listaValoraciones as $valoracion) {
+                            $idValoracion = $valoracion->getIdValoracionProducto();
+                            $paramValoracion = ['idValoracion' => $idValoracion];
+                            $eliminarExito = $objetoValoracion->baja($paramValoracion);
+                        }
+                    }
+                    //---- elimino la compra item
+                    $idCompraItem =  $comprasDeProducto[0]->getIdCompraItem();
+                    $paramCompraItem = ['idCompraItem' => $idCompraItem];
+                    $eliminarExito = $objetoCompraItem->baja($paramCompraItem);
+                    //----por ultimo elimino el producto 
+                    if ($eliminarExito) {
+                        $eliminarExito = $this->baja($paramProducto);
+                    }
+                } else {
+                    $eliminarExito = false;
+                }
+            }
+        } else {
+            $eliminarExito = $this->baja($paramProducto);
+        }
+        return $eliminarExito;
     }
 }
