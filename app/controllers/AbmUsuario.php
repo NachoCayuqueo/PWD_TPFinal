@@ -318,4 +318,45 @@ class AbmUsuario
         }
         return false;
     }
+
+    /**
+     * da a acceso a un usuario con una cuenta registrada
+     * @param string idusuario
+     * @return bool
+     */
+    public function activarUsuario($idUsuario)
+    {
+        $usuario = $this->buscar(['idUsuario' => $idUsuario]);
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $modificarParams = [
+                "idUsuario" => $usuario->getIdUsuario(),
+                "usNombre" => $usuario->getUsNombre(),
+                "usPass" => $usuario->getUsPass(),
+                "usMail" => $usuario->getUsMail(),
+                "usDeshabilitado" => $usuario->getUsDeshabilitado(),
+                "usActivo" => 1
+            ];
+            return $this->modificacion($modificarParams);
+        }
+        return false;
+    }
+
+    public function habilitarUsuario($idUsuario)
+    {
+        $usuario = $this->buscar(['idUsuario' => $idUsuario]);
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $modificarParams = [
+                "idUsuario" => $usuario->getIdUsuario(),
+                "usNombre" => $usuario->getUsNombre(),
+                "usPass" => $usuario->getUsPass(),
+                "usMail" => $usuario->getUsMail(),
+                "usDeshabilitado" => null,
+                "usActivo" => 1
+            ];
+            return $this->modificacion($modificarParams);
+        }
+        return false;
+    }
 }
