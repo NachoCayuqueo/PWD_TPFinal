@@ -97,6 +97,90 @@ class Session
         return $list_rol;
     }
 
+    public function validarUsuarioPorRol($nombreRol)
+    {
+        $objetoUsuarioRol = new AbmUsuarioRol();
+        $esUsuarioValido = false;
+        if ($this->validar()) {
+            $usuario = $this->getUsuario();
+            if (!is_null($usuario)) {
+                $rol = $objetoUsuarioRol->obtenerRolActivo($usuario->getIdUsuario());
+                $descripcionRol = $rol->getRoDescripcion();
+                if ($descripcionRol === $nombreRol) {
+                    $esUsuarioValido = true;
+                }
+            }
+        }
+        return $esUsuarioValido;
+    }
+
+
+    //* valida que el usuario tenga permiso para ingresar a una pagina especifica
+    public function validarUsuario()
+    {
+        $datosMenuActual = $this->recuperarMenuActual();
+        $objetoUsuarioRol = new AbmUsuarioRol();
+        $esUsuarioValido = false;
+        if ($this->validar()) {
+            $usuario = $this->getUsuario();
+            if (!is_null($usuario)) {
+                $rol = $objetoUsuarioRol->obtenerRolActivo($usuario->getIdUsuario());
+                $idRol = $rol->getIdRol();
+                if ($idRol === $datosMenuActual['idRol']) {
+                    $esUsuarioValido = true;
+                }
+            }
+        }
+        return $esUsuarioValido;
+    }
+
+    private function recuperarMenuActual()
+    {
+        // Obtener la URI de la solicitud actual
+        $requestUri = $_SERVER['REQUEST_URI'];
+
+        // Dividir la URI en partes utilizando la barra inclinada como delimitador
+        $uriParts = explode('/', $requestUri);
+
+        // Eliminar elementos vacíos del arreglo resultante
+        $uriParts = array_filter($uriParts);
+        $tamaño_arreglo = count($uriParts);
+        $ultimo_elemento = $uriParts[$tamaño_arreglo];
+        $anteultimo_elemento = $uriParts[$tamaño_arreglo - 1];
+        $descripcionMenu = $anteultimo_elemento . "/" . $ultimo_elemento;
+
+        $objetoMenu = new AbmMenu();
+        $menu = $objetoMenu->buscar(['meDescripcion' => $descripcionMenu]);
+
+        $idMenuPadre = $menu[0]->getObjetoPadre()->getIdMenu();
+
+        $condicion = false;
+        $objetoMenuRol = new AbmMenuRol();
+        if ($idMenuPadre >= 1 && $idMenuPadre <= 3) {
+            $menuRol = $objetoMenuRol->buscar(['idMenu' => $idMenuPadre]);
+            $condicion = true;
+        }
+        //TODO: deberia tener un maximo de repeticiones por las dudas
+        while (!$condicion) {
+            $menu = $objetoMenu->buscar(['idMenu' => $idMenuPadre]);
+            $idMenuPadre = $menu[0]->getObjetoPadre()->getIdMenu();
+            if ($idMenuPadre >= 1 && $idMenuPadre <= 3) {
+                $menuRol = $objetoMenuRol->buscar(['idMenu' => $idMenuPadre]);
+                $condicion = true;
+            }
+        }
+        $idrol = $menuRol[0]->getObjetoRol()->getIdRol();
+        return ['idMenu' => $idMenuPadre, 'idRol' => $idrol];
+    }
+
+    public function esUsuarioNoLogueado()
+    {
+        if (!$this->validar()) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      *Cierra la sesión actual.
      */

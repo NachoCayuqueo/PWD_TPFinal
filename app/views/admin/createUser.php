@@ -1,12 +1,23 @@
 <?php
 include_once '../../../config/configuration.php';
-$objetoRol = new AbmRol();
-$listaRoles = $objetoRol->buscar(null); //obtengo todos los roles
+
+$session = new Session();
+$esUsuarioValido = $session->validarUsuario();
 
 $existenRoles = false;
-if (!empty($listaRoles)) {
-    $existenRoles = true;
+
+if ($esUsuarioValido) {
+    $objetoRol = new AbmRol();
+    $listaRoles = $objetoRol->buscar(null); //obtengo todos los roles
+
+    if (!empty($listaRoles)) {
+        $existenRoles = true;
+    }
+} else {
+    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +112,7 @@ if (!empty($listaRoles)) {
 
     <script src="<?php echo $PUBLIC_JS ?>/admin/validations.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/admin/createUserAjax.js"></script>
-
+    <?php include_once "../structures/footer.php"; ?>
 </body>
 
 </html>

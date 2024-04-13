@@ -1,32 +1,15 @@
 <?php
 include_once '../../../config/configuration.php';
 $session = new Session();
-$existeSesion = false;
-if ($session->validar()) {
-    $usuario = $session->getUsuario();
-    if (is_null(($usuario))) {
-        $nombreUsuario = 'Usuario';
-        header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-    } else {
-        $nombreUsuario = $usuario->getUsNombre();
-        $idUsuarioActivo = $usuario->getIdUsuario();
-        $usuarioRoles = $session->getRol();
-        //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
-        foreach ($usuarioRoles as $usuarioRol) {
-            $objetoRol = $usuarioRol->getObjetoRol();
-            $descripcionRol = $objetoRol->getRoDescripcion();
-            if ($descripcionRol === 'cliente') {
-                $existeSesion = true;
-            }
-        }
-    }
+$esUsuarioValido = $session->validarUsuario();
+$existeListaCompra = false;
+
+if ($esUsuarioValido) {
     $objetoCompra = new AbmCompra();
     $param = ['idUsuario' => $idUsuarioActivo];
     $listaCompra = $objetoCompra->obtenerCompras($param);
-    //viewStructure($listaCompra);
-    $existeListaCompra = true;
-    if (empty($listaCompra)) {
-        $existeListaCompra = false;
+    if (!empty($listaCompra)) {
+        $existeListaCompra = true;
     }
 } else {
     header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
@@ -88,7 +71,7 @@ if ($session->validar()) {
         }
         ?>
     </div>
-
+    <?php include_once "../structures/footer.php"; ?>
 </body>
 
 </html>

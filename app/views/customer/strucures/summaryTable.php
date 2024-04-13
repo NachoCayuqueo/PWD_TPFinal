@@ -54,45 +54,51 @@ function crearTablaResumenCompra($listaCompras)
 
 function crearTablaComprasCanceladas($listaCompras)
 {
-    $listaProductos = [];
+    $comprasCanceladas = [];
     $existeCompra = false;
     $fechaCancelacion = '';
     foreach ($listaCompras as $compra) {
         $estadoCompra = $compra['estadoCompra'];
         if ($estadoCompra === 5) {
-            $listaProductos = $compra['compraItem'];
-            $fechaCancelacion = $compra['fechaFin'];
+            $comprasCanceladas[] = $compra;
             $existeCompra = true;
-            break;
         }
     }
-
     echo '
-    <table class="table" >
+    <table class="table table-striped table-bordered" >
                     <thead>
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Precio Unitario</th>
+                            <th scope="col">Cantidad Productos</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Fecha Compra</th>
                             <th scope="col">Fecha Cancelacion</th>
                         </tr>
                     </thead>
                     <tbody>
                     ';
-    foreach ($listaProductos as $producto) {
-        $idProducto = $producto['idProducto'];
-        $nombreProducto = $producto['nombreProducto'];
-        $cantidadProducto = $producto['cantidadProducto'];
-        $precioUnitario = $producto['precioUnitarioProducto'];
+    foreach ($comprasCanceladas as $compra) {
+        $idCompra = $compra['idCompra'];
+        $cantidadCompra = $compra['cantidadItems'];
+        $totalCompra = $compra['precioTotal'];
+        $fechaCompra = $compra['fechaCompra'];
+        $fechaCancelacion = $compra['fechaFin'];
         //crear tabla
         echo "<tr>";
-        echo "<td class='card-title'>" . $idProducto . "</td>";
-        echo "<td>" . $nombreProducto . "</td>";
-        echo "<td>" . $cantidadProducto . "</td>";
-        echo "<td>" . $precioUnitario . "</td>";
+        echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseCompras" . $idCompra . "' role='button' aria-expanded='false' aria-controls='collapseCompras" . $idCompra . "'>
+                <img id='toggleIcon_" . $idCompra . "' src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-right.svg' alt='right'></a>
+              </td>";
+        echo "<td class='card-title'>" . $idCompra . "</td>";
+        echo "<td>" . $cantidadCompra . "</td>";
+        echo "<td>" . $totalCompra . "</td>";
+        echo "<td>" . $fechaCompra . "</td>";
         echo "<td>" . $fechaCancelacion . "</td>";
         echo "</tr>";
+
+        // Función que muestra el área de colapso
+        $listaProductos = $compra['compraItem'];
+        collapseProducto($idCompra, $listaProductos);
     }
     echo '</tbody>
                 </table>  ';

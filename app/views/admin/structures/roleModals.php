@@ -20,7 +20,7 @@ function modalEdit($modalId, $idRol, $nombreRol)
                         </div>
                         <div class="row mb-4">
                             <div class="col">
-                                <label for="descripcionRol_' . $idRol . '" class="form-label">Mail</label>
+                                <label for="descripcionRol_' . $idRol . '" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="descripcionRol_' . $idRol . '" name="descripcionRol_' . $idRol . '" value="' . $nombreRol . '" required>
                                 <div class="invalid-feedback">Ingresar un nombre</div>
                             </div>

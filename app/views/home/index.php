@@ -1,13 +1,31 @@
 <?php
 include_once "../../../config/configuration.php";
+$session = new Session();
+$objetoUsuarioRol = new AbmUsuarioRol();
+if ($session->validar()) {
+    $usuario = $session->getUsuario();
+    $idUsuario = $usuario->getIdUsuario();
+    $rol = $objetoUsuarioRol->obtenerRolActivo($idUsuario);
+    $nombreRolActivo = $rol->getRoDescripcion();
+}
 
-$productos = new AbmProducto();
-$listadoProductos = $productos->buscar(null);
-$existenProductos = false;
-if (count($listadoProductos) > 0) {
-    $existenProductos = true;
-} else {
-    echo  "<div class='container'>No hay productos registrados.</div>";
+if (!is_null($nombreRolActivo) && $nombreRolActivo !== 'cliente') {
+    $locacion = getHomePage($nombreRolActivo);
+    header('Location: ' . $VISTAS . "/" . $locacion);
+}
+
+
+$objetoProducto = new AbmProducto();
+$productosDestacados = $objetoProducto->obtenerProductosSimilares('favorite');
+$productosNuevos = $objetoProducto->obtenerProductosSimilares('new');
+
+$existenProductosDestacados = false;
+if ($productosDestacados) {
+    $existenProductosDestacados = true;
+}
+$existenProductosNuevos = false;
+if (!empty($productosNuevos)) {
+    $existenProductosNuevos = true;
 }
 ?>
 <!DOCTYPE html>
@@ -52,15 +70,21 @@ if (count($listadoProductos) > 0) {
             <div class="container-sm p-4">
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                     <?php
-                    if ($existenProductos) {
-                        foreach ($listadoProductos as $producto) {
-                            if ($producto->getEsProPopular()) {
-                                $botonComprar = "../customer/buyProduct.php?idProducto=" . $producto->getIdProducto();
-                                echo '<div class="col">';
-                                productsCard($producto, $botonComprar);
-                                echo '</div>';
-                            }
+                    if ($existenProductosDestacados) {
+                        // Obtener el total de productos disponibles
+                        $numProductos = count($productosDestacados);
+
+                        // Obtener tres números aleatorios únicos
+                        $indicesAleatorios = array_rand($productosDestacados, min(3, $numProductos));
+                        foreach ($indicesAleatorios as $indice) {
+                            $productoDestacado = $productosDestacados[$indice];
+                            $botonComprar = "../customer/buyProduct.php?idProducto=" . $productoDestacado->getIdProducto();
+                            echo '<div class="col">';
+                            productsCard($productoDestacado, $botonComprar);
+                            echo '</div>';
                         }
+                    } else {
+                        echo  "<div class='container text-center'>No hay productos registrados.</div>";
                     }
                     ?>
                 </div>
@@ -78,15 +102,21 @@ if (count($listadoProductos) > 0) {
             <div class="container-sm p-4">
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                     <?php
-                    if ($existenProductos) {
-                        foreach ($listadoProductos as $producto) {
-                            if ($producto->getEsProNuevo()) {
-                                $botonComprar = "../customer/buyProduct.php?idProducto=" . $producto->getIdProducto();
-                                echo '<div class="col">';
-                                productsCard($producto, $botonComprar);
-                                echo '</div>';
-                            }
+                    if ($existenProductosNuevos) {
+                        // Obtener el total de productos disponibles
+                        $numProductosNuevos = count($productosNuevos);
+
+                        // Obtener tres números aleatorios únicos
+                        $indicesAleatoriosNuevos = array_rand($productosNuevos, min(3, $numProductosNuevos));
+                        foreach ($indicesAleatoriosNuevos as $indice) {
+                            $productoNuevo = $productosNuevos[$indice];
+                            $botonComprar = "../customer/buyProduct.php?idProducto=" . $productoNuevo->getIdProducto();
+                            echo '<div class="col">';
+                            productsCard($productoNuevo, $botonComprar);
+                            echo '</div>';
                         }
+                    } else {
+                        echo  "<div class='container text-center'>No hay productos registrados.</div>";
                     }
                     ?>
                 </div>
@@ -97,7 +127,5 @@ if (count($listadoProductos) > 0) {
 
     <?php include_once "../structures/footer.php"; ?>
 </body>
-
-
 
 </html>

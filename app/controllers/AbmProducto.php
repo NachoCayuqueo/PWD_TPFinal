@@ -25,6 +25,10 @@ class AbmProducto
                 $where[] = " procantstock = '" . $param['proCantStock'] . "'";
             if (isset($param['proTipo']))
                 $where[] = " protipo = '" . $param['proTipo'] . "'";
+            if (isset($param['esProDestacado']))
+                $where[] = " esprodestacado = '" . $param['esProDestacado'] . "'";
+            if (isset($param['esProNuevo']))
+                $where[] = " espronuevo = '" . $param['esProNuevo'] . "'";
         }
         $whereClause = implode(" AND ", $where);
         $objetoProducto = new Producto();
@@ -87,9 +91,34 @@ class AbmProducto
         return $arregloValoracion;
     }
 
-    private function obtenerProductosSimilares($tipoProducto)
+    public function obtenerProductosSimilares($tipoProducto)
     {
-        return $this->buscar(['proTipo' => $tipoProducto]);
+        switch ($tipoProducto) {
+            case 'favorite':
+                return $this->buscar(['esProDestacado' => 1]);
+            case 'new':
+                return $this->buscar(['esProNuevo' => 1]);
+            default:
+                return $this->buscar(['proTipo' => $tipoProducto]);
+        }
+    }
+
+    public function obtenerNombreTipo($tipo)
+    {
+        switch ($tipo) {
+            case 'accessories':
+                return 'Accesorios';
+            case 'toys':
+                return 'Juguetes';
+            case 'food':
+                return 'Alimentos';
+            case 'favorite':
+                return 'Productos Destacados';
+            case 'new':
+                return 'Productos Nuevos';
+            default:
+                return 'Productos';
+        }
     }
 
     public function modificacion($param)

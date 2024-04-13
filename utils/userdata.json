@@ -1,0 +1,19 @@
+{
+  "user": [
+    {
+      "role": "admin",
+      "avatar_img": "person-workspace.svg",
+      "homepage": "admin/dashboard.php"
+    },
+    {
+      "role": "deposito",
+      "avatar_img": "person-gear.svg",
+      "homepage": "deposit/dashboard.php"
+    },
+    {
+      "role": "cliente",
+      "avatar_img": "person-circle.svg",
+      "homepage": "home/index.php"
+    }
+  ]
+}

@@ -1,42 +1,26 @@
 <?php
 include_once '../../../config/configuration.php';
 $session = new Session();
-$existeSesion = false;
-if ($session->validar()) {
-    $usuario = $session->getUsuario();
-    if (is_null(($usuario))) {
-        $nombreUsuario = 'Usuario';
-        header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-    } else {
-        $nombreUsuario = $usuario->getUsNombre();
-        $idUsuarioActivo = $usuario->getIdUsuario();
-        $usuarioRoles = $session->getRol();
-        //TODO: realizar funcion aparte - ver donde seria mejor, en ABM o en SESSION
-        foreach ($usuarioRoles as $usuarioRol) {
-            $objetoRol = $usuarioRol->getObjetoRol();
-            $descripcionRol = $objetoRol->getRoDescripcion();
-            if ($descripcionRol === 'cliente') {
-                $existeSesion = true;
-            }
-        }
+$esUsuarioValido = $session->validarUsuarioPorRol("cliente");
+$existeListaCompra = false;
+
+if ($esUsuarioValido) {
+    $data = data_submitted();
+    $idProducto = $data['idProducto'];
+
+    $objetoProducto = new AbmProducto();
+    $datosProducto = $objetoProducto->obtenerDatosProductos($idProducto);
+    $tipoProductosSimilares = '';
+    if (!is_null($datosProducto)) {
+        $masInfo = $datosProducto['masInfo'];
+        $productosSimilares = $datosProducto['productosSimilares'];
+        $datosValoraciones = $datosProducto['datosValoraciones'];
+        $valoraciones = $datosValoraciones['valoraciones'];
+        $promedioValoraciones = $datosValoraciones['promedio'];
     }
 } else {
     header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
 }
-
-$data = data_submitted();
-$idProducto = $data['idProducto'];
-
-$objetoProducto = new AbmProducto();
-$datosProducto = $objetoProducto->obtenerDatosProductos($idProducto);
-if (!is_null($datosProducto)) {
-    $masInfo = $datosProducto['masInfo'];
-    $productosSimilares = $datosProducto['productosSimilares'];
-    $datosValoraciones = $datosProducto['datosValoraciones'];
-    $valoraciones = $datosValoraciones['valoraciones'];
-    $promedioValoraciones = $datosValoraciones['promedio'];
-}
-
 
 ?>
 <!DOCTYPE html>
@@ -49,7 +33,6 @@ if (!is_null($datosProducto)) {
     include_once "./strucures/modals.php";
     ?>
 </head>
-
 
 <body>
     <?php
@@ -135,7 +118,7 @@ if (!is_null($datosProducto)) {
                         // Mostrar los productos correspondientes a los índices aleatorios
                         foreach ($indicesAleatorios as $indice) {
                             $objetoProducto = $productosSimilares[$indice];
-
+                            $tipoProductosSimilares = $objetoProducto->getProTipo();
                             $botonComprar = "buyProduct.php?idProducto=" . $objetoProducto->getIdProducto();
                             echo '<div class="col">';
                             productsCard($objetoProducto, $botonComprar);
@@ -147,7 +130,9 @@ if (!is_null($datosProducto)) {
                     </div>
                 </div>
             </div>
-            <div class="text-center"><button class="btn btn-outline-primary">Mas Productos similares</button></div>
+            <div class="text-center">
+                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-outline-primary">Mas Productos similares</a>
+            </div>
         </div>
     </div>
 

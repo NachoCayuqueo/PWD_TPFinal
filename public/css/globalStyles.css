@@ -111,13 +111,53 @@ input[type="number"] {
   height: 13vh;
 }
 
+.footer-text {
+  color: white;
+}
+
 .footer-title {
   font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
+  color: white;
 }
 
 .footer-subtitle {
   font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Agrega estilos personalizados */
+.footer-title-with-line {
+  position: relative;
+  text-align: center;
+}
+
+.footer-title-with-line h1 {
+  display: inline-block;
+  background-color: #2d3f50;
+  padding: 20px;
+}
+
+.footer-title-with-line::before,
+.footer-title-with-line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%; /* Ajusta el ancho de las líneas según tu preferencia */
+  height: 1px;
+  background-color: black;
+}
+
+.footer-title-with-line::before {
+  left: 0;
+}
+
+.footer-title-with-line::after {
+  right: 0;
+}
+
+.footer-img {
+  width: 20px; /* Ajusta el ancho de las imágenes según tu preferencia */
+  margin: 0 20px; /* Ajusta el margen entre las imágenes según tu preferencia */
 }
 
 /* Agrega estilos personalizados */
@@ -163,12 +203,13 @@ input[type="number"] {
   border-color: grey; /* Color del borde para checkbox deshabilitados */
 }
 
-/** boton flotante agregar nuevoss roles*/
+/** boton flotante agregar nuevos roles */
 .btn-floating {
-  position: fixed;
-  bottom: 20px; /* Distancia desde la parte inferior */
-  right: 20px; /* Distancia desde el borde derecho */
-  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  position: absolute;
+  padding: 10px;
+  top: 50%;
+  right: 10px;
+  transform: translateY(50%);
 }
 
 .rating-container {
