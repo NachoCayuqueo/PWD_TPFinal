@@ -36,8 +36,6 @@ function crearTablaProducto($listaProducto)
     $descripcionCompleta = $producto->getProMasInfo();
 
 
-
-
     echo "<tr style='text-align: center;'>";
     echo "<td style='width: max-content;'>" . $producto->getIdProducto() . "</td>";
     echo '<td style="max-width: 200px; width: max-content;">' . $producto->getProNombre() . '</td>';
@@ -112,10 +110,3 @@ function seleccionCheck($esNuevo, $esPopular)
 
   return [$esNuevito, $esPopu];
 }
-
-//echo '<script src="' . $PUBLIC_JS . '/deposit/deleteProduct.js"></script>';
-
-
-// <a href="actions/deleteProductAction.php?idProducto=' . $id . '" class="btn btn-outline-danger">
-// <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/trash3.svg" alt="eliminar">
-// </a>

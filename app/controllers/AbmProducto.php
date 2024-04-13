@@ -183,36 +183,44 @@ class AbmProducto
         $objetoValoracion = new AbmValoracionProducto();
         $listaValoraciones = $objetoValoracion->buscar($paramProducto);
         $eliminarExito = true;
-
-        //---- elimino valoraciones si este producto posee
-        if (!empty($listaValoraciones)) {
-            foreach ($listaValoraciones as $valoracion) {
-                $idValoracion = $valoracion->getIdValoracionProducto();
-                $paramValoracion = ['idValoracion' => $idValoracion];
-                $eliminarExito = $objetoValoracion->baja($paramValoracion);
-            }
-        }
-
         //---- elimino compras si este producto posee
         $objetoCompraItem = new AbmCompraItem();
         $comprasDeProducto = $objetoCompraItem->buscar($paramProducto);
+
         if (!empty($comprasDeProducto)) { //si encuentra una compra la elimina
-            // controlar q la compraEstado tipo sea 4 o 5 con fecha fin distinta de null
 
-            $objetoCompraEstado = new AbmCompraEstado();
+            foreach ($comprasDeProducto as $compra) {
+                $idCompraItem = $compra->getObjetoCompra()->getIdCompra();
+                $objCompraEstado = new AbmCompraEstado();
 
+                $estadoCompra = $objCompraEstado->obtenerEstadoActual($idCompraItem);
+                $estadoActual = $estadoCompra['estadoActual'];
+                $fechaFin = $estadoCompra['fechaFin'];
 
-
-            $idCompraItem =  $comprasDeProducto[0]->getIdCompraItem();
-            $paramCompraItem = ['idCompraItem' => $idCompraItem];
-            $eliminarExito = $objetoCompraItem->baja($paramCompraItem);
-        }
-
-        //----por ultimo elimino el producto 
-        if ($eliminarExito) {
+                if ((($estadoActual === 4) && ($fechaFin)) || ($estadoActual === 5)) {
+                    //---- elimino valoraciones si este producto posee
+                    if (!empty($listaValoraciones)) {
+                        foreach ($listaValoraciones as $valoracion) {
+                            $idValoracion = $valoracion->getIdValoracionProducto();
+                            $paramValoracion = ['idValoracion' => $idValoracion];
+                            $eliminarExito = $objetoValoracion->baja($paramValoracion);
+                        }
+                    }
+                    //---- elimino la compra item
+                    $idCompraItem =  $comprasDeProducto[0]->getIdCompraItem();
+                    $paramCompraItem = ['idCompraItem' => $idCompraItem];
+                    $eliminarExito = $objetoCompraItem->baja($paramCompraItem);
+                    //----por ultimo elimino el producto 
+                    if ($eliminarExito) {
+                        $eliminarExito = $this->baja($paramProducto);
+                    }
+                } else {
+                    $eliminarExito = false;
+                }
+            }
+        } else {
             $eliminarExito = $this->baja($paramProducto);
         }
-
         return $eliminarExito;
     }
 }
