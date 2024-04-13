@@ -237,6 +237,8 @@ class Usuario extends DataBase
 
         if ($usDeshabilitado !== null) {
             $query .= ", usdeshabilitado='" . $usDeshabilitado . "'";
+        } else {
+            $query .= ", usdeshabilitado=NULL";
         }
         // Agregar la columna usActivo
         $usActivo = $this->getUsActivo();
