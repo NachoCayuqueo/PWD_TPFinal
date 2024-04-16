@@ -12,14 +12,26 @@ include_once '../../../config/configuration.php';
     ?>
 </head>
 
-<body>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh;">
     <div class="container">
-        <h1>Pagina de acceso denegado</h1>
-        <p>Pagina en construccion para redireccionar a usuarios que intentan ingresar a una cuenta sin autorizacion</p>
-        <a class="btn btn-outline-primary" href="<?php echo $PRINCIPAL ?>/app/views/home">volver</a>
-
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="card border-danger" style="max-width: 900px; margin: auto;">
+                    <h5 class="card-header bg-danger text-white">Acceso Denegado</h5>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div style="max-width: 200px;">
+                            <img src="../../../assets/images/AccesoDenegado.jpg" alt="accesoDenegado" style="width: 100%; height: auto;">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-center">No tiene los permisos necesarios para redireccionarlo a la página que intentó ingresar.</p>
+                            <a class="btn btn-outline-danger d-block mx-auto" href="<?php echo $PRINCIPAL ?>/app/views/home">Inicio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </body>
+
 
 </html>
