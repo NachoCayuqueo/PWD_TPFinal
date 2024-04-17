@@ -24,7 +24,7 @@
             <h5 class="mb-3 footer-title">Nosotros</h5>
             <div class="mb-2 footer-text">
                 <p>Aute deserunt incididunt esse amet pariatur anim nisi nulla fugiat officia sit excepteur veniam.</p>
-                <a href="#" class="btn fw-bold footer-text">¿Quienes Somos?</a>
+                <a href="../nosotros.php" class="btn fw-bold footer-text">¿Quienes Somos?</a>
             </div>
         </div>
         <div class="col-xs-12 col-md-4 footer-text">

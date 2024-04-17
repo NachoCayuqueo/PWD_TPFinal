@@ -1,5 +1,5 @@
 <?php
-include_once '../../../config/configuration.php';
+include_once './config/configuration.php';
 ?>
 
 <!DOCTYPE html>
@@ -9,11 +9,13 @@ include_once '../../../config/configuration.php';
     <?php
     $title = "Acceso Denegado";
     include_once "../structures/head.php";
+
     ?>
 </head>
 
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <div class="container">
+<body>
+    <?php include_once "../structures/navbar.php"; ?>
+    <div class="container mt-5 mb-5" style="display: flex; justify-content: center; align-items: center;">
         <div class="row justify-content-center">
             <div class="col">
                 <div class="card border-danger" style="max-width: 900px; margin: auto;">
@@ -31,6 +33,7 @@ include_once '../../../config/configuration.php';
             </div>
         </div>
     </div>
+    <?php include_once "../structures/footer.php"; ?>
 </body>
 
 
