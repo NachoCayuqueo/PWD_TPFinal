@@ -193,4 +193,39 @@ class AbmCompraEstado
 
         return $bajaExitosa;
     }
+
+    public function cambiarEstadoAIniciada($idCompra)
+    {
+        $modificacionExitosa = false;
+        $datosEstadoActual = $this->obtenerEstadoActual($idCompra);
+        $paramBusqueda = [
+            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+            'idCompra' => $idCompra
+        ];
+        $compraEstado = $this->buscar($paramBusqueda);
+
+        if (!empty($compraEstado)) {
+            $newDate = date('Y-m-d H:i:s');
+            //* cerrar compra con estado 1
+            $param = [
+                'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
+                'ceFechaIni' => $compraEstado[0]->getCefechaini(),
+                'ceFechaFin' => $newDate,
+                'idCompra' =>  $idCompra,
+                'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+            ];
+            $modificacionExitosa = $this->modificacion($param);
+            if ($modificacionExitosa) {
+                //* crear compra con estado 2: Iniciada
+                $param = [
+                    'ceFechaIni' => $newDate,
+                    'ceFechaFin' => NULL,
+                    'idCompra' =>  $idCompra,
+                    'idCompraEstadoTipo' => 2,
+                ];
+                $modificacionExitosa = $this->alta($param);
+            }
+        }
+        return $modificacionExitosa;
+    }
 }
