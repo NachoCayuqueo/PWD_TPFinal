@@ -31,19 +31,19 @@
             <h5 class="mb-3 footer-title">Contactános</h5>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/whatsapp.svg" alt="whatsapp">
-                <p>numero celular</p>
+                <p>2995-111-999</p>
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/telephone-fill.svg" alt="telephone">
-                <p>numero telefono</p>
+                <p> 764-84377 </p>
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/envelope-at-fill.svg" alt="email">
-                <p>correoelectronico@gmail.com</p>
+                <p>Doggys.Friends@gmail.com</p>
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/geo-alt-fill.svg" alt="location">
-                <p>nuestra direccion</p>
+                <p>Avenida Siempreviva 742</p>
             </div>
         </div>
         <div class="col-xs-12 col-md-4">
