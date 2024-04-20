@@ -47,16 +47,20 @@ if (!empty($productosNuevos)) {
     <div class="container-fluid" style="background-color: #eebbc3;">
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <h2 class="title text-center mt-3">Bienvenidos a</h2>
                 <h1 class="welcome-title text-center">Doggys Friends</h1>
-                <p class="text mt-5 p-2">Cillum Lorem cillum nostrud ea cupidatat culpa ea non pariatur culpa exercitation enim. Ex reprehenderit excepteur est reprehenderit nisi ipsum velit nostrud. Excepteur minim nisi in est sit dolore quis nulla laborum in. Id amet eiusmod aliqua id. Aliquip do laboris nostrud Lorem. Amet ipsum ullamco sunt cupidatat cillum amet laborum aliquip. Esse Lorem anim nostrud Lorem consectetur adipisicing dolore duis mollit laborum velit.
-                    Non sint ipsum nisi pariatur nulla nisi id cupidatat dolore officia et qui. Aliquip ipsum excepteur deserunt non eiusmod officia velit velit. Sunt fugiat proident dolor elit pariatur elit fugiat laborum.
+                <p class="text mt-5 p-2">¡Bienvenidos a Doggys Friends, tu destino número uno para mimar a tus fieles compañeros de cuatro patas! En Doggys Friends, nos enorgullece ofrecerte
+                    una amplia gama de productos diseñados para el bienestar y la felicidad de tus adorables amigos peludos. Desde juguetes irresistibles hasta las últimas
+                    tendencias en moda canina, estamos aquí para satisfacer todas las necesidades de tus perros con estilo y calidad. <br />
+                    En Doggys Friends, sabemos que cada perro es único, por eso nos esforzamos por ofrecerte una experiencia de compra personalizada y amigable.Nuestro equipo de
+                    expertos está aquí para brindarte asesoramiento y recomendaciones para que encuentres los productos perfectos que se adapten a las necesidades y personalidad
+                    de tu peludo amigo.
                 </p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="image-container">
-                    <img src="<?php echo $IMAGES ?>/welcome1.png" alt="welcome" class="img-fluid" style="width: 100%; height: 70vh;">
+                    <img src="<?php echo $IMAGES ?>/welcome1.png" alt="welcome" class="img-fluid" style="width: 600px;">
                 </div>
             </div>
         </div>
