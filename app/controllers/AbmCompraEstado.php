@@ -160,75 +160,6 @@ class AbmCompraEstado
         return ['estadoActual' => $estado, 'fechaFin' => $fechaFin];
     }
 
-    public function cancelarCompra($idCompra)
-    {
-        $datosEstadoActual = $this->obtenerEstadoActual($idCompra);
-        $paramBusqueda = [
-            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
-            'idCompra' => $idCompra
-        ];
-        $compraEstado = $this->buscar($paramBusqueda);
-
-        $newDate = date('Y-m-d H:i:s');
-        //* agrego fecha a estado actual
-        $param = [
-            'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
-            'ceFechaIni' => $compraEstado[0]->getCefechaini(),
-            'ceFechaFin' => $newDate,
-            'idCompra' =>  $idCompra,
-            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
-        ];
-        $bajaExitosa = $this->modificacion($param);
-
-        //* cambio a estado cancelado
-        $paramNuevoEstado = [
-            'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
-            'ceFechaIni' => $newDate,
-            'ceFechaFin' => $newDate,
-            'idCompra' =>  $idCompra,
-            'idCompraEstadoTipo' => 5,
-        ];
-
-        $bajaExitosa = $this->alta($paramNuevoEstado);
-
-        return $bajaExitosa;
-    }
-
-    public function cambiarEstadoAIniciada($idCompra)
-    {
-        $modificacionExitosa = false;
-        $datosEstadoActual = $this->obtenerEstadoActual($idCompra);
-        $paramBusqueda = [
-            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
-            'idCompra' => $idCompra
-        ];
-        $compraEstado = $this->buscar($paramBusqueda);
-
-        if (!empty($compraEstado)) {
-            $newDate = date('Y-m-d H:i:s');
-            //* cerrar compra con estado 1
-            $param = [
-                'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
-                'ceFechaIni' => $compraEstado[0]->getCefechaini(),
-                'ceFechaFin' => $newDate,
-                'idCompra' =>  $idCompra,
-                'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
-            ];
-            $modificacionExitosa = $this->modificacion($param);
-            if ($modificacionExitosa) {
-                //* crear compra con estado 2: Iniciada
-                $param = [
-                    'ceFechaIni' => $newDate,
-                    'ceFechaFin' => NULL,
-                    'idCompra' =>  $idCompra,
-                    'idCompraEstadoTipo' => 2,
-                ];
-                $modificacionExitosa = $this->alta($param);
-            }
-        }
-        return $modificacionExitosa;
-    }
-
     /**
      * Cambia el estado de una compra a un nuevo estado especificado.
      *
@@ -238,7 +169,6 @@ class AbmCompraEstado
      */
     public function cambiarEstadoCompra($idCompra, $estadoNuevo)
     {
-        //TODO borrar cancelarCompra y CambiarEstadoAIniciada y utilizar esta funcions
         $modificacionExitosa = false;
         $datosEstadoActual = $this->obtenerEstadoActual($idCompra);
         $paramBusqueda = [
