@@ -228,4 +228,47 @@ class AbmCompraEstado
         }
         return $modificacionExitosa;
     }
+
+    /**
+     * Cambia el estado de una compra a un nuevo estado especificado.
+     *
+     * @param int $idCompra El ID de la compra a la que se cambiará el estado.
+     * @param int $estadoNuevo El nuevo estado al que se cambiará la compra.
+     * @return bool Indica si la modificación del estado de la compra fue exitosa o no.
+     */
+    public function cambiarEstadoCompra($idCompra, $estadoNuevo)
+    {
+        //TODO borrar cancelarCompra y CambiarEstadoAIniciada y utilizar esta funcions
+        $modificacionExitosa = false;
+        $datosEstadoActual = $this->obtenerEstadoActual($idCompra);
+        $paramBusqueda = [
+            'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+            'idCompra' => $idCompra
+        ];
+        $compraEstado = $this->buscar($paramBusqueda);
+
+        if (!empty($compraEstado)) {
+            $newDate = date('Y-m-d H:i:s');
+            //* cerrar compra con estado actual
+            $param = [
+                'idCompraEstado' => $compraEstado[0]->getIdCompraEstado(),
+                'ceFechaIni' => $compraEstado[0]->getCefechaini(),
+                'ceFechaFin' => $newDate,
+                'idCompra' =>  $idCompra,
+                'idCompraEstadoTipo' => $datosEstadoActual['estadoActual'],
+            ];
+            $modificacionExitosa = $this->modificacion($param);
+            if ($modificacionExitosa) {
+                //* crear compra con estado nuevo
+                $param = [
+                    'ceFechaIni' => $newDate,
+                    'ceFechaFin' => $estadoNuevo === 5 ? $newDate : null,
+                    'idCompra' =>  $idCompra,
+                    'idCompraEstadoTipo' => $estadoNuevo,
+                ];
+                $modificacionExitosa = $this->alta($param);
+            }
+        }
+        return $modificacionExitosa;
+    }
 }
