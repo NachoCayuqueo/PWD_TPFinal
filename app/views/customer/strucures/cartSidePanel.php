@@ -34,7 +34,8 @@ echo '
             </div>';
 if ($existeCompraCarrito) {
     echo '
-            <div class="offcanvas-body">';
+            <div class="offcanvas-body">
+            <form id="formulario-compra_' . $idCompra . '" name="formulario-compra" class="formulario-compra" data-idusuario="' . $idUsuario . '">';
     foreach ($arregloProductos as $producto) {
         $idProducto = $producto['idProducto'];
         $nombreProducto = $producto['nombreProducto'];
@@ -44,7 +45,7 @@ if ($existeCompraCarrito) {
         $precioProductoTotal = $cantidadProducto *  $precioUnitario;
         $precioFinal += $precioProductoTotal;
         echo '
-            <div class="card mb-2">
+            <div id="card-compra" class="card mb-2">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-sm-9"> <!-- Para ocupar el 80% del espacio -->
@@ -59,7 +60,7 @@ if ($existeCompraCarrito) {
             
                   <div class="d-flex">
                     <div class="me-2">
-                        <img src="' . $urlImagen . '" alt="imagen" width="100">
+                        <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="100">
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="input-group me-3" style="width: 120px;">
@@ -88,9 +89,10 @@ if ($existeCompraCarrito) {
                     <h3 class="title">$' . $precioFinal . '</h3>
                 </div>
                 <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-outline-primary btn-text" type="button">Comprar</button>
+                    <button class="btn btn-outline-primary btn-text" type="submit">Comprar</button>
                 </div>
-            </div>';
+            </form>
+        </div>';
 } else {
     echo '
             <div class="m-2">
@@ -102,4 +104,6 @@ if ($existeCompraCarrito) {
 echo
 '</div>';
 
+echo '<script src="https://js.stripe.com/v3/"></script>';
 echo '<script src="' . $PUBLIC_JS . '/customer/handleQuantityCartAjax.js"></script>';
+echo '<script src="' . $PUBLIC_JS . '/customer/checkoutAjax.js"></script>';
