@@ -140,6 +140,11 @@ class AbmCompra
 
         $listaCompra = $this->buscar($param);
         if (!empty($listaCompra)) {
+            // buscar datos usuario
+            $objetoUsuario = new AbmUsuario();
+            $usuario = $objetoUsuario->buscar(['idUsuario' => $param['idUsuario']]);
+            $usuario = $usuario[0];
+
             foreach ($listaCompra as $compra) {
                 // Obtener detalles de los items de la compra
                 $detallesCompra = $this->obtenerDetallesCompraItems($compra);
@@ -156,6 +161,8 @@ class AbmCompra
                     'precioTotal' => $detallesCompra['precioTotal'],
                     'fechaCompra' => $compra->getCofecha(),
                     'idUsuario' => $param['idUsuario'],
+                    'nombreUsuario' => $usuario->getUsNombre(),
+                    'emailUsuario' =>  $usuario->getUsMail(),
                     'compraItem' => $detallesCompra['items']
                 ];
                 array_push($compras, $compra_data);
@@ -163,6 +170,26 @@ class AbmCompra
         }
 
         return $compras;
+    }
+
+    public function obtenerDetallesCompras()
+    {
+        $arregloIdUsuarios = [];
+        $arregloCompras = [];
+        $compras = $this->buscar(null);
+        if (!empty($compras)) {
+            foreach ($compras as $compra) {
+                $idUsuario = $compra->getObjetoUsuario()->getIdUsuario();
+                array_push($arregloIdUsuarios, $idUsuario);
+            }
+            $arregloIdUsuarios = array_unique($arregloIdUsuarios);
+
+            foreach ($arregloIdUsuarios as $idUsuario) {
+                $compraUsuario = $this->obtenerCompras(['idUsuario' => $idUsuario]);
+                array_push($arregloCompras, $compraUsuario);
+            }
+        }
+        return $arregloCompras;
     }
 
     /**
