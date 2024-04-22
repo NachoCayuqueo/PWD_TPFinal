@@ -50,7 +50,7 @@ if (!empty($productosNuevos)) {
                 <div class="card mb-3" style="max-width: 800px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="<?php echo $IMAGES ?>/nacho.png" class="img-fluid rounded-start" alt="...">
+                            <img src="<?php echo $IMAGES ?>/staff/nacho.jpg" class="img-fluid rounded-start" alt="nacho">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -64,7 +64,7 @@ if (!empty($productosNuevos)) {
                 <div class="card mb-3" style="max-width: 800px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="<?php echo $IMAGES ?>/pablo.png" class="img-fluid rounded-start" alt="...">
+                            <img src="<?php echo $IMAGES ?>/staff/pablo.png" class="img-fluid rounded-start" alt="pablo">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
