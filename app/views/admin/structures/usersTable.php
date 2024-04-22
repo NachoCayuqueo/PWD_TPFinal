@@ -134,6 +134,7 @@ function crearTablaUsuariosDeshabilitados($listaUsuario)
         $email = $usuario->getUsMail();
         $fechaDeshabilitado = $usuario->getUsDeshabilitado();
         if ($fechaDeshabilitado) {
+            $fechaDeshabilitado = dateFormat($fechaDeshabilitado);
             $cantidadUsuario++;
             echo "<tr>";
             echo "<td class='card-title'>" . $id . "</td>";

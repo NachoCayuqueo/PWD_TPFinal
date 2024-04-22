@@ -178,16 +178,17 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (6, 'Mostrar Usuarios', 'admin/dashboard.php', 4, NULL), -- usuario Administrador
 (7, 'Roles', 'admin/roleList.php', 1,NULL), -- usuario Administrador
 (8, 'Administrar Menu', 'admin/manageMenu.php', 1,NULL), -- usuario Administrador
-(9, 'Listar Productos', 'deposit/dashboard.php', 2,NULL), -- usuario Deposito
-(10, 'Crear Producto', 'deposit/newProduct.php', 2,NULL), -- usuario Deposito
-(11, 'Productos', 'menu selector del usuario cliente', 3, NULL), -- usuario Cliente selector
-(12, 'Accesorios', 'customer/similarProducts.php?type=accessories', 11,NULL), -- usuario Cliente
-(13, 'Juguetes', 'customer/similarProducts.php?type=toys',11,NULL), -- usuario Cliente
-(14, 'Alimentos', 'customer/similarProducts.php?type=food',11,NULL), -- usuario Cliente
-(15, 'Productos Favoritos', 'customer/similarProducts.php?type=favorite', 3,NULL), -- usuario Cliente
-(16, 'Productos Nuevos', 'customer/similarProducts.php?type=new', 3,NULL), -- usuario Cliente
-(17, 'Mis Compras', 'customer/shoppingSummary.php', 3,NULL), -- usuario Cliente
-(18, 'Carrito', '#', 3,NULL); -- usuario Cliente
+(9, 'Compras', 'admin/manageShopping.php', 1,NULL), -- usuario Administrador
+(10, 'Listar Productos', 'deposit/dashboard.php', 2,NULL), -- usuario Deposito
+(11, 'Crear Producto', 'deposit/newProduct.php', 2,NULL), -- usuario Deposito
+(12, 'Productos', 'menu selector del usuario cliente', 3, NULL), -- usuario Cliente selector
+(13, 'Accesorios', 'customer/similarProducts.php?type=accessories', 11,NULL), -- usuario Cliente
+(14, 'Juguetes', 'customer/similarProducts.php?type=toys',11,NULL), -- usuario Cliente
+(15, 'Alimentos', 'customer/similarProducts.php?type=food',11,NULL), -- usuario Cliente
+(16, 'Productos Favoritos', 'customer/similarProducts.php?type=favorite', 3,NULL), -- usuario Cliente
+(17, 'Productos Nuevos', 'customer/similarProducts.php?type=new', 3,NULL), -- usuario Cliente
+(18, 'Mis Compras', 'customer/shoppingSummary.php', 3,NULL), -- usuario Cliente
+(19, 'Carrito', '#', 3,NULL); -- usuario Cliente
 
 -- --------------------------------------------------------
 
@@ -376,7 +377,7 @@ CREATE TABLE `usuario` (
 --
 -- Volcado de datos para la tabla `usuario`
 --
-
+-- controlar esto
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usactivo`) VALUES
 (1, 'Nacho', '81bf209201c06b67bfbc4cb9faa3bb56', 'adminNacho@gmail.com',true),
 (2, 'Pablo', 'b38f66d321c9b38bc3c168decae0d09e', 'adminPablo@gmail.com',true),
@@ -405,7 +406,7 @@ CREATE TABLE `usuariorol` (
 --
 -- Volcado de datos para la tabla `usuariorol`
 --
-
+-- controlar esto
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (1, 1),
 (2, 1),
