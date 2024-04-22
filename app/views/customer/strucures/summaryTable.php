@@ -25,6 +25,7 @@ function crearTablaResumenCompra($listaCompras)
         $idCompra = $compra['idCompra'];
         $estadoCompra = $compra['estadoCompra'];
         $fechaCompra = $compra['fechaCompra'];
+        $fechaCompra = dateFormat($fechaCompra);
         $cantidadCompra = $compra['cantidadItems'];
         $precioTotal = $compra['precioTotal'];
         if ($estadoCompra === 3 || $estadoCompra === 4) {
@@ -83,6 +84,7 @@ function crearTablaComprasCanceladas($listaCompras)
         $cantidadCompra = $compra['cantidadItems'];
         $totalCompra = $compra['precioTotal'];
         $fechaCompra = $compra['fechaCompra'];
+        $fechaCompra = dateFormat($fechaCompra);
         $fechaCancelacion = $compra['fechaFin'];
         //crear tabla
         echo "<tr>";
