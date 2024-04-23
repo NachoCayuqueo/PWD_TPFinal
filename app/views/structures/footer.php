@@ -1,19 +1,3 @@
-<!-- <div class="container-fluid footer">
-    <div class="row p-5" style="background-color: #2d3f50;">
-        <div class="footer-title-with-line">
-            <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/facebook.svg" alt="facebook">
-            <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/instagram.svg" alt="instagram">
-            <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/twitter-x.svg" alt="twitter-x">
-        </div>
-        <div class="d-flex justify-content-center mt-4">
-            <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="inicio" width="80">
-        </div>
-        <div class="col-xs-12 mt-4">
-            <p class=" footer-title text-center">Copyright &copy; 2024 DoggyFriends</p>
-        </div>
-    </div>
-</div> -->
-
 <div class="container-fluid footer">
     <div class="row p-3" style="background-color: #2d3f50;">
         <div class="text-center">
@@ -23,8 +7,8 @@
         <div class="col-xs-12 col-md-4">
             <h5 class="mb-3 footer-title">Nosotros</h5>
             <div class="mb-2 footer-text">
-                <p>Aute deserunt incididunt esse amet pariatur anim nisi nulla fugiat officia sit excepteur veniam.</p>
-                <a href="../nosotros.php" class="btn fw-bold footer-text">¿Quienes Somos?</a>
+                <p>Somos Doggy Friends, tu destino para todo lo relacionado con el bienestar y la felicidad de tus amigos de cuatro patas. Nos dedicamos a proporcionarte los mejores productos y servicios para cuidar a tu mascota y hacer que su vida sea aún más emocionante y saludable.</p>
+                <a href="<?php echo $VISTAS ?>/nosotros.php" class="btn fw-bold footer-text">¿Quienes Somos?</a>
             </div>
         </div>
         <div class="col-xs-12 col-md-4 footer-text">
