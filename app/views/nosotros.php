@@ -15,19 +15,6 @@ if (!is_null($nombreRolActivo) && $nombreRolActivo !== 'cliente') {
     header('Location: ' . $VISTAS . "/" . $locacion);
 }
 
-
-$objetoProducto = new AbmProducto();
-$productosDestacados = $objetoProducto->obtenerProductosSimilares('favorite');
-$productosNuevos = $objetoProducto->obtenerProductosSimilares('new');
-
-$existenProductosDestacados = false;
-if ($productosDestacados) {
-    $existenProductosDestacados = true;
-}
-$existenProductosNuevos = false;
-if (!empty($productosNuevos)) {
-    $existenProductosNuevos = true;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,33 +29,45 @@ if (!empty($productosNuevos)) {
 <body>
     <?php
     include_once './structures/navbar.php';
-    include_once './structures/cards.php';
+
     ?>
-    <div class="container-fluid m-5">
+    <div class="container-fluid p-5">
+        <div>
+            <h3 class="text-center">Conoce a los Creadores de Doggy Friends</h3>
+        </div>
+        <div class="mt-3 mb-4">
+            <h5 class="text-center text-body-secondary">Detrás de la Tienda Online Especializada en Productos para Perros</h5>
+        </div>
         <div class="row">
             <div class="col">
-                <div class="card mb-3" style="max-width: 800px;">
+                <div class="card mb-3" style="height: 300px;">
                     <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="<?php echo $IMAGES ?>/staff/nacho.jpg" class="img-fluid rounded-start" alt="nacho">
+                        <div class="col-md-4 d-flex align-items-center justify-content-center">
+                            <img src="<?php echo $IMAGES ?>/staff/nacho.jpg" class="img-fluid rounded-start" alt="nacho" style="height: 250px;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 class="card-title">¡Hola, soy Nacho!</h5>
+                                <p class="card-text">Soy uno de los creadores de Doggy Friends, la tienda online que nació de nuestra pasión por los perros. Además de mi amor por la programación, disfruto explorando nuevos lenguajes y tecnologías para mejorar la experiencia de nuestros clientes peludos. Cuando no estoy trabajando en el sitio web, me encanta desconectar y pasar tiempo de calidad con mi fiel compañero de cuatro patas. ¡Ven y únete a nuestra comunidad perruna!</p>
+
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card mb-3" style="max-width: 800px;">
+                <div class="card mb-3" style="height: 300px;">
                     <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="<?php echo $IMAGES ?>/staff/pablo.png" class="img-fluid rounded-start" alt="pablo">
+                        <div class="col-md-4 d-flex align-items-center justify-content-center">
+                            <img src="<?php echo $IMAGES ?>/staff/pablo.png" class="img-fluid rounded-start" alt="pablo" style="height: 240px;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 class="card-title">¡Hola, soy Pablo!</h5>
+                                <p class="card-text">Como uno de los cofundadores de Doggy Friends, me enorgullece brindar a nuestros clientes peludos los mejores productos y experiencias. Amante de los perros y experto en hacerles cosquillas, estoy comprometido con el bienestar y la felicidad de nuestros amigos de cuatro patas. ¡Únete a nuestra manada y descubre todo lo que Doggy Friends tiene para ofrecer!</p>
+
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -76,10 +75,6 @@ if (!empty($productosNuevos)) {
             </div>
         </div>
     </div>
-
-
-
-
 
     <?php include_once "./structures/footer.php"; ?>
 </body>
