@@ -86,6 +86,7 @@ function crearTablaComprasCanceladas($listaCompras)
         $fechaCompra = $compra['fechaCompra'];
         $fechaCompra = dateFormat($fechaCompra);
         $fechaCancelacion = $compra['fechaFin'];
+        $fechaCancelacion = dateFormat($fechaCancelacion);
         //crear tabla
         echo "<tr>";
         echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseCompras" . $idCompra . "' role='button' aria-expanded='false' aria-controls='collapseCompras" . $idCompra . "'>
