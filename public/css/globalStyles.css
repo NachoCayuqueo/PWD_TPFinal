@@ -63,7 +63,7 @@ input[type="number"] {
   font-family: Poppins;
 }
 .btn-color {
-  background-color: #eebbc3;
+  background-color: #2d3f50;
   color: white;
 }
 
@@ -255,4 +255,50 @@ input[type="number"] {
 
 .btn-radius {
   border-radius: 50%;
+}
+
+.ribbon {
+  position: absolute;
+  top: 0px; /* Ajuste para bajar el ribbon */
+  left: 0px; /* Ajuste para que el ribbon sobresalga un poco */
+  width: 150px; /* Ancho del ribbon */
+  height: 150px; /* Altura del ribbon */
+  overflow: hidden;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 250px; /* Ancho del texto del ribbon */
+  padding: 10px 0;
+  background-color: #f00b0b; /* Color de fondo del ribbon */
+  color: #fff; /* Color del texto del ribbon */
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  transform: translate(-50%, 50%) rotate(-45deg); /* Rotación y desplazamiento */
+  top: 0px; /* Ajuste para bajar el texto del ribbon */
+  left: 50px;
+}
+
+.ribbon_2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px; /* Ancho del ribbon */
+  height: 100px; /* Altura del ribbon */
+  overflow: hidden;
+}
+.ribbon_2 span {
+  position: absolute;
+  display: block;
+  width: 150px; /* Ancho del texto del ribbon */
+  padding: 10px 0;
+  background-color: #ffc107; /* Color de fondo del ribbon */
+  color: #fff; /* Color del texto del ribbon */
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  transform: translate(-50%, 50%) rotate(-45deg); /* Rotación y desplazamiento */
+  top: -25px; /* Ajuste para posicionar el ribbon */
+  left: 0;
 }
