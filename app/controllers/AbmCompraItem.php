@@ -134,6 +134,10 @@ class AbmCompraItem
         return $arreglo;
     }
 
+    // param:
+    // 'idCompra' => $idCompra,
+    //'idProducto' => $idProducto
+    //'cantidadItemProducto' => $cantItemProd
     public function eliminarItem($param)
     {
         $response = [];
@@ -174,6 +178,18 @@ class AbmCompraItem
                     $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar eliminar la compra');
             } else {
                 $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al buscar  el estado de la compra');
+            }
+        }
+        // se actualiza el stock del producto
+        if ($bajaExitosa) {
+            $idProducto = $param['idProducto'];
+            $cantidad = (-1 * $param['cantidadItemProducto']);
+            $objetoProducto = new AbmProducto();
+            $actualizacionExitosa = $objetoProducto->actualizarStock($idProducto, $cantidad);
+            if ($actualizacionExitosa) {
+                $response = array('title' => 'EXITO', 'message' => 'El producto fue eliminado del carrito');
+            } else {
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar actualizar el stock');
             }
         }
 
