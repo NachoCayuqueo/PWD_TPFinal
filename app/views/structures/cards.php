@@ -33,8 +33,8 @@ function productsCard($product, $hrefComprar)
                 <h3 class="text-center">$' . $product->getProPrecio() . '</h3>
             </div>
             <div class="text-center mb-3">
-                <a href="' . $hrefComprar . '" class="btn' . ($stock === 0 ? " btn-secondary disabled" : " btn-color") . ' rounded-pill me-2">Comprar</a>
-                <a id="btn-more-info-' . $product->getIdProducto() . '" class="btn btn-color rounded-pill" onclick="moreProductInfo(' . $product->getIdProducto() . ')">
+                <a href="' . $hrefComprar . '" class="btn btn-secondary' . ($stock === 0 ? " disabled" : " btn-color") . ' rounded-pill me-2">Comprar</a>
+                <a id="btn-more-info-' . $product->getIdProducto() . '" class="btn btn-secondary btn-color rounded-pill" onclick="moreProductInfo(' . $product->getIdProducto() . ')">
                     Mas info
                 </a>
             </div>
