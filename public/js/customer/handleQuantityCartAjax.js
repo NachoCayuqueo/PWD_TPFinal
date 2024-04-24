@@ -12,50 +12,12 @@ $(document).ready(function () {
 
     let cantProducto = 0;
 
-    if (nuevoValor > 0) {
+    if (nuevoValor >= 1) {
       $("#quantity_" + id).val(nuevoValor); // Actualizar el valor del input
       cantProducto = -1 * (cantidadActual - nuevoValor);
+      console.log({ cantProducto });
+      actualizarCantidadDisponible(idUsuario, id, cantProducto);
     }
-
-    //AJAX
-    $.ajax({
-      url: "../../views/customer/actions/cartAction.php",
-      type: "POST",
-      data: {
-        idUsuario,
-        idProducto: id,
-        cantProducto,
-      },
-      success: function (response) {
-        response = JSON.parse(response);
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          });
-        }
-      },
-      error: function (xhr, status, error) {
-        // Maneja los errores de la solicitud AJAX
-        console.error(error);
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
-      },
-    });
   });
 
   // Controlador de eventos para el botón de "+"
@@ -69,49 +31,13 @@ $(document).ready(function () {
     const cantidadActual = $("#quantity_" + id).data("cantidad");
     const nuevoValor = parseInt(valorActual) + 1; // Incrementar el valor
 
-    console.log({ cantidadActual, valorActual, nuevoValor });
+    const stockDisponible = $("#quantity_" + id).data("stock");
 
-    $("#quantity_" + id).val(nuevoValor); // Actualizar el valor del input
-
-    //AJAX
-    $.ajax({
-      url: "../../views/customer/actions/cartAction.php",
-      type: "POST",
-      data: {
-        idUsuario,
-        idProducto: id,
-        cantProducto: nuevoValor - cantidadActual,
-      },
-      success: function (response) {
-        response = JSON.parse(response);
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          });
-        }
-      },
-      error: function (xhr, status, error) {
-        // Maneja los errores de la solicitud AJAX
-        console.error(error);
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
-      },
-    });
+    if (stockDisponible > cantidadActual) {
+      $("#quantity_" + id).val(nuevoValor);
+      const cantProducto = nuevoValor - cantidadActual;
+      actualizarCantidadDisponible(idUsuario, id, cantProducto);
+    }
   });
 
   // Btn Borrar
@@ -119,9 +45,10 @@ $(document).ready(function () {
     const idBtnTrash = $(this).attr("id");
     const partesId = idBtnTrash.split("_");
     const id = partesId[partesId.length - 1];
-
     const idCompra = $("#button-trash_" + id).data("idcompra");
-    console.log({ id, idCompra });
+
+    const cantidadItemProducto = $("#quantity_" + id).data("cantidad");
+
     //AJAX
     $.ajax({
       url: "../../views/customer/actions/deleteProductAction.php",
@@ -129,6 +56,7 @@ $(document).ready(function () {
       data: {
         idCompra,
         idProducto: id,
+        cantidadItemProducto,
       },
       success: function (response) {
         response = JSON.parse(response);
@@ -162,3 +90,44 @@ $(document).ready(function () {
     });
   });
 });
+
+function actualizarCantidadDisponible(idUsuario, idProducto, cantProducto) {
+  $.ajax({
+    url: "../../views/customer/actions/cartAction.php",
+    type: "POST",
+    data: {
+      idUsuario,
+      idProducto,
+      cantProducto,
+    },
+    success: function (response) {
+      response = JSON.parse(response);
+      if (response.title === "EXITO") {
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: response.message,
+        }).then(() => {
+          location.reload();
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.message,
+        });
+      }
+    },
+    error: function (xhr, status, error) {
+      // Maneja los errores de la solicitud AJAX
+      console.error(error);
+      console.error(xhr.responseText);
+      // Muestra una alerta de error
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      });
+    },
+  });
+}
