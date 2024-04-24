@@ -13,19 +13,27 @@ function productsCard($product, $hrefComprar)
     $moreInfoArray = explode('.', $product->getProMasInfo());
     $nombreImagen = $product->getProImagen();
     $tipo = $product->getProTipo();
+    $stock = $product->getProCantStock();
 
     $urlImagen =  $GLOBALS['IMAGES'] . "/products/" . $tipo . "/" . $nombreImagen;
 
     echo '
         <div class="card card-container p-2" style="height: 100%;">
-            <img src="' . $urlImagen . '" class="image card-img-top" alt="' . $product->getProNombre() . '">
+        ';
+    if ($stock === 0) {
+        echo '<div class="ribbon">
+            <span>Sin Stock</span>
+        </div>';
+    }
+
+    echo '  <img src="' . $urlImagen . '" class="image card-img-top" alt="' . $product->getProNombre() . '">
             <div class="card-body">
                 <h5 class="mt-2 text-center">' . $product->getProNombre() . '</h5>
                 <p class="card-text">' . $product->getProDescripcion() . '</p>
                 <h3 class="text-center">$' . $product->getProPrecio() . '</h3>
             </div>
             <div class="text-center mb-3">
-                <a href="' . $hrefComprar . '" class="btn btn-color rounded-pill me-2">Comprar</a>
+                <a href="' . $hrefComprar . '" class="btn' . ($stock === 0 ? " btn-secondary disabled" : " btn-color") . ' rounded-pill me-2">Comprar</a>
                 <a id="btn-more-info-' . $product->getIdProducto() . '" class="btn btn-color rounded-pill" onclick="moreProductInfo(' . $product->getIdProducto() . ')">
                     Mas info
                 </a>
