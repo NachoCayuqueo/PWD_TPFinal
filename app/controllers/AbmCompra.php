@@ -211,6 +211,7 @@ class AbmCompra
         // Calcular el precio total y construir los datos de los items
         foreach ($listaItems as $item) {
             $producto = $item->getObjetoProducto();
+            $stockProducto = $producto->getProCantStock();
             $precioUnitario = $producto->getProPrecio();
             $tipo = $producto->getProTipo();
             $nombreImagen = $producto->getProImagen();
@@ -226,6 +227,7 @@ class AbmCompra
                 'urlImagen' => $urlImagen,
                 'precioUnitarioProducto' => $precioUnitario,
                 'cantidadProducto' => $cantidad,
+                'stockDisponible' => $stockProducto
             ];
             $compraItem[] = $item_data;
         }
@@ -366,14 +368,22 @@ class AbmCompra
                 'idCompra' => $idCompra,
                 'idProducto' => $idProducto
             ];
-            return $objetoCompraItem->modificacion($paramModificar);
+            $modificacionExitosa = $objetoCompraItem->modificacion($paramModificar);
         } else {
             $paramAlta = [
                 'idCompra' => $idCompra,
                 'idProducto' =>  $idProducto,
                 'ciCantidad' => $cantidadProducto
             ];
-            return $objetoCompraItem->alta($paramAlta);
+            $modificacionExitosa = $objetoCompraItem->alta($paramAlta);
         }
+
+        if ($modificacionExitosa) {
+            //actualizar stock
+            $objetoProducto = new AbmProducto();
+            return $objetoProducto->actualizarStock($idProducto, $cantidadProducto);
+        }
+
+        return false;
     }
 }

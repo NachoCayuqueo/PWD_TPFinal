@@ -86,18 +86,19 @@ if ($esUsuarioValido) {
                         ?></p>
                     <div class="d-flex">
                         <div class="input-group mb-3" style="width: 150px;">
-                            <button class="btn btn-outline-secondary" type="button" id="button-minus">
+                            <button class="btn btn-outline-secondary border-color-custom <?php echo $datosProducto['stock'] === 1 ? "disabled" : "" ?>" type="button" id="button-minus">
                                 <img src="<?php echo $BOOTSTRAP_ICONS ?>/dash.svg" alt="minus">
                             </button>
-                            <input type="number" class="form-control text-center" placeholder="1" id="quantity" value="1">
-                            <button class="btn btn-outline-secondary" type="button" id="button-plus">
+                            <input type="number" class="form-control text-center border-color-custom" placeholder="1" id="quantity" value="1" readonly>
+                            <button class="btn btn-outline-secondary border-color-custom <?php echo $datosProducto['stock'] === 1 ? "disabled" : "" ?>" type="button" id="button-plus">
                                 <img src="<?php echo $BOOTSTRAP_ICONS ?>/plus.svg" alt="plus">
                             </button>
                         </div>
                         <div class="ms-2 btn-text">
-                            <button class="btn btn-primary" id="btn-cart">AGREGAR AL CARRITO</button>
+                            <button class="btn btn-secondary btn-color" id="btn-cart">AGREGAR AL CARRITO</button>
                         </div>
                     </div>
+                    <p id="stock" data-cantStock="<?php echo  $datosProducto['stock'] ?>"> cantidad disponible: <?php echo $datosProducto['stock'] ?>/<?php echo $datosProducto['stock'] ?></p>
                 </div>
             </div>
         </div>
@@ -131,7 +132,7 @@ if ($esUsuarioValido) {
                 </div>
             </div>
             <div class="text-center">
-                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-outline-primary">Mas Productos similares</a>
+                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-secondary btn-color">Mas Productos similares</a>
             </div>
         </div>
     </div>

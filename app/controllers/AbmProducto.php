@@ -252,4 +252,28 @@ class AbmProducto
         }
         return $eliminarExito;
     }
+
+    public function actualizarStock($idProducto, $cantidad)
+    {
+        $producto = $this->buscar(['idProducto' => $idProducto]);
+        if (!empty($producto)) {
+            $producto = $producto[0];
+            $nuevoStock = $producto->getProCantStock() - $cantidad;
+            $paramActualizar = [
+                'idProducto' => $idProducto,
+                'proNombre' => $producto->getProNombre(),
+                'proDescripcion' => $producto->getProDescripcion(),
+                'proMasInfo' => $producto->getProMasInfo(),
+                'proImagen' => $producto->getProImagen(),
+                'proPrecio' => $producto->getProPrecio(),
+                'proTipo' => $producto->getProTipo(),
+                'proCantStock' => $nuevoStock,
+                'esprodestacado' => $producto->getEsProPopular(),
+                'espronuevo' => $producto->getEsProNuevo()
+            ];
+
+            return $this->modificacion($paramActualizar);
+        }
+        return false;
+    }
 }

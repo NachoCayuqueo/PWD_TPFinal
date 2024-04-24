@@ -20,7 +20,8 @@ $(document).ready(function () {
             title: "Éxito",
             text: response.message,
           }).then((result) => {
-            location.reload();
+            // location.reload();
+            window.location.href = "../../../app/views/home";
           });
         } else {
           Swal.fire({

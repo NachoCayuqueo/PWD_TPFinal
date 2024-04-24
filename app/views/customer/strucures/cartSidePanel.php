@@ -37,13 +37,17 @@ if ($existeCompraCarrito) {
             <div class="offcanvas-body">
             <form id="formulario-compra_' . $idCompra . '" name="formulario-compra" class="formulario-compra" data-idusuario="' . $idUsuario . '">';
     foreach ($arregloProductos as $producto) {
+        //viewStructure($arregloProductos);
         $idProducto = $producto['idProducto'];
         $nombreProducto = $producto['nombreProducto'];
         $cantidadProducto = $producto['cantidadProducto'];
+        $stockDisponile = $producto['stockDisponible'];
+
         $precioUnitario = $producto['precioUnitarioProducto'];
         $urlImagen = $producto['urlImagen'];
         $precioProductoTotal = $cantidadProducto *  $precioUnitario;
         $precioFinal += $precioProductoTotal;
+
         echo '
             <div id="card-compra" class="card mb-2">
                 <div class="card-body">
@@ -58,25 +62,28 @@ if ($existeCompraCarrito) {
                         </div>
                     </div>
             
-                  <div class="d-flex">
-                    <div class="me-2">
-                        <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="100">
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <div class="input-group me-3" style="width: 120px;">
-                            <button class="btn btn-outline-secondary border-color-custom" type="button" id="button-minus_' . $idProducto . '" data-iduser="' . $idUsuario . '">
-                                -
-                            </button>
-                            <input type="number" class="form-control text-center border-color-custom" placeholder="1" id="quantity_' . $idProducto . '" value="' . $cantidadProducto . '" data-cantidad="' . $cantidadProducto . '">
-                            <button class="btn btn-outline-secondary border-color-custom" type="button" id="button-plus_' . $idProducto . '" data-iduser="' . $idUsuario . '">
-                                +
-                            </button>
+                    <div class="d-flex">
+                        <div class="me-2">
+                            <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="100">
                         </div>
-                        <div>
-                            <p class="card-text"> $' . $precioProductoTotal . '</p>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="input-group me-3" style="width: 120px;">
+                                <button class="btn btn-outline-secondary border-color-custom" type="button" id="button-minus_' . $idProducto . '" data-iduser="' . $idUsuario . '">
+                                    -
+                                </button>
+                                <input readonly type="number" class="form-control text-center border-color-custom" placeholder="1" id="quantity_' . $idProducto . '" value="' . $cantidadProducto . '" data-cantidad="' . $cantidadProducto . '" data-stock="' . $stockDisponile . '">
+                                <button class="btn btn-outline-secondary border-color-custom" type="button" id="button-plus_' . $idProducto . '" data-iduser="' . $idUsuario . '">
+                                    +
+                                </button>
+                            </div>
+                            <div>
+                                <p class="card-text"> $' . $precioProductoTotal . '</p>
+                            </div>
                         </div>
                     </div>
-                  </div>
+                    <div>
+                        <p class="card-text text-center">' . ($stockDisponile === 0 ? "¡Ultimo Producto!" : "") . '</p>
+                    </div>
                 </div>
             </div>';
     }
