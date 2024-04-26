@@ -22,6 +22,8 @@ $(document).ready(function () {
       }
     );
 
+    let cancelarComentario = false;
+
     modal.find(".btn-save").click(function () {
       datosCards = [];
       // Recorrer cada card
@@ -32,6 +34,10 @@ $(document).ready(function () {
         const estrellas = card.find(".star.filled").length; // Contar las estrellas marcadas
         const comentario = card.find("textarea").val(); // Obtener el comentario
 
+        if (estrellas === 0) {
+          cancelarComentario = true;
+        }
+
         datosCards.push({
           idUsuario,
           idProducto,
@@ -39,45 +45,11 @@ $(document).ready(function () {
           comentario: comentario,
         });
       });
-      console.log({ datosCards });
-      //AJAX
-      // $.ajax({
-      //   url: "../../views/customer/actions/classifyProductAction.php",
-      //   type: "POST",
-      //   data: {
-      //     productosRankeados: datosCards,
-      //   },
-      //   success: function (response) {
-      //     response = JSON.parse(response);
-      //     if (response.title === "EXITO") {
-      //       Swal.fire({
-      //         icon: "success",
-      //         title: "Éxito",
-      //         text: response.message,
-      //       }).then((result) => {
-      //         location.reload();
-      //         // window.location.href = "../../../app/views/home";
-      //       });
-      //     } else {
-      //       Swal.fire({
-      //         icon: "error",
-      //         title: "Error",
-      //         text: response.message,
-      //       });
-      //     }
-      //   },
-      //   error: function (xhr, status, error) {
-      //     // Maneja los errores de la solicitud AJAX
-      //     console.error(error);
-      //     console.error(xhr.responseText);
-      //     // Muestra una alerta de error
-      //     Swal.fire({
-      //       icon: "error",
-      //       title: "Error",
-      //       text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-      //     });
-      //   },
-      // });
+      if (cancelarComentario) {
+        cancelarValoracion();
+      } else {
+        valorarCompra(datosCards);
+      }
     });
   });
 
@@ -88,7 +60,6 @@ $(document).ready(function () {
     $("[id^='card_modalSeeReview_" + id + "_']").each(function () {
       const card = $(this);
       const idProducto = obtenerId(card);
-      console.log(idProducto);
       const promedio = parseFloat($("#promedio_" + idProducto).val()); // Obtener el promedio del input oculto
       const parteEntera = Math.floor(promedio); // Obtener la parte entera del promedio
       const parteDecimal = promedio - parteEntera; // Obtener la parte decimal del promedio
@@ -107,6 +78,57 @@ $(document).ready(function () {
     });
   });
 });
+
+function cancelarValoracion() {
+  Swal.fire({
+    icon: "info",
+    title: "Estrellas",
+    text: "Debe calificar todos los productos",
+  }).then((result) => {
+    location.reload();
+  });
+}
+
+function valorarCompra(productosRankeados) {
+  //AJAX
+  $.ajax({
+    url: "../../views/customer/actions/classifyProductAction.php",
+    type: "POST",
+    data: {
+      productosRankeados,
+    },
+    success: function (response) {
+      response = JSON.parse(response);
+      if (response.title === "EXITO") {
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: response.message,
+        }).then((result) => {
+          location.reload();
+          // window.location.href = "../../../app/views/home";
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.message,
+        });
+      }
+    },
+    error: function (xhr, status, error) {
+      // Maneja los errores de la solicitud AJAX
+      console.error(error);
+      console.error(xhr.responseText);
+      // Muestra una alerta de error
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      });
+    },
+  });
+}
 
 function obtenerId(card) {
   const idCompleto = card.attr("id");
