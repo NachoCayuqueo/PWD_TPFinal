@@ -5,8 +5,10 @@ $esUsuarioValido = $session->validarUsuario();
 $existeListaCompra = false;
 
 if ($esUsuarioValido) {
-    $objetoCompra = new AbmCompra();
+    $usuario = $session->getUsuario();
+    $idUsuarioActivo = $usuario->getIdUsuario();
     $param = ['idUsuario' => $idUsuarioActivo];
+    $objetoCompra = new AbmCompra();
     $listaCompra = $objetoCompra->obtenerCompras($param);
     if (!empty($listaCompra)) {
         $existeListaCompra = true;

@@ -197,14 +197,15 @@ class ValoracionProducto extends DataBase
         $resp = false;
         $idProducto = $this->getObjetoProducto()->getIdProducto();
         $idUsuario = $this->getObjetoUsuario()->getIdUsuario();
-        $query = "INSERT INTO valoracionproducto(idusuario,idproducto, ranking, descripcion,fechacreacion)  
+        $query = "INSERT INTO valoracionproducto(idusuario,idproducto, ranking, descripcion,fecha_creacion)  
               VALUES('"
             . $idUsuario . "', '"
             . $idProducto . "', '"
             . $this->getRanking() . "', '"
-            . $this->getFechaCreacion() . "', '"
-            . $this->getDescripcion() . "'
+            . $this->getDescripcion() . "', '"
+            . $this->getFechaCreacion() . "'
         );";
+
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($query)) {
                 $this->setIdValoracionProducto($id);
@@ -229,7 +230,7 @@ class ValoracionProducto extends DataBase
             idproducto='" . $idProducto . "', 
             ranking='" . $this->getRanking() . "',
             descrpcion='" . $this->getDescripcion() . "',  
-            fechacreacion='" . $this->getFechaCreacion() . "'" .
+            fecha_creacion='" . $this->getFechaCreacion() . "'" .
             " WHERE idvaloracion=" . $this->getIdValoracionProducto();
 
         if ($this->Iniciar()) {
@@ -284,7 +285,7 @@ class ValoracionProducto extends DataBase
                     $objetoUsuario->cargar();
 
                     $obj = new ValoracionProducto();
-                    $obj->setear($row['idvaloracion'], $row['ranking'], $row['descripcion'], $row['fechacreacion'], $objetoUsuario, $objetoProducto);
+                    $obj->setear($row['idvaloracion'], $row['ranking'], $row['descripcion'], $row['fecha_creacion'], $objetoUsuario, $objetoProducto);
 
                     array_push($arreglo, $obj);
                 }

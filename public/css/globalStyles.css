@@ -232,6 +232,10 @@ input[type="number"] {
   color: gold;
 }
 
+.star.hovered {
+  color: gold; /* Cambia el color de las estrellas al pasar el ratón sobre ellas */
+}
+
 .reviews {
   margin-left: 20px;
 }
