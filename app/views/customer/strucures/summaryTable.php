@@ -167,7 +167,7 @@ function collapseProducto($idCompra, $listaProductos)
 function modalRankearCompra($idModal, $idUsuario, $productos)
 {
     echo '
-    <div class="modal fade" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
+    <div class="modal fade modal-ranking-compra" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -179,7 +179,7 @@ function modalRankearCompra($idModal, $idUsuario, $productos)
         $idProducto = $producto['idProducto'];
         $nombreProducto = $producto['nombreProducto'];
         $urlImagen = $producto['urlImagen'];
-        echo '<div id="card_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
+        echo '<div id="card_' . $idModal . '_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="50">
@@ -202,7 +202,7 @@ function modalRankearCompra($idModal, $idUsuario, $productos)
     echo '  
           </div>
           <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+            <button id="btn-save_' . $idModal . '" type="button" class="btn btn-primary btn-save" data-bs-dismiss="modal">Guardar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           </div>
         </div>
@@ -214,7 +214,7 @@ function modalRankearCompra($idModal, $idUsuario, $productos)
 function modalVerValoracion($idModal, $idUsuario, $productos)
 {
     echo '
-    <div class="modal fade" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
+    <div class="modal fade modal-ver-valoracion" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -227,7 +227,7 @@ function modalVerValoracion($idModal, $idUsuario, $productos)
         $nombreProducto = $producto['nombreProducto'];
         $urlImagen = $producto['urlImagen'];
         $valoracion = $producto['valoracion'];
-        echo '<div id="card_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
+        echo '<div id="card_' . $idModal . '_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="50">
