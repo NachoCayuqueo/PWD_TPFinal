@@ -17,6 +17,7 @@ function crearTablaResumenCompra($listaCompras)
         <th scope="col">Cantidad de Productos</th>
         <th scope="col">Fecha de Compra</th>
         <th scope="col">Total</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody class="table-group-divider card-text">
@@ -30,6 +31,7 @@ function crearTablaResumenCompra($listaCompras)
         $precioTotal = $compra['precioTotal'];
         if ($estadoCompra === 3 || $estadoCompra === 4) {
             //crear tabla
+            $tieneValoracion = $compra['tieneValoracion'];
             echo "<tr>";
             echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseCompras" . $idCompra . "' role='button' aria-expanded='false' aria-controls='collapseCompras" . $idCompra . "'>
                     <img id='toggleIcon_" . $idCompra . "' src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-right.svg' alt='right'></a>
@@ -38,11 +40,29 @@ function crearTablaResumenCompra($listaCompras)
             echo "<td>" . $cantidadCompra . "</td>";
             echo "<td>" . $fechaCompra . "</td>";
             echo "<td>" . $precioTotal . "</td>";
+            echo "<td class='text-center'>"
+                . (!$tieneValoracion
+                    ? " <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $idCompra . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='comentar'>
+                        <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
+                    </a>"
+                    : " <a href='#' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#modalSeeReview_" . $idCompra . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='right' data-bs-title='ver tu opinion'>
+                        <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/eye.svg' alt='see_review'>
+                    </a>") .
+                "</td>";
             echo "</tr>";
 
             // Función que muestra el área de colapso
             $listaProductos = $compra['compraItem'];
             collapseProducto($idCompra, $listaProductos);
+
+            $idUsuario = $compra['idUsuario'];
+            if (!$tieneValoracion) {
+                $idModal = 'modalEdit_' . $idCompra;
+                modalRankearCompra($idModal, $idUsuario, $listaProductos);
+            } else {
+                $idModal = 'modalSeeReview_' . $idCompra;
+                modalVerValoracion($idModal, $idUsuario, $listaProductos);
+            }
 
             $comprasEncontradas++;
         }
@@ -144,4 +164,96 @@ function collapseProducto($idCompra, $listaProductos)
         </tr>';
 }
 
+function modalRankearCompra($idModal, $idUsuario, $productos)
+{
+    echo '
+    <div class="modal fade" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Comentarios</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">';
+    foreach ($productos as $producto) {
+        $idProducto = $producto['idProducto'];
+        $nombreProducto = $producto['nombreProducto'];
+        $urlImagen = $producto['urlImagen'];
+        echo '<div id="card_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="50">
+                <h5 class="card-title ms-2">' . $nombreProducto . '</h5>
+            </div>
+            <div class="rating">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+            </div>
+            <div class="form-floating mt-2">
+                <textarea class="form-control" placeholder="Deja un comentario aqui" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Deja un comentario</label>
+            </div>
+        </div>
+      </div>';
+    }
+    echo '  
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+';
+}
+
+function modalVerValoracion($idModal, $idUsuario, $productos)
+{
+    echo '
+    <div class="modal fade" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Comentarios</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">';
+    foreach ($productos as $producto) {
+        $idProducto = $producto['idProducto'];
+        $nombreProducto = $producto['nombreProducto'];
+        $urlImagen = $producto['urlImagen'];
+        $valoracion = $producto['valoracion'];
+        echo '<div id="card_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="50">
+                <h5 class="card-title ms-2">' . $nombreProducto . '</h5>
+            </div>
+            <input type="hidden" id="promedio_' . $idProducto . '" value="' . $valoracion['ranking'] . '">
+            <div id="rating_' . $idProducto . '" class="rating">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+            </div>
+            <p class="card-text">' . $valoracion['descripcion'] . '</p>
+        </div>
+      </div>';
+    }
+    echo '  
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+';
+}
 echo '<script src="' . $PUBLIC_JS . '/customer/changeCollapseButton.js"></script>';
+echo '<script src="' . $PUBLIC_JS . '/customer/classifyProductAjax.js"></script>';
