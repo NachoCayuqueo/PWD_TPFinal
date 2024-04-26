@@ -126,7 +126,7 @@ class Compra extends DataBase
         $idUsuario = $this->getObjetoUsuario()->getIdUsuario();
         $query = "INSERT INTO compra(cofecha, idusuario)  
               VALUES('"
-            . $this->cofecha . "', '"
+            . $this->getCofecha() . "', '"
             . $idUsuario . "'
         );";
         if ($this->Iniciar()) {
