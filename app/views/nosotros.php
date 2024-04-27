@@ -1,6 +1,13 @@
 <?php
 
 include_once "../../config/configuration.php";
+
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception;
+
+include_once "../../vendor/autoload.php";
+
 $session = new Session();
 $objetoUsuarioRol = new AbmUsuarioRol();
 if ($session->validar()) {
@@ -28,6 +35,45 @@ $existenProductosNuevos = false;
 if (!empty($productosNuevos)) {
     $existenProductosNuevos = true;
 }
+
+//incluimos la clase PHPMailer
+include_once('../../vendor/phpmailer/phpmailer/src/PHPMailer.php');
+
+
+// $mail = new PHPMailer(true);
+
+// try {
+//     // Configuración del servidor SMTP de Gmail
+//     $mail->isSMTP();
+//     $mail->Host = 'smtp.office365.com';
+//     $mail->SMTPAuth = true;
+//     $mail->Username = $_ENV['ADM_EMAIL']; // Tu dirección de correo electrónico completa
+//     $mail->Password = $_ENV['ADM_PASSWORD']; // Tu contraseña de Gmail
+//     $mail->SMTPSecure = 'tls'; // TLS
+//     $mail->Port = 587; // Puerto SMTP
+
+//     // Configuración del remitente y destinatario
+//     $mail->setFrom($_ENV['ADM_EMAIL'], $_ENV['ADM_NOMBRE']);
+//     $mail->addAddress('pabloaldana.cipo@gmail.com', 'Nombre del Destinatario');
+
+//     // Contenido del correo
+//     $mail->isHTML(true);
+//     $mail->Subject = 'Prueba de correo SMTP';
+//     $mail->Body    = 'Este es un correo de prueba enviado desde PHPMailer con SMTP';
+
+//     // Envío del correo
+//     $mail->send();
+//     echo 'El correo fue enviado correctamente.';
+// } catch (Exception $e) {
+//     echo 'Error al enviar el correo: ', $mail->ErrorInfo;
+// }
+// //envío el mensaje, comprobando si se envió correctamente
+// if (!$mail->Send()) {
+//     echo "Error al enviar el mensaje: " . $mail->ErrorInfo;
+// } else {
+//     echo "Mensaje enviado!!";
+// }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

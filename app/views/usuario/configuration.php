@@ -63,7 +63,7 @@ if ($session->validar()) {
             <div class="col mb-5 mt-5">
                 <div id="contenedor-formulario">
                     <div class="container d-flex justify-content-center">
-                        <div class="card mb-3" style="max-width: 650px;">
+                        <div class="card mb-3" style="width: 900px;">
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <img src="<?php echo $BOOTSTRAP_ICONS . "/" . $avatarUsuario  ?>" width="300px" class="img-fluid rounded-start ms-3" alt="avatar">

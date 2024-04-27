@@ -274,7 +274,6 @@ $(document).ready(function () {
     const formulario = $(this);
 
     const idMenu = obtenerId(formulario);
-    console.log({ idMenu });
 
     $.ajax({
       url: "../../views/admin/actions/activateMenuAction.php",
@@ -326,7 +325,12 @@ $(document).ready(function () {
     const formulario = $(this);
 
     const idUsuario = obtenerId(formulario);
+    const btnMailer = $("#btnMailer_modalActivarUsuario_" + idUsuario);
+    // Mostrar el spinner al enviar el formulario
+    //btnMailer.find(".spinner-border").removeClass("d-none");
 
+    // Deshabilitar el botón mientras se procesa la solicitud
+    btnMailer.prop("disabled", true);
     $.ajax({
       url: "../../views/admin/actions/activateUserAction.php",
       type: "POST",
@@ -334,6 +338,7 @@ $(document).ready(function () {
         idUsuario,
       },
       success: function (response) {
+        //btnMailer.find(".spinner-border").addClass("d-none");
         response = JSON.parse(response);
 
         if (response.title === "EXITO") {
@@ -343,10 +348,17 @@ $(document).ready(function () {
             text: response.message,
           }).then(() => {
             // Cerrar el modal después de que se cierre el mensaje
+
             $("#modalActivarUsuario_" + idUsuario).modal("hide");
             location.reload();
           });
         } else {
+          // Ocultar el spinner en caso de error
+          //btnMailer.find(".spinner-border").addClass("d-none");
+
+          // Habilitar el botón nuevamente en caso de error
+          //btnMailer.prop("disabled", false);
+
           Swal.fire({
             icon: "error",
             title: "Error",
@@ -359,6 +371,12 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
+        // Ocultar el spinner en caso de error
+        // btnMailer.find(".spinner-border").addClass("d-none");
+
+        // // Habilitar el botón nuevamente en caso de error
+        // btnMailer.prop("disabled", false);
+
         console.error(xhr.responseText);
         console.error("status: " + status);
         console.error("error: " + error);
