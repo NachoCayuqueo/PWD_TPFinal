@@ -407,7 +407,7 @@ CREATE TABLE `usuariorol` (
 -- Volcado de datos para la tabla `usuariorol`
 --
 -- controlar esto
-INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+INSERT INTO `usuariorol` (`idusuario`, `idrol`,`rolactivo`) VALUES
 (1, 1,1),
 (2, 1,1),
 (3, 2,1),
