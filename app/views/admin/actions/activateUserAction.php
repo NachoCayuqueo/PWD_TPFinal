@@ -14,13 +14,10 @@ $usuarioMail = $usuario->getUsMail();
 $usuarioNombre = $usuario->getUsNombre();
 
 
-$response = phpMailer($usuarioNombre, $usuarioMail, 'registro');
-//$cambioExitoso = $objetoUsuario->activarUsuario($idUsuario);
-// //! DENTRO DEL IF HAGO EL LLAMADO A LA FUNCION PARA USAR PHP MAILER
-// if ($cambioExitoso) {
-
-//     $response = $notificacionExitosa;
-// } else
-//     $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar activar al usuario');
+$cambioExitoso = $objetoUsuario->activarUsuario($idUsuario);
+if ($cambioExitoso) {
+    $response = phpMailer($usuarioNombre, $usuarioMail, 'registro');
+} else
+    $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar activar al usuario');
 // Convertir el array a formato JSON
 echo json_encode($response);
