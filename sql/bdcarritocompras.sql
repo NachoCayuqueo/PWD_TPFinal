@@ -408,16 +408,16 @@ CREATE TABLE `usuariorol` (
 --
 -- controlar esto
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 3),
-(5, 3),
-(6, 3),
-(7, 3),
-(8, 3),
-(9, 3),
-(10, 3);
+(1, 1,1),
+(2, 1,1),
+(3, 2,1),
+(4, 3,1),
+(5, 3,1),
+(6, 3,1),
+(7, 3,1),
+(8, 3,1),
+(9, 3,1),
+(10, 3,1);
 
 --
 -- Índices para tablas volcadas
