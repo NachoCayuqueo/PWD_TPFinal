@@ -86,6 +86,7 @@ function getHomePage($rol)
     return $homepage;
 }
 
+
 function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
 {
     // echo "estoy en funcion phpMailerr0";
@@ -132,4 +133,21 @@ function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
         $retorno = array('title' => 'ERROR', 'message' => 'Error al enviar el correo: ' . $mail->ErrorInfo);
     }
     return $retorno;
+
+function dateFormat($originalDate)
+{
+    $months = array(
+        1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
+        5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
+        9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+    );
+
+    $timestamp = strtotime($originalDate);
+    $day = date('d', $timestamp);
+    $monthNumber = date('n', $timestamp);
+    $month = $months[$monthNumber];
+    $year = date('Y', $timestamp);
+
+    return $day . '-' . $month . '-' . $year;
+
 }

@@ -140,9 +140,14 @@ class AbmCompra
 
         $listaCompra = $this->buscar($param);
         if (!empty($listaCompra)) {
+            // buscar datos usuario
+            $objetoUsuario = new AbmUsuario();
+            $usuario = $objetoUsuario->buscar(['idUsuario' => $param['idUsuario']]);
+            $usuario = $usuario[0];
+
             foreach ($listaCompra as $compra) {
                 // Obtener detalles de los items de la compra
-                $detallesCompra = $this->obtenerDetallesCompraItems($compra);
+                $detallesCompra = $this->obtenerDetallesCompraItems($usuario->getIdUsuario(), $compra);
 
                 // obtener el estado actual de la compra
                 $detallesEstado = $objetoCompraEstado->obtenerEstadoActual($compra->getIdCompra());
@@ -155,7 +160,10 @@ class AbmCompra
                     'cantidadItems' => count($detallesCompra['items']),
                     'precioTotal' => $detallesCompra['precioTotal'],
                     'fechaCompra' => $compra->getCofecha(),
-                    'idUsuario' => $param['idUsuario'],
+                    'idUsuario' => $usuario->getIdUsuario(),
+                    'nombreUsuario' => $usuario->getUsNombre(),
+                    'emailUsuario' =>  $usuario->getUsMail(),
+                    'tieneValoracion' => $detallesCompra['compraConValoracion'],
                     'compraItem' => $detallesCompra['items']
                 ];
                 array_push($compras, $compra_data);
@@ -165,15 +173,36 @@ class AbmCompra
         return $compras;
     }
 
+    public function obtenerDetallesCompras()
+    {
+        $arregloIdUsuarios = [];
+        $arregloCompras = [];
+        $compras = $this->buscar(null);
+        if (!empty($compras)) {
+            foreach ($compras as $compra) {
+                $idUsuario = $compra->getObjetoUsuario()->getIdUsuario();
+                array_push($arregloIdUsuarios, $idUsuario);
+            }
+            $arregloIdUsuarios = array_unique($arregloIdUsuarios);
+
+            foreach ($arregloIdUsuarios as $idUsuario) {
+                $compraUsuario = $this->obtenerCompras(['idUsuario' => $idUsuario]);
+                array_push($arregloCompras, $compraUsuario);
+            }
+        }
+        return $arregloCompras;
+    }
+
     /**
      * Obtiene los detalles de los items de una compra.
+     * @param int $idUsuario - ID del usuario.
      * @param Compra $compra - Objeto de la compra.
      * @return array - Arreglo de objetos que representa los detalles de los items de la compra.
      */
-    private function obtenerDetallesCompraItems($compra)
+    private function obtenerDetallesCompraItems($idUsuario, $compra)
     {
         $objetoCompraItem = new AbmCompraItem();
-        $objetoProducto = new AbmProducto();
+        $objetoValoracion = new AbmValoracionProducto();
         $compraItem = [];
         $precioTotal = 0;
 
@@ -184,6 +213,8 @@ class AbmCompra
         // Calcular el precio total y construir los datos de los items
         foreach ($listaItems as $item) {
             $producto = $item->getObjetoProducto();
+            $idProducto = $producto->getIdProducto();
+            $stockProducto = $producto->getProCantStock();
             $precioUnitario = $producto->getProPrecio();
             $tipo = $producto->getProTipo();
             $nombreImagen = $producto->getProImagen();
@@ -192,18 +223,25 @@ class AbmCompra
             $cantidad = $item->getCiCantidad();
             $precioTotal += ($cantidad * $precioUnitario);
 
+            //busco si tiene valoracion
+            $valoracionProducto = $objetoValoracion->obtenerValoracionProducto($idUsuario, $idProducto);
+            $tieneValoracion = empty($valoracionProducto) ? 0 : 1;
+
+
             $item_data = [
                 'idCompraItem' => $item->getIdCompraItem(),
-                'idProducto' => $producto->getIdProducto(),
+                'idProducto' => $idProducto,
                 'nombreProducto' => $producto->getProNombre(),
                 'urlImagen' => $urlImagen,
                 'precioUnitarioProducto' => $precioUnitario,
                 'cantidadProducto' => $cantidad,
+                'stockDisponible' => $stockProducto,
+                'valoracion' => $valoracionProducto
             ];
             $compraItem[] = $item_data;
         }
 
-        return ['items' => $compraItem, 'precioTotal' => $precioTotal];
+        return ['items' => $compraItem, 'precioTotal' => $precioTotal, 'compraConValoracion' => $tieneValoracion];
     }
 
     /**
@@ -339,14 +377,22 @@ class AbmCompra
                 'idCompra' => $idCompra,
                 'idProducto' => $idProducto
             ];
-            return $objetoCompraItem->modificacion($paramModificar);
+            $modificacionExitosa = $objetoCompraItem->modificacion($paramModificar);
         } else {
             $paramAlta = [
                 'idCompra' => $idCompra,
                 'idProducto' =>  $idProducto,
                 'ciCantidad' => $cantidadProducto
             ];
-            return $objetoCompraItem->alta($paramAlta);
+            $modificacionExitosa = $objetoCompraItem->alta($paramAlta);
         }
+
+        if ($modificacionExitosa) {
+            //actualizar stock
+            $objetoProducto = new AbmProducto();
+            return $objetoProducto->actualizarStock($idProducto, $cantidadProducto);
+        }
+
+        return false;
     }
 }
