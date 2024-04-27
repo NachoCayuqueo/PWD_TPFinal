@@ -89,10 +89,7 @@ function getHomePage($rol)
 
 function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
 {
-    // echo "estoy en funcion phpMailerr0";
-    // echo ($nombreDestinatario . '-' . $emailDestinatario . '-' . $tipo);
-    // echo ($_ENV['ADM_EMAIL']);
-    // echo ($_ENV['ADM_PASSWORD']);
+
     $mail = new PHPMailer(true);
     $asunto = "";
     $mensaje = "";
