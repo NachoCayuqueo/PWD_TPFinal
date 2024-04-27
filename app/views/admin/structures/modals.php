@@ -268,7 +268,10 @@ function modalActivarUsuario($idUsuario, $nombreUsuario)
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Activar</button>
+                  <button id="btnMailer_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                  <span class="spinner-border spinner-border-sm d-none"  role="status" aria-hidden="true"></span>
+                  Activar
+                  </button>
                 </div>
             </form>
         </div>

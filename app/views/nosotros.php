@@ -1,6 +1,7 @@
 <?php
 
 include_once "../../config/configuration.php";
+
 $session = new Session();
 $objetoUsuarioRol = new AbmUsuarioRol();
 if ($session->validar()) {

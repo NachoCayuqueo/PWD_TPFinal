@@ -1,4 +1,10 @@
 <?php
+include_once('../vendor/phpmailer/phpmailer/src/PHPMailer.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 function data_submitted()
 {
     //* Auxiliary function to take the received data regardless of the method used
@@ -80,6 +86,54 @@ function getHomePage($rol)
     return $homepage;
 }
 
+
+function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
+{
+    // echo "estoy en funcion phpMailerr0";
+    // echo ($nombreDestinatario . '-' . $emailDestinatario . '-' . $tipo);
+    // echo ($_ENV['ADM_EMAIL']);
+    // echo ($_ENV['ADM_PASSWORD']);
+    $mail = new PHPMailer(true);
+    $asunto = "";
+    $mensaje = "";
+    $retorno = "";
+    try {
+        // Configuración del servidor SMTP de Gmail
+        $mail->isSMTP();
+        $mail->Host = 'smtp.office365.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['ADM_EMAIL']; // Tu dirección de correo electrónico completa
+        $mail->Password = $_ENV['ADM_PASSWORD']; // Tu contraseña de Gmail
+        $mail->SMTPSecure = 'tls'; // TLS
+        $mail->Port = 587; // Puerto SMTP
+
+        // Configuración del remitente y destinatario
+        $mail->setFrom($_ENV['ADM_EMAIL'], $_ENV['ADM_NOMBRE']);
+        $mail->addAddress($emailDestinatario, $nombreDestinatario);
+
+        // Contenido del correo
+        $mail->isHTML(true);
+
+        switch ($tipo) {
+            case 'registro':
+                $asunto = 'Registro de usuario aprobado';
+                $mensaje = 'Hola ' . $nombreDestinatario . ', tu registro en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobado.';
+                break;
+            case 'compraAprobada:':
+                $asunto = 'Compra aprobada';
+                $mensaje = 'Hola ' . $nombreDestinatario . ', tu compra en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobada.';
+                break;
+        }
+        $mail->Subject = $asunto;
+        $mail->Body    = $mensaje;
+        // Envío del correo
+        $mail->send();
+        $retorno = array('title' => 'EXITO', 'message' => 'El correo fue enviado correctamente.');
+    } catch (Exception $e) {
+        $retorno = array('title' => 'ERROR', 'message' => 'Error al enviar el correo: ' . $mail->ErrorInfo);
+    }
+    return $retorno;
+
 function dateFormat($originalDate)
 {
     $months = array(
@@ -95,4 +149,5 @@ function dateFormat($originalDate)
     $year = date('Y', $timestamp);
 
     return $day . '-' . $month . '-' . $year;
+
 }
