@@ -35,7 +35,8 @@ function login() {
           title: "Error",
           text: response.message,
         }).then((result) => {
-          window.location.href = "../../../app/views/home";
+          location.reload();
+          // window.location.href = "../../../app/views/home";
         });
       }
     },
