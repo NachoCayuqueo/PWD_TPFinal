@@ -198,8 +198,8 @@ class AbmUsuario
                 $where[] = " idusuario = '" . $param['idUsuario'] . "'";
             if (isset($param['usNombre']))
                 $where[] = " usnombre = '" . $param['usNombre'] . "'";
-            if (isset($param['uspass']))
-                $where[] = " usPass = '" . $param['usPass'] . "'";
+            if (isset($param['usPass']))
+                $where[] = " uspass = '" . $param['usPass'] . "'";
             if (isset($param['usMail']))
                 $where[] = " usmail = '" . $param['usMail'] . "'";
             if (isset($param['usDeshabilitado']))
