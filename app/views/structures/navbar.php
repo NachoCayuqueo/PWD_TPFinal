@@ -30,7 +30,7 @@ if (is_null($nombreRolActivo)) {
 
 <nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
     <div class="container-fluid">
-        <a class="navbar-brand m-2" href="<?php echo $PRINCIPAL ?>" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Home">
+        <a class="navbar-brand m-2" href="<?php echo $PRINCIPAL ?>" type="button" data-bs-tooltip="tooltip" data-bs-placement="bottom" data-bs-title="Home">
             <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="inicio" width="80" class="d-inline-block align-text-top">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
