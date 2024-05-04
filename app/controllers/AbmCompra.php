@@ -127,6 +127,15 @@ class AbmCompra
         return $arreglo;
     }
 
+
+    public function buscarComprador($idCompra)
+    {
+        $param = ['idCompra' => $idCompra];
+        $compra = $this->buscar($param);
+        $usuario = $compra[0]->getObjetoUsuario();
+        return $usuario;
+    }
+
     /**
      * Obtiene las compras realizadas por un usuario y los detalles de cada compra.
      * @param array $param - Parámetros de búsqueda, en este caso el idUsuario.

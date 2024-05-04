@@ -99,7 +99,7 @@ function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
         $mail->isSMTP();
         $mail->Host = 'smtp.office365.com';
         $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['ADM_EMAIL']; // Tu dirección de correo electrónico completa
+        $mail->Username = $_ENV['ADM_EMAIL']; // Tu dirección de correo 1electrónico completa
         $mail->Password = $_ENV['ADM_PASSWORD']; // Tu contraseña de Gmail
         $mail->SMTPSecure = 'tls'; // TLS
         $mail->Port = 587; // Puerto SMTP
@@ -116,13 +116,14 @@ function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
                 $asunto = 'Registro de usuario aprobado';
                 $mensaje = 'Hola ' . $nombreDestinatario . ', tu registro en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobado.';
                 break;
-            case 'compraAprobada:':
-                $asunto = 'Compra aprobada';
+            case 'compraAprobada':
+                $asunto = 'CompraAprobada';
                 $mensaje = 'Hola ' . $nombreDestinatario . ', tu compra en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobada.';
                 break;
         }
         $mail->Subject = $asunto;
-        $mail->Body    = $mensaje;
+        $mail->Body = $mensaje;
+
         // Envío del correo
         $mail->send();
         $retorno = array('title' => 'EXITO', 'message' => 'El correo fue enviado correctamente.');

@@ -141,7 +141,7 @@ function mostrarDatosTabla($idCompra, $idUsuario, $nombreUsuario, $emailUsuario,
     echo "<td>" . $precioTotalCompra . "</td>";
     if ($mostrarBotones) {
         echo "<td class='text-center'>
-            <button type='button' class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#modalAutorizar_" . $idCompra . "'>
+            <button  type='button' class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#modalAutorizar_" . $idCompra . "'>
                 Autorizar
             </button>
             <button type='button' class='btn btn-outline-danger' data-bs-toggle='modal' data-bs-target='#modalCancelar_" . $idCompra . "'>
@@ -209,7 +209,10 @@ function modalAutorizarCompra($idModal, $idCompra)
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Activar</button>
+                  <button id="btn-activar_' . $idCompra . '" type="submit" class="btn btn-primary">
+                    <span class="spinner-border spinner-border-sm d-none"  role="status" aria-hidden="true"></span>
+                    Activar
+                  </button>
                 </div>
             </form>
         </div>
