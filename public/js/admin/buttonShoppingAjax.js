@@ -4,6 +4,10 @@ $(document).ready(function () {
     const formulario = $(this);
     const idForm = obtenerId(formulario);
 
+    const btnMailer = $("#btn-activar_" + idForm);
+    btnMailer.prop("disabled", true);
+    btnMailer.find(".spinner-border").removeClass("d-none");
+
     $.ajax({
       url: "../../views/admin/actions/authorizeCustomerBuy.php",
       type: "POST",
@@ -11,6 +15,7 @@ $(document).ready(function () {
         idCompra: idForm,
       },
       success: function (response) {
+        btnMailer.find(".spinner-border").addClass("d-none");
         response = JSON.parse(response);
         if (response.title === "EXITO") {
           Swal.fire({
@@ -23,6 +28,11 @@ $(document).ready(function () {
             location.reload();
           });
         } else {
+          // Ocultar el spinner en caso de error
+          btnMailer.find(".spinner-border").addClass("d-none");
+          // Habilitar el botón nuevamente en caso de error
+          btnMailer.prop("disabled", false);
+
           Swal.fire({
             icon: "error",
             title: "Error",
@@ -35,6 +45,11 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
+        // Ocultar el spinner en caso de error
+        btnMailer.find(".spinner-border").addClass("d-none");
+        // Habilitar el botón nuevamente en caso de error
+        btnMailer.prop("disabled", false);
+
         // Maneja los errores de la solicitud AJAX
         console.error(xhr.responseText);
         // Muestra una alerta de error
