@@ -96,7 +96,10 @@ if ($existeCompraCarrito) {
                     <h3 class="title">$' . $precioFinal . '</h3>
                 </div>
                 <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-outline-primary btn-text" type="submit">Comprar</button>
+                    <button class="btn btn-outline-primary btn-text" type="submit">
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        Comprar
+                    </button>
                 </div>
             </form>
         </div>';

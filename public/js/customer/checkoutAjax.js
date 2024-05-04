@@ -27,6 +27,11 @@ $(document).ready(function () {
       });
     });
 
+    const botonCompra = formulario.find('button[type="submit"]');
+    botonCompra.prop("disabled", true);
+    console.log(formulario.find(".spinner-border"));
+    formulario.find(".spinner-border").removeClass("d-none");
+
     $.ajax({
       url: "../../views/customer/actions/checkout.php",
       method: "POST",
@@ -36,12 +41,14 @@ $(document).ready(function () {
         productos,
       },
       success: function (session) {
+        formulario.find(".spinner-border").hide();
         stripe.redirectToCheckout({
           sessionId: session.id,
         });
         // Manejar la respuesta si es necesaria
       },
       error: function (xhr, status, error) {
+        formulario.find(".spinner-border").hide();
         // Manejar errores si es necesario
         console.log(xhr);
         console.log("error:" + error);
