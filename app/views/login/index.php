@@ -20,7 +20,7 @@
             <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
                 <div class="col col-sm-6 col-lg-7 col-xl-6">
                     <!-- logo -->
-                    <a href="../home" class="d-flex justify-content-center mb-4">
+                    <a href="../home" class="d-flex justify-content-center mb-4 " data-bs-tooltip="tooltip" data-bs-placement="bottom" data-bs-title="Volver al Sitio">
                         <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="logo" width="150">
                     </a>
                     <div class="text-center mb-5">
@@ -43,10 +43,13 @@
                         <div class="mb-3">
                             <input name=send id=send type=submit value="Login" class="btn btn-primary btn-lg w-100">
                         </div>
-
                         <div class="text-center">
                             <small>¿No tienes una cuenta?</small>
                             <a href="../register" class="btn fw-bold">Registrate</a>
+                        </div>
+                        <div class="text-center">
+                            <small>Visita nuestro sitio</small>
+                            <a href="../home" class="btn fw-bold" style="color: blue;">Doggy Friends</a>
                         </div>
                     </form>
                 </div>
