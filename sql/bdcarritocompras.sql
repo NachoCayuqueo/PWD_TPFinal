@@ -377,18 +377,17 @@ CREATE TABLE `usuario` (
 --
 -- Volcado de datos para la tabla `usuario`
 --
--- controlar esto
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usactivo`) VALUES
 (1, 'Nacho', '81bf209201c06b67bfbc4cb9faa3bb56', 'adminNacho@gmail.com',true),
 (2, 'Pablo', 'b38f66d321c9b38bc3c168decae0d09e', 'adminPablo@gmail.com',true),
-(3, 'Elias', 'b7990ca3fb4f3052715c23ef64afc726', 'deposito@gmail.com',false),
+(3, 'Elias', 'b7990ca3fb4f3052715c23ef64afc726', 'deposito@gmail.com',true),
 (4, 'Miriam', '217903b25bc43eed22d78616623fe994', 'miriam@gmail.com',true),
 (5, 'Gisela', 'f559ffd0188ddb9ecbebb5c23ca35ccc', 'gisela@gmail.com',true),
-(6, 'Marcos', 'a1058a18f8b346d33d71f635f8108af9', 'marcos@gmail.com',true),
+(6, 'Marcos', 'a1058a18f8b346d33d71f635f8108af9', 'marcos@gmail.com',false),
 (7, 'Luis', 'a5288be6ab6b21d8447dcee5d9dfb62a', 'luis@gmail.com',true),
-(8, 'Cesar', '2d6bc6df8011336535d75156d32d05ef', 'cesar@gmail.com',true),
+(8, 'Cesar', '2d6bc6df8011336535d75156d32d05ef', 'cesar@gmail.com',false),
 (9, 'Paula', '0c7931bc1693c95acb5268cd0ce0d304', 'paula@gmail.com',true),
-(10, 'Marcela', '04526085da70159df77941897a3575c5', 'marcela@gmail.com',true);
+(10, 'Marcela', '04526085da70159df77941897a3575c5', 'marcela@gmail.com',false);
 
 
 -- --------------------------------------------------------
@@ -406,7 +405,6 @@ CREATE TABLE `usuariorol` (
 --
 -- Volcado de datos para la tabla `usuariorol`
 --
--- controlar esto
 INSERT INTO `usuariorol` (`idusuario`, `idrol`,`rolactivo`) VALUES
 (1, 1,1),
 (2, 1,1),
