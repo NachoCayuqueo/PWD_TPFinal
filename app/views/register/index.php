@@ -15,7 +15,7 @@
             <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
                 <div class="col col-sm-6 col-lg-7 col-xl-6">
                     <!-- logo -->
-                    <a href="#" class="d-flex justify-content-center mb-4">
+                    <a href="../home" class="d-flex justify-content-center mb-4 " data-bs-tooltip="tooltip" data-bs-placement="bottom" data-bs-title="Volver al Sitio">
                         <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="logo" width="150">
                     </a>
 

@@ -41,7 +41,7 @@
                             <div class="invalid-feedback">La contraseña debe tener como minimo 8 caracteres</div>
                         </div>
                         <div class="mb-3">
-                            <input name=send id=send type=submit value="Login" class="btn btn-primary btn-lg w-100">
+                            <input name=send id=send type=submit value="Iniciar Sesion" class="btn btn-primary btn-lg w-100">
                         </div>
                         <div class="text-center">
                             <small>¿No tienes una cuenta?</small>
