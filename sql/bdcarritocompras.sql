@@ -182,9 +182,9 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (10, 'Listar Productos', 'deposit/dashboard.php', 2,NULL), -- usuario Deposito
 (11, 'Crear Producto', 'deposit/newProduct.php', 2,NULL), -- usuario Deposito
 (12, 'Productos', 'menu selector del usuario cliente', 3, NULL), -- usuario Cliente selector
-(13, 'Accesorios', 'customer/similarProducts.php?type=accessories', 11,NULL), -- usuario Cliente
-(14, 'Juguetes', 'customer/similarProducts.php?type=toys',11,NULL), -- usuario Cliente
-(15, 'Alimentos', 'customer/similarProducts.php?type=food',11,NULL), -- usuario Cliente
+(13, 'Accesorios', 'customer/similarProducts.php?type=accessories', 12,NULL), -- usuario Cliente
+(14, 'Juguetes', 'customer/similarProducts.php?type=toys',12,NULL), -- usuario Cliente
+(15, 'Alimentos', 'customer/similarProducts.php?type=food',12,NULL), -- usuario Cliente
 (16, 'Productos Favoritos', 'customer/similarProducts.php?type=favorite', 3,NULL), -- usuario Cliente
 (17, 'Productos Nuevos', 'customer/similarProducts.php?type=new', 3,NULL), -- usuario Cliente
 (18, 'Mis Compras', 'customer/shoppingSummary.php', 3,NULL), -- usuario Cliente
