@@ -67,12 +67,11 @@ $(document).ready(function () {
 });
 
 function modificarDatosPersonales() {
-  // const nombre = $("#name").val();
   let nombre = $("#name").val().trim(); // Elimina espacios en blanco al principio y al final
   nombre = nombre.replace(/\s+/g, " "); // Reemplaza múltiples espacios consecutivos por un solo espacio
   const email = $("#email").val();
   const idUsuario = $("#name").data("id");
-  //console.log({ idUsuario, nombre, email });
+
   //AJAX
   $.ajax({
     url: "../../views/admin/actions/editUserDataAction.php",
@@ -84,7 +83,6 @@ function modificarDatosPersonales() {
     },
     success: function (response) {
       response = JSON.parse(response);
-
       if (response.title === "EXITO") {
         Swal.fire({
           icon: "success",
@@ -94,10 +92,19 @@ function modificarDatosPersonales() {
           location.reload();
         });
       }
-      if (response.title === "SIN CAMBIOS") {
+      if (response.title === "INFO") {
         Swal.fire({
-          icon: "success",
+          icon: "info",
           title: "Éxito",
+          text: response.message,
+        }).then(() => {
+          location.reload();
+        });
+      }
+      if (response.title === "ERROR") {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
           text: response.message,
         }).then(() => {
           location.reload();

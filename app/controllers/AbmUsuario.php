@@ -359,4 +359,51 @@ class AbmUsuario
         }
         return false;
     }
+
+    public function cambiarEmail($idUsuario, $nombre, $email)
+    {
+        $existenCambios = false;
+        $respuesta = [];
+
+        $usuario = $this->buscar(['idUsuario' => $idUsuario]);
+
+        if ($nombre !== $usuario[0]->getUsNombre())
+            $existenCambios = true;
+
+        if ($email !== $usuario[0]->getUsMail()) {
+            if ($this->existeMail($email)) {
+                return array('title' => 'ERROR', 'message' => 'El Email que intenta ingresar ya existe. Por favor, ingrese otro');
+            }
+            $existenCambios = true;
+        }
+
+        if ($existenCambios) {
+            $modificarParams = [
+                "idUsuario" => $idUsuario,
+                "usNombre" => $nombre,
+                "usPass" => $usuario[0]->getUsPass(),
+                "usMail" => $email,
+                "usDeshabilitado" => $usuario[0]->getUsDeshabilitado(),
+                "usActivo" => $usuario[0]->getUsActivo() ? '1' : '0'
+            ];
+            $modificacionExitosa = $this->modificacion($modificarParams);
+            if ($modificacionExitosa) {
+                $respuesta = array('title' => 'EXITO', 'message' => 'Los datos fueron modificados exitosamente');
+            } else {
+                $respuesta = array('title' => 'ERROR', 'message' => 'No se realizaron los cambios. Contacte con un administrador');
+            }
+        } else {
+            $respuesta = array('title' => 'INFO', 'message' => 'Se mantuvieron los cambios actuales');
+        }
+        return $respuesta;
+    }
+
+    private function existeMail($email)
+    {
+        $usuario = $this->buscar(['usMail' => $email]);
+        if (!empty($usuario)) {
+            return true;
+        }
+        return false;
+    }
 }
