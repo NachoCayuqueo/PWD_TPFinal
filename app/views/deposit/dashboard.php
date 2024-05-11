@@ -62,6 +62,7 @@ if ($esUsuarioValido) {
         ?>
     </div>
     <script src="<?php echo $PUBLIC_JS ?>/deposit/deleteProduct.js"></script>
+    <?php include_once "../structures/footer.php"; ?>
 </body>
 
 </html>
