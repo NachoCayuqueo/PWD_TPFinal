@@ -399,7 +399,7 @@ INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usactivo`) 
 CREATE TABLE `usuariorol` (
   `idusuario` bigint(20) NOT NULL,
   `idrol` bigint(20) NOT NULL,
-  `rolactivo` boolean NOT NULL DEFAULT false -- Nuevo campo para indicar el rol activo
+  `rolactivo` boolean NOT NULL DEFAULT false 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
