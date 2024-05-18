@@ -204,15 +204,20 @@ class Menu extends DataBase
         $resp = false;
         $idPadre = $this->getObjetoPadre()->getIdMenu();
         $query = "UPDATE menu SET 
-            menombre='" . $this->getMeNombre() . "', 
-            medescripcion='" . $this->getMeDescripcion() . "', 
-            idpadre='" . $idPadre . "'";
+        menombre='" . $this->getMeNombre() . "', 
+        medescripcion='" . $this->getMeDescripcion() . "', ";
+
+        if ($idPadre !== null) {
+            $query .= "idpadre='" . $idPadre . "', ";
+        } else {
+            $query .= "idpadre=NULL, ";
+        }
 
         $meDeshabilitado = $this->getMeDeshabilitado();
         if ($meDeshabilitado !== null) {
-            $query .= ", medeshabilitado='" . $meDeshabilitado . "'";
+            $query .= "medeshabilitado='" . $meDeshabilitado . "'";
         } else {
-            $query .= ", medeshabilitado=NULL";
+            $query .= "medeshabilitado=NULL";
         }
 
         $query .= " WHERE idmenu=" . $this->getIdMenu();
