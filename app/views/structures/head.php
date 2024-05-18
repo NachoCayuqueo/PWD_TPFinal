@@ -15,6 +15,7 @@ include_once "../../../config/configuration.php";
 <!-- SWEETALERT2 -->
 <link rel="stylesheet" href="<?php echo $PRINCIPAL ?>/public/lib/sweetalert2/sweetalert2.min.css">
 <script src="<?php echo $PRINCIPAL ?>/public/lib/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="<?php echo $PUBLIC_JS ?>/alerts.js"></script>
 
 <!-- SCRIPT -->
 <script type="text/javascript" src='<?php echo $PRINCIPAL ?>/public/lib/bootstrap/bootstrap.bundle.min.js'></script>
