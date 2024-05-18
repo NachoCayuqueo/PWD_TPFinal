@@ -136,6 +136,7 @@ class Session
 
     private function recuperarMenuActual()
     {
+        $idMenuPadre = -1;
         // Obtener la URI de la solicitud actual
         $requestUri = $_SERVER['REQUEST_URI'];
 
@@ -152,7 +153,8 @@ class Session
         $objetoMenu = new AbmMenu();
         $menu = $objetoMenu->buscar(['meDescripcion' => $descripcionMenu]);
 
-        $idMenuPadre = $menu[0]->getObjetoPadre()->getIdMenu();
+        if (!empty($menu))
+            $idMenuPadre = $menu[0]->getObjetoPadre()->getIdMenu();
 
         $condicion = false;
         $objetoMenuRol = new AbmMenuRol();
