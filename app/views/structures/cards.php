@@ -50,3 +50,17 @@ function productsCard($product, $hrefComprar)
     //* script para mostrar u ocultar la información adicional
     echo ' <script src="' . $GLOBALS['PUBLIC_JS'] . '/moreProductInfo.js"></script>';
 }
+
+function buttonCard($href, $text)
+{
+    $url = $GLOBALS['VISTAS'] . "/" . $href;
+    echo '
+    <div class="card p-2 shadow border border-0">
+        <a href="' .  $url . '" class="btn">
+            <div class="card-body">
+                <h5 class="card-title">' . $text . '</h5>
+            </div>
+        </a>
+    </div>
+    ';
+}
