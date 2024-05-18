@@ -1,8 +1,6 @@
 $(document).ready(function () {
   $("#form-modificar-producto").submit(function (event) {
     event.preventDefault();
-    //TODO: funciona pero no hace la validacion de los campos ya que falta esa parte
-    //! se debe realizar la validacionFormulario
     if (validarFormulario(event)) {
       const archivo = $("#miArchivo")[0].files[0];
 
@@ -17,9 +15,6 @@ $(document).ready(function () {
   });
   $("#form-nuevo-producto").submit(function (event) {
     event.preventDefault();
-    //TODO: funciona pero no hace la validacion de los campos ya que falta esa parte
-    //! se debe realizar la validacionFormulario
-    //if (validarFormulario()) {
     const archivo = $("#miArchivo")[0].files[0];
     guardarImagenNuevo(archivo);
   });
@@ -30,10 +25,7 @@ function guardarImagenModif(archivo) {
   let formData = new FormData();
 
   const tipo = $("input[name='tipo']:checked").val();
-  // Agregar el archivo seleccionado al objeto FormData
-  // const archivo = $("#miArchivo")[0].files[0];
   formData.append("miArchivo", archivo);
-  // Agregar el tipo al formData
   formData.append("tipo", tipo);
 
   // Solicitud AJAX
@@ -45,24 +37,21 @@ function guardarImagenModif(archivo) {
     contentType: false,
     success: function (response) {
       response = JSON.parse(response);
-      console.log(response); // Manejar la respuesta del servidor
       if (response.title === "EXITO") {
         const nombreImg = archivo.name;
         enviarFormularioDeModificacion(nombreImg);
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.message,
-        });
+        mostrarAlerta(response);
       }
     },
     error: function (xhr, status, error) {
-      Swal.fire({
-        icon: "error",
+      console.error("error", error);
+      const datosAlerta = {
         title: "Error",
-        text: "Consulte con un administrador",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }
@@ -71,8 +60,6 @@ function guardarImagenNuevo(archivo) {
   let formData = new FormData();
 
   const tipo = $("input[name='tipo']:checked").val();
-  // Agregar el archivo seleccionado al objeto FormData
-  // const archivo = $("#miArchivo")[0].files[0];
   formData.append("miArchivo", archivo);
   // Agregar el tipo al formData
   formData.append("tipo", tipo);
@@ -86,24 +73,21 @@ function guardarImagenNuevo(archivo) {
     contentType: false,
     success: function (response) {
       response = JSON.parse(response);
-      console.log(response); // Manejar la respuesta del servidor
       if (response.title === "EXITO") {
         const nombreImg = archivo.name;
         enviarFormularioDeCreacion(nombreImg);
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.message,
-        });
+        mostrarAlerta(response);
       }
     },
     error: function (xhr, status, error) {
-      Swal.fire({
-        icon: "error",
+      console.error("error", error);
+      const datosAlerta = {
         title: "Error",
-        text: "Consulte con un administrador",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }
@@ -139,32 +123,21 @@ function enviarFormularioDeModificacion(nombreImg) {
     success: function (response) {
       response = JSON.parse(response);
       if (response.title === "EXITO") {
-        Swal.fire({
-          icon: "success",
-          title: "Éxito",
-          text: response.message,
-        }).then((result) => {
-          // Redirecciona a la página deseada
-          window.location.href = "../../views/deposit/dashboard.php";
-        });
+        const href = "../../views/deposit/index.php";
+        mostrarAlerta(response, null, href);
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.message,
-        });
+        mostrarAlerta(response);
       }
     },
     error: function (xhr, status, error) {
       // Maneja los errores de la solicitud AJAX
-      console.error(error);
-      console.error(xhr.responseText);
-      // Muestra una alerta de error
-      Swal.fire({
-        icon: "error",
+      console.error("error", error);
+      const datosAlerta = {
         title: "Error",
-        text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }
@@ -198,32 +171,21 @@ function enviarFormularioDeCreacion(nombreImg) {
     success: function (response) {
       response = JSON.parse(response);
       if (response.title === "EXITO") {
-        Swal.fire({
-          icon: "success",
-          title: "Éxito",
-          text: response.message,
-        }).then((result) => {
-          // Redirecciona a la página deseada
-          window.location.href = "../../views/deposit/dashboard.php";
-        });
+        const href = "../../views/deposit/index.php";
+        mostrarAlerta(response, null, href);
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.message,
-        });
+        mostrarAlerta(response);
       }
     },
     error: function (xhr, status, error) {
       // Maneja los errores de la solicitud AJAX
-      console.error(error);
-      console.error(xhr.responseText);
-      // Muestra una alerta de error
-      Swal.fire({
-        icon: "error",
+      console.error("error", error);
+      const datosAlerta = {
         title: "Error",
-        text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }
