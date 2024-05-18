@@ -36,15 +36,23 @@ function validarFormulario(event) {
     $("#error-precio").text("").hide();
   }
 
-  if (stock <= 0) {
-    $("#error-stock").text("El stock debe ser mayor que cero.").show().css({
-      color: "#dc3545",
-      "font-size": "0.875rem",
-    });
-    isValid = false;
+  if (stock !== "") {
+    if (stock < 0) {
+      $("#error-stock")
+        .text("El stock debe ser mayor o igual a cero.")
+        .show()
+        .css({
+          color: "#dc3545",
+          "font-size": "0.875rem",
+        });
+      isValid = false;
+    } else {
+      $("#error-stock").text("").hide();
+    }
   } else {
     $("#error-stock").text("").hide();
   }
+
   return isValid;
 }
 function validarFormularioNuevo(event) {

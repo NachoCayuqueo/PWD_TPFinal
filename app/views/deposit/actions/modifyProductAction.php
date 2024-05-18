@@ -9,7 +9,14 @@ $param = ["idProducto" => $idProducto];
 $producto = $objProducto->buscar($param);
 
 $stockActual = $producto[0]->getProCantStock();
-$stockModificado = $stockActual + $datos['stock'];
+
+$stockIngresado = $datos['stock'];
+if (!$stockIngresado) {
+    $stockModificado = $stockActual + $datos['stock'];
+} else {
+    $stockModificado = $stockActual + 0;
+}
+
 
 
 if (!empty($producto)) {
