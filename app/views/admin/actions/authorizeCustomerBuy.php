@@ -14,10 +14,14 @@ $estadoAceptado = 3;
 $cambioExitoso = $objetoCompraEstado->cambiarEstadoCompra($idCompra, $estadoAceptado);
 $estadoEnviado = 4;
 $cambioExitoso = $objetoCompraEstado->cambiarEstadoCompra($idCompra, $estadoEnviado);
-if ($cambioExitoso)
-
-    $response = phpMailer($usuarioNombre, $usuarioMail, 'compraAprobada');
-else
+if ($cambioExitoso) {
+    $param = [
+        "nombreDestinatario" => $usuarioNombre,
+        "emailDestinatario" => $usuarioMail,
+        "asunto" => "compraAprobada",
+    ];
+    $response = phpMailer($param);
+} else
     $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar autorizar la compra');
 //Convertir el array a formato JSON
 echo json_encode($response);
