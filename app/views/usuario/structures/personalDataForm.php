@@ -33,7 +33,10 @@ if ($session->validar()) {
                 </div>
                 <div class="row">
                     <div class="col d-flex justify-content-center">
-                        <button id="btn-send" class="btn btn-text btn-primary me-md-2" type="submit">Guardar Cambios</button>
+                        <button id="btn-send" class="btn btn-text btn-primary me-md-2" type="submit">
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            Guardar Cambios
+                        </button>
                     </div>
                 </div>
             </form>

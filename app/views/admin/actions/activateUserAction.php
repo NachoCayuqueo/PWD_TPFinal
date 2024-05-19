@@ -16,7 +16,12 @@ $usuarioNombre = $usuario->getUsNombre();
 
 $cambioExitoso = $objetoUsuario->activarUsuario($idUsuario);
 if ($cambioExitoso) {
-    $response = phpMailer($usuarioNombre, $usuarioMail, 'registro');
+    $param = [
+        "nombreDestinatario" => $usuarioNombre,
+        "emailDestinatario" => $usuarioMail,
+        "asunto" => "registro",
+    ];
+    $response = phpMailer($param);
 } else
     $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar activar al usuario');
 // Convertir el array a formato JSON

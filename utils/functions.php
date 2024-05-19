@@ -83,12 +83,27 @@ function getHomePage($rol)
             break;
         }
     }
+    echo $homepage;
     return $homepage;
 }
 
-
-function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
+/**
+ * Envía un correo electrónico utilizando PHPMailer.
+ * 
+ * @param array $param Parámetros para el envío del correo.
+ *  - string $nombreDestinatario: Nombre del destinatario.
+ *  - string $emailDestinatario: Correo electrónico del destinatario.
+ *  - string $asunto: Tipo de mensaje a enviar (registro, compraAprobada, cambioEmail).
+ *  - string $emailAntiguo (opcional): Correo electrónico antiguo en caso de cambio de email.
+ * 
+ * @return array Resultado del envío del correo.
+ *  - string $title: Título del resultado (EXITO o ERROR).
+ *  - string $message: Mensaje descriptivo del resultado.
+ */
+function phpMailer($param)
 {
+    $nombreDestinatario = $param['nombreDestinatario'];
+    $emailDestinatario = $param['emailDestinatario'];
 
     $mail = new PHPMailer(true);
     $asunto = "";
@@ -104,6 +119,8 @@ function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
         $mail->SMTPSecure = 'tls'; // TLS
         $mail->Port = 587; // Puerto SMTP
 
+        list($asunto, $mensaje, $emailDestinatario) = getEmailContent($param);
+
         // Configuración del remitente y destinatario
         $mail->setFrom($_ENV['ADM_EMAIL'], $_ENV['ADM_NOMBRE']);
         $mail->addAddress($emailDestinatario, $nombreDestinatario);
@@ -111,16 +128,6 @@ function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
         // Contenido del correo
         $mail->isHTML(true);
 
-        switch ($tipo) {
-            case 'registro':
-                $asunto = 'Registro de usuario aprobado';
-                $mensaje = 'Hola ' . $nombreDestinatario . ', tu registro en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobado.';
-                break;
-            case 'compraAprobada':
-                $asunto = 'CompraAprobada';
-                $mensaje = 'Hola ' . $nombreDestinatario . ', tu compra en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobada.';
-                break;
-        }
         $mail->Subject = $asunto;
         $mail->Body = $mensaje;
 
@@ -132,6 +139,54 @@ function phpMailer($nombreDestinatario, $emailDestinatario, $tipo)
     }
     return $retorno;
 }
+
+function getEmailContent($param)
+{
+    $nombreDestinatario = $param['nombreDestinatario'];
+    $emailDestinatario = $param['emailDestinatario'];
+    $tipo = $param['asunto'];
+
+    switch ($tipo) {
+        case 'registro':
+            $asunto = 'Registro de usuario aprobado';
+            $mensaje = 'Hola ' . $nombreDestinatario . ', tu registro en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobado.';
+            break;
+        case 'compraAprobada':
+            $asunto = 'Compra Aprobada';
+            $mensaje = 'Hola ' . $nombreDestinatario . ', tu compra en la página de ' . $_ENV['NOMBRE_SITIO'] . ' ha sido aprobada.';
+            break;
+        case 'cambioDeEmail':
+            $asunto = 'Cambio de email';
+            $mensaje = 'Hola ' . $nombreDestinatario . ', tu correo electrónico ha sido modificado. Tu nuevo correo electrónico es: ' . $param['emailDestinatario'] . '.';
+            $emailDestinatario = $param['emailAntiguo'];
+            break;
+        case 'altaUsuario':
+            $asunto = 'Bienvenido a nuestro sitio';
+            $mensaje = 'Hola ' . $nombreDestinatario . ', ¡Bienvenido a ' . $_ENV['NOMBRE_SITIO'] . '!' . "\n" .
+                'Tu cuenta ha sido creada exitosamente. A continuación, encontrarás tus datos de acceso:' . "\n" .
+                'Correo electrónico: ' . $emailDestinatario . "\n" .
+                'Contraseña: ' . $param['passwordDestinatario'] . "\n" .
+                'Por favor, guarda esta información de manera segura. Puedes cambiar tu contraseña en cualquier momento, iniciando sesión en el sitio y modificándola en la sección de configuraciones.' . "\n" .
+                '¡Esperamos que disfrutes tu experiencia en nuestro sitio!';
+            break;
+        case 'bajaUsuario':
+            $asunto = 'Baja de Cuenta';
+            $mensaje = 'Hola ' . $nombreDestinatario . ', tu cuenta en ' . $_ENV['NOMBRE_SITIO'] . ' ha sido dada de baja.';
+            break;
+        case 'habilitarUsuario':
+            $asunto = 'Habilitacion de Cuenta';
+            $mensaje = 'Hola ' . $nombreDestinatario . ', tu cuenta en ' . $_ENV['NOMBRE_SITIO'] . ' ha sido habilitada.';
+            break;
+        case 'compraCancelada':
+            $asunto = 'Compra Cancelada';
+            $mensaje = 'Hola ' . $nombreDestinatario . ', tu compra en la página de ' . $_ENV['NOMBRE_SITIO'] . ' fue cancelada.';
+            break;
+        default:
+            throw new Exception('Tipo de mensaje no reconocido.');
+    }
+    return array($asunto, $mensaje, $emailDestinatario);
+}
+
 function dateFormat($originalDate)
 {
     $months = array(

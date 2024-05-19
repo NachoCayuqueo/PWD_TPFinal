@@ -3,12 +3,12 @@
     {
       "role": "admin",
       "avatar_img": "person-workspace.svg",
-      "homepage": "admin/dashboard.php"
+      "homepage": "admin/index.php"
     },
     {
       "role": "deposito",
       "avatar_img": "person-gear.svg",
-      "homepage": "deposit/dashboard.php"
+      "homepage": "deposit/index.php"
     },
     {
       "role": "cliente",

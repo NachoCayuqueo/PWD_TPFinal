@@ -16,33 +16,11 @@ $(document).ready(function () {
       },
       success: function (response) {
         btnMailer.find(".spinner-border").addClass("d-none");
-        response = JSON.parse(response);
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalAutorizar_" + idForm).modal("hide");
-            location.reload();
-          });
-        } else {
-          // Ocultar el spinner en caso de error
-          btnMailer.find(".spinner-border").addClass("d-none");
-          // Habilitar el botón nuevamente en caso de error
-          btnMailer.prop("disabled", false);
+        btnMailer.prop("disabled", false);
 
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalAutorizar_" + idForm).modal("hide");
-            location.reload();
-          });
-        }
+        response = JSON.parse(response);
+        const idModal = "modalAutorizar_" + idForm;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
         // Ocultar el spinner en caso de error
@@ -51,13 +29,13 @@ $(document).ready(function () {
         btnMailer.prop("disabled", false);
 
         // Maneja los errores de la solicitud AJAX
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        console.error("error: " + error);
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -67,6 +45,11 @@ $(document).ready(function () {
     const formulario = $(this);
     const idForm = obtenerId(formulario);
 
+    const btnMailer = $("#btnCancelarCompra_" + idForm);
+    // Mostrar el spinner al enviar el formulario
+    btnMailer.find(".spinner-border").removeClass("d-none");
+    btnMailer.prop("disabled", true);
+
     $.ajax({
       url: "../../views/admin/actions/cancelCustomerBuy.php",
       type: "POST",
@@ -74,38 +57,24 @@ $(document).ready(function () {
         idCompra: idForm,
       },
       success: function (response) {
+        btnMailer.find(".spinner-border").addClass("d-none");
+        btnMailer.prop("disabled", false);
+
         response = JSON.parse(response);
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalAutorizar_" + idForm).modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalAutorizar_" + idForm).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalAutorizar_" + idForm;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
+        btnMailer.find(".spinner-border").addClass("d-none");
+        btnMailer.prop("disabled", false);
         // Maneja los errores de la solicitud AJAX
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        console.error("error: " + error);
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });

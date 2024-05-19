@@ -9,9 +9,10 @@ $passwordActual = $data['passwordActual'];
 $passwordNueva = $data['passwordNueva'];
 
 $modificacionExitosa = $objetoUsuario->modificarPassword($data);
-if ($modificacionExitosa)
+if ($modificacionExitosa) {
     $response = array('title' => 'EXITO', 'message' => 'La contraseña se  ha cambiado correctamente');
-else
+    $objetoUsuario->cerrarSesion();
+} else
     $response = array('title' => 'ERROR', 'message' => 'Ocurrio  un error al intentar guardar la nueva contraseña');
 
 echo json_encode($response);

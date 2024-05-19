@@ -26,7 +26,7 @@ function modalEdit($modalId, $idUsuario, $nombre, $mail)
                                 </div>
                                 <div class="row mb-4">
                                     <div class="col">
-                                        <label for="usMail_' . $idUsuario . '" class="form-label">Mail</label>
+                                        <label for="usMail_' . $idUsuario . '" class="form-label">Correo Electronico</label>
                                         <input type="text" class="form-control" id="usMail_' . $idUsuario . '" name="usMail_' . $idUsuario . '" value="' . $mail . '" required>
                                         <div class="invalid-feedback">Ingresar mail valido</div>
                                     </div>
@@ -35,7 +35,10 @@ function modalEdit($modalId, $idUsuario, $nombre, $mail)
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            <button id="btnMailer_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                                <span class="spinner-border spinner-border-sm d-none"  role="status" aria-hidden="true"></span>
+                                Guardar Cambios
+                            </button>
                         </div>
                         </form>
                     </div>
@@ -59,8 +62,11 @@ function modalDelete($modalId, $idUsuario, $nombre)
                       ¿Esta seguro que desea  eliminar al usuario ' . $nombre . '?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-primary">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button id="btn_borrar_Mailer_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            Aceptar
+                        </button>
                     </div>
                 </form>
             </div>
@@ -295,8 +301,11 @@ function modalHabilitarUsuario($idUsuario, $nombreUsuario)
                   ¿Esta seguro que desea habilitar al usuario ' . $nombreUsuario . '?
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Activar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button id="btn_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        Activar
+                    </button>
                 </div>
             </form>
         </div>

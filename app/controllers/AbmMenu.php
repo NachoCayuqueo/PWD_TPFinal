@@ -156,6 +156,45 @@ class AbmMenu
         return $resp;
     }
 
+    public function obtenerNombresMenu($idMenu)
+    {
+        $arregloNombresMenu = [];
+        $arregloHijosMenu = $this->obtenerHijosMenu($idMenu);
+        // viewStructure($arregloHijosMenu);
+        $arregloNombresMenu = $this->obtenerNombres($arregloHijosMenu);
+
+        return $arregloNombresMenu;
+    }
+
+    private function obtenerNombres($array)
+    {
+        $nombres = [];
+
+        foreach ($array as $hijo) {
+            //* Se agrega el nombre del hijo
+            if (empty($hijo['subHijos'])) {
+                $nombres[] = [
+                    'nombre' => $hijo['nombreHijo'],
+                    'href' => $hijo['descripcionHijo']
+                ];
+            }
+
+            //* Se verifica si el hijo tiene subHijos
+            if (!empty($hijo['subHijos'])) {
+                foreach ($hijo['subHijos'] as $subHijo) {
+                    if (isset($subHijo['nombre'])) {
+                        $nombres[] = [
+                            'nombre' => $subHijo['nombre'],
+                            'href' => $subHijo['descripcion']
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $nombres;
+    }
+
     /**
      * Arma dinámicamente el menú de navegación basado en el rol del usuario o en un menú predeterminado.
      * Si el usuario está autenticado, se genera el menú según el rol proporcionado.
@@ -554,5 +593,25 @@ class AbmMenu
             'idMenu' => $idMenu,
         ];
         return $this->deshabilitar($paramBaja);
+    }
+
+    public function actualizarDatosMenu($idMenu, $nombre)
+    {
+        $menu = $this->buscar(['idMenu' => $idMenu]);
+        $idPadre = null;
+        if (!empty($menu)) {
+            $menu = $menu[0];
+            $id = $menu->getIdMenu();
+            $descripcion = $menu->getMeDescripcion();
+            $fechaDeshabilitado = $menu->getMeDeshabilitado();
+            $objetoPadre = $menu->getObjetoPadre();
+
+            if ($objetoPadre) {
+                $idPadre = $objetoPadre->getIdMenu();
+            }
+
+            return $this->modificarMenu($id, $nombre, $descripcion, $fechaDeshabilitado, $idPadre);
+        }
+        return false;
     }
 }

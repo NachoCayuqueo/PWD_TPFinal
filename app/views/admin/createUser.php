@@ -101,7 +101,10 @@ if ($esUsuarioValido) {
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
-                            <button id='btn-send' class="btn btn-text btn-primary me-md-2" type="submit">Enviar</button>
+                            <button id='btn-send' class="btn btn-text btn-primary me-md-2" type="submit">
+                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                Enviar
+                            </button>
                             <button id='btn-clean' class="btn btn-text btn-primary" type="reset">Borrar</button>
                         </div>
                     </form>

@@ -119,4 +119,33 @@ class AbmRol
         $arreglo = $objetoUsuarioRol->listar($whereClause);
         return $arreglo;
     }
+
+    public function actualizarRol($idRol, $nombreRol)
+    {
+        $modificacionExitosa = false;
+        $rol = $this->buscar(['idRol' => $idRol]);
+        //* verificar si el rol existe
+        if (!empty($rol)) {
+            $params = [
+                "idRol" => $idRol,
+                "roDescripcion" => $nombreRol,
+            ];
+            $modificacionExitosa = $this->modificacion($params);
+
+            if ($modificacionExitosa) {
+                //* actualizo el nombre en el menu
+                $objetoMenuRol = new AbmMenuRol();
+                $menuRol = $objetoMenuRol->buscar(['idRol' => $idRol]);
+                if (!empty($menuRol)) {
+                    $objetoMenu = new AbmMenu();
+                    $menuRol = $menuRol[0];
+                    $idMenu = $menuRol->getObjetoMenu()->getIdMenu();
+                    $modificacionExitosa = $objetoMenu->actualizarDatosMenu($idMenu, $nombreRol);
+                } else {
+                    $modificacionExitosa = false;
+                }
+            }
+        }
+        return $modificacionExitosa;
+    }
 }

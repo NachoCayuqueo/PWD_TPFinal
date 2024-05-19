@@ -7,13 +7,25 @@ $data = data_submitted();
 $idUsuario = $data['idUsuario'];
 $nombre = $data['nombre'];
 $email = $data['email'];
+$esConfiguracionPersonal = $data['esConfiguracionPersonal'];
 
 $param = ["idUsuario" => $idUsuario];
 $usuario   = $objetoUsuario->buscar($param);
 
 $response = array();
 
-$response = $objetoUsuario->cambiarEmail($idUsuario, $nombre, $email);
-
+$response = $objetoUsuario->cambiarDatosPersonales($idUsuario, $nombre, $email);
+if ($response['title'] === "EXITO" && $response['enviar_email']) {
+    $param = [
+        "nombreDestinatario" => $nombre,
+        "emailDestinatario" => $email,
+        "asunto" => "cambioDeEmail",
+        "emailAntiguo" => $usuario[0]->getUsMail(),
+    ];
+    $response = phpMailer($param);
+    if ($response['title'] === "EXITO" && $esConfiguracionPersonal) {
+        $objetoUsuario->cerrarSesion();
+    }
+}
 // Convertir el array a formato JSON
 echo json_encode($response);

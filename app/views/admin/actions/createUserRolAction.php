@@ -2,30 +2,35 @@
 include_once '../../../../config/configuration.php';
 
 $objetoUsuario = new AbmUsuario();
+$objetoUsuarioRol = new AbmUsuarioRol();
 $response = array();
 
 $data = data_submitted();
-
 $email = $data['usuarioMail'];
 $idRoles = $data['idRoles'];
+$esUsuarioActivo = $data['activarUsuario'];
+$password = $data['password'];
 
 $usuarioParam = ['usMail' => $email];
 $usuario = $objetoUsuario->buscar($usuarioParam);
 
 if (!empty($usuario)) {
     $idUsuario = $usuario[0]->getIdUsuario();
-    foreach ($idRoles as $idRol) {
+    $param = [
+        'idUsuario' => $idUsuario,
+        'idRolesAsignados' => $idRoles
+    ];
+    $response = $objetoUsuarioRol->crearUsuarioRol($param);
+
+    if ($response['title'] === 'EXITO' && $esUsuarioActivo) {
+        //enviar mail
         $param = [
-            'idUsuario' => $idUsuario,
-            'idRol' => $idRol
+            "nombreDestinatario" => $nombre,
+            "emailDestinatario" => $email,
+            "passwordDestinatario" => $password,
+            "asunto" => "altaUsuario",
         ];
-        $altaExitosa = $objetoUsuario->alta_rol($param);
-        if ($altaExitosa) {
-            $response = array('title' => 'EXITO', 'message' => 'Alta exitosa');
-        } else {
-            $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar  dar de alta al usuario-rol');
-            break; // Si no se puede agregar el rol
-        }
+        $response = phpMailer($param);
     }
 } else {
     $response = ["title" => "ERROR", "message" => "No se encontro al usuario con el correo electronico: " + $email];

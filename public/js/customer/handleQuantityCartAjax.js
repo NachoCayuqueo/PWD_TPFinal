@@ -60,32 +60,17 @@ $(document).ready(function () {
       },
       success: function (response) {
         response = JSON.parse(response);
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          });
-        }
+        mostrarAlerta(response);
       },
       error: function (xhr, status, error) {
         // Maneja los errores de la solicitud AJAX
-        console.error(error);
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        console.error("error", error);
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -102,32 +87,17 @@ function actualizarCantidadDisponible(idUsuario, idProducto, cantProducto) {
     },
     success: function (response) {
       response = JSON.parse(response);
-      if (response.title === "EXITO") {
-        Swal.fire({
-          icon: "success",
-          title: "Éxito",
-          text: response.message,
-        }).then(() => {
-          location.reload();
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.message,
-        });
-      }
+      mostrarAlerta(response);
     },
     error: function (xhr, status, error) {
       // Maneja los errores de la solicitud AJAX
-      console.error(error);
-      console.error(xhr.responseText);
-      // Muestra una alerta de error
-      Swal.fire({
-        icon: "error",
+      console.error("error", error);
+      const datosAlerta = {
         title: "Error",
-        text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }

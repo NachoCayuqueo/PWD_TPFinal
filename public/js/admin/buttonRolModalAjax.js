@@ -1,6 +1,4 @@
 $(document).ready(function () {
-  //! se debe realizar la validacion en el formulario de campos validos
-  //! revisar ajax -> createUserAjax
   $(".formulario-editar-rol").submit(function (event) {
     event.preventDefault();
     const formulario = $(this);
@@ -21,34 +19,20 @@ $(document).ready(function () {
       },
       success: function (response) {
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalEdit_" + id).modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          });
-        }
+        const idModal = "modalEdit_" + id;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
         // Maneja los errores de la solicitud AJAX
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        console.error({ xhr });
+        console.error("status: " + status);
+        console.error("error: " + error);
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -69,39 +53,17 @@ $(document).ready(function () {
       },
       success: function (response) {
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalDelete_" + id).modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalDelete_" + id).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalDelete_" + id;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
-        console.error(xhr.responseText);
-        console.error("status: " + status);
         console.error("error: " + error);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -120,39 +82,17 @@ $(document).ready(function () {
       },
       success: function (response) {
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalAddRole").modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalAddRole").modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalAddRole";
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
-        console.error(xhr.responseText);
-        console.error("status: " + status);
         console.error("error: " + error);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
