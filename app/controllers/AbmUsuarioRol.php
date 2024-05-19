@@ -141,7 +141,33 @@ class AbmUsuarioRol
         return $arreglo;
     }
 
-    //parametro $idUsuario
+
+    // $param: idUsuario, idRolesAsignados
+    public function crearUsuarioRol($param)
+    {
+        $idUsuario = $param['idUsuario'];
+        $idRolesAsignados = $param['idRolesAsignados'];
+        $rolActivoEstablecido = false;
+        foreach ($idRolesAsignados as $idRol) {
+            $param = [
+                'idUsuario' => $idUsuario,
+                'idRol' => $idRol,
+                'rolActivo' => $rolActivoEstablecido ? 0 : 1,
+            ];
+            $altaExitosa = $this->alta($param);
+            if ($altaExitosa && !$rolActivoEstablecido) {
+                $rolActivoEstablecido = true;
+            }
+            if ($altaExitosa) {
+                $response = array('title' => 'EXITO', 'message' => 'Alta exitosa');
+            } else {
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar  dar de alta al usuario-rol');
+                break;
+            }
+        }
+        return $response;
+    }
+
     //se desactiva el rol actual y se activa el nuevo rol
     public function cambiarDeRol($idUsuario, $idRol)
     {

@@ -320,6 +320,34 @@ class AbmUsuario
     }
 
     /**
+     * crear usuario
+     * @param array $param: nombre,email,password,activarUsuario
+     * @return bool
+     */
+    public function crearUsuario($param)
+    {
+        $response = [];
+        //* se controla que el usuario no exista
+        $usuario = $this->buscar(['usMail' => $param['email']]);
+        if (empty($usuario)) {
+            $params = [
+                'usNombre' => $param['nombre'],
+                'usPass' => $param['password'],
+                'usMail' => $param['email'],
+                'usActivo' => $param['activarUsuario'],
+            ];
+            $altaExitosa = $this->alta($params);
+            if ($altaExitosa) {
+                $response = array('title' => 'EXITO', 'message' => 'Alta exitosa');
+            } else
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar  dar de alta al usuario');
+        } else {
+            $response = ["title" => "ERROR", "message" => "El correo electronico ingresado ya existe en nuestro sistema. Por favor, ingrese un correo electronico distinto"];
+        }
+        return $response;
+    }
+
+    /**
      * da a acceso a un usuario con una cuenta registrada
      * @param string idusuario
      * @return bool
@@ -360,9 +388,10 @@ class AbmUsuario
         return false;
     }
 
-    public function cambiarEmail($idUsuario, $nombre, $email)
+    public function cambiarDatosPersonales($idUsuario, $nombre, $email)
     {
         $existenCambios = false;
+        $enviarEmail = false;
         $respuesta = [];
 
         $usuario = $this->buscar(['idUsuario' => $idUsuario]);
@@ -375,6 +404,7 @@ class AbmUsuario
                 return array('title' => 'ERROR', 'message' => 'El Email que intenta ingresar ya existe. Por favor, ingrese otro');
             }
             $existenCambios = true;
+            $enviarEmail = true;
         }
 
         if ($existenCambios) {
@@ -388,7 +418,7 @@ class AbmUsuario
             ];
             $modificacionExitosa = $this->modificacion($modificarParams);
             if ($modificacionExitosa) {
-                $respuesta = array('title' => 'EXITO', 'message' => 'Los datos fueron modificados exitosamente');
+                $respuesta = array('title' => 'EXITO', 'message' => 'Los datos fueron modificados exitosamente', 'enviar_email' => $enviarEmail);
             } else {
                 $respuesta = array('title' => 'ERROR', 'message' => 'No se realizaron los cambios. Contacte con un administrador');
             }
@@ -405,5 +435,11 @@ class AbmUsuario
             return true;
         }
         return false;
+    }
+
+    public function cerrarSesion()
+    {
+        $session = new Session();
+        $session->cerrar();
     }
 }

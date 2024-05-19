@@ -29,6 +29,11 @@ function enviarFormularioDeCreacion() {
 
   const activarUsuario = activarUsuarioLabel === "SI" ? "1" : "0";
 
+  const btnMailer = $("#btn-send");
+  // Mostrar el spinner al enviar el formulario
+  btnMailer.find(".spinner-border").removeClass("d-none");
+  btnMailer.prop("disabled", true);
+
   $.ajax({
     url: "../../views/admin/actions/createUserAction.php",
     type: "POST",
@@ -41,45 +46,13 @@ function enviarFormularioDeCreacion() {
     success: function (response) {
       response = JSON.parse(response);
       if (response.title === "EXITO") {
-        $.ajax({
-          url: "../../views/admin/actions/createUserRolAction.php",
-          type: "POST",
-          data: {
-            usuarioMail: email,
-            idRoles: idsCheckboxesSeleccionados,
-          },
-          success: function (response) {
-            response = JSON.parse(response);
-            if (response.title === "EXITO") {
-              Swal.fire({
-                icon: "success",
-                title: "Éxito",
-                text: "El usuario fue creado correctamente.",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  // Limpiar el formulario después de mostrar el modal de éxito
-                  $("#form-nuevo-usuario")[0].reset();
-                  // Eliminar la clase 'was-validated' para evitar que se activen las validaciones
-                  $("#form-nuevo-usuario").removeClass("was-validated");
-                }
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: response.message,
-              });
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Hubo un error al procesar la segunda solicitud. Por favor, inténtalo de nuevo.",
-            });
-          },
-        });
+        crearUsuarioRol(
+          idsCheckboxesSeleccionados,
+          email,
+          password,
+          activarUsuario,
+          btnMailer
+        );
       } else {
         Swal.fire({
           icon: "error",
@@ -89,13 +62,57 @@ function enviarFormularioDeCreacion() {
       }
     },
     error: function (xhr, status, error) {
-      // Maneja los errores de la solicitud AJAX
-      console.error(xhr.responseText);
-      Swal.fire({
-        icon: "error",
+      btnMailer.find(".spinner-border").addClass("d-none");
+      btnMailer.prop("disabled", false);
+      console.error("error", error);
+      const datosAlerta = {
         title: "Error",
-        text: "Hubo un error al procesar la primer solicitud. Por favor, inténtalo de nuevo.",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
+    },
+  });
+}
+
+//TODO: creo que lo mejor es crear una funcion generica para mailer asi
+//TODO: se desligan las demas de enviar el email
+function crearUsuarioRol(
+  idRoles,
+  usuarioMail,
+  password,
+  activarUsuario,
+  btnMailer
+) {
+  $.ajax({
+    url: "../../views/admin/actions/createUserRolAction.php",
+    type: "POST",
+    data: {
+      idRoles,
+      usuarioMail,
+      password,
+      activarUsuario,
+    },
+    success: function (response) {
+      btnMailer.find(".spinner-border").addClass("d-none");
+      btnMailer.prop("disabled", false);
+
+      response = JSON.parse(response);
+      if (response.title === "EXITO") {
+        const href = "../../../app/views/home";
+        mostrarAlerta(response, null, href);
+      } else {
+        mostrarAlerta(response);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("error", error);
+      const datosAlerta = {
+        title: "Error",
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }
