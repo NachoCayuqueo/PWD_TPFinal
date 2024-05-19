@@ -14,6 +14,11 @@ $(document).ready(function () {
     const nombre = $("#usNombre_" + idForm).val();
     const email = $("#usMail_" + idForm).val();
 
+    const btnMailer = $("#btnMailer_" + idUsuario);
+    // Mostrar el spinner al enviar el formulario
+    btnMailer.find(".spinner-border").removeClass("d-none");
+    btnMailer.prop("disabled", true);
+
     $.ajax({
       url: "../../views/admin/actions/editUserDataAction.php",
       type: "POST",
@@ -21,42 +26,26 @@ $(document).ready(function () {
         idUsuario,
         nombre,
         email,
+        esConfiguracionPersonal: false,
       },
       success: function (response) {
+        btnMailer.find(".spinner-border").addClass("d-none");
+        btnMailer.prop("disabled", false);
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: "Los datos fueron modificados correctamente.",
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#exampleModal_" + id).modal("hide");
-            location.reload();
-          });
-        }
-        if (response.title === "SIN CAMBIOS") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: "No se realizaron cambios",
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#exampleModal_" + id).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "exampleModal_" + idForm;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
-        // Maneja los errores de la solicitud AJAX
+        btnMailer.find(".spinner-border").addClass("d-none");
+        btnMailer.prop("disabled", false);
         console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        console.error("error", error);
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   }
@@ -64,12 +53,12 @@ $(document).ready(function () {
   $(".formulario-borrar").submit(function (event) {
     event.preventDefault();
     const formulario = $(this);
+    const id = obtenerId(formulario);
 
-    const idCompleto = formulario.attr("id"); // Recuperar el id completo del formulario actual
-    const partesId = idCompleto.split("_"); // Dividir el id completo para obtener solo el idUsuario
-    const id = partesId[partesId.length - 1]; // Obtener el último elemento
-
-    const nombre = formulario.data("name");
+    const btnMailer = $("#btn_borrar_Mailer_" + id);
+    // Mostrar el spinner al enviar el formulario
+    btnMailer.find(".spinner-border").removeClass("d-none");
+    btnMailer.prop("disabled", true);
 
     $.ajax({
       url: "../../views/admin/actions/deleteUserAction.php",
@@ -78,30 +67,24 @@ $(document).ready(function () {
         idUsuario: id,
       },
       success: function (response) {
-        response = JSON.parse(response);
+        btnMailer.find(".spinner-border").removeClass("d-none");
+        btnMailer.prop("disabled", false);
 
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: "El usuario " + nombre + " ha sido eliminado correctamente.",
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#exampleModal_" + id).modal("hide");
-            location.reload();
-          });
-        }
+        response = JSON.parse(response);
+        const idModal = "exampleModal_" + id;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
-        console.error(xhr.responseText);
-        console.error("status: " + status);
+        btnMailer.find(".spinner-border").removeClass("d-none");
+        btnMailer.prop("disabled", false);
+
         console.error("error: " + error);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -134,15 +117,6 @@ $(document).ready(function () {
       switches
     );
 
-    // console.log({
-    //   idMenu,
-    //   nombreItem,
-    //   idRolSeleccionado,
-    //   switchDisabled,
-    //   subItems,
-    // });
-
-    // AJAX
     $.ajax({
       url: "../../views/admin/actions/editMenuAction.php",
       type: "POST",
@@ -156,37 +130,18 @@ $(document).ready(function () {
       success: function (response) {
         response = JSON.parse(response);
 
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalEdit_" + idMenu).modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalEdit_" + idMenu).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalEdit_" + idMenu;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
         // Maneja los errores de la solicitud AJAX
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        console.error("error: " + error);
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   }
@@ -213,14 +168,6 @@ $(document).ready(function () {
       switches
     );
 
-    // console.log({
-    //   idMenu,
-    //   nombreItem,
-    //   idRolSeleccionado,
-    //   switchDisabled,
-    //   subItems,
-    // });
-
     $.ajax({
       url: "../../views/admin/actions/deleteMenuAction.php",
       type: "POST",
@@ -233,38 +180,18 @@ $(document).ready(function () {
       },
       success: function (response) {
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalEdit_" + idMenu).modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalEdit_" + idMenu).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalEdit_" + idMenu;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
         // Maneja los errores de la solicitud AJAX
-        console.error(xhr.responseText);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        console.error("error: " + error);
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -283,39 +210,17 @@ $(document).ready(function () {
       },
       success: function (response) {
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalActivarMenu_" + idMenu).modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalActivarMenu_" + idMenu).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalActivarMenu_" + idMenu;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
-        console.error(xhr.responseText);
-        console.error("status: " + status);
         console.error("error: " + error);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -328,7 +233,6 @@ $(document).ready(function () {
     const btnMailer = $("#btnMailer_modalActivarUsuario_" + idUsuario);
     // Mostrar el spinner al enviar el formulario
     btnMailer.find(".spinner-border").removeClass("d-none");
-
     // Deshabilitar el botón mientras se procesa la solicitud
     btnMailer.prop("disabled", true);
     $.ajax({
@@ -339,50 +243,24 @@ $(document).ready(function () {
       },
       success: function (response) {
         btnMailer.find(".spinner-border").addClass("d-none");
+        btnMailer.prop("disabled", false);
+
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalActivarUsuario_" + idUsuario).modal("hide");
-            location.reload();
-          });
-        } else {
-          // Ocultar el spinner en caso de error
-          btnMailer.find(".spinner-border").addClass("d-none");
-          // Habilitar el botón nuevamente en caso de error
-          btnMailer.prop("disabled", false);
-
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalActivarUsuario_" + idUsuario).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalActivarUsuario_" + idUsuario;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
         // Ocultar el spinner en caso de error
         btnMailer.find(".spinner-border").addClass("d-none");
-        // // Habilitar el botón nuevamente en caso de error
         btnMailer.prop("disabled", false);
 
-        console.error(xhr.responseText);
-        console.error("status: " + status);
         console.error("error: " + error);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
@@ -390,8 +268,11 @@ $(document).ready(function () {
   $(".formulario-habilitar-usuario").submit(function (event) {
     event.preventDefault();
     const formulario = $(this);
-
     const idUsuario = obtenerId(formulario);
+
+    const btnMailer = $("#btn_modalHabilitarUsuario_" + idUsuario);
+    btnMailer.find(".spinner-border").removeClass("d-none");
+    btnMailer.prop("disabled", true);
 
     $.ajax({
       url: "../../views/admin/actions/enableUserAction.php",
@@ -401,39 +282,17 @@ $(document).ready(function () {
       },
       success: function (response) {
         response = JSON.parse(response);
-
-        if (response.title === "EXITO") {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalHabilitarUsuario_" + idUsuario).modal("hide");
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: response.message,
-          }).then(() => {
-            // Cerrar el modal después de que se cierre el mensaje
-            $("#modalHabilitarUsuario_" + idUsuario).modal("hide");
-            location.reload();
-          });
-        }
+        const idModal = "modalHabilitarUsuario_" + idUsuario;
+        mostrarAlerta(response, idModal);
       },
       error: function (xhr, status, error) {
-        console.error(xhr.responseText);
-        console.error("status: " + status);
         console.error("error: " + error);
-        // Muestra una alerta de error
-        Swal.fire({
-          icon: "error",
+        const datosAlerta = {
           title: "Error",
-          text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-        });
+          message:
+            "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+        };
+        mostrarAlerta(datosAlerta);
       },
     });
   });
