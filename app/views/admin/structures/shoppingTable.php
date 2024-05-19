@@ -236,8 +236,11 @@ function modalCancelarCompra($idModal, $idCompra)
                       ¿Esta seguro que desea cancelar la compra con id ' . $idCompra . '?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-primary">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button id="btnCancelarCompra_' . $idCompra . '" type="submit" class="btn btn-primary">
+                            <span class="spinner-border spinner-border-sm d-none"  role="status" aria-hidden="true"></span>
+                            Aceptar
+                        </button>
                     </div>
                 </form>
             </div>
