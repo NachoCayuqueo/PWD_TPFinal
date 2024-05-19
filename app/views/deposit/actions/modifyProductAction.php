@@ -8,13 +8,21 @@ $idProducto = $datos['idProducto'];
 $param = ["idProducto" => $idProducto];
 $producto = $objProducto->buscar($param);
 
+//! MODIFIACION PARA EVITAR SIEMPRE INGRESAR STOCK
 $stockActual = $producto[0]->getProCantStock();
-
 $stockIngresado = $datos['stock'];
 if (!$stockIngresado) {
     $stockModificado = $stockActual + $datos['stock'];
 } else {
     $stockModificado = $stockActual + 0;
+}
+
+//! MODIFICACION PARA CONTROLAR SI SE CAMBIA EL TIPO, CAMBIO LA FOTO DE LUGAR 
+$tipoActual = $producto[0]->getProTipo();
+$tipoIngresado = $datps['tipo'];
+$cambiarImagenDeLugar = false;
+if ($tipoIngresado != $tipoActual) {
+    $cambiarImagenDeLugar = true;
 }
 
 
@@ -35,6 +43,9 @@ if (!empty($producto)) {
     ];
 
     $modificacionExitosa = $objProducto->modificacion($modificarParams);
+
+    if (!$cambiarImagenDeLugar) {
+    }
 
     if ($modificacionExitosa)
         $response = array('title' => 'EXITO', 'message' => 'Modificacion exitosa con el id: ' . $datos['idProducto']);
