@@ -72,6 +72,10 @@ function modificarDatosPersonales() {
   const email = $("#email").val();
   const idUsuario = $("#name").data("id");
 
+  const btnMailer = $("#btn-send");
+  // Mostrar el spinner al enviar el formulario
+  btnMailer.find(".spinner-border").removeClass("d-none");
+  btnMailer.prop("disabled", true);
   //AJAX
   $.ajax({
     url: "../../views/admin/actions/editUserDataAction.php",
@@ -80,46 +84,29 @@ function modificarDatosPersonales() {
       idUsuario,
       nombre,
       email,
+      esConfiguracionPersonal: true,
     },
     success: function (response) {
+      btnMailer.find(".spinner-border").addClass("d-none");
+      btnMailer.prop("disabled", false);
       response = JSON.parse(response);
       if (response.title === "EXITO") {
-        Swal.fire({
-          icon: "success",
-          title: "Éxito",
-          text: response.message,
-        }).then(() => {
-          location.reload();
-        });
-      }
-      if (response.title === "INFO") {
-        Swal.fire({
-          icon: "info",
-          title: "Éxito",
-          text: response.message,
-        }).then(() => {
-          location.reload();
-        });
-      }
-      if (response.title === "ERROR") {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.message,
-        }).then(() => {
-          location.reload();
-        });
+        const href = "../../../app/views/login";
+        mostrarAlerta(response, null, href);
+      } else {
+        mostrarAlerta(response);
       }
     },
     error: function (xhr, status, error) {
-      // Maneja los errores de la solicitud AJAX
-      console.error(xhr.responseText);
-      // Muestra una alerta de error
-      Swal.fire({
-        icon: "error",
+      btnMailer.find(".spinner-border").addClass("d-none");
+      btnMailer.prop("disabled", false);
+      console.error("error: " + error);
+      const datosAlerta = {
         title: "Error",
-        text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }
@@ -140,32 +127,22 @@ function modificarPassword() {
     },
     success: function (response) {
       response = JSON.parse(response);
-
       if (response.title === "EXITO") {
-        Swal.fire({
-          icon: "success",
-          title: "Éxito",
-          text: response.message,
-        }).then(() => {
-          location.reload();
-        });
+        const href = "../../../app/views/login";
+        mostrarAlerta(response, null, href);
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: response.message,
-        });
+        mostrarAlerta(response);
       }
     },
     error: function (xhr, status, error) {
       // Maneja los errores de la solicitud AJAX
-      console.error(xhr.responseText);
-      // Muestra una alerta de error
-      Swal.fire({
-        icon: "error",
+      console.error("error", error);
+      const datosAlerta = {
         title: "Error",
-        text: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
-      });
+        message:
+          "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.",
+      };
+      mostrarAlerta(datosAlerta);
     },
   });
 }
