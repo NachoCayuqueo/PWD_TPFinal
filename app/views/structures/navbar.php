@@ -1,4 +1,5 @@
 <?php
+include_once "./config/configuration.php";
 include_once "../customer/strucures/cartSidePanel.php";
 $session = new Session();
 $existeSesion = false;
@@ -28,7 +29,7 @@ if (is_null($nombreRolActivo)) {
 
 ?>
 
-<nav class="navbar navbar-expand-lg" style="background-color: #d4d8f0;">
+<nav class="navbar navbar-color navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand m-2" href="<?php echo $PRINCIPAL ?>" type="button" data-bs-tooltip="tooltip" data-bs-placement="bottom" data-bs-title="Home">
             <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="inicio" width="80" class="d-inline-block align-text-top">
@@ -41,13 +42,14 @@ if (is_null($nombreRolActivo)) {
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-2">
                 <li class="nav-item dropdown">
                     <div class="d-flex align-items-center">
-                        <p class="m-0 me-2">
-                            Bienvenido
+                        <p class="m-0 me-2 welcome-title">
+                            ¡Hola
                             <?php
                             echo $existeSesion
                                 ? $nombreUsuario
                                 : "Usuario";
                             ?>
+                            !
                         </p>
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="<?php echo $BOOTSTRAP_ICONS . "/" . $avatarUsuario ?>" alt="inicio" width="30" class="d-inline-block align-text-top">
@@ -82,3 +84,4 @@ if (is_null($nombreRolActivo)) {
 $objetoMenu = new AbmMenu();
 $objetoMenu->armarMenu($idRol);
 ?>
+<!-- <hr class="my-0" style="color: white;"> -->

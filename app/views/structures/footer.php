@@ -1,5 +1,5 @@
-<div class="container-fluid footer">
-    <div class="row p-3" style="background-color: #2d3f50;">
+<div class="container-fluid footer footer-color">
+    <div class="row p-3">
         <div class="text-center">
             <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="inicio" width="80">
         </div>
