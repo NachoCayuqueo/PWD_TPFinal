@@ -20,8 +20,8 @@
                     </a>
 
                     <div class="text-center mb-5">
-                        <h3 class="fw-bold">Registrarse</h3>
-                        <p class="text-secondary">Complete todos los campos</p>
+                        <h3 class="title fw-bold">Registrarse</h3>
+                        <p class="text">Complete todos los campos</p>
                     </div>
 
                     <!-- form -->
@@ -47,12 +47,12 @@
                             <div class="invalid-feedback">Debe ingresar un email valido</div>
                         </div>
                         <div class="mb-3">
-                            <input name=send id=send type=submit value="Register" class="btn btn-primary btn-lg w-100">
+                            <input name=send id=send type=submit value="Registrarse" class="btn btn-text btn-color btn-lg w-100">
                         </div>
 
                         <div class="text-center">
-                            <small>¿Quieres iniciar sesión?</small>
-                            <a href="../login" class="btn fw-bold">Log In</a>
+                            <small class="text">¿Quieres iniciar sesión?</small>
+                            <a href="../login" class="btn btn-text fw-bold">Iniciar Sesión</a>
                         </div>
                     </form>
                 </div>
