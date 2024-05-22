@@ -44,13 +44,12 @@ if (!empty($productosNuevos)) {
     include_once '../structures/cards.php';
     ?>
 
-    <div class="container-fluid" style="background-color: #eebbc3;">
-
-        <div class="row">
+    <div class="container-fluid banner-color banner-text-color">
+        <div class="row py-3">
             <div class="col-md-8">
-                <h2 class="title text-center mt-3">Bienvenidos a</h2>
+                <h2 class="welcome-title text-center mt-3">Bienvenidos a</h2>
                 <h1 class="welcome-title text-center">Doggys Friends</h1>
-                <p class="text mt-5 p-2">¡Bienvenidos a Doggys Friends, tu destino número uno para mimar a tus fieles compañeros de cuatro patas! En Doggys Friends, nos enorgullece ofrecerte
+                <p class="text mt-3 p-2">¡Bienvenidos a Doggys Friends, tu destino número uno para mimar a tus fieles compañeros de cuatro patas! En Doggys Friends, nos enorgullece ofrecerte
                     una amplia gama de productos diseñados para el bienestar y la felicidad de tus adorables amigos peludos. Desde juguetes irresistibles hasta las últimas
                     tendencias en moda canina, estamos aquí para satisfacer todas las necesidades de tus perros con estilo y calidad. <br />
                     En Doggys Friends, sabemos que cada perro es único, por eso nos esforzamos por ofrecerte una experiencia de compra personalizada y amigable.Nuestro equipo de
@@ -70,7 +69,7 @@ if (!empty($productosNuevos)) {
         <div class="title-with-line">
             <h1 class="title text-center">Productos Destacados</h1>
         </div>
-        <div class="main-container">
+        <div class="">
             <div class="container-sm p-4">
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                     <?php
@@ -102,7 +101,7 @@ if (!empty($productosNuevos)) {
         <div class="title-with-line">
             <h1 class="title text-center">Productos Nuevos</h1>
         </div>
-        <div class="main-container">
+        <div class="">
             <div class="container-sm p-4">
                 <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                     <?php

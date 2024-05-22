@@ -44,29 +44,26 @@ if ($esUsuarioValido) {
             <div class="title-with-line">
                 <h1 class="title text-center"><?php echo $nombreTipo ?></h1>
             </div>
-            <div class="main-container">
-                <div class="container-sm p-4">
-                    <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
-                        <?php
-                        if ($existenProductos) {
-                            foreach ($productosTipoSimilares as $producto) {
-                                $botonComprar = "../customer/buyProduct.php?idProducto=" . $producto->getIdProducto();
-                                echo '<div class="col">';
-                                productsCard($producto, $botonComprar);
-                                echo '</div>';
-                            }
-                        } else {
-                            echo '
+            <div class="container-sm p-4">
+                <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+                    <?php
+                    if ($existenProductos) {
+                        foreach ($productosTipoSimilares as $producto) {
+                            $botonComprar = "../customer/buyProduct.php?idProducto=" . $producto->getIdProducto();
+                            echo '<div class="col">';
+                            productsCard($producto, $botonComprar);
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '
                             <div>
                             <p>Productos no encontrados</p>
                             </div>
                             ';
-                        }
-                        ?>
-                    </div>
+                    }
+                    ?>
                 </div>
             </div>
-
         </div>
     </div>
     <?php include_once "../structures/footer.php"; ?>

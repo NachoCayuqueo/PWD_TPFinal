@@ -304,7 +304,7 @@ class AbmMenu
         $datosMenu = $arregloMenu['hijos'];
         // Inicia la estructura del navbar
         echo '
-    <nav class="navbar navbar-expand-lg" style="background-color: #aabebd;">
+    <nav class="navbar navbar-expand-lg navbar-menu-color">
         <div class="container-fluid">
             <div class="navbar-title collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
@@ -355,7 +355,7 @@ class AbmMenu
                     ';
                     } else {
                         echo '
-                    <a id="carritoLink" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Carrito</a>
+                    <a id="carritoLink" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="color: #f5f7f8;">Carrito</a>
                     ';
                     }
                     echo '</li>';

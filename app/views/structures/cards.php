@@ -18,7 +18,7 @@ function productsCard($product, $hrefComprar)
     $urlImagen =  $GLOBALS['IMAGES'] . "/products/" . $tipo . "/" . $nombreImagen;
 
     echo '
-        <div class="card card-container p-2" style="height: 100%;">
+        <div class="card card-container p-2 h-100">
         ';
     if ($stock === 0) {
         echo '<div class="ribbon">
@@ -26,15 +26,18 @@ function productsCard($product, $hrefComprar)
         </div>';
     }
 
-    echo '  <img src="' . $urlImagen . '" class="image card-img-top" alt="' . $product->getProNombre() . '">
+    echo '  
+            
+            <img src="' . $urlImagen . '" class="image card-img-top" alt="' . $product->getProNombre() . '">
+            
             <div class="card-body">
                 <h5 class="mt-2 text-center">' . $product->getProNombre() . '</h5>
                 <p class="card-text">' . $product->getProDescripcion() . '</p>
                 <h3 class="text-center">$' . $product->getProPrecio() . '</h3>
             </div>
             <div class="text-center mb-3">
-                <a href="' . $hrefComprar . '" class="btn btn-secondary' . ($stock === 0 ? " disabled" : " btn-color") . ' rounded-pill me-2">Comprar</a>
-                <a id="btn-more-info-' . $product->getIdProducto() . '" class="btn btn-secondary btn-color rounded-pill" onclick="moreProductInfo(' . $product->getIdProducto() . ')">
+                <a href="' . $hrefComprar . '" class="btn' . ($stock === 0 ? " btn-secondary disabled" : " btn-color") . ' rounded-pill me-2">Comprar</a>
+                <a id="btn-more-info-' . $product->getIdProducto() . '" class="btn btn-color rounded-pill" onclick="moreProductInfo(' . $product->getIdProducto() . ')">
                     Mas info
                 </a>
             </div>
