@@ -32,7 +32,7 @@ if ($esUsuarioValido) {
     include_once '../structures/navbar.php';
     ?>
     <div class="mt-3">
-        <h1 class="text-center">Panel Administrador</h1>
+        <h1 class="title text-center">Panel Administrador</h1>
     </div>
     <div class="container-sm p-4">
         <?php
@@ -40,7 +40,7 @@ if ($esUsuarioValido) {
             crearTablaRoles($listaRoles);
         } else {
             echo '
-                    <div class="container d-flex justify-content-center">
+                    <div class="container d-flex justify-content-center text">
                         <div class=" card-container d-flex justify-content-center align-items-center">
                             <div class="card text-center mb-3" style="width: 28rem;">
                                 <div class="card-header">

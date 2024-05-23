@@ -58,14 +58,14 @@ if (is_null($nombreRolActivo)) {
                             <?php
                             if ($existeSesion) {
                                 echo '
-                                <li><a class="dropdown-item" href="' . $VISTAS . '/usuario/actions/cerrarSesionAction.php">Salir</a></li>
+                                <li><a class="text dropdown-item" href="' . $VISTAS . '/usuario/actions/cerrarSesionAction.php">Salir</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="' . $VISTAS . '/usuario/configuration.php">Configuraciones</a></li>';
+                                <li><a class="text dropdown-item" href="' . $VISTAS . '/usuario/configuration.php">Configuraciones</a></li>';
                             } else {
-                                echo '<li><a class="dropdown-item" href="' . $VISTAS . '/login">Login</a></li>
-                                <li><a class="dropdown-item" href="' . $VISTAS . '/register">Register</a></li>
+                                echo '<li><a class="text dropdown-item" href="' . $VISTAS . '/login">Login</a></li>
+                                <li><a class="text dropdown-item" href="' . $VISTAS . '/register">Register</a></li>
                                 ';
                             }
                             ?>
@@ -84,4 +84,3 @@ if (is_null($nombreRolActivo)) {
 $objetoMenu = new AbmMenu();
 $objetoMenu->armarMenu($idRol);
 ?>
-<!-- <hr class="my-0" style="color: white;"> -->

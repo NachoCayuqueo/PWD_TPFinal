@@ -7,10 +7,10 @@ function modalEdit($modalId, $idUsuario, $nombre, $mail)
                     <div class="modal-content">
                     <form id="formulario_' . $idUsuario . '" class="formulario-editar card-title card-body" novalidate>
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="modalEditLabel">Editar Usuario</h1>
+                            <h1 class="modal-title title fs-5" id="modalEditLabel">Editar Usuario</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body text">
                                 <div class="row mb-4">
                                     <div class="col">
                                         <label for="idUsuario_' . $idUsuario . '" class="form-label">ID</label>
@@ -34,8 +34,8 @@ function modalEdit($modalId, $idUsuario, $nombre, $mail)
                         
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button id="btnMailer_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                            <button id="btnMailer_' . $idUsuario . '" type="submit" class="btn btn-text btn-color">
                                 <span class="spinner-border spinner-border-sm d-none"  role="status" aria-hidden="true"></span>
                                 Guardar Cambios
                             </button>
@@ -55,15 +55,15 @@ function modalDelete($modalId, $idUsuario, $nombre)
             <div class="modal-content">
                 <form id="formulario_' . $idUsuario . '" class="formulario-borrar" data-name="' . $nombre . '">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar Usuario</h1>
+                      <h1 class="modal-title title fs-5" id="exampleModalLabel">Borrar Usuario</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text">
                       ¿Esta seguro que desea  eliminar al usuario ' . $nombre . '?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button id="btn_borrar_Mailer_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button id="btn_borrar_Mailer_' . $idUsuario . '" type="submit" class="btn btn-text btn-color">
                             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             Aceptar
                         </button>
@@ -83,10 +83,10 @@ function modalEditMenu($modalId, $idRolPadre, $idItem, $nombreItem, $subMenu, $r
                     <div class="modal-content">
                         <form id="formulario_' . $idItem . '" class="formulario-editar-menu card-title card-body" novalidate>
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Menu</h1>
+                                <h1 class="modal-title title fs-5" id="exampleModalLabel">Editar Menu</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body text">
                                     <div class="row mb-4">
                                         <div class="col">
                                             <label for="idItem_' . $idItem . '" class="form-label">ID</label>
@@ -156,8 +156,8 @@ function modalEditMenu($modalId, $idRolPadre, $idItem, $nombreItem, $subMenu, $r
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-text btn-color">Guardar Cambios</button>
                             </div>
                         </form>
                     </div>
@@ -174,10 +174,10 @@ function modalDeleteMenu($modalId, $idRolPadre, $idItem, $nombreMenu, $subMenu)
             <div class="modal-content">
                 <form id="formulario_' . $idItem . '" class="formulario-borrar-menu">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Deshabilitar Menu</h1>
+                      <h1 class="modal-title title fs-5" id="exampleModalLabel">Deshabilitar Menu</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text">
                         <div class="row mb-4">
                             <div class="col form-floating">
                                 <input type="text" class="form-control" id="idMenu_' . $idItem . '" value="' . $idItem . '" name="idMenu_' . $idItem . '" readonly>
@@ -223,8 +223,8 @@ function modalDeleteMenu($modalId, $idRolPadre, $idItem, $nombreMenu, $subMenu)
     }
     echo '</div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-danger">Desactivar</button>
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-text btn-color">Desactivar</button>
                     </div>
                 </form>
             </div>
@@ -266,15 +266,15 @@ function modalActivarUsuario($idUsuario, $nombreUsuario)
         <div class="modal-content">
             <form id="formulario_' . $idUsuario . '" class="formulario-activar-usuario">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Activar Usuario</h1>
+                  <h1 class="modal-title title fs-5" id="exampleModalLabel">Activar Usuario</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text">
                   ¿Esta seguro que desea activar al usuario ' . $nombreUsuario . '?
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button id="btnMailer_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                  <button id="btnMailer_' . $idUsuario . '" type="submit" class="btn btn-text btn-color">
                   <span class="spinner-border spinner-border-sm d-none"  role="status" aria-hidden="true"></span>
                   Activar
                   </button>
@@ -294,15 +294,15 @@ function modalHabilitarUsuario($idUsuario, $nombreUsuario)
         <div class="modal-content">
             <form id="formulario_' . $idUsuario . '" class="formulario-habilitar-usuario">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Habilitar Usuario</h1>
+                  <h1 class="modal-title title fs-5" id="exampleModalLabel">Habilitar Usuario</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text">
                   ¿Esta seguro que desea habilitar al usuario ' . $nombreUsuario . '?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button id="btn_' . $idUsuario . '" type="submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button id="btn_' . $idUsuario . '" type="submit" class="btn btn-text btn-color">
                         <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                         Activar
                     </button>

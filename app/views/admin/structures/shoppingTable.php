@@ -141,10 +141,10 @@ function mostrarDatosTabla($idCompra, $idUsuario, $nombreUsuario, $emailUsuario,
     echo "<td>" . $precioTotalCompra . "</td>";
     if ($mostrarBotones) {
         echo "<td class='text-center'>
-            <button  type='button' class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#modalAutorizar_" . $idCompra . "'>
+            <button  type='button' class='btn btn-text btn-color' data-bs-toggle='modal' data-bs-target='#modalAutorizar_" . $idCompra . "'>
                 Autorizar
             </button>
-            <button type='button' class='btn btn-outline-danger' data-bs-toggle='modal' data-bs-target='#modalCancelar_" . $idCompra . "'>
+            <button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#modalCancelar_" . $idCompra . "'>
                 Cancelar
             </button>
         </td>";

@@ -34,13 +34,13 @@ if ($esUsuarioValido) {
     include_once '../structures/navbar.php';
     ?>
     <div class="mt-3">
-        <h1 class="text-center">Panel Administrador</h1>
+        <h1 class="text-center title">Panel Administrador</h1>
     </div>
     <div class="container-sm p-4">
         <?php
         if ($existeUsuario) {
             echo '
-            <div>
+            <div class="text">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                       <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Lista Usuarios Activos</button>

@@ -34,7 +34,7 @@ if ($esUsuarioValido) {
     include_once '../structures/navbar.php';
     ?>
     <div class="mt-3">
-        <h1 class="text-center">Mis Compras</h1>
+        <h1 class="title text-center">Mis Compras</h1>
     </div>
     <div class="container-sm p-4">
 
@@ -54,12 +54,12 @@ if ($esUsuarioValido) {
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">';
             if (crearTablaResumenCompra($listaCompra) === 0) {
-                echo "<p>No se encontraron compras registradas.</p>";
+                echo "<p class='text'>No se encontraron compras registradas.</p>";
             }
             echo '</div>
                   <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">';
             if (!crearTablaComprasCanceladas($listaCompra)) {
-                echo "<p>No se encontraron compras canceladas.</p>";
+                echo "<p class='text'>No se encontraron compras canceladas.</p>";
             };
             echo '</div>
                 </div>

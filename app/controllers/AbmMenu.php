@@ -304,7 +304,7 @@ class AbmMenu
         $datosMenu = $arregloMenu['hijos'];
         // Inicia la estructura del navbar
         echo '
-    <nav class="navbar navbar-expand-lg navbar-menu-color">
+    <nav class="navbar navbar-expand-lg navbar-menu-color item-navbar">
         <div class="container-fluid">
             <div class="navbar-title collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">

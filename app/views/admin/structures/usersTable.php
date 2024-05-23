@@ -98,7 +98,7 @@ function crearTablaNuevoUsuarios($listaUsuario)
             echo "<td>" . $nombre . "</td>";
             echo "<td>" . $email . "</td>";
             echo "<td class='text-center'>
-            <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#modalActivarUsuario_" . $id . "'>
+            <button type='button' class='btn btn-text btn-color' data-bs-toggle='modal' data-bs-target='#modalActivarUsuario_" . $id . "'>
                 Activar
             </button>
                 </td>";
@@ -142,7 +142,7 @@ function crearTablaUsuariosDeshabilitados($listaUsuario)
             echo "<td>" . $email . "</td>";
             echo "<td>" . $fechaDeshabilitado . "</td>";
             echo "<td class='text-center'>
-            <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#modalHabilitarUsuario_" . $id . "'>
+            <button type='button' class='btn btn-text btn-color' data-bs-toggle='modal' data-bs-target='#modalHabilitarUsuario_" . $id . "'>
                 Habilitar
             </button>
                 </td>";

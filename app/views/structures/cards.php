@@ -22,7 +22,7 @@ function productsCard($product, $hrefComprar)
         ';
     if ($stock === 0) {
         echo '<div class="ribbon">
-            <span>Sin Stock</span>
+            <span class="text">Sin Stock</span>
         </div>';
     }
 
@@ -31,11 +31,11 @@ function productsCard($product, $hrefComprar)
             <img src="' . $urlImagen . '" class="image card-img-top" alt="' . $product->getProNombre() . '">
             
             <div class="card-body">
-                <h5 class="mt-2 text-center">' . $product->getProNombre() . '</h5>
-                <p class="card-text">' . $product->getProDescripcion() . '</p>
-                <h3 class="text-center">$' . $product->getProPrecio() . '</h3>
+                <h5 class="mt-2 title text-center">' . $product->getProNombre() . '</h5>
+                <p class="card-text text">' . $product->getProDescripcion() . '</p>
+                <h3 class="text-center text">$' . $product->getProPrecio() . '</h3>
             </div>
-            <div class="text-center mb-3">
+            <div class="text-center mb-3 btn-text">
                 <a href="' . $hrefComprar . '" class="btn' . ($stock === 0 ? " btn-secondary disabled" : " btn-color") . ' rounded-pill me-2">Comprar</a>
                 <a id="btn-more-info-' . $product->getIdProducto() . '" class="btn btn-color rounded-pill" onclick="moreProductInfo(' . $product->getIdProducto() . ')">
                     Mas info
@@ -44,7 +44,7 @@ function productsCard($product, $hrefComprar)
             <div id="mas-info-' . $product->getIdProducto() . '" class="p-2" style="display: none;" >';
 
     foreach ($moreInfoArray as $content) {
-        echo '<p class="card-text">' . $content . '</p>';
+        echo '<p class="text card-text">' . $content . '</p>';
     }
     echo '
             </div> 
@@ -61,7 +61,7 @@ function buttonCard($href, $text)
     <div class="card p-2 shadow border border-0">
         <a href="' .  $url . '" class="btn">
             <div class="card-body">
-                <h5 class="card-title">' . $text . '</h5>
+                <h5 class="card-title title">' . $text . '</h5>
             </div>
         </a>
     </div>

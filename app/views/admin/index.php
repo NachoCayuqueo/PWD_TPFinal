@@ -26,7 +26,7 @@ if ($esUsuarioValido) {
     include_once '../structures/navbar.php';
     ?>
     <div class="mt-3">
-        <h1 class="text-center">Panel Administrador</h1>
+        <h1 class="title text-center">Panel Administrador</h1>
     </div>
     <div class="container-sm">
         <div class="row row-cols-1 row-cols-md-3 p-4 mb-4 row-gap-4 text-center">

@@ -8,10 +8,10 @@ function modalEdit($modalId, $idRol, $nombreRol)
             <div class="modal-content">
             <form id="formulario-editar-rol_' . $idRol . '" class="formulario-editar-rol card-title card-body">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Rol</h1>
+                    <h1 class="modal-title title fs-5" id="exampleModalLabel">Editar Rol</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text">
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="idRol_' . $idRol . '" class="form-label">ID</label>
@@ -27,8 +27,8 @@ function modalEdit($modalId, $idRol, $nombreRol)
                         </div>                
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-text btn-color">Guardar Cambios</button>
                 </div>
                 </form>
             </div>
@@ -45,15 +45,15 @@ function modalDelete($modalId, $idRol, $nombreRol)
             <div class="modal-content">
                 <form id="formulario-borrar-rol_' . $idRol . '" class="formulario-borrar-rol">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar Rol</h1>
+                      <h1 class="modal-title title fs-5" id="exampleModalLabel">Borrar Rol</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text">
                       ¿Esta seguro que desea  eliminar el rol ' . $nombreRol . '?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-primary">Aceptar</button>
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-text btn-color">Aceptar</button>
                     </div>
                 </form>
             </div>
@@ -70,10 +70,10 @@ function modalAddRole()
             <div class="modal-content">
                 <form id="formulario-nuevo-rol" class="formulario-nuevo-rol card-title card-body">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Rol</h1>
+                        <h1 class="modal-title title fs-5" id="exampleModalLabel">Agregar Rol</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text">
                             <div class="row mb-4">
                                 <div class="col">
                                     <label for="nombreRol" class="form-label">Nombre</label>
@@ -83,8 +83,8 @@ function modalAddRole()
                             </div>                
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-text btn-color">Guardar Cambios</button>
                     </div>
                 </form>
             </div>

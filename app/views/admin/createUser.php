@@ -35,7 +35,7 @@ if ($esUsuarioValido) {
     include_once '../structures/navbar.php';
     ?>
     <div class="mt-3">
-        <h1 class="text-center">Panel Administrador</h1>
+        <h1 class="text-center title">Panel Administrador</h1>
     </div>
     <div class="container mt-3 mb-3">
         <div class="card ">
@@ -43,7 +43,7 @@ if ($esUsuarioValido) {
                 <h3 class="title">Nuevo Usuario</h3>
             </div>
             <div>
-                <form class="form card-body card-title" id="form-nuevo-usuario" name="form-nuevo-usuario" novalidate>
+                <form class="form card-body card-title text" id="form-nuevo-usuario" name="form-nuevo-usuario" novalidate>
                     <div class="row mb-4">
                         <div class="col">
                             <label for="name" class="form-label">Nombre</label>
@@ -100,11 +100,11 @@ if ($esUsuarioValido) {
                         </div>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
-                        <button id='btn-send' class="btn btn-text btn-primary me-md-2" type="submit">
+                        <button id='btn-send' class="btn btn-text btn-color me-md-2" type="submit">
                             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             Enviar
                         </button>
-                        <button id='btn-clean' class="btn btn-text btn-primary" type="reset">Borrar</button>
+                        <button id='btn-clean' class="btn btn-text btn-color" type="reset">Borrar</button>
                     </div>
                 </form>
             </div>

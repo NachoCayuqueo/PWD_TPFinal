@@ -132,7 +132,7 @@ if ($esUsuarioValido) {
                 </div>
             </div>
             <div class="text-center">
-                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-secondary btn-color">Mas Productos similares</a>
+                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-text btn-color">Mas Productos similares</a>
             </div>
         </div>
     </div>
