@@ -50,7 +50,7 @@ if ($esUsuarioValido) {
                 <div class="mt-3">
                     <h1 class="title text-center"><?php echo $datosProducto['nombre'] ?></h1>
                 </div>
-                <hr class="my-1" style="border-width: 2px;">
+                <hr class="my-1" style="border-width: 2px; color: #2d3f50;">
 
                 <div class="rating-container">
                     <div class="rating">
@@ -95,7 +95,7 @@ if ($esUsuarioValido) {
                             </button>
                         </div>
                         <div class="ms-2 btn-text">
-                            <button class="btn btn-secondary btn-color" id="btn-cart">AGREGAR AL CARRITO</button>
+                            <button class="btn btn-color" id="btn-cart">AGREGAR AL CARRITO</button>
                         </div>
                     </div>
                     <p id="stock" data-cantStock="<?php echo  $datosProducto['stock'] ?>"> cantidad disponible: <?php echo $datosProducto['stock'] ?>/<?php echo $datosProducto['stock'] ?></p>
@@ -106,7 +106,7 @@ if ($esUsuarioValido) {
             <div class="title-with-line">
                 <h1 class="title">Productos Similares</h1>
             </div>
-            <div class="main-container">
+            <div>
                 <div class="container-sm p-4">
                     <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                         <?php
@@ -132,7 +132,7 @@ if ($esUsuarioValido) {
                 </div>
             </div>
             <div class="text-center">
-                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-secondary btn-color">Mas Productos similares</a>
+                <a href="similarProducts.php?type=<?php echo $tipoProductosSimilares ?>" class="btn btn-text btn-color">Mas Productos similares</a>
             </div>
         </div>
     </div>

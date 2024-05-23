@@ -18,14 +18,14 @@ if ($session->validar()) {
         <div>
             <form class="form card-body card-title" id="formulario-datos-personales" name="formulario-datos-personales" novalidate>
                 <div class="row mb-4">
-                    <div class="col">
+                    <div class="col text">
                         <label for="name" class="form-label">Nombre</label>
                         <input id="name" name="name" class="form-control" type="text" value="<?php echo $nombre ?>" data-id="<?php echo $idUsuario ?>" required>
                         <div class="invalid-feedback">Ingresar Nombre</div>
                     </div>
                 </div>
                 <div class="row mb-4">
-                    <div class="col">
+                    <div class="col text">
                         <label for="email" class="form-label">Email</label>
                         <input id="email" name="email" class="form-control" type="text" value="<?php echo $email ?>" required>
                         <div class="invalid-feedback">Ingresar email valido</div>
@@ -33,7 +33,7 @@ if ($session->validar()) {
                 </div>
                 <div class="row">
                     <div class="col d-flex justify-content-center">
-                        <button id="btn-send" class="btn btn-text btn-primary me-md-2" type="submit">
+                        <button id="btn-send" class="btn btn-text btn-color me-md-2" type="submit">
                             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             Guardar Cambios
                         </button>

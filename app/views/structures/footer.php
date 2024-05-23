@@ -1,5 +1,8 @@
-<div class="container-fluid footer">
-    <div class="row p-3" style="background-color: #2d3f50;">
+<?php
+include_once "./config/configuration.php";
+?>
+<div class="container-fluid footer footer-color">
+    <div class="row p-3">
         <div class="text-center">
             <img src="<?php echo $LOGOS ?>/logo_pet_shop.png" alt="inicio" width="80">
         </div>
@@ -7,27 +10,27 @@
         <div class="col-xs-12 col-md-4">
             <h5 class="mb-3 footer-title">Nosotros</h5>
             <div class="mb-2 footer-text">
-                <p>Somos Doggy Friends, tu destino para todo lo relacionado con el bienestar y la felicidad de tus amigos de cuatro patas. Nos dedicamos a proporcionarte los mejores productos y servicios para cuidar a tu mascota y hacer que su vida sea aún más emocionante y saludable.</p>
-                <a href="<?php echo $VISTAS ?>/nosotros.php" class="btn fw-bold footer-text">¿Quienes Somos?</a>
+                <p class="text">Somos Doggy Friends, tu destino para todo lo relacionado con el bienestar y la felicidad de tus amigos de cuatro patas. Nos dedicamos a proporcionarte los mejores productos y servicios para cuidar a tu mascota y hacer que su vida sea aún más emocionante y saludable.</p>
+                <a href="<?php echo $VISTAS ?>/nosotros.php" class="btn btn-text fw-bold footer-text">¿Quienes Somos?</a>
             </div>
         </div>
         <div class="col-xs-12 col-md-4 footer-text">
             <h5 class="mb-3 footer-title">Contactános</h5>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/whatsapp.svg" alt="whatsapp">
-                <p>2995-111-999</p>
+                <p class="text">2995-111-999</p>
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/telephone-fill.svg" alt="telephone">
-                <p> 764-84377 </p>
+                <p class="text">764-84377</p>
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/envelope-at-fill.svg" alt="email">
-                <p>Doggys.Friends@gmail.com</p>
+                <p class="text">Doggys.Friends@gmail.com</p>
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/geo-alt-fill.svg" alt="location">
-                <p>Avenida Siempreviva 742</p>
+                <p class="text">Avenida Siempreviva 742</p>
             </div>
         </div>
         <div class="col-xs-12 col-md-4">

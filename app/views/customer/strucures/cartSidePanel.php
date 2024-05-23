@@ -29,7 +29,7 @@ foreach ($listaCompras as $compra) {
 echo '
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrito de Compras</h5>
+                <h5 class="offcanvas-title title" id="offcanvasRightLabel">Carrito de Compras</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>';
 if ($existeCompraCarrito) {
@@ -96,7 +96,7 @@ if ($existeCompraCarrito) {
                     <h3 class="title">$' . $precioFinal . '</h3>
                 </div>
                 <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-outline-primary btn-text" type="submit">
+                    <button class="btn btn-text btn-color" type="submit">
                         <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                         Comprar
                     </button>

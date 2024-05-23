@@ -20,7 +20,7 @@ function crearTablaResumenCompra($listaCompras)
         <th scope="col"></th>
     </tr>
     </thead>
-    <tbody class="table-group-divider card-text">
+    <tbody class="table-group-divider text card-text">
     ';
     foreach ($listaCompras as $compra) {
         $idCompra = $compra['idCompra'];

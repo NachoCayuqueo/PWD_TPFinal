@@ -20,39 +20,39 @@
                     </a>
 
                     <div class="text-center mb-5">
-                        <h3 class="fw-bold">Registrarse</h3>
-                        <p class="text-secondary">Complete todos los campos</p>
+                        <h3 class="title fw-bold">Registrarse</h3>
+                        <p class="text">Complete todos los campos</p>
                     </div>
 
                     <!-- form -->
                     <form id="formulario-registro-usuario" name="formulario-registro-usuario" novalidate>
                         <div class="input-group mb-3 ">
                             <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/person-fill.svg" alt="username"></span>
-                            <input type="text" class="form-control " id="user" name="user" placeholder="Nombre de usuario" required>
+                            <input type="text" class="form-control rounded-end" id="user" name="user" placeholder="Nombre de usuario" required>
                             <div class="invalid-feedback">Debe ingresar usuario</div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/lock-fill.svg" alt="lock"></span>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese contraseña" required minlength="8">
+                            <input type="password" class="form-control rounded-end" id="password" name="password" placeholder="Ingrese contraseña" required minlength="8">
                             <div class="invalid-feedback">La contraseña debe tener como minimo 8 caracteres</div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/lock-fill.svg" alt="lock"></span>
-                            <input type="password" class="form-control" id="repeat-password" name="repeat-password" placeholder="Repetir contraseña" required minlength="8">
+                            <input type="password" class="form-control rounded-end" id="repeat-password" name="repeat-password" placeholder="Repetir contraseña" required minlength="8">
                             <div class="invalid-feedback">Las contraseñas deben coincidir</div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><img src="<?php echo $BOOTSTRAP_ICONS ?>/envelope-fill.svg" alt="lock"></span>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Ingrese Email" required>
+                            <input type="text" class="form-control rounded-end" id="email" name="email" placeholder="Ingrese Email" required>
                             <div class="invalid-feedback">Debe ingresar un email valido</div>
                         </div>
                         <div class="mb-3">
-                            <input name=send id=send type=submit value="Register" class="btn btn-primary btn-lg w-100">
+                            <input name=send id=send type=submit value="Registrarse" class="btn btn-text btn-color btn-lg w-100">
                         </div>
 
                         <div class="text-center">
-                            <small>¿Quieres iniciar sesión?</small>
-                            <a href="../login" class="btn fw-bold">Log In</a>
+                            <small class="text">¿Quieres iniciar sesión?</small>
+                            <a href="../login" class="btn btn-text fw-bold">Iniciar Sesión</a>
                         </div>
                     </form>
                 </div>
