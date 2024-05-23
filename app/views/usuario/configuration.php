@@ -62,11 +62,6 @@ if ($session->validar()) {
                 </div>
             </div>
 
-            <!-- Línea vertical -->
-            <!-- <div class="col-auto d-flex justify-content-center align-items-center">
-                <div class="vr"></div>
-            </div> -->
-
             <div class="col mb-5 mt-5">
                 <div id="contenedor-formulario">
                     <div class="container d-flex justify-content-center">
