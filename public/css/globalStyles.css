@@ -1,27 +1,16 @@
 /* globals fonts */
 @font-face {
+  font-family: Pacifico;
+  src: url(../../assets/fonts/Pacifico/Pacifico-Regular.ttf);
+}
+@font-face {
   font-family: Monserrat;
   src: url(../../assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
 }
 
 @font-face {
-  font-family: OpenSans;
-  src: url(../../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth\wght.ttf);
-}
-
-@font-face {
-  font-family: Poppins;
-  src: url(../../assets/fonts/Poppins/Poppins-Regular.ttf);
-}
-
-@font-face {
   font-family: Nunito;
   src: url(../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf);
-}
-
-@font-face {
-  font-family: Pacifico;
-  src: url(../../assets/fonts/Pacifico/Pacifico-Regular.ttf);
 }
 
 /* global styles for the project */
@@ -30,7 +19,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-color: #fafbfe;
+  background-color: #f0f0f0;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -52,18 +41,26 @@ input[type="number"] {
 }
 .welcome-title {
   font-family: Pacifico, Verdana, Geneva, Tahoma, sans-serif;
-  color: gray;
+  color: white;
 }
 
+.item-navbar {
+  font-family: Monserrat, "Courier New", Courier, monospace;
+}
 .text {
   font-family: Nunito;
 }
 
 .btn-text {
-  font-family: Poppins;
+  font-family: Nunito;
 }
 .btn-color {
-  background-color: #2d3f50;
+  background-color: #047466;
+  color: white;
+}
+
+.btn-color:hover {
+  background-color: #04e4fb;
   color: white;
 }
 
@@ -95,15 +92,43 @@ input[type="number"] {
 }
 
 .card-container {
+  height: 450px; /* Ajusta esta altura según tus necesidades */
   border-radius: 25px;
-  box-shadow: 0px 0px 15px 1px rgba(168, 168, 168, 0.75);
+
+  /* box-shadow: 0px 0px 15px 1px rgba(168, 168, 168, 0.75); */
+}
+
+.card-container:hover {
+  box-shadow: 10px 12px 16px 0px rgba(4, 116, 102, 0.63);
 }
 
 .image {
   border-radius: 20px;
 }
 
+.navbar-color {
+  /* #d4d8f0 */
+  background-color: #7fe4f1;
+}
+
+.navbar-menu-color {
+  /* aabebd */
+  background-color: #047466;
+}
+.banner-color {
+  /* eebbc3  */
+  background-color: #047466;
+}
+
+.banner-text-color {
+  color: white;
+}
+
 /** footer */
+.footer-color {
+  /* 2d3f50 */
+  background-color: #047466;
+}
 .footer {
   margin-top: auto;
   display: table;
@@ -171,7 +196,7 @@ input[type="number"] {
 
 .title-with-line h1 {
   display: inline-block; /* Para que el título ocupe solo el espacio necesario */
-  background-color: #fff; /* Fondo blanco detrás del texto */
+  background-color: #f0f0f0; /* Fondo blanco detrás del texto */
   padding: 20px; /* Espacio alrededor del texto */
 }
 
@@ -182,7 +207,7 @@ input[type="number"] {
   top: 50%;
   width: 100%;
   height: 1px; /* Grosor de la línea */
-  background-color: #000; /* Color de la línea */
+  background-color: #047466; /* Color de la línea */
   z-index: -1; /* Para que la línea esté detrás del texto */
 }
 
