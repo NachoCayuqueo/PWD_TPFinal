@@ -16,16 +16,6 @@ Bienvenido a nuestra tienda online especializada en productos para perros. Nuest
 
 ## Screenshots
 
-## Variables de Entorno
-
-El proyecto utiliza archivos de entorno para manejar configuraciones sensibles y específicas del entorno.
-
-- .env: Archivo principal de configuración de entorno que contiene las variables de entorno reales.
-
-- .env.example: Archivo de ejemplo que muestra las variables de entorno necesarias sin los valores sensibles. Útil para configurar el entorno en diferentes máquinas.
-
-**Nota:** Antes de comenzar con las instalaciones, revise el archivo .env.example y complete su propio archivo .env con las variables de entorno necesarias.
-
 ## Tecnologias
 
 Para el desarrollo del proyecto se utilizó:
@@ -35,6 +25,16 @@ Para el desarrollo del proyecto se utilizó:
 - **Bibliotecas**: jQuery, SweetAlert2, AJAX
 - **Bases de Datos**: MySQL (utilizando phpMyAdmin para la gestión)
 - **Librerías PHP**: phpdotenv, PHPMailer, stripe-php
+
+## Variables de Entorno
+
+El proyecto utiliza archivos de entorno para manejar configuraciones sensibles y específicas del entorno.
+
+- .env: Archivo principal de configuración de entorno que contiene las variables de entorno reales.
+
+- .env.example: Archivo de ejemplo que muestra las variables de entorno necesarias sin los valores sensibles. Útil para configurar el entorno en diferentes máquinas.
+
+**Nota:** Antes de comenzar con las instalaciones, revise el archivo .env.example y complete su propio archivo .env con las variables de entorno necesarias.
 
 ## Instalación
 
@@ -105,6 +105,10 @@ La contraseña utiliza el siguiente formato: `cliente<nombre>`
 
 - Tarjeta Visa Argentina (AR)
   - **Número**: 4000000320000021
+
+## Documentación Tecnica
+
+Para más detalles técnicos sobre la implementación del sitio, por favor consulta el archivo PDF de documentación técnica incluido en el proyecto.
 
 ## Autores
 
