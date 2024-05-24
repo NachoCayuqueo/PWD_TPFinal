@@ -48,7 +48,7 @@ if (!empty($productosNuevos)) {
         <div class="row py-3">
             <div class="col-md-8">
                 <h2 class="welcome-title text-center">Bienvenidos a</h2>
-                <h1 class="welcome-title text-center">Doggys Friends</h1>
+                <h1 class="welcome-title text-center">Doggy Friends</h1>
                 <p class="text mt-3 mb-auto p-2">¡Bienvenidos a Doggys Friends, tu destino número uno para mimar a tus fieles compañeros de cuatro patas! En Doggys Friends, nos enorgullece ofrecerte
                     una amplia gama de productos diseñados para el bienestar y la felicidad de tus adorables amigos peludos. Desde juguetes irresistibles hasta las últimas
                     tendencias en moda canina, estamos aquí para satisfacer todas las necesidades de tus perros con estilo y calidad. <br />

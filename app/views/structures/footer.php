@@ -26,7 +26,7 @@ include_once "./config/configuration.php";
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/envelope-at-fill.svg" alt="email">
-                <p class="text">Doggys.Friends@gmail.com</p>
+                <p class="text">Doggy.Friends@gmail.com</p>
             </div>
             <div class="d-flex mb-2">
                 <img class="footer-img" src="<?php echo $BOOTSTRAP_ICONS ?>/geo-alt-fill.svg" alt="location">
