@@ -127,11 +127,9 @@ class AbmProducto
         if ($this->seteadosCamposClaves($param)) {
             $objetoProducto = $this->cargarObjeto($param);
             if ($objetoProducto != null and $objetoProducto->modificar()) {
-
                 $resp = true;
             }
         }
-
         return $resp;
     }
     private function seteadosCamposClaves($param)
