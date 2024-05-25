@@ -66,7 +66,7 @@ if ($esUsuarioValido) {
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="stock" class="form-label">Stock a ingresar</label>
-                                <input id="stock" name="stock" class="form-control" value="" type="number" required>
+                                <input id="stock" name="stock" class="form-control" value="" type="number">
                                 <span> Stock actual: <?php echo $stock  ?></span>
                                 <div class="invalid-feedback">Ingrese el stock</div>
                                 <span id="error-stock" class="error" style="color: red; display: none;"></span>

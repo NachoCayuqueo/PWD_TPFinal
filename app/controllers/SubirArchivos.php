@@ -16,15 +16,30 @@ class SubirArchivos
             $ubicacion = $this->CARPETA .  $tipo . '/' . $nombre;
             if (move_uploaded_file($carpetaTemporal, $ubicacion)) {
                 $exito = true;
-                $resp =  "Archivo guardado con éxito";
-            } else {
-
-                $resp = "ERROR al guardar el archivo";
             }
         } else {
             $resp = "ERROR: El formato del archivo no es el permitido";
         }
-
         return $exito;
+    }
+
+    public function cambiarImagenDeLugar($nombre, $tipoActual, $nuevoTipo)
+    {
+        $ubicacionActual = $this->CARPETA . $tipoActual . '/' . $nombre;
+        $nuevaUbicacion = $this->CARPETA . $nuevoTipo . '/' . $nombre;
+        $exito = false;
+
+        if (file_exists($ubicacionActual)) {
+            if (rename($ubicacionActual, $nuevaUbicacion)) {
+                $exito = true;
+                $resp = "Archivo movido con éxito";
+            } else {
+                $resp = "ERROR al mover el archivo";
+            }
+        } else {
+            $resp = "ERROR: El archivo no existe en la ubicación actual";
+        }
+
+        return $resp;
     }
 }
