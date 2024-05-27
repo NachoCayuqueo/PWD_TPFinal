@@ -69,14 +69,15 @@ function crearTablaProducto($listaProducto)
     <input type="hidden" name="esPopular" value="' . $esPopular . '">
     <input type="hidden" name="nombreImagen" value="' . $producto->getProImagen() . '">
     <input type="hidden" name="nombreCompleto" value="' . $producto->getProDescripcion() . '">
+    
     <button type="submit" class="btn btn-outline-primary">
       <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/pen.svg" alt="editar">
     </button>
-  </form>
-
     <a href="" class="btn btn-outline-danger deleteButton" id="deleteButton-' . $producto->getIdProducto() . '" data-id="' . $producto->getIdProducto() . '">
         <img src="' . $GLOBALS['BOOTSTRAP_ICONS'] . '/trash3.svg" alt="eliminar">
     </a>  
+  </form>
+
 </td>';
 
 
