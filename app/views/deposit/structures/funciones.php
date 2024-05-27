@@ -3,7 +3,6 @@
 function crearTablaProducto($listaProducto)
 {
   echo '
-    <h4 class="mb-4 title text-center">Listado de Productos</h4>
     <table class="table table-striped table-bordered">
     <thead>
     <tr class="text-center card-title">
@@ -18,7 +17,7 @@ function crearTablaProducto($listaProducto)
         <th scope="col"></th>
     </tr>
     </thead>
-    <tbody class="table-group-divider card-text">
+    <tbody class="table-group-divider card-text text">
     ';
 
 
@@ -43,7 +42,7 @@ function crearTablaProducto($listaProducto)
     echo "<td style='width: max-content;'>" . $producto->getProTipo() . "</td>";
     echo '<td style="width: max-content; margin: 0; padding: 3;">
         <p style="margin: 0;">
-          <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample' . $id . '" role="button" aria-expanded="false" aria-controls="multiCollapseExample' . $id . '">Mostrar Información</a>
+          <a class="btn btn-text btn-color" data-bs-toggle="collapse" href="#multiCollapseExample' . $id . '" role="button" aria-expanded="false" aria-controls="multiCollapseExample' . $id . '">Mostrar Información</a>
         </p>
         <div class="row " style="margin: 0;">
           <div class="col " style="margin: 0;">
