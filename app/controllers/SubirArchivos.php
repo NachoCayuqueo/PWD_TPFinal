@@ -40,6 +40,6 @@ class SubirArchivos
             $resp = "ERROR: El archivo no existe en la ubicación actual";
         }
 
-        return $resp;
+        return $exito;
     }
 }

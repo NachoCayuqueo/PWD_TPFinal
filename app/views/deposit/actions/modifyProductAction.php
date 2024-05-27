@@ -14,11 +14,13 @@ $producto = $objProducto->buscar($param);
 //! MODIFIACION PARA EVITAR SIEMPRE INGRESAR STOCK
 $stockActual = $producto[0]->getProCantStock();
 $stockIngresado = $datos['stock'];
-if (!$stockIngresado) {
-    $stockModificado = $stockActual + $datos['stock'];
+
+if ($stockIngresado) {
+    $stockModificado = $stockActual + $stockIngresado;
 } else {
-    $stockModificado = $stockActual + 0;
+    $stockModificado = $stockActual;
 }
+
 
 //! MODIFICACION PARA CONTROLAR SI SE CAMBIA EL TIPO, CAMBIO LA FOTO DE LUGAR 
 $tipoActual = $producto[0]->getProTipo();
@@ -44,16 +46,19 @@ if (!empty($producto)) {
     ];
     $modificacionExitosa = $objProducto->modificacion($modificarParams);
 
-    if ($cambiarImagenDeLugar && $modificacionExitosa) {
+    if ($cambiarImagenDeLugar && $cambiarImagenDeLugar) {
         $objSubirArchivos = new SubirArchivos();
         $nombreImagen = $datos['nombreImagen'];
         $imagenMovida = $objSubirArchivos->cambiarImagenDeLugar($nombreImagen, $tipoActual, $tipoNuevo);
-        $response = array('title' => 'EXITO', 'message' => 'Fue modificado con exito el produto: ' . $datos['idProducto']);
+        if ($imagenMovida) {
+            $response = array('title' => 'EXITO', 'message' => 'Fue modificado con exito el produto: ' . $datos['idProducto']);
+        } else {
+            $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al mover la imagen del produto: ' . $datos['idProducto']);
+        }
     } else
         $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al editar el producto con id: ' . $datos['idProducto']);
 } else {
     $response = array('title' => 'NO PRODUCTO', 'message' => 'Producto no encontrado');
 }
-// viewStructure($responde);
 // Convertir el array a formato JSON
 echo json_encode($response);
