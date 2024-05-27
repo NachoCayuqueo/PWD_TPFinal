@@ -46,7 +46,7 @@ if (!empty($producto)) {
     ];
     $modificacionExitosa = $objProducto->modificacion($modificarParams);
 
-    if ($cambiarImagenDeLugar && $cambiarImagenDeLugar) {
+    if ($modificacionExitosa && $cambiarImagenDeLugar) {
         $objSubirArchivos = new SubirArchivos();
         $nombreImagen = $datos['nombreImagen'];
         $imagenMovida = $objSubirArchivos->cambiarImagenDeLugar($nombreImagen, $tipoActual, $tipoNuevo);
