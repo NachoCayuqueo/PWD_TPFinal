@@ -30,7 +30,7 @@ if ($esUsuarioValido) {
 
 <head>
     <?php
-    $title = "Panel Admin";
+    $title = "Panel Deposito";
     include_once "../structures/head.php";
     ?>
 </head>
@@ -40,7 +40,7 @@ if ($esUsuarioValido) {
     include_once '../structures/navbar.php';
     ?>
     <div class="mt-3">
-        <h1 class="text-center">Panel Encargado De Deposito</h1>
+        <h1 class="title text-center">Panel Deposito</h1>
     </div>
     <div class="main-container">
         <div class="container mt-3 mb-3">
@@ -49,7 +49,7 @@ if ($esUsuarioValido) {
                     <h3 class="title">Modificar Producto</h3>
                 </div>
                 <div>
-                    <form class="form card-body card-title" id="form-modificar-producto" name="form-modif-producto" novalidate enctype="multipart/form-data">
+                    <form class="form card-body card-title text" id="form-modificar-producto" name="form-modif-producto" novalidate enctype="multipart/form-data">
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -174,8 +174,8 @@ if ($esUsuarioValido) {
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
-                            <button id='btn-send' class="btn btn-text btn-primary me-md-2" type="submit">Modificar</button>
-                            <button id='btn-clean' class="btn btn-text btn-primary" type="reset">Borrar</button>
+                            <button id='btn-send' class="btn btn-text btn-color me-md-2" type="submit">Modificar</button>
+                            <button id='btn-clean' class="btn btn-text btn-danger" type="reset">Borrar</button>
                         </div>
                     </form>
                 </div>

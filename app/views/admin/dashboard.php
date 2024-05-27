@@ -75,22 +75,9 @@ if ($esUsuarioValido) {
             ';
         } else {
             echo '
-                    <div class="container d-flex justify-content-center">
-                        <div class=" card-container d-flex justify-content-center align-items-center">
-                            <div class="card text-center mb-3" style="width: 28rem;">
-                                <div class="card-header">
-                                    <div class="text-end"><a class="btn-close" href="../../index.php" role="button"></a></div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">UPS!</h5>
-                                    <p class="card-text">No se encontraron productos cargados en la base de datos</p>
-                                </div>
-                                <div class="card-footer text-body-secondary">
-                                    <img src="../../assets/logo.png" style="height: 30px;" alt="logo-fai">
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
+                <div class="d-flex justify-content-center">
+                    <h4 class="text">No se encontraron usuarios cargados en la base de datos</h4>
+                </div>';
         }
         ?>
     </div>
