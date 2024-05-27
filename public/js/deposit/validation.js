@@ -83,7 +83,7 @@ function validarFormularioNuevo(event) {
     $("#error-precio").text("").hide();
   }
 
-  if (stock <= 0) {
+  if (stock < 0) {
     $("#error-stock").text("El stock debe ser mayor que cero.").show().css({
       color: "#dc3545",
       "font-size": "0.875rem",

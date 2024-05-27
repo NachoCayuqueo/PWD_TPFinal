@@ -15,8 +15,12 @@ $(document).ready(function () {
   });
   $("#form-nuevo-producto").submit(function (event) {
     event.preventDefault();
-    const archivo = $("#miArchivo")[0].files[0];
-    guardarImagenNuevo(archivo);
+    if (validarFormularioNuevo(event)) {
+      const archivo = $("#miArchivo")[0].files[0];
+      if (archivo) {
+        guardarImagenNuevo(archivo);
+      }
+    }
   });
 });
 
