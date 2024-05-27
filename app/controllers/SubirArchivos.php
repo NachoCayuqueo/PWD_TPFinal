@@ -2,7 +2,7 @@
 class SubirArchivos
 {
     private $EXTENSION_IMG = ['jpg', 'png', 'jpeg'];
-    private $CARPETA = __DIR__ . '/../../assets/images/products/'; //carpeta donde se
+    private $CARPETA = __DIR__ . '/../../assets/images/products/';
 
     public function SubirImagen($nombre, $carpetaTemporal, $tipo)
     {
@@ -47,12 +47,7 @@ class SubirArchivos
         if (file_exists($ubicacionActual)) {
             if (rename($ubicacionActual, $nuevaUbicacion)) {
                 $exito = true;
-                $resp = "Archivo movido con éxito";
-            } else {
-                $resp = "ERROR al mover el archivo";
             }
-        } else {
-            $resp = "ERROR: El archivo no existe en la ubicación actual";
         }
 
         return $exito;
