@@ -12,7 +12,7 @@ $(document).ready(function () {
 });
 
 function validarFormulario(event) {
-  ("use strict");
+  "use strict";
   const form = $("#form-modificar-producto")[0];
   let isValid = true;
 
@@ -37,7 +37,9 @@ function validarFormulario(event) {
   }
 
   if (stock !== "") {
-    if (stock < 0) {
+    const stockValue = Number(stock); // Convertir stock a número
+
+    if (stockValue < 0) {
       $("#error-stock")
         .text("El stock debe ser mayor o igual a cero.")
         .show()
@@ -55,6 +57,7 @@ function validarFormulario(event) {
 
   return isValid;
 }
+
 function validarFormularioNuevo(event) {
   ("use strict");
   const form = $("#form-nuevo-producto")[0];

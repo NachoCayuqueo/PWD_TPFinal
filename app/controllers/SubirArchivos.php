@@ -4,24 +4,39 @@ class SubirArchivos
     private $EXTENSION_IMG = ['jpg', 'png', 'jpeg'];
     private $CARPETA = __DIR__ . '/../../assets/images/products/'; //carpeta donde se
 
-
     public function SubirImagen($nombre, $carpetaTemporal, $tipo)
     {
+        // Extensiones permitidas
+        $extensionesPermitidas = $this->EXTENSION_IMG;
+
+        // Obtener la información del archivo
         $inf_archivo = pathinfo($nombre);
-        $extensionDeArchivo = $inf_archivo['extension'];
+        $extensionDeArchivo = strtolower($inf_archivo['extension']);
         $exito = false;
 
+        // Verificar que la extensión del archivo esté permitida
+        if (in_array($extensionDeArchivo, $extensionesPermitidas)) {
+            // Construir la ubicación final del archivo
+            $ubicacion = $this->CARPETA .  $tipo . '/' . basename($nombre);
 
-        if (in_array($extensionDeArchivo, $this->EXTENSION_IMG)) {
-            $ubicacion = $this->CARPETA .  $tipo . '/' . $nombre;
+            // Verificar que el directorio existe o crearlo
+            if (!file_exists(dirname($ubicacion))) {
+                mkdir(dirname($ubicacion), 0777, true);
+            }
+
+            // Mover el archivo desde la carpeta temporal a la ubicación final
             if (move_uploaded_file($carpetaTemporal, $ubicacion)) {
                 $exito = true;
+            } else {
+                $resp = "ERROR: No se pudo mover el archivo.";
             }
         } else {
-            $resp = "ERROR: El formato del archivo no es el permitido";
+            $resp = "ERROR: El formato del archivo no es el permitido.";
         }
+
         return $exito;
     }
+
 
     public function cambiarImagenDeLugar($nombre, $tipoActual, $nuevoTipo)
     {
@@ -40,6 +55,6 @@ class SubirArchivos
             $resp = "ERROR: El archivo no existe en la ubicación actual";
         }
 
-        return $resp;
+        return $exito;
     }
 }

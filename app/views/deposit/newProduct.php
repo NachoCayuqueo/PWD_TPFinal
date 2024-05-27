@@ -152,7 +152,7 @@ if (!empty($listaRoles)) {
                             <div class="col d-flex align-items-center">
                                 <div>
                                     <h5>Seleccione Imagen</h5>
-                                    <input class="form-control" type="file" id="miArchivo" name="miArchivo" required>
+                                    <input class="form-control" type="file" id="miArchivo" name="miArchivo">
                                     <div class="invalid-feedback">Debe seleccionar una imagen del producto</div>
                                     <small id="miniaturaHelp" class="form-text text-muted">formatos permitidos: png, jpg y jpeg</small>
                                 </div>
