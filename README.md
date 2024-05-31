@@ -78,6 +78,24 @@ git clone git@github.com:NachoCayuqueo/PWD_TPFinal.git
 http://localhost/PWD_TPFinal/app/views/home
 ```
 
+## Configuración de Permisos para Imágenes de Productos
+
+Asegúrate de que las siguientes carpetas tengan permisos de lectura y escritura para poder crear y editar archivos:
+
+- `assets/images/products/accessories`
+- `assets/images/products/food`
+- `assets/images/products/toys`
+
+### Configuración de Permisos
+
+En sistemas Unix, utiliza los siguientes comandos:
+
+```bash
+chmod -R 777 assets/images/products/accessories
+chmod -R 777 assets/images/products/food
+chmod -R 777 assets/images/products/toys
+```
+
 ## Cuentas de Testeo
 
 Para facilitar el proceso de prueba, proporcionamos las siguientes cuentas de prueba:
@@ -109,6 +127,8 @@ La contraseña utiliza el siguiente formato: `cliente<nombre>`
 ## Documentación Tecnica
 
 Para más detalles técnicos sobre la implementación del sitio, por favor consulta el archivo PDF de documentación técnica incluido en el proyecto.
+
+- [Documentación Técnica](docs/documentacion_tecnica.pdf)
 
 ## Autores
 
