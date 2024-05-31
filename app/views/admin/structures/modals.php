@@ -142,13 +142,16 @@ function modalEditMenu($modalId, $idRolPadre, $idItem, $nombreItem, $subMenu, $r
 
     if ($roles) {
         foreach ($roles as $rol) {
-            $idRol = $rol->getIdRol();
+            $fechaEliminacion = $rol->getRoFechaEliminacion();
             $descripionRol = $rol->getRoDescripcion();
-            $esRolActivo = $idRol === $idRolPadre;
-            echo '
+            if (!$fechaEliminacion && $descripionRol !== 'cliente') {
+                $idRol = $rol->getIdRol();
+                $esRolActivo = $idRol === $idRolPadre;
+                echo '
     <input type="radio" class="btn-check" name="options-base" id="optionRol_' . $idRol . '_' . $idItem . '" value="' . $idRol . '" ' . ($esRolActivo ? "checked" : "") . ' autocomplete="off">
     <label class="btn" for="optionRol_' . $idRol . '_' . $idItem . '">' . $descripionRol . '</label>
 ';
+            }
         }
     }
 
