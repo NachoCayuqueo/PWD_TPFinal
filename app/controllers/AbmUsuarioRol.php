@@ -210,4 +210,83 @@ class AbmUsuarioRol
         }
         return $rol;
     }
+
+    /**
+     * Modificar el estado de un rol para un usuario.
+     *
+     * Esta función permite activar o desactivar un rol para un usuario específico.
+     * Si el rol se activa, la función también verifica si el usuario ya tiene un rol activo
+     * y lo desactiva antes de activar el nuevo rol. Si el rol se desactiva, la función
+     * procede a eliminar el rol del usuario.
+     *
+     * @param array $param Parámetros necesarios para la modificación del rol del usuario.
+     *   - idUsuario: int El ID del usuario al que se le modificará el rol.
+     *   - idRol: int El ID del rol que se modificará.
+     *   - rolActivo: bool Indica si el rol debe ser activado (true) o desactivado (false).
+     *   - nombreRol: string El nombre del rol que se modificará (para mensajes descriptivos).
+     *
+     * @return array $response Respuesta con el resultado de la operación.
+     *   - title: string El título del resultado ('EXITO' o 'ERROR').
+     *   - message: string Mensaje descriptivo del resultado de la operación.
+     */
+    public function modificarRolUsuario($param)
+    {
+        $response = [];
+        $esRolActivo = $param['rolActivo'];
+        $idUsuario = $param['idUsuario'];
+        $idRol = $param['idRol'];
+        $nombreRol = $param['nombreRol'];
+
+        $params = [
+            "idUsuario" => $idUsuario,
+            "idRol" => $idRol,
+        ];
+
+        $rolActivo = $this->obtenerRolActivo($idUsuario);
+
+        if ($esRolActivo) {
+            //* verificar rol actual
+            if ($rolActivo) {
+                $params["rolActivo"] = 0;
+            } else {
+                $params["rolActivo"] = 1;
+            }
+            //* dar alta en UsuarioRol
+            $altaExitosa = $this->alta($params);
+            if ($altaExitosa)
+                $response = array('title' => 'EXITO', 'message' => 'Se activo el rol: '  . strtoupper($nombreRol));
+            else
+                $response = array('title' => 'ERROR', 'message' => 'ERROR al activar el rol: ' . strtoupper($nombreRol));
+        } else {
+            //* verificar si rol activo se da de baja
+            if ($rolActivo->getIdRol() == $idRol) {
+                $paramBuscarRol = [
+                    "idUsuario" => $idUsuario,
+                    "rolActivo" => 0
+                ];
+
+                $usuarioRol = $this->buscar($paramBuscarRol);
+                $rol = $usuarioRol[0]->getObjetoRol();
+                $paramModificar = [
+                    "idUsuario" => $idUsuario,
+                    "idRol" => $rol->getIdRol(),
+                    "rolActivo" => 1
+                ];
+                $modificacionExitosa = $this->modificacion($paramModificar);
+            }
+            // if ($modificacionExitosa) {
+            //     $response = array('title' => 'EXITO', 'message' => 'nuevo rol activado');
+            // } else {
+            //     $response = array('title' => 'ERROR', 'message' =>  $idUsuario);
+            // }
+            //* eliminar en UsuarioRol
+            $params["rolActivo"] = 0;
+            $bajaExitosa = $this->baja($params);
+            if ($bajaExitosa)
+                $response = array('title' => 'EXITO', 'message' => 'Se dio de baja el rol: ' . strtoupper($nombreRol));
+            else
+                $response = array('title' => 'ERROR', 'message' => 'ERROR al dar de baja el rol: ' . strtoupper($nombreRol));
+        }
+        return $response;
+    }
 }
