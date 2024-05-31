@@ -18,7 +18,7 @@ function productsCard($product, $hrefComprar)
     $urlImagen =  $GLOBALS['IMAGES'] . "/products/" . $tipo . "/" . $nombreImagen;
 
     echo '
-        <div class="card card-container p-2 h-100">
+        <div class="card card-container card-container-height p-2 h-100">
         ';
     if ($stock === 0) {
         echo '<div class="ribbon">
