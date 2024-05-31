@@ -67,8 +67,6 @@
 
     <script src="<?php echo $PUBLIC_JS ?>/validations.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/user/registerAjax.js"></script>
-    <script src="<?php echo $PRINCIPAL ?>/public/lib/md5.js"></script>
-
 </body>
 
 </html>

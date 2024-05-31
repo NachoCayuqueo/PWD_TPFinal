@@ -69,6 +69,15 @@ function getAvatar($rol)
             break;
         }
     }
+    // Si no se encontró el rol especificado, buscar el rol "nuevo"
+    if ($avatarUsuario === "") {
+        foreach ($dataJSON['user'] as $user) {
+            if ($user['role'] === 'nuevo') {
+                $avatarUsuario = $user['avatar_img'];
+                break;
+            }
+        }
+    }
     return $avatarUsuario;
 }
 
@@ -83,7 +92,6 @@ function getHomePage($rol)
             break;
         }
     }
-    echo $homepage;
     return $homepage;
 }
 
@@ -110,12 +118,11 @@ function phpMailer($param)
     $mensaje = "";
     $retorno = "";
     try {
-        // Configuración del servidor SMTP de Gmail
         $mail->isSMTP();
         $mail->Host = 'smtp.office365.com';
         $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['ADM_EMAIL']; // Tu dirección de correo 1electrónico completa
-        $mail->Password = $_ENV['ADM_PASSWORD']; // Tu contraseña de Gmail
+        $mail->Username = $_ENV['ADM_EMAIL'];
+        $mail->Password = $_ENV['ADM_PASSWORD'];
         $mail->SMTPSecure = 'tls'; // TLS
         $mail->Port = 587; // Puerto SMTP
 
@@ -157,21 +164,34 @@ function getEmailContent($param)
             break;
         case 'cambioDeEmail':
             $asunto = 'Cambio de email';
-            $mensaje = 'Hola ' . $nombreDestinatario . ', tu correo electrónico ha sido modificado. Tu nuevo correo electrónico es: ' . $param['emailDestinatario'] . '.';
-            $emailDestinatario = $param['emailAntiguo'];
+            // $mensaje = 'Hola ' . $nombreDestinatario . ', tu correo electrónico ha sido modificado. Tu nuevo correo electrónico es: ' . $param['emailDestinatario'] . '.';
+            $mensaje = 'Hola ' . $nombreDestinatario . ",<br><br>" .
+                "Queremos informarte que tu correo electrónico para ingresar a nuestro sitio web ha sido modificado. A partir de ahora, deberás utilizar el siguiente correo electrónico para acceder a tu cuenta:<br><br>" .
+                "Nuevo correo electrónico: " . $param['emailDestinatario'] . "<br><br>" .
+                "El correo electrónico anterior (" . $param['emailAntiguo'] . ") ya no podrá ser utilizado para ingresar a nuestro sitio web.<br><br>" .
+                "Si no has solicitado este cambio o tienes alguna duda, por favor, ponte en contacto con nuestro soporte lo antes posible.<br><br>" .
+                "Gracias por ser parte de " . $_ENV['NOMBRE_SITIO'] . ".<br><br>" .
+                "Saludos,<br><br>" .
+                "El equipo de " . $_ENV['NOMBRE_SITIO'];
+            // $emailDestinatario = $param['emailAntiguo'];
             break;
         case 'altaUsuario':
             $asunto = 'Bienvenido a nuestro sitio';
-            $mensaje = 'Hola ' . $nombreDestinatario . ', ¡Bienvenido a ' . $_ENV['NOMBRE_SITIO'] . '!' . "\n" .
-                'Tu cuenta ha sido creada exitosamente. A continuación, encontrarás tus datos de acceso:' . "\n" .
-                'Correo electrónico: ' . $emailDestinatario . "\n" .
-                'Contraseña: ' . $param['passwordDestinatario'] . "\n" .
-                'Por favor, guarda esta información de manera segura. Puedes cambiar tu contraseña en cualquier momento, iniciando sesión en el sitio y modificándola en la sección de configuraciones.' . "\n" .
-                '¡Esperamos que disfrutes tu experiencia en nuestro sitio!';
+            $mensaje = "Hola " . $nombreDestinatario . ", ¡Bienvenido a " . $_ENV['NOMBRE_SITIO'] . "!<br><br>" .
+                "Tu cuenta ha sido creada exitosamente.<br><br>" .
+                "A continuación, encontrarás tus datos de acceso:<br><br>" .
+                "Correo electrónico: " . $emailDestinatario . "<br><br>" .
+                "Contraseña: " . $param['passwordDestinatario'] . "<br><br>" .
+                "Por favor, guarda esta información de manera segura. Puedes cambiar tu contraseña en cualquier momento, iniciando sesión en el sitio y modificándola en la sección de configuraciones.<br><br>" .
+                "¡Esperamos que disfrutes tu experiencia en nuestro sitio!";
             break;
         case 'bajaUsuario':
             $asunto = 'Baja de Cuenta';
-            $mensaje = 'Hola ' . $nombreDestinatario . ', tu cuenta en ' . $_ENV['NOMBRE_SITIO'] . ' ha sido dada de baja.';
+            $mensaje = 'Hola ' . $nombreDestinatario . ",<br><br>" .
+                "Lamentamos informarte que tu cuenta en " . $_ENV['NOMBRE_SITIO'] . " ha sido dada de baja.<br><br>" .
+                "Si crees que esto es un error o si tienes alguna pregunta, por favor, ponte en contacto con nuestro soporte.<br><br>" .
+                "Saludos,<br>" .
+                "El equipo de " . $_ENV['NOMBRE_SITIO'];
             break;
         case 'habilitarUsuario':
             $asunto = 'Habilitacion de Cuenta';
@@ -189,17 +209,21 @@ function getEmailContent($param)
 
 function dateFormat($originalDate)
 {
-    $months = array(
-        1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
-        5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
-        9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
-    );
+    if ($originalDate) {
+        $months = array(
+            1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
+            5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
+            9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+        );
 
-    $timestamp = strtotime($originalDate);
-    $day = date('d', $timestamp);
-    $monthNumber = date('n', $timestamp);
-    $month = $months[$monthNumber];
-    $year = date('Y', $timestamp);
+        $timestamp = strtotime($originalDate);
+        $day = date('d', $timestamp);
+        $monthNumber = date('n', $timestamp);
+        $month = $months[$monthNumber];
+        $year = date('Y', $timestamp);
 
-    return $day . '-' . $month . '-' . $year;
+        return $day . '-' . $month . '-' . $year;
+    } else {
+        return '';
+    }
 }

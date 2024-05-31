@@ -65,8 +65,8 @@ class AbmMenu
         $resp = false;
         $param['idMenu'] = null;
 
-        $objetoCompraEstado = $this->cargarObjeto($param);
-        if ($objetoCompraEstado != null and $objetoCompraEstado->insertar()) {
+        $objetoMenu = $this->cargarObjeto($param);
+        if ($objetoMenu != null and $objetoMenu->insertar()) {
             $resp = true;
         }
         return $resp;
@@ -81,8 +81,8 @@ class AbmMenu
     {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            $objetoCompraEstado = $this->cargarObjeto($param);
-            if ($objetoCompraEstado != null and $objetoCompraEstado->modificar()) {
+            $objetoMenu = $this->cargarObjeto($param);
+            if ($objetoMenu != null and $objetoMenu->modificar()) {
                 $resp = true;
             }
         }
@@ -98,8 +98,8 @@ class AbmMenu
     {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            $objetoCompraEstado = $this->cargarObjetoConClave($param);
-            if ($objetoCompraEstado != null and $objetoCompraEstado->eliminar()) {
+            $objetoMenu = $this->cargarObjetoConClave($param);
+            if ($objetoMenu != null and $objetoMenu->eliminar()) {
                 $resp = true;
             }
         }
@@ -451,13 +451,13 @@ class AbmMenu
     {
         $idMenu = $param['idMenu'];
         $nombreItem = $param['nombreItem'];
-        $idRolSeleccionado = $param['idRolSeleccionado'];
+        //$idRolSeleccionado = $param['idRolSeleccionado'];
         $switchActivado = $param['deshabilitarSwitch'];
         $switchActivado = $switchActivado === 'null' ? false : true;
         $subItems = $param['subItems'];
 
         if (!empty($subItems)) {
-            $respuesta = $this->deshabilitarSubItems($switchActivado, $subItems, $idMenu, $nombreItem, $idRolSeleccionado);
+            $respuesta = $this->deshabilitarSubItems($switchActivado, $subItems, $idMenu, $nombreItem);
         } else {
             $respuesta = $this->deshabilitarItem($idMenu);
         }
@@ -484,7 +484,7 @@ class AbmMenu
         return $cambiosExitosos;
     }
 
-    private function deshabilitarSubItems($deshabilitarSelector, $subItems, $idMenu, $nombreItem, $idRol)
+    private function deshabilitarSubItems($deshabilitarSelector, $subItems, $idMenu, $nombreItem)
     {
         if (!$deshabilitarSelector) {
             $bajaExitosa = $this->procesarDeshabilitarSubItems($subItems);

@@ -11,6 +11,7 @@ function enviarFormularioDeCreacion() {
   const nombre = $("#name").val();
   const email = $("#email").val();
   const password = $("#password").val();
+  const encryptedPassword = hex_md5(password);
 
   // Array para almacenar los IDs de los checkboxes seleccionados
   const idsCheckboxesSeleccionados = [];
@@ -40,7 +41,7 @@ function enviarFormularioDeCreacion() {
     data: {
       nombre,
       email,
-      password,
+      password: encryptedPassword,
       activarUsuario,
     },
     success: function (response) {
@@ -54,6 +55,9 @@ function enviarFormularioDeCreacion() {
           btnMailer
         );
       } else {
+        btnMailer.find(".spinner-border").addClass("d-none");
+        btnMailer.prop("disabled", false);
+
         Swal.fire({
           icon: "error",
           title: "Error",
@@ -106,6 +110,8 @@ function crearUsuarioRol(
       }
     },
     error: function (xhr, status, error) {
+      btnMailer.find(".spinner-border").addClass("d-none");
+      btnMailer.prop("disabled", false);
       console.error("error", error);
       const datosAlerta = {
         title: "Error",

@@ -11,6 +11,8 @@ if ($session->validar()) {
 
 if (!is_null($nombreRolActivo) && $nombreRolActivo !== 'cliente') {
     $locacion = getHomePage($nombreRolActivo);
+    if ($locacion === "")
+        $locacion = getHomePage('nuevo');
     header('Location: ' . $VISTAS . "/" . $locacion);
 }
 

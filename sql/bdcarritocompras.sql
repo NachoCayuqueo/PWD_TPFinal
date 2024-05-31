@@ -346,7 +346,8 @@ INSERT INTO `valoracionproducto` (`idvaloracion`,`idproducto`, `idusuario`, `ran
 
 CREATE TABLE `rol` (
   `idrol` bigint(20) NOT NULL,
-  `rodescripcion` varchar(50) NOT NULL
+  `rodescripcion` varchar(50) NOT NULL,
+  `rofechaeliminacion` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

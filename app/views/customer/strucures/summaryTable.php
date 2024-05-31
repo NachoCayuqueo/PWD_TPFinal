@@ -42,7 +42,7 @@ function crearTablaResumenCompra($listaCompras)
             echo "<td>" . $precioTotal . "</td>";
             echo "<td class='text-center'>"
                 . (!$tieneValoracion
-                    ? " <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $idCompra . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='comentar'>
+                    ? " <a href='#' class='btn btn-outline-success edit-btn' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $idCompra . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='comentar'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
                     </a>"
                     : " <a href='#' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#modalSeeReview_" . $idCompra . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='right' data-bs-title='ver tu opinion'>
@@ -202,8 +202,8 @@ function modalRankearCompra($idModal, $idUsuario, $productos)
     echo '  
           </div>
           <div class="modal-footer">
-            <button id="btn-save_' . $idModal . '" type="button" class="btn btn-primary btn-save" data-bs-dismiss="modal">Guardar</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button id="btn-save_' . $idModal . '" type="button" class="btn btn-text btn-color btn-save" data-bs-dismiss="modal">Guardar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
           </div>
         </div>
       </div>

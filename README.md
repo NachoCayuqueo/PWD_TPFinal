@@ -124,11 +124,11 @@ La contraseña utiliza el siguiente formato: `cliente<nombre>`
 - Tarjeta Visa Argentina (AR)
   - **Número**: 4000000320000021
 
-## Documentación Tecnica
+## Documentación Técnica
 
 Para más detalles técnicos sobre la implementación del sitio, por favor consulta el archivo PDF de documentación técnica incluido en el proyecto.
 
-- [Documentación Técnica](docs/documentacion_tecnica.pdf)
+La documentación técnica se encuentra en el siguiente directorio del proyecto: `docs/documentacion_tecnica.pdf`
 
 ## Autores
 

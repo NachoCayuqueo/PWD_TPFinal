@@ -12,12 +12,14 @@ class AbmRol
         $obj = null;
         if (
             array_key_exists('idRol', $param)  &&
-            array_key_exists('roDescripcion', $param)
+            array_key_exists('roDescripcion', $param) &&
+            array_key_exists('roFechaEliminacion', $param)
         ) {
             $obj = new Rol();
             $obj->setear(
                 $param['idRol'],
-                $param['roDescripcion']
+                $param['roDescripcion'],
+                $param['roFechaEliminacion']
             );
         }
         return $obj;
@@ -34,7 +36,7 @@ class AbmRol
         $obj = null;
         if (isset($param['idRol'])) {
             $obj = new Rol();
-            $obj->setear($param['idRol'], null);
+            $obj->setear($param['idRol'], null, null);
         }
         return $obj;
     }
@@ -113,11 +115,25 @@ class AbmRol
                 $where[] = " idRol = '" . $param['idRol'] . "'";
             if (isset($param['roDescripcion']))
                 $where[] = " rodescripcion = '" . $param['roDescripcion'] . "'";
+            if (isset($param['roFechaEliminacion']))
+                $where[] = " rofechaeliminacion = '" . $param['roFechaEliminacion'] . "'";
         }
         $whereClause = implode(" AND ", $where);
         $objetoUsuarioRol = new Rol();
         $arreglo = $objetoUsuarioRol->listar($whereClause);
         return $arreglo;
+    }
+
+    public function deshabilitar($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $objetoRol = $this->cargarObjetoConClave($param);
+            if ($objetoRol != null and $objetoRol->deshabilitar()) {
+                $resp = true;
+            }
+        }
+        return $resp;
     }
 
     public function actualizarRol($idRol, $nombreRol)
@@ -147,5 +163,104 @@ class AbmRol
             }
         }
         return $modificacionExitosa;
+    }
+
+    public function nuevoRol($nombre)
+    {
+        $response = [];
+        //* busco todos los roles para verificar que no exista
+        $listaRoles = $this->buscar(null);
+        $existeRol = false;
+        if (!empty($listaRoles)) {
+            foreach ($listaRoles as $rol) {
+                $descripcionRol = $rol->getRoDescripcion();
+                if (strtolower($nombre) === strtolower($descripcionRol)) {
+                    //si se encuentra un rol con ese mismo nombre, enviamos mensaje de error 
+                    $response = array('title' => 'ERROR', 'message' => 'El rol que intenta cargar ya existe');
+                    $existeRol = true;
+                    break;
+                }
+            }
+        }
+        if (!$existeRol) {
+            //* si no existe creo el nuevo rol
+            $param = [
+                'roDescripcion' => $nombre,
+                'roFechaEliminacion' => NULL
+            ];
+            $altaExitosa = $this->alta($param);
+
+            if ($altaExitosa) {
+                //* agregro el rol en la tabla menu
+                $objetoMenu = new AbmMenu();
+                $paramMenu = [
+                    'meNombre' => $nombre,
+                    'meDescripcion' => 'menu padre del usuario ' . $nombre,
+                    'meDeshabilitado' => NULL,
+                    'idPadre' => NULL
+                ];
+                $altaExitosa = $objetoMenu->alta($paramMenu);
+
+                if ($altaExitosa) {
+                    //* recuperar idRol
+                    $rol = $this->buscar(['roDescripcion' => $nombre]);
+                    $idRol = $rol[0]->getIdRol();
+                    //* recuperar idMenu
+                    $menu = $objetoMenu->buscar(['meNombre' => $nombre]);
+                    $idMenu = $menu[0]->getIdMenu();
+
+                    //* actualizo menurol
+                    $objetoMenuRol = new AbmMenuRol();
+                    $paramMenuRol = [
+                        'idMenu' => $idMenu,
+                        'idRol' => $idRol
+                    ];
+                    $altaExitosa = $objetoMenuRol->alta($paramMenuRol);
+                    if ($altaExitosa) {
+                        $response = array('title' => 'EXITO', 'message' => 'Alta exitosa');
+                    } else {
+                        $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar crear un nuevo rol');
+                    }
+                }
+            } else
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al intentar crear un nuevo rol');
+        } else
+            $response = array('title' => 'ERROR', 'message' => 'El rol que intenta ingresar ya existe');
+
+
+        return $response;
+    }
+
+    public function eliminarRol($idRol)
+    {
+        $response = [];
+
+        $objetoUsuarioRol = new AbmUsuarioRol();
+        $param = ['idRol' => $idRol];
+        $listaUsuarioRol = $objetoUsuarioRol->buscar($param);
+        if (empty($listaUsuarioRol)) {
+            //* menu-rol 
+            $objetoMenuRol = new AbmMenuRol();
+            $menuRol = $objetoMenuRol->buscar($param);
+            $idMenu = $menuRol[0]->getObjetoMenu()->getIdMenu();
+
+            //* eliminar menu -> se agrega fecha deshabilitado
+            $objetoMenu = new AbmMenu();
+            $bajaExitosa = $objetoMenu->deshabilitar(['idMenu' => $idMenu]);
+
+            if ($bajaExitosa) {
+                //* eliminar rol
+                $bajaExitosa = $this->deshabilitar($param);
+                if ($bajaExitosa)
+                    $response = array('title' => 'EXITO', 'message' => 'Se elimino el rol');
+                else
+                    $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al dar de baja el rol con id: ' . $idRol);
+            } else {
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al dar de baja el rol con id: ' . $idRol);
+            }
+        } else {
+            $response = array('title' => 'ERROR', 'message' => 'Existen usuarios  asignados a este Rol');
+        }
+        return $response;
     }
 }

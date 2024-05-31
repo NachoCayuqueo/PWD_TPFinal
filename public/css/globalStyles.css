@@ -92,10 +92,12 @@ input[type="number"] {
 }
 
 .card-container {
-  height: 450px; /* Ajusta esta altura según tus necesidades */
+  /* height: 450px; */
   border-radius: 25px;
+}
 
-  /* box-shadow: 0px 0px 15px 1px rgba(168, 168, 168, 0.75); */
+.card-container-height {
+  height: 450px;
 }
 
 .card-container:hover {

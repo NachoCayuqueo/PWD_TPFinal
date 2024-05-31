@@ -48,4 +48,3 @@ if ($session->validar()) {
 
 <script src="<?php echo $PUBLIC_JS ?>/user/validatePersonalData.js"></script>
 <script src="<?php echo $PUBLIC_JS ?>/user/changePersonalDataAjax.js"></script>
-<script src="<?php echo $PRINCIPAL ?>/public/lib/md5.js"></script>

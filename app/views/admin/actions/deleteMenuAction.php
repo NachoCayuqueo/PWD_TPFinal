@@ -7,14 +7,12 @@ $data = data_submitted();
 
 $idMenu = $data['idMenu'];
 $nombreItem = $data['nombreItem'];
-$idRolSeleccionado = $data['idRolSeleccionado'];
 $deshabilitarSwitch = $data['deshabilitarSwitch'];
 $subItems = $data['subItems'];
 
 $param = [
     'idMenu' => $idMenu,
     'nombreItem' => $nombreItem,
-    'idRolSeleccionado' => $idRolSeleccionado,
     'deshabilitarSwitch' => $deshabilitarSwitch,
     'subItems' => $subItems
 ];

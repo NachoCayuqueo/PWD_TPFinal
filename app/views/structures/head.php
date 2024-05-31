@@ -20,5 +20,6 @@ include_once "../../../config/configuration.php";
 <!-- SCRIPT -->
 <script type="text/javascript" src='<?php echo $PRINCIPAL ?>/public/lib/bootstrap/bootstrap.bundle.min.js'></script>
 <script type="text/javascript" src='<?php echo $PRINCIPAL ?>/public/lib/jquery-3.7.1.min.js'></script>
+<script type="text/javascript" src="<?php echo $PRINCIPAL ?>/public/lib/md5.js"></script>
 <script type="text/javascript" src='<?php echo $PRINCIPAL ?>/public/js/modalAction.js'></script>
 <script type="text/javascript" src='<?php echo $PRINCIPAL ?>/public/js/tooltipScript.js'></script>

@@ -174,18 +174,25 @@ class Menu extends DataBase
         }
         return $resp;
     }
-    //TODO: testear cuando el idpadre en NULL
+
     public function insertar()
     {
         $resp = false;
         $idPadre = $this->getObjetoPadre()->getIdMenu();
 
-        $sql = "INSERT INTO menu(menombre,medescripcion,idpadre,medeshabilitado)  
-            VALUES("
-            . $this->getMeNombre() . ","
-            . $this->getMeDescripcion() . ","
-            . $idPadre . ","
-            . $this->getMeDeshabilitado() . ");";
+        $idPadreStr = $idPadre === null ? '' : ', idpadre';
+        $idPadreVal = $idPadre === null ? '' : ', ' . $idPadre;
+
+        $fechaDeshabilitado = $this->getMeDeshabilitado();
+        $fechaDeshabilitadoStr =  ', medeshabilitado';
+        $fechaDeshabilitadoVal = $fechaDeshabilitado === null ? ', NULL' : ", '" . $fechaDeshabilitado . "'";
+
+        $sql = "INSERT INTO menu (menombre, medescripcion" . $idPadreStr . $fechaDeshabilitadoStr . ") VALUES ('"
+            . $this->getMeNombre() . "', '"
+            . $this->getMeDescripcion() . "'"
+            . $idPadreVal
+            . $fechaDeshabilitadoVal . ");";
+
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($sql)) {
                 $this->setIdMenu($id);

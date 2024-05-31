@@ -23,6 +23,7 @@ function crearTablaMenu($listaMenu, $roles)
         foreach ($hijos as $item) {
             $esSelector = false;
             $nombreRol = $menu['nombre'];
+            $nombre = $menu['nombre'];
             $subItems = $item['subHijos'];
             $fechaDeshabilitado = $item['fechaDeshabilitado'];
             if (is_null($fechaDeshabilitado)) {
@@ -43,12 +44,18 @@ function crearTablaMenu($listaMenu, $roles)
                 echo "<td>" . $item['nombreHijo'] . "</td>";
                 echo "<td>" . $nombreRol . "</td>";
                 echo "<td class='text-center'>
-            <a href='#' class='btn btn-outline-primary edit-btn' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $item['idHijo'] . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='Editar'>
-                <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
-            </a>
-            <a href='#' class='btn btn-outline-danger delete-btn' data-bs-toggle='modal' data-bs-target='#modalDelete_" . $item['idHijo'] . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='right' data-bs-title='Desactivar'>
+                <div>";
+
+                if ($nombre !== 'Cliente') {
+                    echo "<a href='#' class='btn btn-outline-primary edit-btn m-1' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $item['idHijo'] . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='Editar'>
+                        <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
+                    </a>";
+                }
+
+                echo "<a href='#' class='btn btn-outline-danger delete-btn' data-bs-toggle='modal' data-bs-target='#modalDelete_" . $item['idHijo'] . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='right' data-bs-title='Desactivar'>
                 <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/x-lg.svg' alt='trash'>
             </a>
+            </div>
           </td>";
                 echo "</tr>";
 

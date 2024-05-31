@@ -140,7 +140,7 @@ function mostrarDatosTabla($idCompra, $idUsuario, $nombreUsuario, $emailUsuario,
     echo "<td>" . $fechaCompra . "</td>";
     echo "<td>" . $precioTotalCompra . "</td>";
     if ($mostrarBotones) {
-        echo "<td class='text-center'>
+        echo "<td class='text-center d-flex gap-2'>
             <button  type='button' class='btn btn-text btn-color' data-bs-toggle='modal' data-bs-target='#modalAutorizar_" . $idCompra . "'>
                 Autorizar
             </button>

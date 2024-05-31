@@ -31,6 +31,8 @@ function crearTablaRol($idUsuario, $fechaDeshabilitado, $roles, $rolesDB)
                 $descripcionRol = $rol->getRoDescripcion();
                 // Verifica si el rol está presente en los roles del usuario
                 $checked = in_array($descripcionRol, $rolesUsuario) ? 'checked' : '';
+                $esUnicoRol = count($rolesUsuario) === 1 && $checked;
+                $disabled = $esUnicoRol ? "disabled" : ""; // Si el usuario tiene un solo rol, no se puede deshabilitar
                 // con ucfirst la primer letra es mayuscula
                 $tablaRoles .= '
                 <tr>

@@ -152,7 +152,6 @@ $(document).ready(function () {
 
     const idMenu = obtenerId(formulario);
     const nombreItem = obtenerNombreItem(idMenu);
-    const idRolSeleccionado = obtenerIdRol(idMenu);
     const switchDisabled = obtenerSwitchDisabled("deleteSwitch", idMenu);
 
     const idItemSelectorValues = obtenerValores("idItemSelectorBorrar", idMenu);
@@ -174,7 +173,6 @@ $(document).ready(function () {
       data: {
         idMenu,
         nombreItem,
-        idRolSeleccionado,
         deshabilitarSwitch: switchDisabled ? switchDisabled : null,
         subItems,
       },
@@ -312,6 +310,7 @@ $(document).ready(function () {
     const idRolSeleccionado = $(
       "input[id^='optionRol_'][id$='_" + id + "']:checked"
     ).attr("id");
+
     const partesIdRolSeleccionado = idRolSeleccionado.split("_");
     return partesIdRolSeleccionado[1];
   }

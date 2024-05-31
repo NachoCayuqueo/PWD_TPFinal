@@ -7,7 +7,7 @@ $data = data_submitted();
 $idUsuario = $data['idUsuario'];
 $nombre = $data['nombre'];
 $email = $data['email'];
-$esConfiguracionPersonal = $data['esConfiguracionPersonal'];
+$esConfiguracionPersonal = filter_var($data['esConfiguracionPersonal'], FILTER_VALIDATE_BOOLEAN); //me aseguro que sea boolean y no una cadena
 
 $param = ["idUsuario" => $idUsuario];
 $usuario   = $objetoUsuario->buscar($param);
