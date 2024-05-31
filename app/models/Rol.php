@@ -3,6 +3,7 @@ class Rol extends DataBase
 {
     private $idRol;
     private $roDescripcion;
+    private $roFechaEliminacion;
     private $mensajeOperacion;
 
     public function __construct()
@@ -11,6 +12,7 @@ class Rol extends DataBase
 
         $this->idRol = "";
         $this->roDescripcion = "";
+        $this->roFechaEliminacion = null;
         $this->mensajeOperacion = "";
     }
 
@@ -29,6 +31,13 @@ class Rol extends DataBase
     public function getRoDescripcion()
     {
         return $this->roDescripcion;
+    }
+    /**
+     * Get the value of roFechaEliminacion
+     */
+    public function getRoFechaEliminacion()
+    {
+        return $this->roFechaEliminacion;
     }
 
     /**
@@ -64,6 +73,18 @@ class Rol extends DataBase
     }
 
     /**
+     * Set the value of roFechaEliminacion
+     *
+     * @return  self
+     */
+    public function setRoFechaEliminacion($roFechaEliminacion)
+    {
+        $this->roFechaEliminacion = $roFechaEliminacion;
+
+        return $this;
+    }
+
+    /**
      * Set the value of mensajeOperacion
      *
      * @return  self
@@ -75,10 +96,11 @@ class Rol extends DataBase
         return $this;
     }
 
-    public function setear($idrol, $rodescripcion)
+    public function setear($idrol, $rodescripcion, $roFechaEliminacion)
     {
         $this->setIdRol($idrol);
         $this->setRoDescripcion($rodescripcion);
+        $this->setRoFechaEliminacion($roFechaEliminacion);
     }
 
     public function cargar()
@@ -90,7 +112,7 @@ class Rol extends DataBase
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $this->Registro();
-                    $this->setear($row['idrol'], $row['rodescripcion']);
+                    $this->setear($row['idrol'], $row['rodescripcion'], $row['rofechaeliminacion']);
                 }
             }
         } else {
@@ -102,8 +124,17 @@ class Rol extends DataBase
     public function insertar()
     {
         $resp = false;
-        $sql = "INSERT INTO rol(rodescripcion)  
-            VALUES('" . $this->getRoDescripcion() . "');";
+        $roDescripcion = $this->getRoDescripcion();
+        $roFechaEliminacion = $this->getRoFechaEliminacion();
+
+        if ($roFechaEliminacion === null) {
+            $sql = "INSERT INTO rol(rodescripcion) VALUES('"
+                . $roDescripcion . "');";
+        } else {
+            $sql = "INSERT INTO rol(rodescripcion, rofechaeliminacion) VALUES('"
+                . $roDescripcion . "', '"
+                . $roFechaEliminacion . "');";
+        }
 
         if ($this->Iniciar()) {
             if ($id = $this->Ejecutar($sql)) {
@@ -151,6 +182,26 @@ class Rol extends DataBase
         return $resp;
     }
 
+    public function deshabilitar()
+    {
+        $resp = false;
+        $newDate = date('Y-m-d H:i:s');
+        $query = "UPDATE rol SET 
+                    rofechaeliminacion='" . $newDate . "' 
+                    WHERE idrol=" . $this->getIdRol();
+
+        if ($this->Iniciar()) {
+            if ($this->Ejecutar($query)) {
+                $resp = true;
+            } else {
+                $this->setMensajeoperacion("ERROR::Rol => deshabilitar ejecutar: " . $this->getError());
+            }
+        } else {
+            $this->setMensajeoperacion("ERROR::Rol => deshabilitar insertar: " . $this->getError());
+        }
+        return $resp;
+    }
+
     public function listar($parametro = "")
     {
         $arreglo = array();
@@ -164,8 +215,7 @@ class Rol extends DataBase
                 if ($res > 0) {
                     while ($row = $this->Registro()) {
                         $objetoRol = new Rol();
-                        $objetoRol->setear($row['idrol'], $row['rodescripcion']);
-
+                        $objetoRol->setear($row['idrol'], $row['rodescripcion'], $row['rofechaeliminacion']);
                         array_push($arreglo, $objetoRol);
                     }
                 }
