@@ -14,6 +14,11 @@
       "role": "cliente",
       "avatar_img": "person-circle.svg",
       "homepage": "home/index.php"
+    },
+    {
+      "role": "nuevo",
+      "avatar_img": "person-walking.svg",
+      "homepage": "usuario/index.php"
     }
   ]
 }
