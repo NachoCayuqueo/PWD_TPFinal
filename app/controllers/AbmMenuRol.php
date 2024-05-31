@@ -45,7 +45,7 @@ class AbmMenuRol
             $objMenu->setear($param['idMenu'], null, null, null, null);
 
             $objetoRol = new Rol();
-            $objetoRol->setear($param['idRol'], null);
+            $objetoRol->setear($param['idRol'], null, null);
 
             $obj = new MenuRol();
             $obj->setear($objMenu, $objetoRol);
@@ -77,8 +77,8 @@ class AbmMenuRol
     public function alta($param)
     {
         $resp = false;
-        $objUsuarioRol = $this->cargarObjeto($param);
-        if (($objUsuarioRol != null) && ($objUsuarioRol->insertar())) {
+        $objetoMenuRol = $this->cargarObjeto($param);
+        if (($objetoMenuRol != null) && ($objetoMenuRol->insertar())) {
             $resp = true;
         }
         return $resp;
@@ -93,8 +93,8 @@ class AbmMenuRol
     {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            $objetoUsuario = $this->cargarObjetoConClave($param);
-            if ($objetoUsuario != null and $objetoUsuario->eliminar()) {
+            $objetoMenuRol = $this->cargarObjetoConClave($param);
+            if ($objetoMenuRol != null and $objetoMenuRol->eliminar()) {
                 $resp = true;
             }
         }
