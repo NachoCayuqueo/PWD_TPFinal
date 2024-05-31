@@ -80,6 +80,7 @@ if (is_null($nombreRolActivo)) {
 <hr class="my-0" style="color: white;">
 
 <?php
+
 //*menu
 $objetoMenu = new AbmMenu();
 $objetoMenu->armarMenu($idRol);
