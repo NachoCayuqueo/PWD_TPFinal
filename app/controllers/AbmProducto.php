@@ -207,15 +207,15 @@ class AbmProducto
 
     public function eliminarProducto($paramProducto)
     {
+        $response = [];
         $objetoValoracion = new AbmValoracionProducto();
         $listaValoraciones = $objetoValoracion->buscar($paramProducto);
         $eliminarExito = true;
         //---- elimino compras si este producto posee
         $objetoCompraItem = new AbmCompraItem();
         $comprasDeProducto = $objetoCompraItem->buscar($paramProducto);
-
-        if (!empty($comprasDeProducto)) { //si encuentra una compra la elimina
-
+        //---- si encuentra una compra la elimina
+        if (!empty($comprasDeProducto)) {
             foreach ($comprasDeProducto as $compra) {
                 $idCompraItem = $compra->getObjetoCompra()->getIdCompra();
                 $objCompraEstado = new AbmCompraEstado();
@@ -227,28 +227,64 @@ class AbmProducto
                 if ((($estadoActual === 4) && ($fechaFin)) || ($estadoActual === 5)) {
                     //---- elimino valoraciones si este producto posee
                     if (!empty($listaValoraciones)) {
-                        foreach ($listaValoraciones as $valoracion) {
-                            $idValoracion = $valoracion->getIdValoracionProducto();
-                            $paramValoracion = ['idValoracion' => $idValoracion];
-                            $eliminarExito = $objetoValoracion->baja($paramValoracion);
-                        }
+                        $eliminarExito = $this->eliminarValoraciones($listaValoraciones, $objetoValoracion);
                     }
-                    //---- elimino la compra item
-                    $idCompraItem =  $comprasDeProducto[0]->getIdCompraItem();
-                    $paramCompraItem = ['idCompraItem' => $idCompraItem];
-                    $eliminarExito = $objetoCompraItem->baja($paramCompraItem);
-                    //----por ultimo elimino el producto 
                     if ($eliminarExito) {
-                        $eliminarExito = $this->baja($paramProducto);
+                        //---- elimino la compra item
+                        $eliminarExito = $this->eliminarCompraItem($compra, $objetoCompraItem);
+                        //----por ultimo elimino el producto 
+                        if ($eliminarExito)
+                            $response = $this->eliminarProductoFinal($paramProducto);
+                        else
+                            $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al dar de baja el producto. Problemas con la compra item con id: ' . $idCompraItem);
+                    } else {
+                        $response = array('title' => 'ERROR', 'message' => 'Ocurrió un error al eliminar las valoraciones del producto');
                     }
                 } else {
-                    $eliminarExito = false;
+                    $response = array('title' => 'ERROR', 'message' => 'El producto no puede ser eliminado porque se encuentra en una compra activa');
                 }
             }
         } else {
-            $eliminarExito = $this->baja($paramProducto);
+            //---- elimino valoraciones si este producto posee
+            if (!empty($listaValoraciones))
+                $eliminarExito = $this->eliminarValoraciones($listaValoraciones, $objetoValoracion);
+
+            if ($eliminarExito) {
+                $response = $this->eliminarProductoFinal($paramProducto);
+            } else
+                $response = array('title' => 'ERROR', 'message' => 'Ocurrió un error al eliminar las valoraciones del producto');
         }
-        return $eliminarExito;
+        return $response;
+    }
+
+    private function eliminarValoraciones($listaValoraciones, $objetoValoracion)
+    {
+        $eliminacionExitosa = true;
+        foreach ($listaValoraciones as $valoracion) {
+            $idValoracion = $valoracion->getIdValoracionProducto();
+            $paramValoracion = ['idValoracion' => $idValoracion];
+            $eliminacionExitosa = $objetoValoracion->baja($paramValoracion);
+            if (!$eliminacionExitosa) break;
+        }
+        return $eliminacionExitosa;
+    }
+
+    private function eliminarCompraItem($compraItem, $objetoCompraItem)
+    {
+        $idCompraItem =  $compraItem->getIdCompraItem();
+        $paramCompraItem = ['idCompraItem' => $idCompraItem];
+        return $objetoCompraItem->baja($paramCompraItem);
+    }
+
+    private function eliminarProductoFinal($paramProducto)
+    {
+        $eliminarExito = $this->baja($paramProducto);
+
+        if ($eliminarExito) {
+            return array('title' => 'EXITO', 'message' => 'El producto se eliminó de manera correcta');
+        } else {
+            return array('title' => 'ERROR', 'message' => 'Ocurrió un error al dar de baja el producto');
+        }
     }
 
     public function actualizarStock($idProducto, $cantidad)

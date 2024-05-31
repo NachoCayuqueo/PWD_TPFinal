@@ -34,8 +34,8 @@ $(document).ready(function () {
       },
       error: function (xhr, status, error) {
         // Maneja los errores de la solicitud AJAX
-        console.error(error);
-        console.error(xhr.responseText);
+        console.error(xhr);
+        console.error("error: " + error);
         // Muestra una alerta de error
         Swal.fire({
           icon: "error",
