@@ -14,8 +14,6 @@ Bienvenido a nuestra tienda online especializada en productos para perros. Nuest
 - **Comentarios y Valoraciones**: Los clientes pueden dejar comentarios y valoraciones sobre los productos comprados, ayudando a otros usuarios a tomar decisiones informadas.
 - **Cambio de Roles**: Los usuarios pueden cambiar entre los roles asignados a su cuenta según sea necesario.
 
-## Screenshots
-
 ## Tecnologias
 
 Para el desarrollo del proyecto se utilizó:
@@ -115,7 +113,7 @@ Los correos electrónicos para los clientes de prueba siguen el formato `<nombre
 La contraseña utiliza el siguiente formato: `cliente<nombre>`
 
 - Ejemplo:
-  - **Email**: usuarioTest@gmail.com - **Contraseña**: clienteusuarioTest
+  - **Email**: luis@gmail.com - **Contraseña**: clienteluis
 
 ### Tarjeta Aprobada para pruebas con Stripe
 

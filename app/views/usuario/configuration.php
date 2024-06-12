@@ -37,7 +37,8 @@ if ($session->validar()) {
             <div class="col-auto col-md-4 col-lg-3 navbar-color">
                 <div class="p-2">
                     <a class="d-flex text-decoration-none align-items-center text-white">
-                        <span class="fs-4 d-none d-sm-inline title">Configuraciones</span>
+                        <img src="<?php echo $BOOTSTRAP_ICONS ?>/grid-fill.svg" alt="">
+                        <span class="fs-4 d-none d-sm-inline title text-white">Panel</span>
                     </a>
                     <ul class="nav nav-pills flex-column mt-4">
                         <li class="nav-item text">

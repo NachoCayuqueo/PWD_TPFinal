@@ -62,7 +62,7 @@ if (is_null($nombreRolActivo)) {
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="text dropdown-item" href="' . $VISTAS . '/usuario/configuration.php">Configuraciones</a></li>';
+                                <li><a class="text dropdown-item" href="' . $VISTAS . '/usuario/configuration.php">Mi Perfil</a></li>';
                             } else {
                                 echo '<li><a class="text dropdown-item" href="' . $VISTAS . '/login">Login</a></li>
                                 <li><a class="text dropdown-item" href="' . $VISTAS . '/register">Register</a></li>
