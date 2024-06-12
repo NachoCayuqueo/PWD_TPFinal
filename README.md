@@ -19,27 +19,27 @@ Bienvenido a nuestra tienda online especializada en productos para perros. Nuest
 
 Para el desarrollo de este proyecto se han utilizado las siguientes tecnologías:
 
-## Lenguajes de Programación
+### Lenguajes de Programación
 
 - ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
   ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
-## Frameworks
+### Frameworks
 
 - ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat-square&logo=bootstrap&logoColor=white)
 
-## Bibliotecas
+### Bibliotecas
 
 - ![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=flat-square&logo=jquery&logoColor=white)
   ![SweetAlert2](https://img.shields.io/badge/SweetAlert2-44CC11?style=flat-square&logo=sweetalert&logoColor=white)
   ![AJAX](https://img.shields.io/badge/AJAX-FF6C37?style=flat-square&logo=ajax&logoColor=white)
 
-## Bases de Datos
+### Bases de Datos
 
 - ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
   ![phpMyAdmin](https://img.shields.io/badge/phpMyAdmin-6C78AF?style=flat-square&logo=phpmyadmin&logoColor=white)
 
-## Librerías PHP
+### Librerías PHP
 
 - ![phpdotenv](https://img.shields.io/badge/phpdotenv-4F5B93?style=flat-square&logo=phpdotenv&logoColor=white)
   ![PHPMailer](https://img.shields.io/badge/PHPMailer-3498DB?style=flat-square&logo=phpmailer&logoColor=white)
