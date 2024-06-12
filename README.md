@@ -13,6 +13,7 @@ Bienvenido a nuestra tienda online especializada en productos para perros. Nuest
 - **Carrito de Compras**: Panel lateral que muestra los productos seleccionados, permite modificar cantidades o eliminar productos, y calcula el precio final.
 - **Comentarios y Valoraciones**: Los clientes pueden dejar comentarios y valoraciones sobre los productos comprados, ayudando a otros usuarios a tomar decisiones informadas.
 - **Cambio de Roles**: Los usuarios pueden cambiar entre los roles asignados a su cuenta según sea necesario.
+- **Actualizar panel menu**: Permite a los administradores gestionar los items del navbar
 
 ## Tecnologias
 
