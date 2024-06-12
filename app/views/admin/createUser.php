@@ -77,8 +77,9 @@ if ($esUsuarioValido) {
                                     foreach ($listaRoles as $rol) {
                                         $idRol = $rol->getIdRol();
                                         $descripionRol = $rol->getRoDescripcion();
+                                        $descripcionRolLower = strtolower($descripcionRol);
                                         echo '
-                                            <input type="checkbox" class="btn-check btn-check-roles" id="btn-check-' . $idRol . '" value="' . $descripionRol . '" ' . ($descripionRol === 'cliente' ? "checked" : "") . ' autocomplete="off">
+                                            <input type="checkbox" class="btn-check btn-check-roles" id="btn-check-' . $idRol . '" value="' . $descripionRol . '" ' . ($descripcionRolLower === 'cliente' ? "checked" : "") . ' autocomplete="off">
                                             <label class="btn" for="btn-check-' . $idRol . '">' . $descripionRol . '</label>        
                                         ';
                                     }

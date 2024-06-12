@@ -45,8 +45,8 @@ function crearTablaMenu($listaMenu, $roles)
                 echo "<td>" . $nombreRol . "</td>";
                 echo "<td class='text-center'>
                 <div>";
-
-                if ($nombre !== 'Cliente') {
+                $nombreLower = strtolower($nombre);
+                if ($nombreLower !== 'cliente') {
                     echo "<a href='#' class='btn btn-outline-primary edit-btn m-1' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $item['idHijo'] . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='Editar'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
                     </a>";
