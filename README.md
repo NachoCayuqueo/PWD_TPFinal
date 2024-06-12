@@ -15,15 +15,35 @@ Bienvenido a nuestra tienda online especializada en productos para perros. Nuest
 - **Cambio de Roles**: Los usuarios pueden cambiar entre los roles asignados a su cuenta según sea necesario.
 - **Actualizar panel menu**: Permite a los administradores gestionar los items del navbar
 
-## Tecnologias
+# Tecnologías Utilizadas en el Proyecto
 
-Para el desarrollo del proyecto se utilizó:
+Para el desarrollo de este proyecto se han utilizado las siguientes tecnologías:
 
-- **Lenguajes de Programación**: PHP, JavaScript
-- **Frameworks**: Bootstrap
-- **Bibliotecas**: jQuery, SweetAlert2, AJAX
-- **Bases de Datos**: MySQL (utilizando phpMyAdmin para la gestión)
-- **Librerías PHP**: phpdotenv, PHPMailer, stripe-php
+## Lenguajes de Programación
+
+- ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
+  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+
+## Frameworks
+
+- ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat-square&logo=bootstrap&logoColor=white)
+
+## Bibliotecas
+
+- ![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=flat-square&logo=jquery&logoColor=white)
+  ![SweetAlert2](https://img.shields.io/badge/SweetAlert2-44CC11?style=flat-square&logo=sweetalert&logoColor=white)
+  ![AJAX](https://img.shields.io/badge/AJAX-FF6C37?style=flat-square&logo=ajax&logoColor=white)
+
+## Bases de Datos
+
+- ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+  ![phpMyAdmin](https://img.shields.io/badge/phpMyAdmin-6C78AF?style=flat-square&logo=phpmyadmin&logoColor=white)
+
+## Librerías PHP
+
+- ![phpdotenv](https://img.shields.io/badge/phpdotenv-4F5B93?style=flat-square&logo=phpdotenv&logoColor=white)
+  ![PHPMailer](https://img.shields.io/badge/PHPMailer-3498DB?style=flat-square&logo=phpmailer&logoColor=white)
+  ![stripe-php](https://img.shields.io/badge/stripe--php-6772E5?style=flat-square&logo=stripe&logoColor=white)
 
 ## Variables de Entorno
 
