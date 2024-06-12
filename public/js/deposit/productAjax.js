@@ -127,7 +127,7 @@ function enviarFormularioDeModificacion(nombreImg) {
     success: function (response) {
       response = JSON.parse(response);
       if (response.title === "EXITO") {
-        const href = "../../views/deposit/index.php";
+        const href = "../../views/deposit/dashboard.php";
         mostrarAlerta(response, null, href);
       } else {
         mostrarAlerta(response);
