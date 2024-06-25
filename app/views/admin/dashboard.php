@@ -1,20 +1,15 @@
 <?php
-include_once '../../../config/configuration.php';
 
-$session = new Session();
+include_once "../../controllers/validaciones.php";
+
 $existeUsuario = false;
 
-$esUsuarioValido = $session->validarUsuario();
-if ($esUsuarioValido) {
-    $objetoUsuario = new AbmUsuario();
-    $objetoRol = new AbmRol();
-    $listaUsuario = $objetoUsuario->buscar(null);
-    if (count($listaUsuario) > 0) {
-        $existeUsuario = true;
-        $rolesDB = $objetoRol->buscar(null);
-    }
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+$objetoUsuario = new AbmUsuario();
+$objetoRol = new AbmRol();
+$listaUsuario = $objetoUsuario->buscar(null);
+if (count($listaUsuario) > 0) {
+    $existeUsuario = true;
+    $rolesDB = $objetoRol->buscar(null);
 }
 ?>
 <!DOCTYPE html>

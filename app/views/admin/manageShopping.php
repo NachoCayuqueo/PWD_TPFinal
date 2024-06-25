@@ -1,14 +1,8 @@
 <?php
-include_once '../../../config/configuration.php';
+include_once "../../controllers/validaciones.php";
 
-$session = new Session();
-$esUsuarioValido = $session->validarUsuario();
-if ($esUsuarioValido) {
-    $objetoCompra = new AbmCompra();
-    $compras = $objetoCompra->obtenerDetallesCompras();
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-}
+$objetoCompra = new AbmCompra();
+$compras = $objetoCompra->obtenerDetallesCompras();
 ?>
 
 <!DOCTYPE html>

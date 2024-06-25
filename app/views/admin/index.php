@@ -1,14 +1,9 @@
 <?php
-include_once "../../../config/configuration.php";
-$session = new Session();
+include_once "../../controllers/validaciones.php";
 
-$esUsuarioValido = $session->validarUsuarioPorRol("admin");
-if ($esUsuarioValido) {
-    $objetoMenu = new AbmMenu();
-    $datosMenu = $objetoMenu->obtenerNombresMenu(1);
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-}
+$objetoMenu = new AbmMenu();
+$datosMenu = $objetoMenu->obtenerNombresMenu(1);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

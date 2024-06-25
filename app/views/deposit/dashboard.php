@@ -1,22 +1,18 @@
 <?php
-include_once '../../../config/configuration.php';
+include_once "../../controllers/validaciones.php";
 include_once './structures/funciones.php';
 
-$session = new Session();
-$esUsuarioValido = $session->validarUsuario();
 $existeProducto = false;
-if ($esUsuarioValido) {
-    $objetoProducto = new AbmProducto();
-    $objetoRol = new AbmRol();
-    $listaProducto = $objetoProducto->buscar(null);
-    if (count($listaProducto) > 0) {
-        $existeProducto = true;
-        $rolesDB = $objetoRol->buscar(null);
-    }
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+
+$objetoProducto = new AbmProducto();
+$objetoRol = new AbmRol();
+$listaProducto = $objetoProducto->buscar(null);
+if (count($listaProducto) > 0) {
+    $existeProducto = true;
+    $rolesDB = $objetoRol->buscar(null);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -151,18 +151,38 @@ class Session
         $descripcionMenu = $anteultimo_elemento . "/" . $ultimo_elemento;
 
         $objetoMenu = new AbmMenu();
+        $objetoMenuRol = new AbmMenuRol();
+
+        if ($this->esIndex($ultimo_elemento)) {
+            $nombre = '';
+            switch ($anteultimo_elemento) {
+                case 'admin':
+                    $nombre = 'admin';
+                    break;
+                case 'deposit':
+                    $nombre = 'deposito';
+                    break;
+                default:
+                    break;
+            }
+            $menu = $objetoMenu->buscar(['meNombre' => $nombre]);
+            $idMenu = $menu[0]->getIdMenu();
+            $menuRol = $objetoMenuRol->buscar(['idMenu' => $idMenu]);
+            $idRol = $menuRol[0]->getObjetoRol()->getIdRol();
+
+            return ['idMenu' => $idMenu, 'idRol' => $idRol];
+        }
+
         $menu = $objetoMenu->buscar(['meDescripcion' => $descripcionMenu]);
 
         if (!empty($menu))
             $idMenuPadre = $menu[0]->getObjetoPadre()->getIdMenu();
 
         $condicion = false;
-        $objetoMenuRol = new AbmMenuRol();
         if ($idMenuPadre >= 1 && $idMenuPadre <= 3) {
             $menuRol = $objetoMenuRol->buscar(['idMenu' => $idMenuPadre]);
             $condicion = true;
         }
-        //TODO: deberia tener un maximo de repeticiones por las dudas
         while (!$condicion) {
             $menu = $objetoMenu->buscar(['idMenu' => $idMenuPadre]);
             $idMenuPadre = $menu[0]->getObjetoPadre()->getIdMenu();
@@ -173,6 +193,14 @@ class Session
         }
         $idrol = $menuRol[0]->getObjetoRol()->getIdRol();
         return ['idMenu' => $idMenuPadre, 'idRol' => $idrol];
+    }
+
+    private function esIndex($ultimoSegmento)
+    {
+        if ($ultimoSegmento === 'index.php') {
+            return true;
+        }
+        return false;
     }
 
     public function esUsuarioNoLogueado()

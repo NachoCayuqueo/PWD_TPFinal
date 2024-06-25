@@ -1,18 +1,12 @@
 <?php
-include_once '../../../config/configuration.php';
+include_once "../../controllers/validaciones.php";
 include_once "roleModals.php";
 
-$session = new Session();
-$esUsuarioValido = $session->validarUsuario();
 $existenRoles = false;
-if ($esUsuarioValido) {
-    $objetoRoles = new AbmRol();
-    $listaRoles = $objetoRoles->buscar(null);
-    if (!empty($listaRoles)) {
-        $existenRoles = true;
-    }
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+$objetoRoles = new AbmRol();
+$listaRoles = $objetoRoles->buscar(null);
+if (!empty($listaRoles)) {
+    $existenRoles = true;
 }
 ?>
 

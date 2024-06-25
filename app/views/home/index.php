@@ -1,21 +1,5 @@
 <?php
-include_once "../../../config/configuration.php";
-$session = new Session();
-$objetoUsuarioRol = new AbmUsuarioRol();
-if ($session->validar()) {
-    $usuario = $session->getUsuario();
-    $idUsuario = $usuario->getIdUsuario();
-    $rol = $objetoUsuarioRol->obtenerRolActivo($idUsuario);
-    $nombreRolActivo = $rol->getRoDescripcion();
-}
-
-if (!is_null($nombreRolActivo) && $nombreRolActivo !== 'cliente') {
-    $locacion = getHomePage($nombreRolActivo);
-    if ($locacion === "")
-        $locacion = getHomePage('nuevo');
-    header('Location: ' . $VISTAS . "/" . $locacion);
-}
-
+include_once "../../controllers/validaciones.php";
 
 $objetoProducto = new AbmProducto();
 $productosDestacados = $objetoProducto->obtenerProductosSimilares('favorite');

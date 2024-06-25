@@ -1,17 +1,12 @@
 <?php
-include_once '../../../config/configuration.php';
+include_once "../../controllers/validaciones.php";
 
-$session = new Session();
-$esUsuarioValido = $session->validarUsuario();
-if ($esUsuarioValido) {
-    $objetoMenu = new AbmMenu();
-    $objetoRol = new AbmRol();
-    $misMenus = $objetoMenu->recuperarDatosMenu();
-    //* obtener roles de la db
-    $roles = $objetoRol->buscar(null);
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-}
+$objetoMenu = new AbmMenu();
+$objetoRol = new AbmRol();
+$misMenus = $objetoMenu->recuperarDatosMenu();
+//* obtener roles de la db
+$roles = $objetoRol->buscar(null);
+
 ?>
 
 <!DOCTYPE html>

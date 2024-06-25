@@ -1,10 +1,8 @@
 <?php
-include_once '../../../config/configuration.php';
+include_once "../../controllers/validaciones.php";
 include_once './structures/funciones.php';
 
 $datos = data_submitted();
-
-// viewStructure($datos);
 
 $nombreImagen = $datos['nombreImagen'];
 $nombre = $datos['nombre'];

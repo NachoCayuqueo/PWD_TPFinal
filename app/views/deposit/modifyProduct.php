@@ -1,28 +1,29 @@
 <?php
-include_once '../../../config/configuration.php';
+include_once "../../controllers/validaciones.php";
 include_once './structures/funciones.php';
 
-$session = new Session();
-$esUsuarioValido = $session->validarUsuarioPorRol("deposito");
+//TODO: debe recibir id por url y desde ahi recuperar los datos
+// $session = new Session();
+// $esUsuarioValido = $session->validarUsuarioPorRol("deposito");
 
-if ($esUsuarioValido) {
-    $datos = data_submitted();
+// if ($esUsuarioValido) {
+$datos = data_submitted();
 
-    $nombreImagen = $datos['nombreImagen'];
-    $nombre = $datos['nombre'];
-    $precio = $datos['precio'];
-    $tipo = $datos['tipo'];
+$nombreImagen = $datos['nombreImagen'];
+$nombre = $datos['nombre'];
+$precio = $datos['precio'];
+$tipo = $datos['tipo'];
 
-    $idProducto = $datos['idProducto'];
-    $descripcion = $datos['descripcionCompleta'];
-    $descripcion_formateada = str_replace('<br/>', '.', $descripcion);
-    $stock = $datos['stock'];
-    $nombreCompleto = $datos['nombreCompleto'];
-    $esNuevo = $datos['esNuevo'];
-    $esPopular = $datos['esPopular'];
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-}
+$idProducto = $datos['idProducto'];
+$descripcion = $datos['descripcionCompleta'];
+$descripcion_formateada = str_replace('<br/>', '.', $descripcion);
+$stock = $datos['stock'];
+$nombreCompleto = $datos['nombreCompleto'];
+$esNuevo = $datos['esNuevo'];
+$esPopular = $datos['esPopular'];
+// } else {
+//     header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
+// }
 ?>
 
 <!DOCTYPE html>
