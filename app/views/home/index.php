@@ -1,18 +1,5 @@
 <?php
 include_once "../../controllers/validaciones.php";
-
-$objetoProducto = new AbmProducto();
-$productosDestacados = $objetoProducto->obtenerProductosSimilares('favorite');
-$productosNuevos = $objetoProducto->obtenerProductosSimilares('new');
-
-$existenProductosDestacados = false;
-if ($productosDestacados) {
-    $existenProductosDestacados = true;
-}
-$existenProductosNuevos = false;
-if (!empty($productosNuevos)) {
-    $existenProductosNuevos = true;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,69 +40,25 @@ if (!empty($productosNuevos)) {
         </div>
     </div>
     <!-- populars products  -->
-    <div>
-        <div class="title-with-line">
-            <h1 class="title text-center">Productos Destacados</h1>
-        </div>
-        <div class="">
-            <div class="container-sm p-4">
-                <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
-                    <?php
-                    if ($existenProductosDestacados) {
-                        // Obtener el total de productos disponibles
-                        $numProductos = count($productosDestacados);
-
-                        // Obtener tres números aleatorios únicos
-                        $indicesAleatorios = array_rand($productosDestacados, min(3, $numProductos));
-                        foreach ($indicesAleatorios as $indice) {
-                            $productoDestacado = $productosDestacados[$indice];
-                            $botonComprar = "../customer/buyProduct.php?idProducto=" . $productoDestacado->getIdProducto();
-                            echo '<div class="col">';
-                            productsCard($productoDestacado, $botonComprar);
-                            echo '</div>';
-                        }
-                    } else {
-                        echo  "<div class='container text-center'>No hay productos registrados.</div>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    <div id="container-favorite-products"></div>
 
     <!-- new products -->
-    <div>
-        <div class="title-with-line">
-            <h1 class="title text-center">Productos Nuevos</h1>
-        </div>
-        <div class="">
-            <div class="container-sm p-4">
-                <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
-                    <?php
-                    if ($existenProductosNuevos) {
-                        // Obtener el total de productos disponibles
-                        $numProductosNuevos = count($productosNuevos);
-
-                        // Obtener tres números aleatorios únicos
-                        $indicesAleatoriosNuevos = array_rand($productosNuevos, min(3, $numProductosNuevos));
-                        foreach ($indicesAleatoriosNuevos as $indice) {
-                            $productoNuevo = $productosNuevos[$indice];
-                            $botonComprar = "../customer/buyProduct.php?idProducto=" . $productoNuevo->getIdProducto();
-                            echo '<div class="col">';
-                            productsCard($productoNuevo, $botonComprar);
-                            echo '</div>';
-                        }
-                    } else {
-                        echo  "<div class='container text-center'>No hay productos registrados.</div>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
+    <div id="container-new-products"></div>
+    <script>
+        const productInfo = [{
+                type: "favorite",
+                idContainer: "container-favorite-products",
+                showRandomProducts: true
+            },
+            {
+                type: "new",
+                idContainer: "container-new-products",
+                showRandomProducts: true
+            }
+        ]
+    </script>
+    <script src="<?php echo $PUBLIC_JS ?>/customer/getProductsAjax.js"></script>
+    <script src="<?php echo $PUBLIC_JS ?>/moreProductInfo.js"></script>
     <?php include_once "../structures/footer.php"; ?>
 </body>
 
