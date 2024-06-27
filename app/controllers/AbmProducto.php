@@ -95,14 +95,33 @@ class AbmProducto
     {
         switch ($tipoProducto) {
             case 'favorite':
-                return $this->buscar(['esProDestacado' => 1]);
+                return $this->toArray($this->buscar(['esProDestacado' => 1]));
             case 'new':
-                return $this->buscar(['esProNuevo' => 1]);
+                return $this->toArray($this->buscar(['esProNuevo' => 1]));
             default:
-                return $this->buscar(['proTipo' => $tipoProducto]);
+                return $this->toArray($this->buscar(['proTipo' => $tipoProducto]));
         }
     }
-
+    private function toArray($listaProductos)
+    {
+        $arregloProductos = [];
+        foreach ($listaProductos as $producto) {
+            $arrayProduct = [
+                'idProducto' => $producto->getIdProducto(),
+                'proNombre' => $producto->getProNombre(),
+                'proDescripcion' => $producto->getProDescripcion(),
+                'proMasInfo' => $producto->getProMasInfo(),
+                'proImagen' => $producto->getProImagen(),
+                'proPrecio' => $producto->getProPrecio(),
+                'proTipo' => $producto->getProTipo(),
+                'proCantStock' => $producto->getProCantStock(),
+                'esProDestacado' => $producto->getEsProPopular(),
+                'esProNuevo' => $producto->getEsProNuevo()
+            ];
+            $arregloProductos[] = $arrayProduct;
+        }
+        return $arregloProductos;
+    }
     public function obtenerNombreTipo($tipo)
     {
         switch ($tipo) {
