@@ -124,6 +124,21 @@ class AbmRol
         return $arreglo;
     }
 
+    public function toArray($listaRol)
+    {
+        $arregloRoles = [];
+        foreach ($listaRol as $rol) {
+            $arrayRol = [
+                'idRol' => $rol->getIdRol(),
+                'rolDescripcion' => $rol->getRoDescripcion(),
+                'fechaEliminacion' => $rol->getRoFechaEliminacion()
+            ];
+            $arregloRoles[] = $arrayRol;
+        }
+        return $arregloRoles;
+    }
+
+
     public function deshabilitar($param)
     {
         $resp = false;

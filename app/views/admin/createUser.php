@@ -1,14 +1,5 @@
 <?php
 include_once "../../controllers/validaciones.php";
-
-$objetoRol = new AbmRol();
-$listaRoles = $objetoRol->buscar(null); //obtengo todos los roles
-
-$existenRoles = false;
-if (!empty($listaRoles)) {
-    $existenRoles = true;
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -62,21 +53,7 @@ if (!empty($listaRoles)) {
                     <div class="row mb-4">
                         <div class="col">
                             <label for="rol" class="form-label">Seleccionar Roles</label>
-                            <div>
-                                <?php
-                                if ($existenRoles) {
-                                    foreach ($listaRoles as $rol) {
-                                        $idRol = $rol->getIdRol();
-                                        $descripionRol = $rol->getRoDescripcion();
-                                        $descripcionRolLower = strtolower($descripcionRol);
-                                        echo '
-                                            <input type="checkbox" class="btn-check btn-check-roles" id="btn-check-' . $idRol . '" value="' . $descripionRol . '" ' . ($descripcionRolLower === 'cliente' ? "checked" : "") . ' autocomplete="off">
-                                            <label class="btn" for="btn-check-' . $idRol . '">' . $descripionRol . '</label>        
-                                        ';
-                                    }
-                                }
-                                ?>
-                            </div>
+                            <div id="listaRol"></div>
                             <div><span id="error-check" class="errorCheck"></span></div>
                         </div>
                         <div class="col">
@@ -103,7 +80,7 @@ if (!empty($listaRoles)) {
         </div>
     </div>
 
-
+    <script src="<?php echo $PUBLIC_JS ?>/admin/createListAjax.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/admin/validations.js"></script>
     <script src="<?php echo $PUBLIC_JS ?>/admin/createUserAjax.js"></script>
     <?php include_once "../structures/footer.php"; ?>
