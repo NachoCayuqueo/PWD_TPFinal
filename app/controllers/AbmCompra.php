@@ -127,6 +127,24 @@ class AbmCompra
         return $arreglo;
     }
 
+    public function toArray($listaCompras)
+    {
+        $arregloCompras = [];
+        foreach ($listaCompras as $compra) {
+
+            $obj_usuario = $compra->getObjetoUsuario();
+            $idUsuario = $obj_usuario->getIdUsuario();
+
+            $arrayCompra = [
+                'idCompra' => $compra->getIdCompra(),
+                'coFecha' => $compra->getCoFecha(),
+                'idUsuario' => $idUsuario,
+            ];
+            $arregloCompras[] = $arrayCompra;
+        }
+        return $arregloCompras;
+    }
+
 
     public function buscarComprador($idCompra)
     {
