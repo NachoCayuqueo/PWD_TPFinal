@@ -150,6 +150,12 @@ class Session
         $anteultimo_elemento = $uriParts[$tamaño_arreglo - 1];
         $descripcionMenu = $anteultimo_elemento . "/" . $ultimo_elemento;
 
+        //TODO: revisar bien esta parte
+        if (strpos($descripcionMenu, 'buyProduct') !== false) {
+            return ['idMenu' => 3, 'idRol' => 3];
+        }
+
+
         $objetoMenu = new AbmMenu();
         $objetoMenuRol = new AbmMenuRol();
 
@@ -162,6 +168,8 @@ class Session
                 case 'deposit':
                     $nombre = 'deposito';
                     break;
+                case 'customer':
+                    $nombre = 'cliente';
                 default:
                     break;
             }
@@ -191,6 +199,7 @@ class Session
                 $condicion = true;
             }
         }
+
         $idrol = $menuRol[0]->getObjetoRol()->getIdRol();
         return ['idMenu' => $idMenuPadre, 'idRol' => $idrol];
     }
