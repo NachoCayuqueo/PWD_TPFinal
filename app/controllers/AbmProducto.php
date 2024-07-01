@@ -54,6 +54,7 @@ class AbmProducto
 
             //* se buscan los productos similares por el tipo
             $productosSimilares = $this->obtenerProductosSimilares($tipo);
+            // $productosSimilares = $this->toArray($productosSimilares);
 
             $arregloProducto = [
                 'id' => $producto[0]->getIdProducto(),
@@ -82,6 +83,7 @@ class AbmProducto
                 $sumaValoraciones += $valoracion->getRanking();
             }
             $cantidad = count($valoraciones);
+            $valoraciones = $objetoValoracion->toArrayValoraciones($valoraciones);
             $arregloValoracion = [
                 'valoraciones' => $valoraciones,
                 'cantidadValoraciones' => $cantidad,
@@ -102,8 +104,10 @@ class AbmProducto
                 return $this->toArray($this->buscar(['proTipo' => $tipoProducto]));
         }
     }
-    private function toArray($listaProductos)
+
+    public function toArray($listaProductos)
     {
+
         $arregloProductos = [];
         foreach ($listaProductos as $producto) {
             $arrayProduct = [
@@ -118,10 +122,13 @@ class AbmProducto
                 'esProDestacado' => $producto->getEsProPopular(),
                 'esProNuevo' => $producto->getEsProNuevo()
             ];
+
             $arregloProductos[] = $arrayProduct;
         }
+
         return $arregloProductos;
     }
+
     public function obtenerNombreTipo($tipo)
     {
         switch ($tipo) {

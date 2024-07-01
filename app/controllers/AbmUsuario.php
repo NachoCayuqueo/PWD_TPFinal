@@ -223,6 +223,27 @@ class AbmUsuario
         return $resp;
     }
 
+    public function toArray($usuarios)
+    {
+
+        $arregloUsuario = [];
+        foreach ($usuarios as $usuario) {
+            $arrayUser = [
+                'idUsuario' => $usuario->getIdUsuario(),
+                'usDeshabilitado' => $usuario->getUsDeshabilitado(),
+                'usMail' => $usuario->getUsMail(),
+                'usNombre' => $usuario->getUsNombre(),
+                'usPass' => $usuario->getUsPass(),
+                'usActivo' => $usuario->getUsActivo(),
+
+            ];
+
+            $arregloUsuario[] = $arrayUser;
+        }
+
+        return $arregloUsuario;
+    }
+
     /**
      * Almacena un nuevo usuario en la base de datos
      * @param array $param: user,password,email

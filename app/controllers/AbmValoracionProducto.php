@@ -169,4 +169,83 @@ class AbmValoracionProducto
             return [];
         }
     }
+
+    public function toArrayValoraciones($valoraciones)
+    {
+        $objetoProducto = new AbmProducto();
+        $objetoUsuario = new AbmUsuario();
+        $arregloValoraciones = [];
+
+        foreach ($valoraciones as $valoracion) {
+            $producto = $valoracion->getObjetoProducto();
+            $productos = $objetoProducto->toArray([$producto]);
+
+            $usuario = $valoracion->getObjetoUsuario();
+            $usuarios = $objetoUsuario->toArray([$usuario]);
+
+            $arrayRatings = [
+                'idValoracionProducto' => $valoracion->getIdValoracionProducto(),
+                'ranking' => $valoracion->getRanking(),
+                'descripcion' => $valoracion->getDescripcion(),
+                'fechaCreacion' => $valoracion->getFechaCreacion(),
+                'objetoUsuario' => $usuarios,
+                'objetoProducto' => $productos,
+            ];
+            $arregloValoraciones[] = $arrayRatings;
+        }
+        return $arregloValoraciones;
+    }
+
+
+    public function generateModalReviews($arregloValoraciones)
+    {
+
+        $modalContent = '
+        <div class="modal fade" id="modalReviews" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Reviews</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">';
+
+        foreach ($arregloValoraciones as $valoracion) {
+            $usuario = $valoracion['objetoUsuario'];
+            $nombreUsuario = $usuario['usNombre'];
+            $emailUsuario = $usuario['usMail'];
+            $promedio = $valoracion['ranking'];
+
+            $modalContent .= '
+            <input type="hidden" id="promedio_' . $valoracion['idValoracionProducto'] . '" value="' . $promedio . '">
+            <div id="card_' . $valoracion['idValoracionProducto'] . '" class="card card-container p-2 mb-3">
+              <div class="card-body">
+                <h5 class="card-title">' . $nombreUsuario . '</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">' . $emailUsuario . '</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary">
+                  <div class="rating">
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                  </div>
+                </h6>
+                <p class="card-text">' . $valoracion['descripcion'] . '</p>
+                <p class="card-text">' . dateFormat($valoracion['fechaCreacion']) . '</p>
+              </div>
+            </div>';
+        }
+
+        $modalContent .= '  
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>';
+
+        return $modalContent;
+    }
 }
