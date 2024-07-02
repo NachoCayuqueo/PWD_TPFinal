@@ -7,6 +7,7 @@ $(document).ready(function () {
     },
     success: function (response) {
       response = JSON.parse(response);
+
       createViewHTML(response);
     },
     error: function (xhr, status, error) {
@@ -71,7 +72,7 @@ $(document).ready(function () {
 });
 
 function createViewHTML(productInfo) {
-  const { title, message, productData } = productInfo;
+  const { title, message, productData, idUsuario } = productInfo;
   const {
     id,
     nombre,
@@ -88,6 +89,7 @@ function createViewHTML(productInfo) {
   uploadImageHTML(urlImagen, nombre);
   updateProductInfo(
     id,
+    idUsuario,
     nombre,
     promedio,
     cantidadValoraciones,
@@ -112,6 +114,7 @@ function uploadImageHTML(urlImage, name) {
 
 function updateProductInfo(
   idProducto,
+  idUsuarioActivo,
   name,
   average,
   countReviews,
@@ -122,7 +125,7 @@ function updateProductInfo(
   ratings
 ) {
   $("#product-info").attr("data-id-product", idProducto);
-  //   $("#product-info").attr("data-id-user", idUsuarioActivo); no encuentro donde se invocaba a idusuarioactivo
+  $("#product-info").attr("data-id-user", idUsuarioActivo);
   productNameHTML(name);
   ratingAverageHTML(average);
   updateReviewCountHTML(countReviews);
@@ -286,7 +289,7 @@ function createProductsCard(
   type
 ) {
   let productsContainer = "";
-  console.log(productData);
+
   //TODO: esta parte no es de jquery creo, cambiar aqui
   productsContainer = document.getElementById(idContainer);
 
