@@ -1,5 +1,8 @@
 <?php
-include_once('../vendor/phpmailer/phpmailer/src/PHPMailer.php');
+// include_once('../vendor/phpmailer/phpmailer/src/PHPMailer.php');
+include_once __DIR__ . '/../config/configuration.php';
+include_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

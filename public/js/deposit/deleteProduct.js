@@ -38,4 +38,11 @@ $(document).ready(function () {
       },
     });
   });
+  $(document).on("click", "[id^='editButton-']", function (event) {
+    event.preventDefault();
+    const idBtnEdit = $(this).attr("id");
+    const partesId = idBtnEdit.split("-");
+    const idProducto = partesId[partesId.length - 1];
+    window.location.href = `modifyProduct.php?idProducto=${idProducto}`;
+  });
 });
