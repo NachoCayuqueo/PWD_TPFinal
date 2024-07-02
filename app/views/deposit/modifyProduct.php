@@ -1,9 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-include_once "../../controllers/validaciones.php";
-include_once './structures/funciones.php';
+
+// include_once "../../controllers/validaciones.php";
+include_once '../../../config/configuration.php';
+// include_once './structures/funciones.php';
 
 //TODO: debe recibir id por url y desde ahi recuperar los datos
 // $session = new Session();
