@@ -1,18 +1,14 @@
 $(document).ready(function () {
-  $("[id^='deleteButton-']").click(function (event) {
+  $(document).on("click", "[id^='deleteButton-']", function (event) {
     event.preventDefault();
     const idBtnMinus = $(this).attr("id");
     const partesId = idBtnMinus.split("-");
     const idProducto = partesId[partesId.length - 1];
-    //CAMBIAR NOMBRES
-    // console.log(id);
 
     $.ajax({
       url: "../../views/deposit/actions/deleteProductAction.php",
       type: "POST",
-      data: {
-        idProducto,
-      },
+      data: { idProducto },
       success: function (response) {
         response = JSON.parse(response);
         if (response.title === "EXITO") {
@@ -21,7 +17,6 @@ $(document).ready(function () {
             title: "Éxito",
             text: response.message,
           }).then((result) => {
-            // Redirecciona a la página deseada
             location.reload();
           });
         } else {
@@ -33,10 +28,8 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
-        // Maneja los errores de la solicitud AJAX
         console.error(xhr);
         console.error("error: " + error);
-        // Muestra una alerta de error
         Swal.fire({
           icon: "error",
           title: "Error",

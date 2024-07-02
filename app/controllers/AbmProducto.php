@@ -102,7 +102,7 @@ class AbmProducto
                 return $this->toArray($this->buscar(['proTipo' => $tipoProducto]));
         }
     }
-    private function toArray($listaProductos)
+    public function toArray($listaProductos)
     {
         $arregloProductos = [];
         foreach ($listaProductos as $producto) {
