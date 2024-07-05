@@ -40,6 +40,7 @@ class SubirArchivos
 
     public function cambiarImagenDeLugar($nombre, $tipoActual, $nuevoTipo)
     {
+        // echo $nombre;
         $ubicacionActual = $this->CARPETA . $tipoActual . '/' . $nombre;
         $nuevaUbicacion = $this->CARPETA . $nuevoTipo . '/' . $nombre;
         $exito = false;

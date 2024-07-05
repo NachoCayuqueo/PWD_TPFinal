@@ -1,11 +1,12 @@
 <?php
 
-use function PHPSTORM_META\elementType;
+// use function PHPSTORM_META\elementType;
 
 include_once '../../../../config/configuration.php';
 
 $objProducto = new AbmProducto();
 $datos = data_submitted();
+// viewStructure($datos);
 
 $idProducto = $datos['idProducto'];
 $param = ["idProducto" => $idProducto];
@@ -21,7 +22,6 @@ if ($stockIngresado) {
     $stockModificado = $stockActual;
 }
 
-
 //! MODIFICACION PARA CONTROLAR SI SE CAMBIA EL TIPO, CAMBIO LA FOTO DE LUGAR 
 $tipoActual = $producto[0]->getProTipo();
 $tipoNuevo = $datos['tipo'];
@@ -29,7 +29,7 @@ $cambiarImagenDeLugar = false;
 if ($tipoIngresado != $tipoActual) {
     $cambiarImagenDeLugar = true;
 }
-
+// echo ($datos['nombreImagen']);
 if (!empty($producto)) {
     $modificarParams = [
         "idProducto" => $datos['idProducto'],

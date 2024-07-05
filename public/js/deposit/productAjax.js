@@ -3,7 +3,7 @@ $(document).ready(function () {
     event.preventDefault();
     if (validarFormulario(event)) {
       const archivo = $("#miArchivo")[0].files[0];
-
+      console.log(archivo);
       if (archivo) {
         // Si se seleccionó un archivo, llamar a la función guardarImagen() para guardar la imagen
         guardarImagenModif(archivo);
@@ -17,6 +17,7 @@ $(document).ready(function () {
     event.preventDefault();
     if (validarFormularioNuevo(event)) {
       const archivo = $("#miArchivo")[0].files[0];
+      console(archivo);
       if (archivo) {
         guardarImagenNuevo(archivo);
       }
@@ -27,7 +28,7 @@ $(document).ready(function () {
 function guardarImagenModif(archivo) {
   // Crear un objeto FormData
   let formData = new FormData();
-
+  // console.log(archivo);
   const tipo = $("input[name='tipo']:checked").val();
   formData.append("miArchivo", archivo);
   formData.append("tipo", tipo);
@@ -105,6 +106,8 @@ function enviarFormularioDeModificacion(nombreImg) {
   const titulo = $("#titulo").val();
   const masInfo = $("#masInfo").val();
   const nombreImagen = nombreImg ? nombreImg : $("#nombreImagen").val();
+  console.log("pRODUC AJAX");
+  console.log(nombreImagen);
   const stock = $("#stock").val();
   const esPopular = $("input[name='esPopular']:checked").val();
   const esNuevo = $("input[name='esNuevo']:checked").val();
