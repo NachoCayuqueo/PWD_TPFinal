@@ -17,7 +17,6 @@ $(document).ready(function () {
     event.preventDefault();
     if (validarFormularioNuevo(event)) {
       const archivo = $("#miArchivo")[0].files[0];
-      console(archivo);
       if (archivo) {
         guardarImagenNuevo(archivo);
       }
