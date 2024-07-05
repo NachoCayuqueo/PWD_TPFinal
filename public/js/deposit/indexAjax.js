@@ -27,15 +27,13 @@ function generarMenuHTML(datosMenu) {
   var menuHTML = "";
   datosMenu.forEach(function (menu) {
     menuHTML += '<div class="col">';
-    console.log(menu.href);
-    console.log(menu.nombre);
     menuHTML += buttonCard(menu.href, menu.nombre);
     menuHTML += "</div>";
   });
 
   $("#menuDeposito").html(menuHTML);
 }
-
+// !ver si puedo meter una variable globar aca env
 function buttonCard(href, text) {
   var url = `/PWD_TPFinal/app/views/${href}`;
   var cardHTML = `
