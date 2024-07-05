@@ -33,7 +33,7 @@ function generarMenuHTML(datosMenu) {
 
   $("#menuDeposito").html(menuHTML);
 }
-// !ver si puedo meter una variable globar aca env
+// !ver si puedo meter una variable globar aca por /PWD_TPFinal/app/views/
 function buttonCard(href, text) {
   var url = `/PWD_TPFinal/app/views/${href}`;
   var cardHTML = `
