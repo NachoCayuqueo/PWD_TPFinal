@@ -1,13 +1,15 @@
 <?php
 include_once "../../controllers/validaciones.php";
-include_once "roleModals.php";
+// include_once "roleModals.php";
 
-$existenRoles = false;
-$objetoRoles = new AbmRol();
-$listaRoles = $objetoRoles->buscar(null);
-if (!empty($listaRoles)) {
-    $existenRoles = true;
-}
+// $existenRoles = false;
+// $objetoRoles = new AbmRol();
+// $listaRoles = $objetoRoles->buscar(null);
+// $listaRoles = $objetoRoles->toArray($listaRoles);
+// //viewStructure($listaRoles);
+// if (!empty($listaRoles)) {
+//     $existenRoles = true;
+// }
 ?>
 
 <!DOCTYPE html>
@@ -28,17 +30,8 @@ if (!empty($listaRoles)) {
     <div class="mt-3">
         <h1 class="title text-center">Panel Administrador</h1>
     </div>
-    <div class="container-sm p-4">
-        <?php
-        if ($listaRoles) {
-            crearTablaRoles($listaRoles);
-        } else {
-            echo '
-                <div class="d-flex justify-content-center">
-                    <h4 class="text">No se encontraron roles cargados en la base de datos</h4>
-                </div>';
-        }
-        ?>
+    <div class="container-sm p-4" id="roleList">
+
         <!-- Botón para agregar nuevos roles -->
         <div class="btn-floating">
             <a class="btn" data-bs-toggle="modal" data-bs-target="#modalAddRole" type="button" data-bs-tooltip="tooltip" data-bs-placement="top" data-bs-title="Nuevo Rol">
@@ -47,9 +40,8 @@ if (!empty($listaRoles)) {
         </div>
     </div>
 
-    <?php
-    modalAddRole();
-    ?>
+    <script src="<?php echo $PUBLIC_JS ?>/admin/roleListAjax.js"></script>
+    <script src="<?php echo $PUBLIC_JS ?>/admin/buttonRolModalAjax.js"></script>
     <?php include_once "../structures/footer.php"; ?>
 </body>
 
