@@ -1,4 +1,26 @@
 <?php
+include_once '../../../../config/configuration.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'];
+
+    $data = data_submitted();
+    $list = $data['list'];
+
+    switch ($action) {
+        case 'crearTablaResumenCompra':
+            $result = crearTablaResumenCompra($list);
+            break;
+        case 'crearTablaComprasCanceladas':
+            $result = crearTablaComprasCanceladas($list);
+            break;
+        default:
+            $result = 'Acción no encontrada';
+            break;
+    }
+
+    echo json_encode(['result' => $result]);
+}
 
 /**
  * Crea la tabla de resumen de compras.
@@ -7,8 +29,8 @@
  */
 function crearTablaResumenCompra($listaCompras)
 {
-    $comprasEncontradas = 0;
-    echo '
+    $existeCompra = false;
+    $html = '
     <table class="table table-striped table-bordered">
     <thead>
     <tr class="text-center card-title">
@@ -22,6 +44,7 @@ function crearTablaResumenCompra($listaCompras)
     </thead>
     <tbody class="table-group-divider text card-text">
     ';
+
     foreach ($listaCompras as $compra) {
         $idCompra = $compra['idCompra'];
         $estadoCompra = $compra['estadoCompra'];
@@ -29,18 +52,19 @@ function crearTablaResumenCompra($listaCompras)
         $fechaCompra = dateFormat($fechaCompra);
         $cantidadCompra = $compra['cantidadItems'];
         $precioTotal = $compra['precioTotal'];
-        if ($estadoCompra === 3 || $estadoCompra === 4) {
+        if ($estadoCompra == 3 || $estadoCompra == 4) {
+            $existeCompra = true;
             //crear tabla
             $tieneValoracion = $compra['tieneValoracion'];
-            echo "<tr>";
-            echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseCompras" . $idCompra . "' role='button' aria-expanded='false' aria-controls='collapseCompras" . $idCompra . "'>
+            $html .= "<tr>";
+            $html .= "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseCompras" . $idCompra . "' role='button' aria-expanded='false' aria-controls='collapseCompras" . $idCompra . "'>
                     <img id='toggleIcon_" . $idCompra . "' src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-right.svg' alt='right'></a>
              </td>";
-            echo "<td class='card-title'>" . $idCompra . "</td>";
-            echo "<td>" . $cantidadCompra . "</td>";
-            echo "<td>" . $fechaCompra . "</td>";
-            echo "<td>" . $precioTotal . "</td>";
-            echo "<td class='text-center'>"
+            $html .= "<td class='card-title'>" . $idCompra . "</td>";
+            $html .= "<td>" . $cantidadCompra . "</td>";
+            $html .= "<td>" . $fechaCompra . "</td>";
+            $html .= "<td>" . $precioTotal . "</td>";
+            $html .= "<td class='text-center'>"
                 . (!$tieneValoracion
                     ? " <a href='#' class='btn btn-outline-success edit-btn' data-bs-toggle='modal' data-bs-target='#modalEdit_" . $idCompra . "' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='comentar'>
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/pen.svg' alt='edit'>
@@ -49,28 +73,28 @@ function crearTablaResumenCompra($listaCompras)
                         <img src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/eye.svg' alt='see_review'>
                     </a>") .
                 "</td>";
-            echo "</tr>";
+            $html .= "</tr>";
 
             // Función que muestra el área de colapso
             $listaProductos = $compra['compraItem'];
-            collapseProducto($idCompra, $listaProductos);
+            $html .= collapseProducto($idCompra, $listaProductos);
 
             $idUsuario = $compra['idUsuario'];
             if (!$tieneValoracion) {
                 $idModal = 'modalEdit_' . $idCompra;
-                modalRankearCompra($idModal, $idUsuario, $listaProductos);
+                $html .= modalRankearCompra($idModal, $idUsuario, $listaProductos);
             } else {
                 $idModal = 'modalSeeReview_' . $idCompra;
-                modalVerValoracion($idModal, $idUsuario, $listaProductos);
+                $html .= modalVerValoracion($idModal, $idUsuario, $listaProductos);
             }
-
-            $comprasEncontradas++;
         }
     }
-    echo '</tbody>
+
+    $html .= '</tbody>
+
     </table>';
 
-    return $comprasEncontradas;
+    return $html;
 }
 
 function crearTablaComprasCanceladas($listaCompras)
@@ -78,6 +102,7 @@ function crearTablaComprasCanceladas($listaCompras)
     $comprasCanceladas = [];
     $existeCompra = false;
     $fechaCancelacion = '';
+
     foreach ($listaCompras as $compra) {
         $estadoCompra = $compra['estadoCompra'];
         if ($estadoCompra === 5) {
@@ -85,20 +110,28 @@ function crearTablaComprasCanceladas($listaCompras)
             $existeCompra = true;
         }
     }
-    echo '
-    <table class="table table-striped table-bordered" >
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">ID</th>
-                            <th scope="col">Cantidad Productos</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Fecha Compra</th>
-                            <th scope="col">Fecha Cancelacion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    ';
+
+    if (!$existeCompra) {
+        return '
+            <div class="contaier p-4">
+                <h5 class="text">No se encontraron compras canceladas.</h5>
+            </div>';
+    }
+
+    $html = '
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">ID</th>
+                <th scope="col">Cantidad Productos</th>
+                <th scope="col">Total</th>
+                <th scope="col">Fecha Compra</th>
+                <th scope="col">Fecha Cancelación</th>
+            </tr>
+        </thead>
+        <tbody>';
+
     foreach ($comprasCanceladas as $compra) {
         $idCompra = $compra['idCompra'];
         $cantidadCompra = $compra['cantidadItems'];
@@ -107,34 +140,38 @@ function crearTablaComprasCanceladas($listaCompras)
         $fechaCompra = dateFormat($fechaCompra);
         $fechaCancelacion = $compra['fechaFin'];
         $fechaCancelacion = dateFormat($fechaCancelacion);
-        //crear tabla
-        echo "<tr>";
-        echo "<td><a class='btn btn-link' data-bs-toggle='collapse' href='#collapseCompras" . $idCompra . "' role='button' aria-expanded='false' aria-controls='collapseCompras" . $idCompra . "'>
-                <img id='toggleIcon_" . $idCompra . "' src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-right.svg' alt='right'></a>
-              </td>";
-        echo "<td class='card-title'>" . $idCompra . "</td>";
-        echo "<td>" . $cantidadCompra . "</td>";
-        echo "<td>" . $totalCompra . "</td>";
-        echo "<td>" . $fechaCompra . "</td>";
-        echo "<td>" . $fechaCancelacion . "</td>";
-        echo "</tr>";
+
+        // Concatenar el HTML de cada fila de la tabla
+        $html .= "<tr>
+            <td>
+                <a class='btn btn-link' data-bs-toggle='collapse' href='#collapseCompras" . $idCompra . "' role='button' aria-expanded='false' aria-controls='collapseCompras" . $idCompra . "'>
+                    <img id='toggleIcon_" . $idCompra . "' src='" . $GLOBALS['BOOTSTRAP_ICONS'] . "/chevron-compact-right.svg' alt='right'>
+                </a>
+            </td>
+            <td class='card-title'>" . $idCompra . "</td>
+            <td>" . $cantidadCompra . "</td>
+            <td>" . $totalCompra . "</td>
+            <td>" . $fechaCompra . "</td>
+            <td>" . $fechaCancelacion . "</td>
+        </tr>";
 
         // Función que muestra el área de colapso
         $listaProductos = $compra['compraItem'];
-        collapseProducto($idCompra, $listaProductos);
+        $html .= collapseProducto($idCompra, $listaProductos);
     }
-    echo '</tbody>
-                </table>  ';
 
-    return $existeCompra;
+    $html .= '</tbody>
+    </table>';
+
+    return $html;
 }
 
 function collapseProducto($idCompra, $listaProductos)
 {
-    echo '
+    $html = '
         <tr class="collapse" id="collapseCompras' . $idCompra . '">
             <td colspan="4">
-                <table class="table" >
+                <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -144,29 +181,36 @@ function collapseProducto($idCompra, $listaProductos)
                         </tr>
                     </thead>
                     <tbody>
-                    ';
+    ';
+
     foreach ($listaProductos as $producto) {
         $idProducto = $producto['idProducto'];
         $nombreProducto = $producto['nombreProducto'];
         $cantidadProducto = $producto['cantidadProducto'];
         $precioUnitario = $producto['precioUnitarioProducto'];
         //crear tabla
-        echo "<tr>";
-        echo "<td class='card-title'>" . $idProducto . "</td>";
-        echo "<td>" . $nombreProducto . "</td>";
-        echo "<td>" . $cantidadProducto . "</td>";
-        echo "<td>" . $precioUnitario . "</td>";
-        echo "</tr>";
+        $html .= "<tr>";
+        $html .= "<td class='card-title'>" . $idProducto . "</td>";
+        $html .= "<td>" . $nombreProducto . "</td>";
+        $html .= "<td>" . $cantidadProducto . "</td>";
+        $html .= "<td>" . $precioUnitario . "</td>";
+        $html .= "</tr>";
     }
-    echo '</tbody>
-                </table>    
+
+    $html .= '
+                    </tbody>
+                </table>
             </td>
-        </tr>';
+        </tr>
+    ';
+
+    return $html;
 }
+
 
 function modalRankearCompra($idModal, $idUsuario, $productos)
 {
-    echo '
+    $html = '
     <div class="modal fade modal-ranking-compra" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -175,11 +219,13 @@ function modalRankearCompra($idModal, $idUsuario, $productos)
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">';
+
     foreach ($productos as $producto) {
         $idProducto = $producto['idProducto'];
         $nombreProducto = $producto['nombreProducto'];
         $urlImagen = $producto['urlImagen'];
-        echo '<div id="card_' . $idModal . '_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
+
+        $html .= '<div id="card_' . $idModal . '_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario="' . $idUsuario . '">
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="50">
@@ -193,13 +239,14 @@ function modalRankearCompra($idModal, $idUsuario, $productos)
                 <span class="star">&#9733;</span>
             </div>
             <div class="form-floating mt-2">
-                <textarea class="form-control" placeholder="Deja un comentario aqui" id="floatingTextarea2" style="height: 100px"></textarea>
+                <textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
                 <label for="floatingTextarea2">Deja un comentario</label>
             </div>
         </div>
       </div>';
     }
-    echo '  
+
+    $html .= '
           </div>
           <div class="modal-footer">
             <button id="btn-save_' . $idModal . '" type="button" class="btn btn-text btn-color btn-save" data-bs-dismiss="modal">Guardar</button>
@@ -207,13 +254,14 @@ function modalRankearCompra($idModal, $idUsuario, $productos)
           </div>
         </div>
       </div>
-    </div>
-';
+    </div>';
+
+    return $html;
 }
 
 function modalVerValoracion($idModal, $idUsuario, $productos)
 {
-    echo '
+    $html = '
     <div class="modal fade modal-ver-valoracion" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalReviewsLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -222,12 +270,14 @@ function modalVerValoracion($idModal, $idUsuario, $productos)
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">';
+
     foreach ($productos as $producto) {
         $idProducto = $producto['idProducto'];
         $nombreProducto = $producto['nombreProducto'];
         $urlImagen = $producto['urlImagen'];
         $valoracion = $producto['valoracion'];
-        echo '<div id="card_' . $idModal . '_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario = "' . $idUsuario . '">
+
+        $html .= '<div id="card_' . $idModal . '_' . $idProducto . '" class="card card-container p-2 mb-3" data-idusuario="' . $idUsuario . '">
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <img src="' . $urlImagen . '" alt="imagen" class="img-product" width="50">
@@ -245,15 +295,15 @@ function modalVerValoracion($idModal, $idUsuario, $productos)
         </div>
       </div>';
     }
-    echo '  
+
+    $html .= '
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
           </div>
         </div>
       </div>
-    </div>
-';
+    </div>';
+
+    return $html;
 }
-echo '<script src="' . $PUBLIC_JS . '/customer/changeCollapseButton.js"></script>';
-echo '<script src="' . $PUBLIC_JS . '/customer/classifyProductAjax.js"></script>';

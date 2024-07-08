@@ -1,21 +1,5 @@
 <?php
-include_once '../../../config/configuration.php';
-$session = new Session();
-$esUsuarioValido = $session->validarUsuario();
-$existeListaCompra = false;
-
-if ($esUsuarioValido) {
-    $usuario = $session->getUsuario();
-    $idUsuarioActivo = $usuario->getIdUsuario();
-    $param = ['idUsuario' => $idUsuarioActivo];
-    $objetoCompra = new AbmCompra();
-    $listaCompra = $objetoCompra->obtenerCompras($param);
-    if (!empty($listaCompra)) {
-        $existeListaCompra = true;
-    }
-} else {
-    header('Location: ' . $PRINCIPAL . "/app/views/error/accessDenied.php");
-}
+include_once "../../controllers/validaciones.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,13 +17,14 @@ if ($esUsuarioValido) {
     <?php
     include_once '../structures/navbar.php';
     ?>
+    <script src="<?php echo $PUBLIC_JS ?>/customer/shoppingSummaryAjax.js"></script>
     <div class="mt-3">
         <h1 class="title text-center">Mis Compras</h1>
     </div>
     <div class="container-sm p-4">
 
         <?php
-        if ($existeListaCompra) {
+        if (true) {
             echo '
             <div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -52,15 +37,11 @@ if ($esUsuarioValido) {
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">';
-            if (crearTablaResumenCompra($listaCompra) === 0) {
-                echo "<p class='text'>No se encontraron compras registradas.</p>";
-            }
+                  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <div id="container-crear-tabla-resumen-compra"></div>';
             echo '</div>
-                  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">';
-            if (!crearTablaComprasCanceladas($listaCompra)) {
-                echo "<p class='text'>No se encontraron compras canceladas.</p>";
-            };
+                  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                    <div id="container-crear-tabla-compras-canceladas"></div>';
             echo '</div>
                 </div>
             </div>
@@ -73,6 +54,7 @@ if ($esUsuarioValido) {
         }
         ?>
     </div>
+
     <?php include_once "../structures/footer.php"; ?>
 </body>
 
