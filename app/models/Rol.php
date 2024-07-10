@@ -184,6 +184,7 @@ class Rol extends DataBase
 
     public function deshabilitar()
     {
+
         $resp = false;
         $newDate = date('Y-m-d H:i:s');
         $query = "UPDATE rol SET 

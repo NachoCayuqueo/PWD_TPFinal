@@ -1,16 +1,6 @@
 <?php
 include_once "../../controllers/validaciones.php";
-// include_once './structures/funciones.php';
 
-// $existeProducto = false;
-
-// $objetoProducto = new AbmProducto();
-// $objetoRol = new AbmRol();
-// $listaProducto = $objetoProducto->buscar(null);
-// if (count($listaProducto) > 0) {
-//     $existeProducto = true;
-//$rolesDB = $objetoRol->buscar(null);
-// }
 ?>
 
 <!DOCTYPE html>

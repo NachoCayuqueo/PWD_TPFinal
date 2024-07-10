@@ -92,5 +92,3 @@ function modalAddRole()
         </div>
     ';
 }
-
-echo '<script src="' . $PUBLIC_JS . '/admin/buttonRolModalAjax.js"></script>';

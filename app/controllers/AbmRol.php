@@ -11,19 +11,22 @@ class AbmRol
     {
         $obj = null;
         if (
-            array_key_exists('idRol', $param)  &&
-            array_key_exists('roDescripcion', $param) &&
-            array_key_exists('roFechaEliminacion', $param)
+            array_key_exists('idRol', $param) &&
+            array_key_exists('roDescripcion', $param)
         ) {
+            // Asignar valor por defecto a roFechaEliminacion si no está presente
+            $roFechaEliminacion = isset($param['roFechaEliminacion']) ? $param['roFechaEliminacion'] : null;
+
             $obj = new Rol();
             $obj->setear(
                 $param['idRol'],
                 $param['roDescripcion'],
-                $param['roFechaEliminacion']
+                $roFechaEliminacion
             );
         }
         return $obj;
     }
+
 
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto que son claves
@@ -33,6 +36,7 @@ class AbmRol
 
     private function cargarObjetoConClave($param)
     {
+
         $obj = null;
         if (isset($param['idRol'])) {
             $obj = new Rol();
@@ -49,9 +53,12 @@ class AbmRol
 
     private function seteadosCamposClaves($param)
     {
+        // viewStructure($param);
         $resp = false;
         if (isset($param['idRol']))
             $resp = true;
+
+
         return $resp;
     }
 
@@ -74,13 +81,17 @@ class AbmRol
      */
     public function modificacion($param)
     {
+        //viewStructure($param);
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
+            // echo "aca llega bien"
             $objetoUsuario = $this->cargarObjeto($param);
+
             if ($objetoUsuario != null and $objetoUsuario->modificar()) {
                 $resp = true;
             }
         }
+
         return $resp;
     }
 
@@ -143,7 +154,9 @@ class AbmRol
     {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
+
             $objetoRol = $this->cargarObjetoConClave($param);
+
             if ($objetoRol != null and $objetoRol->deshabilitar()) {
                 $resp = true;
             }
@@ -153,6 +166,7 @@ class AbmRol
 
     public function actualizarRol($idRol, $nombreRol)
     {
+        //echo ("idRol: " . +$idRol);
         $modificacionExitosa = false;
         $rol = $this->buscar(['idRol' => $idRol]);
         //* verificar si el rol existe
@@ -162,7 +176,7 @@ class AbmRol
                 "roDescripcion" => $nombreRol,
             ];
             $modificacionExitosa = $this->modificacion($params);
-
+            //! aca sale siempre en falso
             if ($modificacionExitosa) {
                 //* actualizo el nombre en el menu
                 $objetoMenuRol = new AbmMenuRol();

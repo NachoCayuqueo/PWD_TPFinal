@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  // console.log("estoy en indexAjax.js");
   $.ajax({
     url: "../../views/deposit/actions/indexAction.php",
     type: "POST",

@@ -44,19 +44,21 @@ function crearTablaRoles(listaRoles) {
     tableHtml += `<td>${rol.rolDescripcion}</td>`;
     tableHtml += `<td class='text-center'>${dateFormat(fechaEliminacion)}</td>`;
     tableHtml += `
-            <td class='text-center'>
-                <a href='#' class='btn btn-outline-primary edit-btn ${disabled}' data-bs-toggle='modal' data-bs-target='#modalEdit_${rol.idRol}' type='button' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='Editar'>
-                    <img src='../../../public/lib/bootstrap/bootstrap-icons/icons/pen.svg' alt='edit'>
-                </a>
-                <a href='#' class='btn btn-outline-danger delete-btn ${disabled}' data-bs-toggle='modal' data-bs-target='#modalDelete_${rol.idRol}' type='button' data-bs-tooltip='tooltip' data-bs-placement='right' data-bs-title='Borrar'>
+   <td class='text-center'>
+                <form action="editRole.php" method="post" class="d-inline">
+                    <input type="hidden" name="idRol" value="${rol.idRol}">
+                    <input type="hidden" name="rolDescripcion" value="${rol.rolDescripcion}">
+                    <button type="submit" class='btn btn-outline-primary edit-btn ${disabled}' data-bs-tooltip='tooltip' data-bs-placement='left' data-bs-title='Editar'>
+                        <img src='../../../public/lib/bootstrap/bootstrap-icons/icons/pen.svg' alt='edit'>
+                    </button>
+                </form>
+                <a href='#' class='btn btn-outline-danger delete-btn ${disabled}' id='deleteRolButton_${rol.idRol}' data-bs-toggle='modal' data-bs-target='#modalDelete_${rol.idRol}' type='button' data-bs-tooltip='tooltip' data-bs-placement='right' data-bs-title='Borrar'>
                     <img src='../../../public/lib/bootstrap/bootstrap-icons/icons/trash3.svg' alt='trash'>
                 </a>
             </td>`;
     tableHtml += `</tr>`;
 
     // agrego los modales para editar y eliminar
-    tableHtml += modalEdit(rol.idRol, rol.rolDescripcion);
-    tableHtml += modalDelete(rol.idRol, rol.rolDescripcion);
   });
 
   tableHtml += `</tbody></table>`;
@@ -64,64 +66,7 @@ function crearTablaRoles(listaRoles) {
   // inserto el html
   $("#roleList").html(tableHtml);
 }
-function modalEdit(idRol, nombreRol) {
-  return `
-    <div class="modal fade" id="modalEdit_${idRol}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="formulario-editar-rol_${idRol}" class="formulario-editar-rol card-title card-body">
-                    <div class="modal-header">
-                        <h1 class="modal-title title fs-5" id="exampleModalLabel">Editar Rol</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text">
-                        <div class="row mb-4">
-                            <div class="col">
-                                <label for="idRol_${idRol}" class="form-label">ID</label>
-                                <input type="text" class="form-control bg-secondary" id="idRol_${idRol}" value="${idRol}" name="idRol_${idRol}" readonly>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col">
-                                <label for="descripcionRol_${idRol}" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="descripcionRol_${idRol}" name="descripcionRol_${idRol}" value="${nombreRol}" required>
-                                <div class="invalid-feedback">Ingresar un nombre</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-text btn-color">Guardar Cambios</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    `;
-}
-function modalDelete(idRol, nombreRol) {
-  return `
-    <div class="modal fade modal-borrar" id="modalDelete_${idRol}" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="formulario-borrar-rol_${idRol}" class="formulario-borrar-rol">
-                    <div class="modal-header">
-                        <h1 class="modal-title title fs-5" id="exampleModalLabel">Borrar Rol</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text">
-                        ¿Esta seguro que desea eliminar el rol ${nombreRol}?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-text btn-color">Aceptar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    `;
-}
+
 function modalAddRole() {
   return `
     <div class="modal fade" id="modalAddRole" tabindex="-1" aria-labelledby="modalAddRoleLabel" aria-hidden="true">

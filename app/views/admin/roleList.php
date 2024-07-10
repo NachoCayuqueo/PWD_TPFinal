@@ -27,6 +27,7 @@ include_once "../../controllers/validaciones.php";
     <?php
     include_once '../structures/navbar.php';
     ?>
+
     <div class="mt-3">
         <h1 class="title text-center">Panel Administrador</h1>
     </div>
@@ -41,7 +42,8 @@ include_once "../../controllers/validaciones.php";
     </div>
 
     <script src="<?php echo $PUBLIC_JS ?>/admin/roleListAjax.js"></script>
-    <script src="<?php echo $PUBLIC_JS ?>/admin/buttonRolModalAjax.js"></script>
+
+
     <?php include_once "../structures/footer.php"; ?>
 </body>
 
