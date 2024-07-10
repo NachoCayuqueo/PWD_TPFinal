@@ -11,5 +11,6 @@ $idRol = $data['idRol'];
 
 $response = $objetoRol->eliminarRol($idRol);
 
+// viewStructure($response);
 // Convertir el array a formato JSON
 echo json_encode($response);
