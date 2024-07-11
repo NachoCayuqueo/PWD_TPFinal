@@ -11,10 +11,14 @@ $idRol = $data['idRol'];
 $nombreRol = $data['nombreRol'];
 
 $modificacionExitosa = $objetoRol->actualizarRol($idRol, $nombreRol);
-if ($modificacionExitosa)
+//!condicion de actualizarrol viene cambiada
+if ($modificacionExitosa) {
+
     $response = array('title' => 'EXITO', 'message' => 'El Rol fue editado correctamente');
-else
+} else {
     $response = array('title' => 'ERROR', 'message' => 'Ocurrio un error al editar el rol con id: ' . $data['idRol']);
+}
+
 
 // Convertir el array a formato JSON
 // viewStructure($response);

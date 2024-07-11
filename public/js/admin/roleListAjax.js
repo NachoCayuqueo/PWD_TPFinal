@@ -45,11 +45,7 @@ $(document).ready(function () {
                 }
               );
             } else {
-              Swal.fire(
-                "Error",
-                "Hubo un problema al eliminar el rol.",
-                "error"
-              );
+              Swal.fire("Error", response.message, "error");
             }
           },
           error: function (xhr, status, error) {
@@ -81,7 +77,7 @@ $(document).ready(function () {
     `;
 
     listaRoles.forEach((rol) => {
-      const fechaEliminacion = rol.roFechaEliminacion;
+      const fechaEliminacion = rol.fechaEliminacion;
       const disabled = fechaEliminacion ? "disabled" : "";
 
       tableHtml += `<tr>`;

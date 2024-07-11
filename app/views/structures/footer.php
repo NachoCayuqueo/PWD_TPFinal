@@ -1,5 +1,6 @@
 <?php
 include_once "./config/configuration.php";
+
 ?>
 <div class="container-fluid footer footer-color">
     <div class="row p-3">

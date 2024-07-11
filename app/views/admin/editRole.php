@@ -2,7 +2,7 @@
 include_once "../../../controllers/validaciones.php";
 include_once '../../../config/configuration.php';
 $datos = data_submitted();
-viewStructure($datos);
+// viewStructure($datos);
 ?>
 
 <!DOCTYPE html>

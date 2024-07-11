@@ -6,7 +6,7 @@ $(document).ready(function () {
     const nombreRol = $("#nombreRol").val();
 
     $.ajax({
-      url: "views/admin/actions/editRolDataAction.php",
+      url: "actions/editRolDataAction.php",
       type: "POST",
       data: {
         idRol,

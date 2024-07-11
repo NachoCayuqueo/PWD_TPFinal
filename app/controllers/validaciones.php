@@ -1,5 +1,6 @@
 <?php
 include_once "../../../config/configuration.php";
+include_once "../../app/views/customer/strucures/cartSidePanel.php";
 $session = new Session();
 $objetoUsuarioRol = new AbmUsuarioRol();
 
